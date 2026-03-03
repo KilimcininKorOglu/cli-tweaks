@@ -45,7 +45,7 @@ cli-tweaks/
 ### Quick Install (copy everything)
 
 ```bash
-git clone https://github.com/<your-username>/cli-tweaks.git
+git clone https://github.com/KilimcininKorOglu/cli-tweaks.git
 cd cli-tweaks
 
 # Factory Droid
@@ -59,103 +59,21 @@ cp -r .claude/skills/* ~/.claude/skills/
 
 ### Hook Registration
 
-After copying the files, you need to register the hooks in your settings. You can either merge the provided `settings.json` manually or copy the hooks section directly.
+After copying the files, register the hooks in your settings by merging the hooks section from the provided `settings.json` into your own:
 
-**Factory Droid** -- merge into `~/.factory/settings.json`:
+| Platform       | Source                    | Target                     |
+|----------------|---------------------------|----------------------------|
+| Factory Droid  | `.factory/settings.json`  | `~/.factory/settings.json` |
+| Claude Code    | `.claude/settings.json`   | `~/.claude/settings.json`  |
 
-```json
-{
-  "enableHooks": true,
-  "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          { "type": "command", "command": "python3 ~/.factory/hooks/plan-mode.py" }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "ExitSpecMode",
-        "hooks": [
-          { "type": "command", "command": "python3 ~/.factory/hooks/save-plan.py", "timeout": 15 }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          { "type": "command", "command": "python3 ~/.factory/hooks/memory-load.py", "timeout": 10 }
-        ]
-      },
-      {
-        "matcher": "compact",
-        "hooks": [
-          { "type": "command", "command": "python3 ~/.factory/hooks/compact-reinject.py AGENTS.md", "timeout": 10 }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          { "type": "command", "command": "python3 ~/.factory/hooks/memory-save.py", "timeout": 10 }
-        ]
-      }
-    ]
-  }
-}
-```
-
-**Claude Code** -- merge into `~/.claude/settings.json`:
-
-```json
-{
-  "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          { "type": "command", "command": "python3 ~/.claude/hooks/plan-mode.py" }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "ExitPlanMode",
-        "hooks": [
-          { "type": "command", "command": "python3 ~/.claude/hooks/save-plan.py", "timeout": 15 }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          { "type": "command", "command": "python3 ~/.claude/hooks/memory-load.py", "timeout": 10 }
-        ]
-      },
-      {
-        "matcher": "compact",
-        "hooks": [
-          { "type": "command", "command": "python3 ~/.claude/hooks/compact-reinject.py CLAUDE.md", "timeout": 10 }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          { "type": "command", "command": "python3 ~/.claude/hooks/memory-save.py", "timeout": 10 }
-        ]
-      }
-    ]
-  }
-}
-```
+Each `settings.json` in this repo contains the full hook configuration ready to merge. Review the files for the exact event mappings and timeouts.
 
 ### Selective Install
 
-Pick only what you need:
+Pick only what you need. Examples below use `.factory/`; replace with `.claude/` for Claude Code.
 
 ```bash
-# Just the planning hooks
+# Just the planning hooks (notify.py is required by save-plan.py)
 cp .factory/hooks/plan-mode.py ~/.factory/hooks/
 cp .factory/hooks/save-plan.py ~/.factory/hooks/
 cp .factory/hooks/notify.py ~/.factory/hooks/
@@ -167,6 +85,8 @@ cp .factory/hooks/memory-save.py ~/.factory/hooks/
 # Just the commit skill
 cp -r .factory/skills/commit ~/.factory/skills/
 ```
+
+> **Note:** `save-plan.py` imports `notify.py` at runtime. Always copy `notify.py` alongside it.
 
 Then add the corresponding hook entries to your `settings.json`.
 
