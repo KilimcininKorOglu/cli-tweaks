@@ -8,25 +8,25 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 
 ### Hook'lar
 
-| Hook                  | Olay               | Açıklama                                                                  |
-|-----------------------|---------------------|---------------------------------------------------------------------------|
-| `plan-mode.py`        | UserPromptSubmit    | Anahtar kelime veya karmaşıklık puanlamasıyla planlama ihtiyacını tespit eder, 5 fazlı iş akışı enjekte eder |
-| `save-plan.py`        | PostToolUse         | Tamamlanan planları diske kaydeder, masaüstü bildirimi gönderir           |
-| `memory-load.py`      | SessionStart        | Projeye özel belleği (MEMORY.md + konu dosyaları) bağlama yükler          |
-| `memory-save.py`      | Stop                | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır        |
-| `compact-reinject.py` | SessionStart:compact| Bağlam sıkıştırmasından sonra AGENTS.md veya CLAUDE.md'yi yeniden enjekte eder |
-| `notify.py`           | (yardımcı modül)    | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)           |
+| Hook                  | Olay                 | Açıklama                                                                                                     |
+|-----------------------|----------------------|--------------------------------------------------------------------------------------------------------------|
+| `plan-mode.py`        | UserPromptSubmit     | Anahtar kelime veya karmaşıklık puanlamasıyla planlama ihtiyacını tespit eder, 5 fazlı iş akışı enjekte eder |
+| `save-plan.py`        | PostToolUse          | Tamamlanan planları diske kaydeder, masaüstü bildirimi gönderir                                              |
+| `memory-load.py`      | SessionStart         | Projeye özel belleği (MEMORY.md + konu dosyaları) bağlama yükler                                             |
+| `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                           |
+| `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra AGENTS.md veya CLAUDE.md'yi yeniden enjekte eder                               |
+| `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                              |
 
 ### Skill'ler
 
-| Skill                                          | Komut                      | Açıklama                                                    |
-|------------------------------------------------|----------------------------|-------------------------------------------------------------|
-| `commit`                                       | `/commit`                  | Repo stilini taklit eden conventional commit'ler             |
-| `task-plan`                                    | `/task-plan`               | PRD'yi özelliklere ayırma ve otonom yürütme                  |
-| `bug-report`                                   | `/bug-report`              | Sistematik hata analizi ve yapılandırılmış rapor oluşturma   |
-| `initialize`                                   | `/initialize`              | Kod tabanını tarayarak AGENTS.md oluşturur                   |
-| `init` (yalnızca Factory Droid)                | `/init`                    | Kod tabanını tarayarak CLAUDE.md oluşturur                   |
-| `implementation-planning` (yalnızca Factory Droid) | `/implementation-planning` | AskUser sorularıyla interaktif planlama                  |
+| Skill                                              | Komut                      | Açıklama                                                   |
+|----------------------------------------------------|----------------------------|------------------------------------------------------------|
+| `commit`                                           | `/commit`                  | Repo stilini taklit eden conventional commit'ler           |
+| `task-plan`                                        | `/task-plan`               | PRD'yi özelliklere ayırma ve otonom yürütme                |
+| `bug-report`                                       | `/bug-report`              | Sistematik hata analizi ve yapılandırılmış rapor oluşturma |
+| `initialize`                                       | `/initialize`              | Kod tabanını tarayarak AGENTS.md oluşturur                 |
+| `init` (yalnızca Factory Droid)                    | `/init`                    | Kod tabanını tarayarak CLAUDE.md oluşturur                 |
+| `implementation-planning` (yalnızca Factory Droid) | `/implementation-planning` | AskUser sorularıyla interaktif planlama                    |
 
 ## Dizin Yapısı
 
@@ -63,10 +63,10 @@ cp -r .claude/skills/* ~/.claude/skills/
 
 Dosyaları kopyaladıktan sonra, repodaki `settings.json` içerisindeki hooks bölümünü kendi ayar dosyanıza birleştiriniz:
 
-| Platform      | Kaynak                    | Hedef                      |
-|---------------|---------------------------|----------------------------|
-| Factory Droid | `.factory/settings.json`  | `~/.factory/settings.json` |
-| Claude Code   | `.claude/settings.json`   | `~/.claude/settings.json`  |
+| Platform      | Kaynak                   | Hedef                      |
+|---------------|--------------------------|----------------------------|
+| Factory Droid | `.factory/settings.json` | `~/.factory/settings.json` |
+| Claude Code   | `.claude/settings.json`  | `~/.claude/settings.json`  |
 
 Bu repodaki her `settings.json` dosyası, birleştirmeye hazır tam hook yapılandırmasını içerir. Olay eşlemeleri ve zaman aşımları için dosyaları inceleyin.
 
@@ -129,14 +129,14 @@ Bağlam penceresi sıkıştırıldığında AGENTS.md veya CLAUDE.md talimatlar�
 
 ## Platform Farklılıkları
 
-| Özellik                    | Factory Droid       | Claude Code          |
-|----------------------------|---------------------|----------------------|
-| Plan modu çıkış olayı     | `ExitSpecMode`      | `ExitPlanMode`       |
-| Yeniden enjeksiyon hedefi  | `AGENTS.md`         | `CLAUDE.md`          |
-| `/init` skill'i            | Evet (CLAUDE.md)    | Hayır (yerleşik)     |
-| `/implementation-planning` | Evet                | Hayır                |
-| Bellek yolları             | `~/.factory/memory/`| `~/.claude/memory/`  |
-| Plan kayıt yolları         | `~/.factory/plans/` | `~/.claude/plans/`   |
+| Özellik                    | Factory Droid        | Claude Code         |
+|----------------------------|----------------------|---------------------|
+| Plan modu çıkış olayı      | `ExitSpecMode`       | `ExitPlanMode`      |
+| Yeniden enjeksiyon hedefi  | `AGENTS.md`          | `CLAUDE.md`         |
+| `/init` skill'i            | Evet (CLAUDE.md)     | Hayır (yerleşik)    |
+| `/implementation-planning` | Evet                 | Hayır               |
+| Bellek yolları             | `~/.factory/memory/` | `~/.claude/memory/` |
+| Plan kayıt yolları         | `~/.factory/plans/`  | `~/.claude/plans/`  |
 
 ## Lisans
 

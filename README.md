@@ -8,25 +8,25 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 
 ### Hooks
 
-| Hook                 | Event              | Description                                                              |
-|----------------------|--------------------|--------------------------------------------------------------------------|
-| `plan-mode.py`       | UserPromptSubmit   | Detects planning needs via keywords or complexity scoring, injects a 5-phase planning workflow |
-| `save-plan.py`       | PostToolUse        | Saves completed plans to disk with desktop notifications                 |
-| `memory-load.py`     | SessionStart       | Loads project-specific memory (MEMORY.md + topic files) into context     |
-| `memory-save.py`     | Stop               | Reminds the agent to save learnings before the session ends              |
-| `compact-reinject.py`| SessionStart:compact | Re-injects AGENTS.md or CLAUDE.md after context compaction             |
-| `notify.py`          | (helper module)    | Cross-platform desktop notifications (macOS, Linux, Windows)             |
+| Hook                  | Event                | Description                                                                                    |
+|-----------------------|----------------------|------------------------------------------------------------------------------------------------|
+| `plan-mode.py`        | UserPromptSubmit     | Detects planning needs via keywords or complexity scoring, injects a 5-phase planning workflow |
+| `save-plan.py`        | PostToolUse          | Saves completed plans to disk with desktop notifications                                       |
+| `memory-load.py`      | SessionStart         | Loads project-specific memory (MEMORY.md + topic files) into context                           |
+| `memory-save.py`      | Stop                 | Reminds the agent to save learnings before the session ends                                    |
+| `compact-reinject.py` | SessionStart:compact | Re-injects AGENTS.md or CLAUDE.md after context compaction                                     |
+| `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |
 
 ### Skills
 
-| Skill                      | Command        | Description                                                        |
-|----------------------------|----------------|--------------------------------------------------------------------|
-| `commit`                   | `/commit`      | Conventional commits with repo style mimicry, smart staging, git safety protocol |
-| `task-plan`                | `/task-plan`   | PRD breakdown into features with autonomous execution and checkpointing |
-| `bug-report`               | `/bug-report`  | Systematic bug analysis and structured report generation           |
-| `initialize`               | `/initialize`  | Creates AGENTS.md by scanning the codebase                         |
-| `init` (Factory Droid only)| `/init`        | Creates CLAUDE.md by scanning the codebase                         |
-| `implementation-planning` (Factory Droid only) | `/implementation-planning` | Interactive planning with mandatory AskUser questions |
+| Skill                                          | Command                    | Description                                                                      |
+|------------------------------------------------|----------------------------|----------------------------------------------------------------------------------|
+| `commit`                                       | `/commit`                  | Conventional commits with repo style mimicry, smart staging, git safety protocol |
+| `task-plan`                                    | `/task-plan`               | PRD breakdown into features with autonomous execution and checkpointing          |
+| `bug-report`                                   | `/bug-report`              | Systematic bug analysis and structured report generation                         |
+| `initialize`                                   | `/initialize`              | Creates AGENTS.md by scanning the codebase                                       |
+| `init` (Factory Droid only)                    | `/init`                    | Creates CLAUDE.md by scanning the codebase                                       |
+| `implementation-planning` (Factory Droid only) | `/implementation-planning` | Interactive planning with mandatory AskUser questions                            |
 
 ## Directory Structure
 
@@ -63,10 +63,10 @@ cp -r .claude/skills/* ~/.claude/skills/
 
 After copying the files, register the hooks in your settings by merging the hooks section from the provided `settings.json` into your own:
 
-| Platform       | Source                    | Target                     |
-|----------------|---------------------------|----------------------------|
-| Factory Droid  | `.factory/settings.json`  | `~/.factory/settings.json` |
-| Claude Code    | `.claude/settings.json`   | `~/.claude/settings.json`  |
+| Platform      | Source                   | Target                     |
+|---------------|--------------------------|----------------------------|
+| Factory Droid | `.factory/settings.json` | `~/.factory/settings.json` |
+| Claude Code   | `.claude/settings.json`  | `~/.claude/settings.json`  |
 
 Each `settings.json` in this repo contains the full hook configuration ready to merge. Review the files for the exact event mappings and timeouts.
 
@@ -129,14 +129,14 @@ The `/commit` skill gathers full git context before committing (status, diff, br
 
 ## Platform Differences
 
-| Feature                    | Factory Droid       | Claude Code          |
-|----------------------------|---------------------|----------------------|
-| Plan mode exit event       | `ExitSpecMode`      | `ExitPlanMode`       |
-| Re-injection target        | `AGENTS.md`         | `CLAUDE.md`          |
-| `/init` skill              | Yes (CLAUDE.md)     | No (built-in)        |
-| `/implementation-planning` | Yes                 | No                   |
-| Memory paths               | `~/.factory/memory/`| `~/.claude/memory/`  |
-| Plan save paths            | `~/.factory/plans/` | `~/.claude/plans/`   |
+| Feature                    | Factory Droid        | Claude Code         |
+|----------------------------|----------------------|---------------------|
+| Plan mode exit event       | `ExitSpecMode`       | `ExitPlanMode`      |
+| Re-injection target        | `AGENTS.md`          | `CLAUDE.md`         |
+| `/init` skill              | Yes (CLAUDE.md)      | No (built-in)       |
+| `/implementation-planning` | Yes                  | No                  |
+| Memory paths               | `~/.factory/memory/` | `~/.claude/memory/` |
+| Plan save paths            | `~/.factory/plans/`  | `~/.claude/plans/`  |
 
 ## License
 
