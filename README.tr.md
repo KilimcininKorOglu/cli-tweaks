@@ -26,7 +26,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `bug-report`                                       | `/bug-report`              | Sistematik hata analizi ve yapılandırılmış rapor oluşturma |
 | `initialize`                                       | `/initialize`              | Kod tabanını tarayarak AGENTS.md oluşturur                 |
 | `init` (yalnızca Factory Droid)                    | `/init`                    | Kod tabanını tarayarak CLAUDE.md oluşturur                 |
-| `implementation-planning` (yalnızca Factory Droid) | `/implementation-planning` | AskUser sorularıyla interaktif planlama                    |
+| `implement-plan`                                   | `/implement-plan`          | AskUser sorularıyla interaktif planlama                    |
 
 ## Dizin Yapısı
 
@@ -134,7 +134,6 @@ Bağlam penceresi sıkıştırıldığında AGENTS.md veya CLAUDE.md talimatlar�
 | Plan modu çıkış olayı      | `ExitSpecMode`       | `ExitPlanMode`      |
 | Yeniden enjeksiyon hedefi  | `AGENTS.md`          | `CLAUDE.md`         |
 | `/init` skill'i            | Evet (CLAUDE.md)     | Hayır (yerleşik)    |
-| `/implementation-planning` | Evet                 | Hayır               |
 | Bellek yolları             | `~/.factory/memory/` | `~/.claude/memory/` |
 | Plan kayıt yolları         | `~/.factory/plans/`  | `~/.claude/plans/`  |
 

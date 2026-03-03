@@ -1,5 +1,5 @@
 ---
-name: implementation-planning
+name: implement-plan
 description: >
   This skill MUST be invoked when the user says "plan this", "planla",
   "tasarla", "design this", "implementation plan", "nasıl implement ederiz"
@@ -7,7 +7,7 @@ description: >
   when user asks "how should I implement X", "en iyi yaklaşım ne", or
   wants a technical specification. Creates detailed implementation plans
   through interactive research and iteration, breaking down tasks into
-  phases with mandatory user questions via AskUser.
+  phases with mandatory user questions via AskUserQuestion.
 ---
 
 # Implementation Planning
@@ -23,7 +23,7 @@ Given a task or ticket:
 3. Present understanding with `file:line` references, ask only unanswerable questions
 4. Verify any user corrections against code before accepting
 5. Outline the phase structure, get approval
-6. Detail each phase, then present with ExitSpecMode
+6. Detail each phase, then present with ExitPlanMode
 
 ## When to Plan (Use This Skill)
 
@@ -85,7 +85,7 @@ Only skip planning for simple tasks:
 
 THIS IS THE MOST CRITICAL STEP. Never skip it.
 
-Before designing any plan, you MUST use the AskUser tool to ask 1-4 focused questions. The goal is to understand what the user actually wants before committing to an approach.
+Before designing any plan, you MUST use the AskUserQuestion tool to ask 1-4 focused questions. The goal is to understand what the user actually wants before committing to an approach.
 
 What to ask about:
 - Ambiguous requirements ("Should X include Y or just Z?")
@@ -95,12 +95,12 @@ What to ask about:
 - Priority trade-offs ("Should we optimize for speed or maintainability?")
 
 How to ask:
-- Use the AskUser tool with structured multiple-choice questions
+- Use the AskUserQuestion tool with structured multiple-choice questions
 - Present what you found in Step 1 as context within the question
 - Keep options short and mutually exclusive
 - 2-4 options per question, 1-4 questions total
 
-Example AskUser usage:
+Example AskUserQuestion usage:
 ```
 1. [question] I found the API uses REST handlers at server.go:45. For the new endpoint, should we follow the existing pattern or introduce a router?
 [topic] Architecture
@@ -118,7 +118,7 @@ Rules:
 - ALWAYS ask at least one question, even if the request seems clear
 - If the request is very specific, confirm your understanding with a verification question
 - DO NOT proceed to Step 3 until you get answers
-- DO NOT ask questions in plain text -- always use AskUser tool
+- DO NOT ask questions in plain text -- always use AskUserQuestion tool
 - If user corrections conflict with what you found in code, present the discrepancy as a question
 
 ### Step 3: Design the Plan
@@ -131,7 +131,7 @@ After getting user answers:
 
 ### Step 4: Present the Plan
 
-Build the complete plan following the template below and present it using ExitSpecMode tool with:
+Build the complete plan following the template below and present it using ExitPlanMode tool with:
 - `title`: A descriptive plan title
 - `plan`: The full plan in markdown format
 
@@ -182,7 +182,7 @@ Manual verification:
 - Get buy-in at each step
 - Assume TDD for automated tests -- don't add explicit "write tests" steps
 - Include manual verification checkpoints at phase boundaries
-- Use ExitSpecMode with optionNames when presenting multiple approaches
+- Use ExitPlanMode with optionNames when presenting multiple approaches
 
 ### Don't
 - Write complete plans before alignment
@@ -196,7 +196,7 @@ Manual verification:
 
 If you encounter open questions during planning:
 1. STOP
-2. Research or ask for clarification immediately (use AskUser tool)
+2. Research or ask for clarification immediately (use AskUserQuestion tool)
 3. Do NOT present a plan with unresolved questions
 4. Every decision must be made before finalizing
 
@@ -235,8 +235,8 @@ If you encounter open questions during planning:
 | Mistake                              | Why It's Wrong                        | Do This Instead                                    |
 |--------------------------------------|---------------------------------------|----------------------------------------------------|
 | Dumping a complete plan immediately  | User can't course-correct early       | Present understanding first, get buy-in at each step |
-| Skipping clarifying questions        | You'll plan the wrong thing           | ALWAYS use AskUser before designing the plan       |
-| Asking questions in plain text       | User gets unstructured wall of text   | Use AskUser tool for structured multiple-choice    |
+| Skipping clarifying questions        | You'll plan the wrong thing           | ALWAYS use AskUserQuestion before designing the plan       |
+| Asking questions in plain text       | User gets unstructured wall of text   | Use AskUserQuestion tool for structured multiple-choice    |
 | Accepting user corrections blindly   | User may be wrong or outdated         | Verify corrections against code before proceeding  |
 | Leaving "TBD" or "TODO" in plan      | Plan should be actionable             | Resolve all questions before finalizing            |
 | Missing file:line references         | Claims become unverifiable            | Every code reference needs a location              |

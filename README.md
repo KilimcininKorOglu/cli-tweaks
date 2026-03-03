@@ -26,7 +26,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `bug-report`                                   | `/bug-report`              | Systematic bug analysis and structured report generation                         |
 | `initialize`                                   | `/initialize`              | Creates AGENTS.md by scanning the codebase                                       |
 | `init` (Factory Droid only)                    | `/init`                    | Creates CLAUDE.md by scanning the codebase                                       |
-| `implementation-planning` (Factory Droid only) | `/implementation-planning` | Interactive planning with mandatory AskUser questions                            |
+| `implement-plan`                               | `/implement-plan`          | Interactive planning with mandatory AskUser questions                            |
 
 ## Directory Structure
 
@@ -134,7 +134,6 @@ The `/commit` skill gathers full git context before committing (status, diff, br
 | Plan mode exit event       | `ExitSpecMode`       | `ExitPlanMode`      |
 | Re-injection target        | `AGENTS.md`          | `CLAUDE.md`         |
 | `/init` skill              | Yes (CLAUDE.md)      | No (built-in)       |
-| `/implementation-planning` | Yes                  | No                  |
 | Memory paths               | `~/.factory/memory/` | `~/.claude/memory/` |
 | Plan save paths            | `~/.factory/plans/`  | `~/.claude/plans/`  |
 
