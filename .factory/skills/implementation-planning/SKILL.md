@@ -8,7 +8,6 @@ description: >
   wants a technical specification. Creates detailed implementation plans
   through interactive research and iteration, breaking down tasks into
   phases with mandatory user questions via AskUser.
-license: MIT
 ---
 
 # Implementation Planning
