@@ -1,5 +1,7 @@
 # cli-tweaks
 
+[Turkce](README.tr.md)
+
 A collection of hooks and skills for Factory Droid and Claude Code that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box.
 
 ## What's Included
