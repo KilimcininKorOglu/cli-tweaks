@@ -40,6 +40,11 @@
             "type": "command",
             "command": "python3 ~/.factory/hooks/compact-reinject.py AGENTS.md",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "python3 ~/.factory/hooks/memory-load.py",
+            "timeout": 10
           }
         ]
       }

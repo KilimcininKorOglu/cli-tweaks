@@ -39,6 +39,11 @@
             "type": "command",
             "command": "python3 ~/.claude/hooks/compact-reinject.py CLAUDE.md",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/memory-load.py",
+            "timeout": 10
           }
         ]
       }
