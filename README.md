@@ -19,14 +19,14 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 
 ### Skills
 
-| Skill                                          | Command                    | Description                                                                      |
-|------------------------------------------------|----------------------------|----------------------------------------------------------------------------------|
-| `commit`                                       | `/commit`                  | Conventional commits with repo style mimicry, smart staging, git safety protocol |
-| `task-plan`                                    | `/task-plan`               | PRD breakdown into features with autonomous execution and checkpointing          |
-| `bug-report`                                   | `/bug-report`              | Systematic bug analysis and structured report generation                         |
-| `initialize`                                   | `/initialize`              | Creates AGENTS.md by scanning the codebase                                       |
-| `init` (Factory Droid only)                    | `/init`                    | Creates CLAUDE.md by scanning the codebase                                       |
-| `implement-plan`                               | `/implement-plan`          | Interactive planning with mandatory AskUser questions                            |
+| Skill                       | Command           | Description                                                                      |
+|-----------------------------|-------------------|----------------------------------------------------------------------------------|
+| `commit`                    | `/commit`         | Conventional commits with repo style mimicry, smart staging, git safety protocol |
+| `task-plan`                 | `/task-plan`      | PRD breakdown into features with autonomous execution and checkpointing          |
+| `bug-report`                | `/bug-report`     | Systematic bug analysis and structured report generation                         |
+| `initialize`                | `/initialize`     | Creates AGENTS.md by scanning the codebase                                       |
+| `init` (Factory Droid only) | `/init`           | Creates CLAUDE.md by scanning the codebase                                       |
+| `implement-plan`            | `/implement-plan` | Interactive planning with mandatory AskUser questions                            |
 
 ## Directory Structure
 
@@ -111,12 +111,13 @@ Completed plans are saved to `~/.factory/plans/<project>/` (or `~/.claude/plans/
 The memory system gives your agent persistent, project-scoped memory across sessions:
 
 - On session start, `memory-load.py` reads `~/.factory/memory/<project>/MEMORY.md` and injects it
+- On context compaction, memory is automatically re-injected alongside instruction files
 - On session end, `memory-save.py` reminds the agent to save anything new it learned
 - Memory files are organized per project with a main index and topic files
 
 ### Compaction Re-injection
 
-When the context window gets compacted, your AGENTS.md or CLAUDE.md instructions are lost. The `compact-reinject.py` hook detects compaction events and re-reads the file from your project directory, keeping your instructions alive.
+When the context window gets compacted, your AGENTS.md or CLAUDE.md instructions and project memory are lost. The compact hooks detect compaction events and re-inject both instruction files and memory, keeping your context alive.
 
 ### Commit Skill
 
@@ -129,13 +130,13 @@ The `/commit` skill gathers full git context before committing (status, diff, br
 
 ## Platform Differences
 
-| Feature                    | Factory Droid        | Claude Code         |
-|----------------------------|----------------------|---------------------|
-| Plan mode exit event       | `ExitSpecMode`       | `ExitPlanMode`      |
-| Re-injection target        | `AGENTS.md`          | `CLAUDE.md`         |
-| `/init` skill              | Yes (CLAUDE.md)      | No (built-in)       |
-| Memory paths               | `~/.factory/memory/` | `~/.claude/memory/` |
-| Plan save paths            | `~/.factory/plans/`  | `~/.claude/plans/`  |
+| Feature              | Factory Droid        | Claude Code         |
+|----------------------|----------------------|---------------------|
+| Plan mode exit event | `ExitSpecMode`       | `ExitPlanMode`      |
+| Re-injection target  | `AGENTS.md`          | `CLAUDE.md`         |
+| `/init` skill        | Yes (CLAUDE.md)      | No (built-in)       |
+| Memory paths         | `~/.factory/memory/` | `~/.claude/memory/` |
+| Plan save paths      | `~/.factory/plans/`  | `~/.claude/plans/`  |
 
 ## License
 
