@@ -167,8 +167,8 @@ CRITICAL RULES:
 - NEVER write code during planning. This is read-only.
 - Use AskUser tool (not plain text) for structured questions.
 
-You have an 'implementation-planning' skill available. Use the Skill tool
-to invoke it with skill name 'implementation-planning' for the detailed
+You have an 'implement-plan' skill available. Use the Skill tool
+to invoke it with skill name 'implement-plan' for the detailed
 planning workflow.""".format(mode=mode)
 
     output = {
