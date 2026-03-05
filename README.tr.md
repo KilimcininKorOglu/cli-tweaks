@@ -32,7 +32,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 
 ```
 cli-tweaks/
-  .factory/          <-- Factory Droid (Kiro)
+  .factory/          <-- Factory Droid
     hooks/
     skills/
     settings.json

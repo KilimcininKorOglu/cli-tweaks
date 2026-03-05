@@ -32,7 +32,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 
 ```
 cli-tweaks/
-  .factory/          <-- Factory Droid (Kiro)
+  .factory/          <-- Factory Droid
     hooks/
     skills/
     settings.json
