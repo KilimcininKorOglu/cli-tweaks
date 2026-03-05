@@ -19,14 +19,14 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 
 ### Skill'ler
 
-| Skill                           | Komut             | Açıklama                                                   |
-|---------------------------------|-------------------|------------------------------------------------------------|
-| `commit`                        | `/commit`         | Repo stilini taklit eden conventional commit'ler           |
-| `task-plan`                     | `/task-plan`      | PRD'yi özelliklere ayırma ve otonom yürütme                |
-| `bug-report`                    | `/bug-report`     | Sistematik hata analizi ve yapılandırılmış rapor oluşturma |
-| `initialize`                    | `/initialize`     | Kod tabanını tarayarak AGENTS.md oluşturur                 |
-| `init` (yalnızca Factory Droid) | `/init`           | Kod tabanını tarayarak CLAUDE.md oluşturur                 |
-| `implement-plan`                | `/implement-plan` | AskUser sorularıyla interaktif planlama                    |
+| Skill                                  | Komut             | Açıklama                                                   |
+|----------------------------------------|-------------------|------------------------------------------------------------|
+| `commit`                               | `/commit`         | Repo stilini taklit eden conventional commit'ler           |
+| `task-plan`                            | `/task-plan`      | PRD'yi özelliklere ayırma ve otonom yürütme                |
+| `bug-report`                           | `/bug-report`     | Sistematik hata analizi ve yapılandırılmış rapor oluşturma |
+| `initialize` (yalnızca Claude Code)    | `/initialize`     | Kod tabanını tarayarak AGENTS.md oluşturur                 |
+| `init-claude` (yalnızca Factory Droid) | `/init-claude`    | Kod tabanını tarayarak CLAUDE.md oluşturur                 |
+| `implement-plan`                       | `/implement-plan` | AskUser sorularıyla interaktif planlama                    |
 
 ## Dizin Yapısı
 
@@ -166,7 +166,7 @@ Bağlam penceresi sıkıştırıldığında AGENTS.md veya CLAUDE.md talimatlar�
 |---------------------------|----------------------|---------------------|
 | Plan modu çıkış olayı     | `ExitSpecMode`       | `ExitPlanMode`      |
 | Yeniden enjeksiyon hedefi | `AGENTS.md`          | `CLAUDE.md`         |
-| `/init` skill'i           | Evet (CLAUDE.md)     | Hayır (yerleşik)    |
+| `/init-claude` skill'i    | Evet (CLAUDE.md)     | Hayır (yerleşik)    |
 | Bellek yolları            | `~/.factory/memory/` | `~/.claude/memory/` |
 | Plan kayıt yolları        | `~/.factory/plans/`  | `~/.claude/plans/`  |
 

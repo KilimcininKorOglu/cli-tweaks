@@ -1,30 +1,29 @@
 ---
-name: initialize
+name: init-claude
 description: >
-  This skill MUST be invoked when the user says "initialize", "init",
-  "başlat", "AGENTS.md oluştur", "create AGENTS.md" or any variation
-  requesting project initialization for AI agents. SHOULD also invoke
-  when user mentions "setup AI rules", "configure agents", "agent
-  kurallarını ayarla". Analyzes the codebase and creates/updates an
-  AGENTS.md file for AI coding agents. Scans project files, build configs,
-  and existing AI rules to generate comprehensive guidance for all AI agents
-  (Cursor, Codex, Gemini CLI, Copilot, etc.).
+  This skill MUST be invoked when the user says "init", "initialize",
+  "başlat", "CLAUDE.md oluştur", "create CLAUDE.md" or any variation
+  requesting CLAUDE.md creation. SHOULD also invoke when user mentions
+  "setup Claude rules", "configure Claude Code". Analyzes the codebase
+  and creates/updates a CLAUDE.md file for Claude Code. Scans project
+  files, build configs, and existing AI rules to generate comprehensive
+  guidance specific to Claude Code.
 argument-hint: ""
 ---
 
-# Initialize - Create AGENTS.md
+# Init - Create CLAUDE.md
 
-Analyzes the codebase and creates or updates an AGENTS.md file for AI coding agents.
+Analyzes the codebase and creates or updates a CLAUDE.md file for Claude Code (claude.ai/code).
 
 ## Target File
 
-AGENTS.md only. Do NOT create or modify CLAUDE.md.
+CLAUDE.md only. Do NOT create or modify AGENTS.md.
 
 ## Required Header
 
 ```
-# AGENTS.md
-This file provides guidance to AI coding agents (Claude Code, Cursor, Codex, Gemini CLI, GitHub Copilot, etc.) when working with code in this repository.
+# CLAUDE.md
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 ```
 
 ## Files to Scan
@@ -33,7 +32,7 @@ This file provides guidance to AI coding agents (Claude Code, Cursor, Codex, Gem
 |----------|----------------------------------------------------------------|----------------------------|
 | High     | `README.md`, `PROJECT.md`, `CONTRIBUTING.md`                   | Project overview           |
 | High     | `package.json`, `Makefile`, `Cargo.toml`, `go.mod`, `pyproject.toml` | Build commands       |
-| High     | `CLAUDE.md`, `GEMINI.md`                                      | Existing AI rules to merge |
+| High     | `AGENTS.md`, `GEMINI.md`                                      | Existing AI rules to merge |
 | High     | `.cursor/rules/`, `.cursorrules`                               | Cursor AI rules            |
 | High     | `.github/copilot-instructions.md`                              | Copilot instructions       |
 | Medium   | `docker-compose.yml`, `Dockerfile`                             | Container setup            |
@@ -61,10 +60,10 @@ This file provides guidance to AI coding agents (Claude Code, Cursor, Codex, Gem
 
 ## Behavior
 
-- If AGENTS.md does not exist: create it directly
-- If AGENTS.md already exists: show proposed changes and ask for confirmation
-- If CLAUDE.md or other AI config files exist, incorporate their important parts
-- You can ONLY edit or create AGENTS.md -- never touch CLAUDE.md
+- If CLAUDE.md does not exist: create it directly
+- If CLAUDE.md already exists: show proposed changes and ask for confirmation
+- If AGENTS.md or other AI config files exist, incorporate their important parts
+- You can ONLY edit or create CLAUDE.md -- never touch AGENTS.md
 
 ## Output Guidelines
 
