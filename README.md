@@ -44,7 +44,39 @@ cli-tweaks/
 
 ## Installation
 
-### Quick Install (copy everything)
+### Quick Install (degit)
+
+No need to clone the entire repo. [degit](https://github.com/Rich-Harris/degit) copies only the files you need.
+
+**Fresh install** (no existing config):
+
+```bash
+# Factory Droid
+npx degit KilimcininKorOglu/cli-tweaks/.factory ~/.factory
+
+# Claude Code
+npx degit KilimcininKorOglu/cli-tweaks/.claude ~/.claude
+```
+
+**Merge with existing setup**:
+
+```bash
+# Factory Droid
+npx degit KilimcininKorOglu/cli-tweaks/.factory/hooks /tmp/cli-tweaks-hooks
+npx degit KilimcininKorOglu/cli-tweaks/.factory/skills /tmp/cli-tweaks-skills
+cp -r /tmp/cli-tweaks-hooks/* ~/.factory/hooks/
+cp -r /tmp/cli-tweaks-skills/* ~/.factory/skills/
+rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
+
+# Claude Code
+npx degit KilimcininKorOglu/cli-tweaks/.claude/hooks /tmp/cli-tweaks-hooks
+npx degit KilimcininKorOglu/cli-tweaks/.claude/skills /tmp/cli-tweaks-skills
+cp -r /tmp/cli-tweaks-hooks/* ~/.claude/hooks/
+cp -r /tmp/cli-tweaks-skills/* ~/.claude/skills/
+rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
+```
+
+### Alternative: git clone
 
 ```bash
 git clone https://github.com/KilimcininKorOglu/cli-tweaks.git
