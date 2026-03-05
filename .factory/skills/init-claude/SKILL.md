@@ -28,17 +28,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Files to Scan
 
-| Priority | Files                                                          | Purpose                    |
-|----------|----------------------------------------------------------------|----------------------------|
-| High     | `README.md`, `PROJECT.md`, `CONTRIBUTING.md`                   | Project overview           |
-| High     | `package.json`, `Makefile`, `Cargo.toml`, `go.mod`, `pyproject.toml` | Build commands       |
-| High     | `AGENTS.md`, `GEMINI.md`                                      | Existing AI rules to merge |
-| High     | `.cursor/rules/`, `.cursorrules`                               | Cursor AI rules            |
-| High     | `.github/copilot-instructions.md`                              | Copilot instructions       |
-| Medium   | `docker-compose.yml`, `Dockerfile`                             | Container setup            |
-| Medium   | `.env.example`, `config/`                                      | Configuration              |
-| Medium   | `src/`, `lib/`, `app/` structure                               | Architecture               |
-| Low      | Linter/formatter configs                                       | Code style                 |
+| Priority | Files                                                                | Purpose                    |
+|----------|----------------------------------------------------------------------|----------------------------|
+| High     | `README.md`, `PROJECT.md`, `CONTRIBUTING.md`                         | Project overview           |
+| High     | `package.json`, `Makefile`, `Cargo.toml`, `go.mod`, `pyproject.toml` | Build commands             |
+| High     | `AGENTS.md`, `GEMINI.md`                                             | Existing AI rules to merge |
+| High     | `.cursor/rules/`, `.cursorrules`                                     | Cursor AI rules            |
+| High     | `.github/copilot-instructions.md`                                    | Copilot instructions       |
+| High     | `.github/workflows/`                                                 | CI/CD build/test commands  |
+| Medium   | `docker-compose.yml`, `Dockerfile`                                   | Container setup            |
+| Medium   | `.env.example`, `config/`                                            | Configuration              |
+| Medium   | `src/`, `lib/`, `app/` structure                                     | Architecture               |
+| Medium   | `.gemini/settings.json`                                              | Gemini CLI config          |
+| Low      | Linter/formatter configs                                             | Code style                 |
+| Low      | `.aider.conf.yml`                                                    | Aider config               |
 
 ## What to Include
 
@@ -49,6 +52,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Environment setup requirements (if present)
 - Database/migration commands (if present)
 - Monorepo workspace structure (if present)
+- Security considerations (if present)
+- PR/commit message guidelines (if present)
+- Deployment steps (if present)
 
 ## What to Exclude
 
