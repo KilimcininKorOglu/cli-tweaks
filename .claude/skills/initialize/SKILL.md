@@ -68,7 +68,7 @@ This file provides guidance to AI coding agents (Claude Code, Cursor, Codex, Gem
 ## Behavior
 
 - If AGENTS.md does not exist: create it directly
-- If AGENTS.md already exists: show proposed changes and ask for confirmation
+- If AGENTS.md already exists: analyze current content and update it directly
 - If CLAUDE.md or other AI config files exist, incorporate their important parts
 - If a monorepo is detected, suggest creating nested AGENTS.md files for each subproject
 - You can ONLY edit or create AGENTS.md -- never touch CLAUDE.md

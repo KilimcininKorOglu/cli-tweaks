@@ -67,7 +67,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Behavior
 
 - If CLAUDE.md does not exist: create it directly
-- If CLAUDE.md already exists: show proposed changes and ask for confirmation
+- If CLAUDE.md already exists: analyze current content and update it directly
 - If AGENTS.md or other AI config files exist, incorporate their important parts
 - You can ONLY edit or create CLAUDE.md -- never touch AGENTS.md
 
