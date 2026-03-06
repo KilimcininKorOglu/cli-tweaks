@@ -12,7 +12,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 |-----------------------|----------------------|------------------------------------------------------------------------------------------------|
 | `plan-mode.py`        | UserPromptSubmit     | Detects planning needs via keywords or complexity scoring, injects a 5-phase planning workflow |
 | `save-plan.py`        | PostToolUse          | Saves completed plans to disk with desktop notifications                                       |
-| `memory-load.py`      | SessionStart         | Loads project-specific memory (MEMORY.md + topic files) into context                           |
+| `memory-load.py`      | SessionStart/compact | Loads project-specific memory (MEMORY.md + topic files) into context                           |
 | `memory-save.py`      | Stop                 | Reminds the agent to save learnings before the session ends                                    |
 | `compact-reinject.py` | SessionStart:compact | Re-injects AGENTS.md or CLAUDE.md after context compaction                                     |
 | `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |
@@ -162,13 +162,14 @@ The `/commit` skill gathers full git context before committing (status, diff, br
 
 ## Platform Differences
 
-| Feature              | Factory Droid        | Claude Code         |
-|----------------------|----------------------|---------------------|
-| Plan mode exit event | `ExitSpecMode`       | `ExitPlanMode`      |
-| Re-injection target  | `AGENTS.md`          | `CLAUDE.md`         |
-| `/init-claude` skill | Yes (CLAUDE.md)      | No (built-in)       |
-| Memory paths         | `~/.factory/memory/` | `~/.claude/memory/` |
-| Plan save paths      | `~/.factory/plans/`  | `~/.claude/plans/`  |
+| Feature                | Factory Droid        | Claude Code         |
+|------------------------|----------------------|---------------------|
+| Plan mode exit event   | `ExitSpecMode`       | `ExitPlanMode`      |
+| Re-injection target    | `AGENTS.md`          | `CLAUDE.md`         |
+| `/init-claude` skill   | Yes (CLAUDE.md)      | No (built-in)       |
+| `/initialize` skill    | No                   | Yes (AGENTS.md)     |
+| Memory paths           | `~/.factory/memory/` | `~/.claude/memory/` |
+| Plan save paths        | `~/.factory/plans/`  | `~/.claude/plans/`  |
 
 ## License
 

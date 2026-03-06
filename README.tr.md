@@ -12,7 +12,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 |-----------------------|----------------------|--------------------------------------------------------------------------------------------------------------|
 | `plan-mode.py`        | UserPromptSubmit     | Anahtar kelime veya karmaşıklık puanlamasıyla planlama ihtiyacını tespit eder, 5 fazlı iş akışı enjekte eder |
 | `save-plan.py`        | PostToolUse          | Tamamlanan planları diske kaydeder, masaüstü bildirimi gönderir                                              |
-| `memory-load.py`      | SessionStart         | Projeye özel belleği (MEMORY.md + konu dosyaları) bağlama yükler                                             |
+| `memory-load.py`      | SessionStart/compact | Projeye özel belleği (MEMORY.md + konu dosyaları) bağlama yükler                                             |
 | `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                           |
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra AGENTS.md veya CLAUDE.md'yi yeniden enjekte eder                               |
 | `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                              |
@@ -162,13 +162,14 @@ Bağlam penceresi sıkıştırıldığında AGENTS.md veya CLAUDE.md talimatlar�
 
 ## Platform Farklılıkları
 
-| Özellik                   | Factory Droid        | Claude Code         |
-|---------------------------|----------------------|---------------------|
-| Plan modu çıkış olayı     | `ExitSpecMode`       | `ExitPlanMode`      |
-| Yeniden enjeksiyon hedefi | `AGENTS.md`          | `CLAUDE.md`         |
+| Özellik                    | Factory Droid        | Claude Code         |
+|----------------------------|----------------------|---------------------|
+| Plan modu çıkış olayı      | `ExitSpecMode`       | `ExitPlanMode`      |
+| Yeniden enjeksiyon hedefi  | `AGENTS.md`          | `CLAUDE.md`         |
 | `/init-claude` skill'i    | Evet (CLAUDE.md)     | Hayır (yerleşik)    |
-| Bellek yolları            | `~/.factory/memory/` | `~/.claude/memory/` |
-| Plan kayıt yolları        | `~/.factory/plans/`  | `~/.claude/plans/`  |
+| `/initialize` skill'i     | Hayır                | Evet (AGENTS.md)    |
+| Bellek yolları             | `~/.factory/memory/` | `~/.claude/memory/` |
+| Plan kayıt yolları         | `~/.factory/plans/`  | `~/.claude/plans/`  |
 
 ## Lisans
 
