@@ -72,7 +72,8 @@ else:
                      project=project_name))
 
 if topic_files:
-    parts.append("\n[TOPIC FILES AVAILABLE] " + ", ".join(topic_files) +
+    listing = "\n".join("- " + f for f in topic_files)
+    parts.append("\n[TOPIC FILES AVAILABLE]\n" + listing +
                  "\nRead these with file tools when you need detailed information.")
 
 context = "\n".join(parts)
