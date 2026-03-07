@@ -14,7 +14,9 @@ argument-hint: ""
 
 # Initialize - Create AGENTS.md
 
-Analyzes the codebase and creates or updates an AGENTS.md file for AI coding agents.
+## Action
+
+Immediately scan the codebase using the files listed below and create or update AGENTS.md. Do not wait for further instructions. Start scanning now.
 
 ## Target File
 

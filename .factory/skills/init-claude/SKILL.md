@@ -13,7 +13,9 @@ argument-hint: ""
 
 # Init - Create CLAUDE.md
 
-Analyzes the codebase and creates or updates a CLAUDE.md file for Claude Code (claude.ai/code).
+## Action
+
+Immediately scan the codebase using the files listed below and create or update CLAUDE.md. Do not wait for further instructions. Start scanning now.
 
 ## Target File
 
