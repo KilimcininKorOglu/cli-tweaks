@@ -15,6 +15,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `memory-load.py`      | SessionStart/compact | Loads project-specific memory (MEMORY.md + topic files) into context                           |
 | `memory-save.py`      | Stop                 | Reminds the agent to save learnings before the session ends                                    |
 | `compact-reinject.py` | SessionStart:compact | Re-injects AGENTS.md or CLAUDE.md after context compaction                                     |
+| `soul.py`             | SessionStart/compact | Injects custom persona from SOUL.md into context                                               |
 | `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |
 
 ### Skills
@@ -154,6 +155,15 @@ When the context window gets compacted, your AGENTS.md or CLAUDE.md instructions
 ### Commit Skill
 
 The `/commit` skill gathers full git context before committing (status, diff, branch, recent log), matches your repository's existing commit style, enforces a git safety protocol, and supports flags like `--amend`, `--wip`, `--push`, and `--all`.
+
+### Custom Persona (SOUL.md)
+
+You can define a custom persona that shapes how the agent communicates with you. Create a `SOUL.md` file in your config directory:
+
+- Factory Droid: `~/.factory/SOUL.md`
+- Claude Code: `~/.claude/SOUL.md`
+
+The `soul.py` hook injects this file at session start and after context compaction. A template is provided in `SOUL.md.template` with an example "tough love" persona -- copy and customize it to your preference.
 
 ## Requirements
 
