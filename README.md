@@ -25,6 +25,8 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `commit`                           | `/commit`         | Conventional commits with repo style mimicry, smart staging, git safety protocol |
 | `task-plan`                        | `/task-plan`      | PRD breakdown into features with autonomous execution and checkpointing          |
 | `bug-report`                       | `/bug-report`     | Systematic bug analysis and structured report generation                         |
+| `dead-code`                        | `/dead-code`      | Dead code audit with 3-phase analysis and cleanup roadmap                        |
+| `git-flow`                         | `/git-flow`       | Structured branch management with strict validation rules                        |
 | `initialize` (Claude Code only)    | `/initialize`     | Creates AGENTS.md by scanning the codebase                                       |
 | `init-claude` (Factory Droid only) | `/init-claude`    | Creates CLAUDE.md by scanning the codebase                                       |
 | `implement-plan`                   | `/implement-plan` | Interactive planning with mandatory AskUser questions                            |
