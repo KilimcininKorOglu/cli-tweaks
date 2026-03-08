@@ -78,7 +78,7 @@ PLAN_PATTERNS = [
     r"\bnasıl yaklaşalım\b",
     r"\bnasıl yaklaşmalı\b",
     r"\bnasıl ilerlemeliyiz\b",
-    # English - explicit planning verbs
+    # English - explicit planning verbs (base forms)
     r"\bplan this\b",
     r"\bplan out\b",
     r"\blet'?s plan\b",
@@ -89,6 +89,28 @@ PLAN_PATTERNS = [
     r"\bdesign this\b",
     r"\bwrite a spec\b",
     r"\bcreate a spec\b",
+    # English - question/request forms
+    r"\bcan you plan\b",
+    r"\bcould you plan\b",
+    r"\bwould you plan\b",
+    r"\bplan it out\b",
+    r"\bplan it for me\b",
+    r"\bhelp me plan\b",
+    r"\bhelp plan\b",
+    r"\bplan for\b",
+    r"\bplan ahead\b",
+    # English - design variants
+    r"\bdesign it\b",
+    r"\bdesign for me\b",
+    r"\bcan you design\b",
+    r"\bcould you design\b",
+    r"\bhelp me design\b",
+    # English - spec variants
+    r"\bspec this out\b",
+    r"\bspec it out\b",
+    r"\bspec this\b",
+    r"\bcan you spec\b",
+    r"\bcould you spec\b",
     # English - "how to" variants
     r"\bhow should i implement\b",
     r"\bhow should we implement\b",
