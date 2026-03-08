@@ -37,6 +37,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 cli-tweaks/
   .factory/          <-- Factory Droid
     hooks/
+      hooks.json     <-- Hook definitions (alternative to settings.json)
     skills/
     settings.json
   .claude/           <-- Claude Code
@@ -80,6 +81,8 @@ cp -r /tmp/cli-tweaks-skills/* ~/.claude/skills/
 rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
 ```
 
+> **Note:** The hooks directory includes `hooks.json` which will be copied automatically.
+
 ### Alternative: git clone
 
 ```bash
@@ -97,7 +100,20 @@ cp -r .claude/skills/* ~/.claude/skills/
 
 ### Hook Registration
 
-After copying the files, register the hooks in your settings by merging the hooks section from the provided `settings.json` into your own:
+After copying the files, register the hooks. You have two options:
+
+**Option 1: Using hooks.json (recommended)**
+
+Copy `hooks.json` to your hooks directory:
+
+```bash
+# Factory Droid
+cp .factory/hooks/hooks.json ~/.factory/hooks/
+```
+
+**Option 2: Using settings.json**
+
+Merge the hooks section from the provided `settings.json` into your own:
 
 | Platform      | Source                   | Target                     |
 |---------------|--------------------------|----------------------------|
@@ -105,6 +121,8 @@ After copying the files, register the hooks in your settings by merging the hook
 | Claude Code   | `.claude/settings.json`  | `~/.claude/settings.json`  |
 
 Each `settings.json` in this repo contains the full hook configuration ready to merge. Review the files for the exact event mappings and timeouts.
+
+> **Note:** Factory Droid reads hooks from both `~/.factory/hooks/hooks.json` and `~/.factory/settings.json`. They are merged together.
 
 ### Selective Install
 
