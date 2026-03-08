@@ -20,7 +20,7 @@ prompt = input_data.get("prompt", "")
 
 # --- Mode 1: Explicit planning keywords ---
 PLAN_PATTERNS = [
-    # Turkish - explicit planning verbs
+    # Turkish - explicit planning verbs (base forms)
     r"\bplanla\b",
     r"\bplanlayalım\b",
     r"\bplanlama yap\b",
@@ -37,6 +37,39 @@ PLAN_PATTERNS = [
     r"\btasarım yap\b",
     r"\btasarim yap\b",
     r"\bspec yaz\b",
+    # Turkish - verb conjugations (imperative, question forms)
+    r"\bplanlasana\b",
+    r"\bplanlar mısın\b",
+    r"\bplanlar misin\b",
+    r"\bplanlarmısın\b",
+    r"\bplanlarmisin\b",
+    r"\bplanlar mıyız\b",
+    r"\bplanlar miyiz\b",
+    r"\bplanlarmıyız\b",
+    r"\bplanlarmiyiz\b",
+    r"\bplanlayabilir misin\b",
+    r"\bplanlayabilirmisin\b",
+    r"\bplanlayabilir misiniz\b",
+    r"\bplanlayabilirmisiniz\b",
+    r"\bplanlasak\b",
+    r"\bplanlasak mı\b",
+    r"\bplanlasakmı\b",
+    r"\bplanlayalım mı\b",
+    r"\bplanlayalımmı\b",
+    r"\bplanlayalim mi\b",
+    r"\bplanlayalimmi\b",
+    r"\bplanla şunu\b",
+    r"\bplanla sunu\b",
+    r"\bşunu planla\b",
+    r"\bsunu planla\b",
+    # Turkish - tasarla conjugations
+    r"\btasarlasana\b",
+    r"\btasarlar mısın\b",
+    r"\btasarlar misin\b",
+    r"\btasarlayabilir misin\b",
+    r"\btasarlayabilirmisin\b",
+    r"\btasarlasak\b",
+    r"\btasarlayalım mı\b",
     # Turkish - "how should we" variants
     r"\bnasıl implement\b",
     r"\bnasıl yapmalı\b",
