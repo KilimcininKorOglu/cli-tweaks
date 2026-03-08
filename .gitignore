@@ -1,3 +1,4 @@
 # Override global gitignore for this project
 !.claude/
 !.factory/
+SOUL.md
