@@ -83,3 +83,4 @@ This file provides guidance to AI coding agents (Claude Code, Cursor, Codex, Gem
 - Use tables for command references
 - No fabricated information
 - Commands verified against project structure
+- IMPORTANT: Always write in English only, regardless of conversation language

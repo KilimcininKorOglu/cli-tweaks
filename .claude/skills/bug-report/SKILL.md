@@ -110,3 +110,4 @@ Last Bug ID: BUG-[XXX]
 - Respect existing code patterns when suggesting fixes
 - Group related bugs together
 - If `bugs.md` or `bug.md` exists, merge into new report and delete old file
+- IMPORTANT: Always write the report in English only, regardless of conversation language

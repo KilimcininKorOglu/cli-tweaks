@@ -81,3 +81,4 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Use tables for command references
 - No fabricated information
 - Commands verified against project structure
+- IMPORTANT: Always write in English only, regardless of conversation language

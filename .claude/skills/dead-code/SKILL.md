@@ -167,3 +167,4 @@ Scope: [Full codebase | src/ | custom path]
 - Respect existing code patterns
 - Group related findings together
 - If previous `DEAD-CODE.md` exists, compare and note changes
+- IMPORTANT: Always write the report in English only, regardless of conversation language
