@@ -15,7 +15,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `memory-load.py`      | SessionStart/compact | Projeye özel belleği (MEMORY.md + konu dosyaları) bağlama yükler                                             |
 | `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                           |
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra AGENTS.md veya CLAUDE.md'yi yeniden enjekte eder                               |
-| `soul.py`             | SessionStart/compact | SOUL.md'den özel persona enjekte eder                                                                        |
+| `global-inject.py`    | SessionStart/compact | settings.json listesindeki global kullanıcı dosyalarını (AGENTS.md, SOUL.md vb.) enjekte eder                |
 | `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                              |
 
 ### Skill'ler
@@ -41,6 +41,7 @@ cli-tweaks/
     hooks/
     skills/
     settings.json
+  SOUL.md.template   <-- Özel persona şablonu
 ```
 
 ## Kurulum
@@ -158,12 +159,18 @@ Bağlam penceresi sıkıştırıldığında AGENTS.md veya CLAUDE.md talimatlar�
 
 ### Özel Persona (SOUL.md)
 
-Ajanın sizinle nasıl iletişim kurduğunu şekillendiren özel bir persona tanımlayabilirsiniz. Yapılandırma dizininizde bir `SOUL.md` dosyası oluşturun:
+Ajanın sizinle nasıl iletişim kurduğunu şekillendiren özel bir persona tanımlayabilirsiniz. Yapılandırma dizininizde bir `SOUL.md` dosyası oluşturun ve `settings.json`'daki `globalInjectFiles` listesine ekleyin:
 
-- Factory Droid: `~/.factory/SOUL.md`
-- Claude Code: `~/.claude/SOUL.md`
+```json
+{
+  "globalInjectFiles": [
+    "~/.factory/AGENTS.md",
+    "~/.factory/SOUL.md"
+  ]
+}
+```
 
-`soul.py` hook'u bu dosyayı oturum başında ve bağlam sıkıştırmasından sonra enjekte eder. `SOUL.md.template` dosyasında örnek bir "sert sevgi" personası bulunur -- kopyalayıp kendi tercihinize göre özelleştirin.
+`global-inject.py` hook'u listelenen tüm dosyaları oturum başında ve bağlam sıkıştırmasından sonra enjekte eder. `SOUL.md.template` dosyasında örnek bir "sert sevgi" personası bulunur -- kopyalayıp kendi tercihinize göre özelleştirin.
 
 ## Gereksinimler
 

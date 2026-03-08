@@ -1,4 +1,8 @@
 {
+  "globalInjectFiles": [
+    "~/.claude/CLAUDE.md",
+    "~/.claude/SOUL.md"
+  ],
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -27,6 +31,11 @@
         "hooks": [
           {
             "type": "command",
+            "command": "python3 ~/.claude/hooks/global-inject.py",
+            "timeout": 10
+          },
+          {
+            "type": "command",
             "command": "python3 ~/.claude/hooks/memory-load.py",
             "timeout": 10
           }
@@ -38,6 +47,11 @@
           {
             "type": "command",
             "command": "python3 ~/.claude/hooks/compact-reinject.py CLAUDE.md",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/global-inject.py",
             "timeout": 10
           },
           {

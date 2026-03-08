@@ -15,7 +15,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `memory-load.py`      | SessionStart/compact | Loads project-specific memory (MEMORY.md + topic files) into context                           |
 | `memory-save.py`      | Stop                 | Reminds the agent to save learnings before the session ends                                    |
 | `compact-reinject.py` | SessionStart:compact | Re-injects AGENTS.md or CLAUDE.md after context compaction                                     |
-| `soul.py`             | SessionStart/compact | Injects custom persona from SOUL.md into context                                               |
+| `global-inject.py`    | SessionStart/compact | Injects global user files (AGENTS.md, SOUL.md, etc.) from settings.json list                   |
 | `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |
 
 ### Skills
@@ -41,6 +41,7 @@ cli-tweaks/
     hooks/
     skills/
     settings.json
+  SOUL.md.template   <-- Custom persona template
 ```
 
 ## Installation
@@ -158,12 +159,18 @@ The `/commit` skill gathers full git context before committing (status, diff, br
 
 ### Custom Persona (SOUL.md)
 
-You can define a custom persona that shapes how the agent communicates with you. Create a `SOUL.md` file in your config directory:
+You can define a custom persona that shapes how the agent communicates with you. Create a `SOUL.md` file in your config directory and add it to `globalInjectFiles` in your `settings.json`:
 
-- Factory Droid: `~/.factory/SOUL.md`
-- Claude Code: `~/.claude/SOUL.md`
+```json
+{
+  "globalInjectFiles": [
+    "~/.factory/AGENTS.md",
+    "~/.factory/SOUL.md"
+  ]
+}
+```
 
-The `soul.py` hook injects this file at session start and after context compaction. A template is provided in `SOUL.md.template` with an example "tough love" persona -- copy and customize it to your preference.
+The `global-inject.py` hook injects all listed files at session start and after context compaction. A template is provided in `SOUL.md.template` with an example "tough love" persona -- copy and customize it to your preference.
 
 ## Requirements
 
