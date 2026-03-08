@@ -48,6 +48,9 @@ How it works:
 - MEMORY.md should be an index pointing to topic files.
 - Read topic files on demand when you need the information.
 
+IMPORTANT: All memory files (MEMORY.md and topic files) MUST be written in English only.
+This ensures consistency and searchability across sessions.
+
 When to save memory:
 - Build commands, test commands, or project setup steps you discovered
 - Architecture decisions or patterns you identified
@@ -60,7 +63,8 @@ When to save memory:
 How to save:
 - Write directly to {memory_dir}/MEMORY.md or topic files using file tools
 - Keep MEMORY.md under 200 lines -- move details to topic files
-- Use markdown headers and bullets for structure""".format(
+- Use markdown headers and bullets for structure
+- ALWAYS write in English regardless of conversation language""".format(
     memory_dir=memory_dir
 ))
 

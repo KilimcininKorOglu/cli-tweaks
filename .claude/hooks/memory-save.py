@@ -37,7 +37,7 @@ if has_memory:
         "(build commands, architecture insights, debugging solutions, user preferences, "
         "workflow patterns), update your memory at {dir}/MEMORY.md or create/update "
         "topic files there. If nothing new was learned, just stop without changes. "
-        "Keep MEMORY.md under 200 lines."
+        "Keep MEMORY.md under 200 lines. IMPORTANT: Always write memory in English only."
     ).format(dir=memory_dir)
 else:
     reason = (
@@ -45,6 +45,7 @@ else:
         "Create {dir}/MEMORY.md with key learnings from this session: "
         "project overview, build/test commands, architecture notes, "
         "user preferences you observed. Keep it concise (under 200 lines). "
+        "IMPORTANT: Always write memory in English only. "
         "If this was a trivial session with nothing worth remembering, just stop."
     ).format(dir=memory_dir)
 
