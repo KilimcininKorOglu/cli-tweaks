@@ -2,8 +2,8 @@
 """
 SessionStart hook: injects global user instruction files into context.
 
-Reads file paths from hooks.json or settings.json "globalInjectFiles" array
-and injects their contents at session start and after context compaction.
+Reads file paths from ~/.factory/settings.json "globalInjectFiles" array.
+Injects contents at session start and after context compaction.
 """
 import json
 import os
@@ -15,23 +15,10 @@ try:
 except json.JSONDecodeError:
     sys.exit(0)
 
-# Try hooks.json first, then fall back to settings.json
-factoryDir = Path.home() / ".factory"
-hooksFile = factoryDir / "hooks" / "hooks.json"
-settingsFile = factoryDir / "settings.json"
+settingsFile = Path.home() / ".factory" / "settings.json"
 
 fileList = []
-
-# Try hooks.json first
-if hooksFile.exists():
-    try:
-        data = json.loads(hooksFile.read_text(encoding="utf-8"))
-        fileList = data.get("globalInjectFiles", [])
-    except (json.JSONDecodeError, IOError):
-        pass
-
-# Fall back to settings.json if no files found
-if not fileList and settingsFile.exists():
+if settingsFile.exists():
     try:
         data = json.loads(settingsFile.read_text(encoding="utf-8"))
         fileList = data.get("globalInjectFiles", [])

@@ -16,11 +16,11 @@ import sys
 from pathlib import Path
 
 try:
-    input_data = json.load(sys.stdin)
+    inputData = json.load(sys.stdin)
 except json.JSONDecodeError:
     sys.exit(0)
 
-cwd = input_data.get("cwd", os.getcwd())
+cwd = inputData.get("cwd", os.getcwd())
 filenames = sys.argv[1:] if len(sys.argv) > 1 else ["AGENTS.md"]
 
 parts = []

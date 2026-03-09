@@ -18,43 +18,43 @@ sys.path.insert(0, str(Path(__file__).parent))
 from notify import notify
 
 try:
-    input_data = json.load(sys.stdin)
+    inputData = json.load(sys.stdin)
 except json.JSONDecodeError:
     sys.exit(0)
 
-tool_name = input_data.get("tool_name", "")
-if tool_name != "ExitSpecMode":
+toolName = inputData.get("tool_name", "")
+if toolName != "ExitSpecMode":
     sys.exit(0)
 
-tool_input = input_data.get("tool_input", {})
-title = tool_input.get("title", "untitled-plan")
-plan = tool_input.get("plan", "")
+toolInput = inputData.get("tool_input", {})
+title = toolInput.get("title", "untitled-plan")
+plan = toolInput.get("plan", "")
 
 if not plan:
     sys.exit(0)
 
 # Derive project name from cwd
-cwd = input_data.get("cwd", os.getcwd())
-project_name = os.path.basename(cwd)
+cwd = inputData.get("cwd", os.getcwd())
+projectName = os.path.basename(cwd)
 
 # Create plans directory
-plans_dir = Path.home() / ".factory" / "plans" / project_name
-plans_dir.mkdir(parents=True, exist_ok=True)
+plansDir = Path.home() / ".factory" / "plans" / projectName
+plansDir.mkdir(parents=True, exist_ok=True)
 
 # Sanitize title for filename
-safe_title = re.sub(r"[^\w\s-]", "", title.lower())
-safe_title = re.sub(r"[\s]+", "-", safe_title).strip("-")
-if not safe_title:
-    safe_title = "untitled-plan"
+safeTitle = re.sub(r"[^\w\s-]", "", title.lower())
+safeTitle = re.sub(r"[\s]+", "-", safeTitle).strip("-")
+if not safeTitle:
+    safeTitle = "untitled-plan"
 
 timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-filename = f"{timestamp}-{safe_title}.md"
-filepath = plans_dir / filename
+filename = f"{timestamp}-{safeTitle}.md"
+filepath = plansDir / filename
 
 # Write plan file
 content = f"# {title}\n\n"
 content += f"*Created: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*\n"
-content += f"*Project: {project_name}*\n\n"
+content += f"*Project: {projectName}*\n\n"
 content += "---\n\n"
 content += plan
 
