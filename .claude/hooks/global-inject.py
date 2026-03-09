@@ -2,8 +2,8 @@
 """
 SessionStart hook: injects global user instruction files into context.
 
-Reads file paths from settings.json "globalInjectFiles" array and injects
-their contents at session start and after context compaction.
+Reads file paths from hooks.json or settings.json "globalInjectFiles" array
+and injects their contents at session start and after context compaction.
 """
 import json
 import os
@@ -15,17 +15,29 @@ try:
 except json.JSONDecodeError:
     sys.exit(0)
 
-# Read settings.json to get file list
-settingsFile = Path.home() / ".claude" / "settings.json"
-if not settingsFile.exists():
-    sys.exit(0)
+# Try hooks.json first, then fall back to settings.json
+claudeDir = Path.home() / ".claude"
+hooksFile = claudeDir / "hooks" / "hooks.json"
+settingsFile = claudeDir / "settings.json"
 
-try:
-    settings = json.loads(settingsFile.read_text(encoding="utf-8"))
-except (json.JSONDecodeError, IOError):
-    sys.exit(0)
+fileList = []
 
-fileList = settings.get("globalInjectFiles", [])
+# Try hooks.json first
+if hooksFile.exists():
+    try:
+        data = json.loads(hooksFile.read_text(encoding="utf-8"))
+        fileList = data.get("globalInjectFiles", [])
+    except (json.JSONDecodeError, IOError):
+        pass
+
+# Fall back to settings.json if no files found
+if not fileList and settingsFile.exists():
+    try:
+        data = json.loads(settingsFile.read_text(encoding="utf-8"))
+        fileList = data.get("globalInjectFiles", [])
+    except (json.JSONDecodeError, IOError):
+        pass
+
 if not fileList:
     sys.exit(0)
 
