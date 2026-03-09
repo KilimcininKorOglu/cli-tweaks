@@ -1,10 +1,15 @@
 """
 Cross-platform desktop notification helper for hooks.
 Supports macOS, Linux, and Windows.
+
+Set NOTIFY_ENABLED=1 environment variable to enable notifications.
 """
 import os
 import platform
 import shlex
+
+# Notifications disabled by default - set NOTIFY_ENABLED=1 to enable
+ENABLED = os.environ.get("NOTIFY_ENABLED", "0") == "1"
 
 
 def escapeApplescript(s: str) -> str:
@@ -13,6 +18,9 @@ def escapeApplescript(s: str) -> str:
 
 
 def notify(title: str, message: str, subtitle: str = ""):
+    if not ENABLED:
+        return
+
     system = platform.system()
 
     if system == "Darwin":
