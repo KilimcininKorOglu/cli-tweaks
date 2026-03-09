@@ -2,8 +2,9 @@
 """
 SessionStart hook: injects global user instruction files into context.
 
-Reads file paths from hooks.json or settings.json "globalInjectFiles" array
-and injects their contents at session start and after context compaction.
+Reads file paths from settings.json "globalInjectFiles" array.
+Also checks hooks/hooks.json for backwards compatibility if it exists.
+Injects contents at session start and after context compaction.
 """
 import json
 import os

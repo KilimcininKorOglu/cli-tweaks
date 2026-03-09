@@ -7,13 +7,21 @@ import platform
 import shlex
 
 
+def escapeApplescript(s: str) -> str:
+    """Escape string for AppleScript double-quoted context."""
+    return s.replace("\\", "\\\\").replace('"', '\\"')
+
+
 def notify(title: str, message: str, subtitle: str = ""):
     system = platform.system()
 
     if system == "Darwin":
-        parts = [f'display notification "{message}" with title "{title}"']
+        safeTitle = escapeApplescript(title)
+        safeMessage = escapeApplescript(message)
+        safeSubtitle = escapeApplescript(subtitle)
+        parts = [f'display notification "{safeMessage}" with title "{safeTitle}"']
         if subtitle:
-            parts[0] += f' subtitle "{subtitle}"'
+            parts[0] += f' subtitle "{safeSubtitle}"'
         os.system(f"osascript -e '{parts[0]}'")
 
     elif system == "Linux":
