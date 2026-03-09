@@ -11,34 +11,34 @@ import sys
 from pathlib import Path
 
 try:
-    input_data = json.load(sys.stdin)
+    inputData = json.load(sys.stdin)
 except json.JSONDecodeError:
     sys.exit(0)
 
 # If already triggered once this turn, let Droid stop
-stop_hook_active = input_data.get("stop_hook_active", False)
-if stop_hook_active:
+stopHookActive = inputData.get("stop_hook_active", False)
+if stopHookActive:
     sys.exit(0)
 
-cwd = input_data.get("cwd", os.getcwd())
-project_name = os.path.basename(cwd)
-memory_dir = Path.home() / ".claude" / "memory" / project_name
+cwd = inputData.get("cwd", os.getcwd())
+projectName = os.path.basename(cwd)
+memoryDir = Path.home() / ".claude" / "memory" / projectName
 
 # Ensure memory directory exists
-memory_dir.mkdir(parents=True, exist_ok=True)
+memoryDir.mkdir(parents=True, exist_ok=True)
 
 # Check if memory file exists
-memory_file = memory_dir / "MEMORY.md"
-has_memory = memory_file.exists()
+memoryFile = memoryDir / "MEMORY.md"
+hasMemory = memoryFile.exists()
 
-if has_memory:
+if hasMemory:
     reason = (
         "Before stopping: if you learned anything new or useful in this session "
         "(build commands, architecture insights, debugging solutions, user preferences, "
         "workflow patterns), update your memory at {dir}/MEMORY.md or create/update "
         "topic files there. If nothing new was learned, just stop without changes. "
         "Keep MEMORY.md under 200 lines. IMPORTANT: Always write memory in English only."
-    ).format(dir=memory_dir)
+    ).format(dir=memoryDir)
 else:
     reason = (
         "Before stopping: this is a new project with no memory yet. "
@@ -47,7 +47,7 @@ else:
         "user preferences you observed. Keep it concise (under 200 lines). "
         "IMPORTANT: Always write memory in English only. "
         "If this was a trivial session with nothing worth remembering, just stop."
-    ).format(dir=memory_dir)
+    ).format(dir=memoryDir)
 
 output = {
     "decision": "block",

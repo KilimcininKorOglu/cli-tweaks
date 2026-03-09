@@ -12,11 +12,11 @@ import re
 import sys
 
 try:
-    input_data = json.load(sys.stdin)
+    inputData = json.load(sys.stdin)
 except json.JSONDecodeError:
     sys.exit(0)
 
-prompt = input_data.get("prompt", "")
+prompt = inputData.get("prompt", "")
 
 # --- Mode 1: Explicit planning keywords ---
 PLAN_PATTERNS = [
@@ -124,7 +124,7 @@ PLAN_PATTERNS = [
     r"\bimplementation plan\b",
 ]
 
-explicit_match = any(re.search(p, prompt, re.IGNORECASE) for p in PLAN_PATTERNS)
+explicitMatch = any(re.search(p, prompt, re.IGNORECASE) for p in PLAN_PATTERNS)
 
 # --- Mode 2: Implicit complexity detection ---
 COMPLEXITY_SIGNALS = [
@@ -157,15 +157,15 @@ COMPLEXITY_SIGNALS = [
     (r"\b(add|implement)\b.*\b(update|to the|for the|with)\b", 1),
 ]
 
-complexity_score = 0
+complexityScore = 0
 for pattern, weight in COMPLEXITY_SIGNALS:
     if re.search(pattern, prompt, re.IGNORECASE):
-        complexity_score += weight
+        complexityScore += weight
 
 if len(prompt) > 80 and re.search(r"\b(implement|add|create|build|refactor|optimize)\b|ekle|oluştur|yap", prompt, re.IGNORECASE):
-    complexity_score += 1
+    complexityScore += 1
 
-implicit_match = complexity_score >= 3
+implicitMatch = complexityScore >= 3
 
 # --- Skip conditions ---
 SKIP_PATTERNS = [
@@ -183,10 +183,10 @@ SKIP_PATTERNS = [
 
 skip = any(re.search(p, prompt, re.IGNORECASE) for p in SKIP_PATTERNS)
 
-matched = (explicit_match or implicit_match) and not skip
+matched = (explicitMatch or implicitMatch) and not skip
 
 if matched:
-    mode = "explicit" if explicit_match else "implicit"
+    mode = "explicit" if explicitMatch else "implicit"
 
     context = """[PLANNING MODE ACTIVE]
 The user's request was detected as requiring planning (mode: {mode}).
