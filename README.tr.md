@@ -172,6 +172,18 @@ Ajanın sizinle nasıl iletişim kurduğunu şekillendiren özel bir persona tan
 
 `global-inject.py` hook'u listelenen tüm dosyaları oturum başında ve bağlam sıkıştırmasından sonra enjekte eder. `SOUL.md.template` dosyasında örnek bir "sert sevgi" personası bulunur -- kopyalayıp kendi tercihinize göre özelleştirin.
 
+### Masaüstü Bildirimleri
+
+Masaüstü bildirimleri varsayılan olarak kapalıdır. Etkinleştirmek için `settings.json` dosyanıza `hookNotify` ekleyin:
+
+```json
+{
+  "hookNotify": true
+}
+```
+
+Etkinleştirildiğinde, tamamlanan planlar ve diğer hook olayları için bildirim alırsınız.
+
 ## Gereksinimler
 
 - Python 3.8+

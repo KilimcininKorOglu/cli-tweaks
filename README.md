@@ -172,6 +172,18 @@ You can define a custom persona that shapes how the agent communicates with you.
 
 The `global-inject.py` hook injects all listed files at session start and after context compaction. A template is provided in `SOUL.md.template` with an example "tough love" persona -- copy and customize it to your preference.
 
+### Desktop Notifications
+
+Desktop notifications are disabled by default. To enable them, add `hookNotify` to your `settings.json`:
+
+```json
+{
+  "hookNotify": true
+}
+```
+
+When enabled, you'll receive notifications for completed plans and other hook events.
+
 ## Requirements
 
 - Python 3.8+
