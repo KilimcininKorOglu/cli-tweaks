@@ -37,13 +37,12 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 cli-tweaks/
   .factory/          <-- Factory Droid
     hooks/
-      hooks.json     <-- Hook definitions (alternative to settings.json)
+      hooks.json     <-- Hook definitions
     skills/
-    settings.json
   .claude/           <-- Claude Code
     hooks/
+      hooks.json     <-- Hook definitions
     skills/
-    settings.json
   SOUL.md.template   <-- Custom persona template
 ```
 
@@ -100,29 +99,14 @@ cp -r .claude/skills/* ~/.claude/skills/
 
 ### Hook Registration
 
-After copying the files, register the hooks. You have two options:
-
-**Option 1: Using hooks.json (recommended)**
-
-Copy `hooks.json` to your hooks directory:
+After copying the files, the hooks are automatically registered via `hooks.json` in the hooks directory. Both platforms use the same approach:
 
 ```bash
-# Factory Droid
-cp .factory/hooks/hooks.json ~/.factory/hooks/
+# Factory Droid - hooks.json is already in ~/.factory/hooks/
+# Claude Code - hooks.json is already in ~/.claude/hooks/
 ```
 
-**Option 2: Using settings.json**
-
-Merge the hooks section from the provided `settings.json` into your own:
-
-| Platform      | Source                   | Target                     |
-|---------------|--------------------------|----------------------------|
-| Factory Droid | `.factory/settings.json` | `~/.factory/settings.json` |
-| Claude Code   | `.claude/settings.json`  | `~/.claude/settings.json`  |
-
-Each `settings.json` in this repo contains the full hook configuration ready to merge. Review the files for the exact event mappings and timeouts.
-
-> **Note:** Factory Droid reads hooks from both `~/.factory/hooks/hooks.json` and `~/.factory/settings.json`. They are merged together.
+If you prefer using `settings.json` instead, merge the hooks section manually. See the provided `settings.json` files for the exact event mappings and timeouts.
 
 ### Selective Install
 
@@ -199,14 +183,14 @@ The `global-inject.py` hook injects all listed files at session start and after 
 
 ## Platform Differences
 
-| Feature                | Factory Droid        | Claude Code         |
-|------------------------|----------------------|---------------------|
-| Plan mode exit event   | `ExitSpecMode`       | `ExitPlanMode`      |
-| Re-injection target    | `AGENTS.md`          | `CLAUDE.md`         |
-| `/init-claude` skill   | Yes (CLAUDE.md)      | No (built-in)       |
-| `/initialize` skill    | No                   | Yes (AGENTS.md)     |
-| Memory paths           | `~/.factory/memory/` | `~/.claude/memory/` |
-| Plan save paths        | `~/.factory/plans/`  | `~/.claude/plans/`  |
+| Feature                | Factory Droid        | Claude Code          |
+|------------------------|----------------------|----------------------|
+| Global config dir      | `~/.factory/`        | `~/.claude/`         |
+| Hook config file       | `hooks/hooks.json`   | `hooks/hooks.json`   |
+| Plan mode exit event   | `ExitSpecMode`       | `ExitPlanMode`       |
+| Re-injection target    | `AGENTS.md`          | `CLAUDE.md`          |
+| `/init-claude` skill   | Yes (CLAUDE.md)      | No (built-in)        |
+| `/initialize` skill    | No                   | Yes (AGENTS.md)      |
 
 ## License
 
