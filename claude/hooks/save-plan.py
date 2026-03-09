@@ -5,7 +5,6 @@ and sends a cross-platform desktop notification.
 """
 import json
 import os
-import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -13,49 +12,81 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from notify import notify
 
+
+def getSlugFromTranscript(transcriptPath: str) -> str:
+    """Extract slug from transcript file by finding first entry with slug field."""
+    try:
+        with open(transcriptPath, "r", encoding="utf-8") as f:
+            for line in f:
+                entry = json.loads(line)
+                slug = entry.get("slug")
+                if slug:
+                    return slug
+    except (OSError, json.JSONDecodeError):
+        pass
+    return ""
+
+
 try:
-    input_data = json.load(sys.stdin)
+    inputData = json.load(sys.stdin)
 except json.JSONDecodeError:
     sys.exit(0)
 
-tool_name = input_data.get("tool_name", "")
-if tool_name != "ExitPlanMode":
+toolName = inputData.get("tool_name", "")
+if toolName != "ExitPlanMode":
     sys.exit(0)
 
 # ExitPlanMode doesn't have plan content in tool_input,
 # but the plan is written to ~/.claude/plans/ by Claude Code itself.
 # We send a notification and optionally copy to project directory.
 
-cwd = input_data.get("cwd", os.getcwd())
-project_name = os.path.basename(cwd)
+cwd = inputData.get("cwd", os.getcwd())
+projectName = os.path.basename(cwd)
 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+plansDir = Path.home() / ".claude" / "plans"
 
-# Find the most recently modified plan file
-plans_dir = Path.home() / ".claude" / "plans"
-if plans_dir.exists():
-    plan_files = sorted(plans_dir.glob("*.md"), key=lambda f: f.stat().st_mtime, reverse=True)
-    if plan_files:
-        latest_plan = plan_files[0]
-        plan_name = latest_plan.stem
+if not plansDir.exists():
+    sys.exit(0)
 
-        # Copy to project-local plans directory
-        project_plans = Path(cwd) / ".claude" / "plans"
-        project_plans.mkdir(parents=True, exist_ok=True)
-        dest = project_plans / f"{datetime.now().strftime('%Y%m%d-%H%M%S')}-{plan_name}.md"
+# Try to find plan file by slug from transcript (most reliable)
+planFile = None
+transcriptPath = inputData.get("transcript_path", "")
+if transcriptPath:
+    slug = getSlugFromTranscript(transcriptPath)
+    if slug:
+        candidate = plansDir / f"{slug}.md"
+        if candidate.exists():
+            planFile = candidate
 
-        content = latest_plan.read_text(encoding="utf-8")
-        header = f"<!-- Saved: {timestamp} | Project: {project_name} -->\n\n"
-        dest.write_text(header + content, encoding="utf-8")
+# Fallback: most recently modified .md file
+if not planFile:
+    planFiles = sorted(plansDir.glob("*.md"), key=lambda f: f.stat().st_mtime, reverse=True)
+    if planFiles:
+        planFile = planFiles[0]
 
-        # Send cross-platform notification
-        notify("Claude Code Plan Complete", f"Plan saved: {dest.name}", subtitle=project_name)
+if not planFile:
+    sys.exit(0)
 
-        output = {
-            "hookSpecificOutput": {
-                "hookEventName": "PostToolUse",
-                "additionalContext": f"Plan also saved to project: {dest}",
-            }
-        }
-        print(json.dumps(output))
+planName = planFile.stem
+
+# Copy to project-local plans directory
+projectPlans = Path(cwd) / ".claude" / "plans"
+projectPlans.mkdir(parents=True, exist_ok=True)
+dest = projectPlans / f"{datetime.now().strftime('%Y%m%d-%H%M%S')}-{planName}.md"
+
+content = planFile.read_text(encoding="utf-8")
+header = f"<!-- Saved: {timestamp} | Project: {projectName} -->\n\n"
+dest.write_text(header + content, encoding="utf-8")
+
+# Send cross-platform notification
+notify("Claude Code Plan Complete", f"Plan saved: {dest.name}", subtitle=projectName)
+
+output = {
+    "hookSpecificOutput": {
+        "hookEventName": "PostToolUse",
+        "additionalContext": f"Plan also saved to project: {dest}",
+    }
+}
+print(json.dumps(output))
 
 sys.exit(0)
