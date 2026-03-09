@@ -19,7 +19,7 @@ Create detailed implementation plans through an interactive, iterative process. 
 Given a task or ticket:
 
 1. Read all referenced documents and files FULLY
-2. Research by spawning `worker` subagents in parallel for codebase exploration
+2. Research by spawning `Explore` subagents in parallel for codebase exploration
 3. Present understanding with `file:line` references, ask only unanswerable questions
 4. Verify any user corrections against code before accepting
 5. Outline the phase structure, get approval
@@ -59,7 +59,7 @@ Only skip planning for simple tasks:
 - Single-line or few-line fixes (typos, obvious bugs, small tweaks)
 - Adding a single function with clear, specific requirements
 - Tasks where the user has given very detailed, step-by-step instructions
-- Pure research/exploration tasks (use Explore subagent instead)
+- Pure research/exploration tasks (use the Explore subagent instead)
 
 ## Core Principles
 
@@ -76,9 +76,9 @@ Only skip planning for simple tasks:
 1. Read all mentioned files FULLY (tickets, research, existing plans)
    - NEVER read files partially
 2. Spawn research subagents in parallel using the Task tool:
-   - `Explore` subagent -> Find all relevant files and understand current implementation
+   - `Explore` subagent -> find all relevant files and understand current implementation
    - Use Grep/Glob tools directly for quick searches
-   - Launch up to 3 Explore agents IN PARALLEL for faster exploration
+   - Launch up to 3 `Explore` agents IN PARALLEL for faster exploration
 3. Build an informed understanding of the codebase before asking anything.
 
 ### Step 2: Ask Clarifying Questions (MOST IMPORTANT STEP)
@@ -177,7 +177,7 @@ Manual verification:
 ### Do
 - Read files FULLY before planning
 - Include file:line references for all claims
-- Use Explore subagents for research (they work in read-only mode)
+- Use `Explore` subagents for research (they work in read-only mode)
 - Verify claims against code
 - Get buy-in at each step
 - Assume TDD for automated tests -- don't add explicit "write tests" steps
