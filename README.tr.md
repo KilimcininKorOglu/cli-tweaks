@@ -35,14 +35,12 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 
 ```
 cli-tweaks/
-  .factory/          <-- Factory Droid
+  factory/           <-- Factory Droid (copy to ~/.factory/)
     hooks/
     skills/
-    settings.json
-  .claude/           <-- Claude Code
+  claude/            <-- Claude Code (copy to ~/.claude/)
     hooks/
     skills/
-    settings.json
   SOUL.md.template   <-- Özel persona şablonu
 ```
 
@@ -56,25 +54,25 @@ Tüm repoyu klonlamaya gerek yok. [degit](https://github.com/Rich-Harris/degit) 
 
 ```bash
 # Factory Droid
-npx degit KilimcininKorOglu/cli-tweaks/.factory ~/.factory
+npx degit KilimcininKorOglu/cli-tweaks/factory ~/.factory
 
 # Claude Code
-npx degit KilimcininKorOglu/cli-tweaks/.claude ~/.claude
+npx degit KilimcininKorOglu/cli-tweaks/claude ~/.claude
 ```
 
 **Mevcut kurulumla birleştirme**:
 
 ```bash
 # Factory Droid
-npx degit KilimcininKorOglu/cli-tweaks/.factory/hooks /tmp/cli-tweaks-hooks
-npx degit KilimcininKorOglu/cli-tweaks/.factory/skills /tmp/cli-tweaks-skills
+npx degit KilimcininKorOglu/cli-tweaks/factory/hooks /tmp/cli-tweaks-hooks
+npx degit KilimcininKorOglu/cli-tweaks/factory/skills /tmp/cli-tweaks-skills
 cp -r /tmp/cli-tweaks-hooks/* ~/.factory/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.factory/skills/
 rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
 
 # Claude Code
-npx degit KilimcininKorOglu/cli-tweaks/.claude/hooks /tmp/cli-tweaks-hooks
-npx degit KilimcininKorOglu/cli-tweaks/.claude/skills /tmp/cli-tweaks-skills
+npx degit KilimcininKorOglu/cli-tweaks/claude/hooks /tmp/cli-tweaks-hooks
+npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
 cp -r /tmp/cli-tweaks-hooks/* ~/.claude/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.claude/skills/
 rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
@@ -87,41 +85,41 @@ git clone https://github.com/KilimcininKorOglu/cli-tweaks.git
 cd cli-tweaks
 
 # Factory Droid
-cp -r .factory/hooks/* ~/.factory/hooks/
-cp -r .factory/skills/* ~/.factory/skills/
+cp -r factory/hooks/* ~/.factory/hooks/
+cp -r factory/skills/* ~/.factory/skills/
 
 # Claude Code
-cp -r .claude/hooks/* ~/.claude/hooks/
-cp -r .claude/skills/* ~/.claude/skills/
+cp -r claude/hooks/* ~/.claude/hooks/
+cp -r claude/skills/* ~/.claude/skills/
 ```
 
 ### Hook Kaydı
 
-Dosyaları kopyaladıktan sonra, repodaki `settings.json` içerisindeki hooks bölümünü kendi ayar dosyanıza birleştiriniz:
+Dosyaları kopyaladıktan sonra, hook tanımlarını `settings.json` dosyanıza birleştirin:
 
-| Platform      | Kaynak                   | Hedef                      |
-|---------------|--------------------------|----------------------------|
-| Factory Droid | `.factory/settings.json` | `~/.factory/settings.json` |
-| Claude Code   | `.claude/settings.json`  | `~/.claude/settings.json`  |
+| Platform      | Kaynak                          | Hedef                      |
+|---------------|---------------------------------|----------------------------|
+| Factory Droid | `factory/settings.json.example` | `~/.factory/settings.json` |
+| Claude Code   | `claude/settings.json.example`  | `~/.claude/settings.json`  |
 
-Bu repodaki her `settings.json` dosyası, birleştirmeye hazır tam hook yapılandırmasını içerir. Olay eşlemeleri ve zaman aşımları için dosyaları inceleyin.
+Örnek dosyadaki `hooks` bölümünü mevcut ayarlarınıza kopyalayın veya örneği başlangıç noktası olarak kullanın.
 
 ### Seçmeli Kurulum
 
-Yalnızca ihtiyacınız olanları seçin. Aşağıdaki örnekler `.factory/` kullanır; Claude Code için `.claude/` ile değiştirin.
+Yalnızca ihtiyacınız olanları seçin. Aşağıdaki örnekler `factory/` kullanır; Claude Code için `claude/` ile değiştirin.
 
 ```bash
 # Yalnızca planlama hook'ları (notify.py, save-plan.py için gereklidir)
-cp .factory/hooks/plan-mode.py ~/.factory/hooks/
-cp .factory/hooks/save-plan.py ~/.factory/hooks/
-cp .factory/hooks/notify.py ~/.factory/hooks/
+cp factory/hooks/plan-mode.py ~/.factory/hooks/
+cp factory/hooks/save-plan.py ~/.factory/hooks/
+cp factory/hooks/notify.py ~/.factory/hooks/
 
 # Yalnızca bellek sistemi
-cp .factory/hooks/memory-load.py ~/.factory/hooks/
-cp .factory/hooks/memory-save.py ~/.factory/hooks/
+cp factory/hooks/memory-load.py ~/.factory/hooks/
+cp factory/hooks/memory-save.py ~/.factory/hooks/
 
 # Yalnızca commit skill'i
-cp -r .factory/skills/commit ~/.factory/skills/
+cp -r factory/skills/commit ~/.factory/skills/
 ```
 
 > **Not:** `save-plan.py`, çalışma zamanında `notify.py`'yi import eder. Her zaman `notify.py`'yi de birlikte kopyalayın.

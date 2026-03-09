@@ -35,13 +35,11 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 
 ```
 cli-tweaks/
-  .factory/          <-- Factory Droid
+  factory/           <-- Factory Droid (copy to ~/.factory/)
     hooks/
-      hooks.json     <-- Hook definitions
     skills/
-  .claude/           <-- Claude Code
+  claude/            <-- Claude Code (copy to ~/.claude/)
     hooks/
-      hooks.json     <-- Hook definitions
     skills/
   SOUL.md.template   <-- Custom persona template
 ```
@@ -56,31 +54,29 @@ No need to clone the entire repo. [degit](https://github.com/Rich-Harris/degit) 
 
 ```bash
 # Factory Droid
-npx degit KilimcininKorOglu/cli-tweaks/.factory ~/.factory
+npx degit KilimcininKorOglu/cli-tweaks/factory ~/.factory
 
 # Claude Code
-npx degit KilimcininKorOglu/cli-tweaks/.claude ~/.claude
+npx degit KilimcininKorOglu/cli-tweaks/claude ~/.claude
 ```
 
 **Merge with existing setup**:
 
 ```bash
 # Factory Droid
-npx degit KilimcininKorOglu/cli-tweaks/.factory/hooks /tmp/cli-tweaks-hooks
-npx degit KilimcininKorOglu/cli-tweaks/.factory/skills /tmp/cli-tweaks-skills
+npx degit KilimcininKorOglu/cli-tweaks/factory/hooks /tmp/cli-tweaks-hooks
+npx degit KilimcininKorOglu/cli-tweaks/factory/skills /tmp/cli-tweaks-skills
 cp -r /tmp/cli-tweaks-hooks/* ~/.factory/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.factory/skills/
 rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
 
 # Claude Code
-npx degit KilimcininKorOglu/cli-tweaks/.claude/hooks /tmp/cli-tweaks-hooks
-npx degit KilimcininKorOglu/cli-tweaks/.claude/skills /tmp/cli-tweaks-skills
+npx degit KilimcininKorOglu/cli-tweaks/claude/hooks /tmp/cli-tweaks-hooks
+npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
 cp -r /tmp/cli-tweaks-hooks/* ~/.claude/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.claude/skills/
 rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
 ```
-
-> **Note:** The hooks directory includes `hooks.json` which will be copied automatically.
 
 ### Alternative: git clone
 
@@ -89,41 +85,41 @@ git clone https://github.com/KilimcininKorOglu/cli-tweaks.git
 cd cli-tweaks
 
 # Factory Droid
-cp -r .factory/hooks/* ~/.factory/hooks/
-cp -r .factory/skills/* ~/.factory/skills/
+cp -r factory/hooks/* ~/.factory/hooks/
+cp -r factory/skills/* ~/.factory/skills/
 
 # Claude Code
-cp -r .claude/hooks/* ~/.claude/hooks/
-cp -r .claude/skills/* ~/.claude/skills/
+cp -r claude/hooks/* ~/.claude/hooks/
+cp -r claude/skills/* ~/.claude/skills/
 ```
 
 ### Hook Registration
 
-After copying the files, the hooks are automatically registered via `hooks.json` in the hooks directory. Both platforms use the same approach:
+After copying the files, register hooks by merging the hook definitions into your `settings.json`:
 
-```bash
-# Factory Droid - hooks.json is already in ~/.factory/hooks/
-# Claude Code - hooks.json is already in ~/.claude/hooks/
-```
+| Platform      | Source                        | Target                     |
+|---------------|-------------------------------|----------------------------|
+| Factory Droid | `factory/settings.json.example` | `~/.factory/settings.json` |
+| Claude Code   | `claude/settings.json.example`  | `~/.claude/settings.json`  |
 
-If you prefer using `settings.json` instead, merge the hooks section manually. See the provided `settings.json` files for the exact event mappings and timeouts.
+Copy the `hooks` section from the example file into your existing settings, or use the example as a starting point.
 
 ### Selective Install
 
-Pick only what you need. Examples below use `.factory/`; replace with `.claude/` for Claude Code.
+Pick only what you need. Examples below use `factory/`; replace with `claude/` for Claude Code.
 
 ```bash
 # Just the planning hooks (notify.py is required by save-plan.py)
-cp .factory/hooks/plan-mode.py ~/.factory/hooks/
-cp .factory/hooks/save-plan.py ~/.factory/hooks/
-cp .factory/hooks/notify.py ~/.factory/hooks/
+cp factory/hooks/plan-mode.py ~/.factory/hooks/
+cp factory/hooks/save-plan.py ~/.factory/hooks/
+cp factory/hooks/notify.py ~/.factory/hooks/
 
 # Just the memory system
-cp .factory/hooks/memory-load.py ~/.factory/hooks/
-cp .factory/hooks/memory-save.py ~/.factory/hooks/
+cp factory/hooks/memory-load.py ~/.factory/hooks/
+cp factory/hooks/memory-save.py ~/.factory/hooks/
 
 # Just the commit skill
-cp -r .factory/skills/commit ~/.factory/skills/
+cp -r factory/skills/commit ~/.factory/skills/
 ```
 
 > **Note:** `save-plan.py` imports `notify.py` at runtime. Always copy `notify.py` alongside it.
@@ -186,7 +182,7 @@ The `global-inject.py` hook injects all listed files at session start and after 
 | Feature                | Factory Droid        | Claude Code          |
 |------------------------|----------------------|----------------------|
 | Global config dir      | `~/.factory/`        | `~/.claude/`         |
-| Hook config file       | `hooks/hooks.json`   | `hooks/hooks.json`   |
+| Hook config file       | `settings.json`      | `settings.json`      |
 | Plan mode exit event   | `ExitSpecMode`       | `ExitPlanMode`       |
 | Re-injection target    | `AGENTS.md`          | `CLAUDE.md`          |
 | `/init-claude` skill   | Yes (CLAUDE.md)      | No (built-in)        |
