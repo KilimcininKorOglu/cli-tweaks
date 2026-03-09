@@ -2,9 +2,7 @@
 """
 SessionStart hook: injects global user instruction files into context.
 
-Reads file paths from settings.json "globalInjectFiles" array (primary).
-Falls back to hooks/hooks.json for backwards compatibility if settings.json
-has no globalInjectFiles configured.
+Reads file paths from ~/.claude/settings.json "globalInjectFiles" array.
 Injects contents at session start and after context compaction.
 """
 import json
@@ -17,23 +15,10 @@ try:
 except json.JSONDecodeError:
     sys.exit(0)
 
-# Check hooks.json first (backwards compatibility), then settings.json (primary)
-claudeDir = Path.home() / ".claude"
-hooksFile = claudeDir / "hooks" / "hooks.json"
-settingsFile = claudeDir / "settings.json"
+settingsFile = Path.home() / ".claude" / "settings.json"
 
 fileList = []
-
-# Check hooks.json (backwards compatibility)
-if hooksFile.exists():
-    try:
-        data = json.loads(hooksFile.read_text(encoding="utf-8"))
-        fileList = data.get("globalInjectFiles", [])
-    except (json.JSONDecodeError, IOError):
-        pass
-
-# Fall back to settings.json (primary config)
-if not fileList and settingsFile.exists():
+if settingsFile.exists():
     try:
         data = json.loads(settingsFile.read_text(encoding="utf-8"))
         fileList = data.get("globalInjectFiles", [])
