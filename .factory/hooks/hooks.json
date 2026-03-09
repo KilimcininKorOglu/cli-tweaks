@@ -1,7 +1,6 @@
 {
   "globalInjectFiles": [
-    "~/.factory/AGENTS.md",
-    "~/.factory/SOUL.md"
+    "~/.factory/AGENTS.md"
   ],
   "UserPromptSubmit": [
     {
