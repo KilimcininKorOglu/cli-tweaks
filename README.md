@@ -191,14 +191,16 @@ When enabled, you'll receive notifications for completed plans and other hook ev
 
 ## Platform Differences
 
-| Feature                | Factory Droid        | Claude Code          |
-|------------------------|----------------------|----------------------|
-| Global config dir      | `~/.factory/`        | `~/.claude/`         |
-| Hook config file       | `settings.json`      | `settings.json`      |
-| Plan mode exit event   | `ExitSpecMode`       | `ExitPlanMode`       |
-| Re-injection target    | `AGENTS.md`          | `CLAUDE.md`          |
-| `/init-claude` skill   | Yes (CLAUDE.md)      | No (built-in)        |
-| `/initialize` skill    | No                   | Yes (AGENTS.md)      |
+| Feature                  | Factory Droid        | Claude Code          |
+|--------------------------|----------------------|----------------------|
+| Global config dir        | `~/.factory/`        | `~/.claude/`         |
+| Hook config file         | `settings.json`      | `settings.json`      |
+| Plan mode exit event     | `ExitSpecMode`       | `ExitPlanMode`       |
+| User question tool       | `AskUser`            | `AskUserQuestion`    |
+| Re-injection target      | `AGENTS.md`          | `CLAUDE.md`          |
+| Subagent terminology     | "worker"             | "Explore"            |
+| `/init-claude` skill     | Yes (CLAUDE.md)      | No (built-in)        |
+| `/initialize` skill      | No                   | Yes (AGENTS.md)      |
 
 ## License
 

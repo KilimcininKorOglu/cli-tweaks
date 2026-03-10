@@ -20,16 +20,16 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 
 ### Skill'ler
 
-| Skill                                  | Komut             | Aciklama                                                   |
-|----------------------------------------|-------------------|------------------------------------------------------------|
-| `commit`                               | `/commit`         | Repo stilini taklit eden conventional commit'ler           |
-| `task-plan`                            | `/task-plan`      | PRD'yi ozelliklere ayirma ve otonom yurutme                |
-| `bug-report`                           | `/bug-report`     | Sistematik hata analizi ve yapilandirilmis rapor olusturma |
-| `dead-code`                            | `/dead-code`      | 3 fazli analiz ve temizlik yol haritasiyla olu kod denetimi|
-| `git-flow`                             | `/git-flow`       | Siki dogrulama kurallariyla yapilandirilmis branch yonetimi|
-| `initialize` (yalnizca Claude Code)    | `/initialize`     | Kod tabanini tarayarak AGENTS.md olusturur                 |
-| `init-claude` (yalnizca Factory Droid) | `/init-claude`    | Kod tabanini tarayarak CLAUDE.md olusturur                 |
-| `implement-plan`                       | `/implement-plan` | AskUser sorulariyla interaktif planlama                    |
+| Skill                                  | Komut             | Açıklama                                                    |
+|----------------------------------------|-------------------|-------------------------------------------------------------|
+| `commit`                               | `/commit`         | Repo stilini taklit eden conventional commit'ler            |
+| `task-plan`                            | `/task-plan`      | PRD'yi özelliklere ayırma ve otonom yürütme                 |
+| `bug-report`                           | `/bug-report`     | Sistematik hata analizi ve yapılandırılmış rapor oluşturma  |
+| `dead-code`                            | `/dead-code`      | 3 fazlı analiz ve temizlik yol haritasıyla ölü kod denetimi |
+| `git-flow`                             | `/git-flow`       | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi |
+| `initialize` (yalnızca Claude Code)    | `/initialize`     | Kod tabanını tarayarak AGENTS.md oluşturur                  |
+| `init-claude` (yalnızca Factory Droid) | `/init-claude`    | Kod tabanını tarayarak CLAUDE.md oluşturur                  |
+| `implement-plan`                       | `/implement-plan` | AskUser sorularıyla interaktif planlama                     |
 
 ## Dizin Yapısı
 
@@ -191,14 +191,16 @@ Etkinleştirildiğinde, tamamlanan planlar ve diğer hook olayları için bildir
 
 ## Platform Farklılıkları
 
-| Özellik                    | Factory Droid        | Claude Code         |
-|----------------------------|----------------------|---------------------|
-| Plan modu çıkış olayı      | `ExitSpecMode`       | `ExitPlanMode`      |
-| Yeniden enjeksiyon hedefi  | `AGENTS.md`          | `CLAUDE.md`         |
-| `/init-claude` skill'i    | Evet (CLAUDE.md)     | Hayır (yerleşik)    |
-| `/initialize` skill'i     | Hayır                | Evet (AGENTS.md)    |
-| Bellek yolları             | `~/.factory/memory/` | `~/.claude/memory/` |
-| Plan kayıt yolları         | `~/.factory/plans/`  | `~/.claude/plans/`  |
+| Özellik                   | Factory Droid        | Claude Code          |
+|---------------------------|----------------------|----------------------|
+| Global yapılandırma dizini | `~/.factory/`        | `~/.claude/`         |
+| Hook yapılandırma dosyası | `settings.json`      | `settings.json`      |
+| Plan modu çıkış olayı     | `ExitSpecMode`       | `ExitPlanMode`       |
+| Kullanıcı soru aracı      | `AskUser`            | `AskUserQuestion`    |
+| Yeniden enjeksiyon hedefi | `AGENTS.md`          | `CLAUDE.md`          |
+| Subagent terminolojisi    | "worker"             | "Explore"            |
+| `/init-claude` skill'i    | Evet (CLAUDE.md)     | Hayır (yerleşik)     |
+| `/initialize` skill'i     | Hayır                | Evet (AGENTS.md)     |
 
 ## Lisans
 
