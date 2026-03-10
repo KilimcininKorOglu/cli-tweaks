@@ -30,7 +30,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `git-flow`                             | `/git-flow`       | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi |
 | `initialize` (yalnızca Claude Code)    | `/initialize`     | Kod tabanını tarayarak AGENTS.md oluşturur                  |
 | `init-claude` (yalnızca Factory Droid) | `/init-claude`    | Kod tabanını tarayarak CLAUDE.md oluşturur                  |
-| `implement-plan`                       | `/implement-plan` | AskUser sorularıyla interaktif planlama                     |
+| `implement-plan`                       | `/implement-plan` | Zorunlu kullanıcı sorularıyla interaktif planlama           |
 
 ## Dizin Yapısı
 

@@ -30,7 +30,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `git-flow`                         | `/git-flow`       | Structured branch management with strict validation rules                        |
 | `initialize` (Claude Code only)    | `/initialize`     | Creates AGENTS.md by scanning the codebase                                       |
 | `init-claude` (Factory Droid only) | `/init-claude`    | Creates CLAUDE.md by scanning the codebase                                       |
-| `implement-plan`                   | `/implement-plan` | Interactive planning with mandatory AskUser questions                            |
+| `implement-plan`                   | `/implement-plan` | Interactive planning with mandatory user questions                               |
 
 ## Directory Structure
 
