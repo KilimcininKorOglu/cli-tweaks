@@ -16,6 +16,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `memory-save.py`      | Stop                 | Reminds the agent to save learnings before the session ends                                    |
 | `compact-reinject.py` | SessionStart:compact | Re-injects AGENTS.md or CLAUDE.md after context compaction                                     |
 | `global-inject.py`    | SessionStart/compact | Injects global user files (AGENTS.md, SOUL.md, etc.) from settings.json list                   |
+| `auto-allow.py`       | PermissionRequest    | Auto-approves tools matching settings.json allow list (Claude Code only, v2.0.45+)             |
 | `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |
 
 ### Skills
