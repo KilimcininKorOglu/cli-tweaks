@@ -228,7 +228,11 @@ CRITICAL RULES:
 - NEVER skip Phase 2 (asking questions). This is the most important phase.
 - NEVER dump a complete plan without first asking questions.
 - NEVER write code during planning. This is read-only.
-- Use AskUserQuestion tool (not plain text) for structured questions.""".format(mode=mode)
+- Use AskUserQuestion tool (not plain text) for structured questions.
+
+You have an 'implement-plan' skill available. Use the Skill tool
+to invoke it with skill name 'implement-plan' for the detailed
+planning workflow.""".format(mode=mode)
 
     output = {
         "hookSpecificOutput": {
