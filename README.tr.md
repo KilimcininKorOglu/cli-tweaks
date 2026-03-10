@@ -192,16 +192,17 @@ Etkinleştirildiğinde, tamamlanan planlar ve diğer hook olayları için bildir
 
 ## Platform Farklılıkları
 
-| Özellik                   | Factory Droid        | Claude Code          |
-|---------------------------|----------------------|----------------------|
+| Özellik                    | Factory Droid        | Claude Code          |
+|----------------------------|----------------------|----------------------|
 | Global yapılandırma dizini | `~/.factory/`        | `~/.claude/`         |
-| Hook yapılandırma dosyası | `settings.json`      | `settings.json`      |
-| Plan modu çıkış olayı     | `ExitSpecMode`       | `ExitPlanMode`       |
-| Kullanıcı soru aracı      | `AskUser`            | `AskUserQuestion`    |
-| Yeniden enjeksiyon hedefi | `AGENTS.md`          | `CLAUDE.md`          |
-| Subagent terminolojisi    | "worker"             | "Explore"            |
-| `/init-claude` skill'i    | Evet (CLAUDE.md)     | Hayır (yerleşik)     |
-| `/initialize` skill'i     | Hayır                | Evet (AGENTS.md)     |
+| Hook yapılandırma dosyası  | `settings.json`      | `settings.json`      |
+| Plan modu çıkış olayı      | `ExitSpecMode`       | `ExitPlanMode`       |
+| Kullanıcı soru aracı       | `AskUser`            | `AskUserQuestion`    |
+| Yeniden enjeksiyon hedefi  | `AGENTS.md`          | `CLAUDE.md`          |
+| Subagent terminolojisi     | "worker"             | "Explore"            |
+| `/init-claude` skill'i     | Evet (CLAUDE.md)     | Hayır (yerleşik)     |
+| `/initialize` skill'i      | Hayır                | Evet (AGENTS.md)     |
+| `auto-allow.py` hook'u     | Hayır                | Evet (v2.0.45+)      |
 
 ## Lisans
 

@@ -202,6 +202,7 @@ When enabled, you'll receive notifications for completed plans and other hook ev
 | Subagent terminology     | "worker"             | "Explore"            |
 | `/init-claude` skill     | Yes (CLAUDE.md)      | No (built-in)        |
 | `/initialize` skill      | No                   | Yes (AGENTS.md)      |
+| `auto-allow.py` hook     | No                   | Yes (v2.0.45+)       |
 
 ## License
 
