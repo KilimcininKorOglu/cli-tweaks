@@ -86,12 +86,12 @@ def matchesPattern(toolName: str, toolInput: dict, pattern: str) -> bool:
     return True
 
 
-def shouldAllow(toolName: str, toolInput: dict, allowList: list) -> bool:
-    """Check if the tool request should be auto-allowed."""
+def findMatchingPattern(toolName: str, toolInput: dict, allowList: list) -> str:
+    """Find the first matching pattern from allow list, or empty string if none."""
     for pattern in allowList:
         if matchesPattern(toolName, toolInput, pattern):
-            return True
-    return False
+            return pattern
+    return ""
 
 
 def main():
@@ -107,11 +107,13 @@ def main():
         sys.exit(0)
 
     allowList = loadAllowList()
+    matchedPattern = findMatchingPattern(toolName, toolInput, allowList)
 
-    if shouldAllow(toolName, toolInput, allowList):
+    if matchedPattern:
         output = {
             "decision": {
-                "behavior": "allow"
+                "behavior": "allow",
+                "message": "Auto-allowed by pattern: {}".format(matchedPattern)
             }
         }
         print(json.dumps(output))
