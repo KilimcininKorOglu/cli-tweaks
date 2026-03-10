@@ -137,8 +137,7 @@ def main():
         debugLog("MATCHED: {}".format(matchedPattern))
         output = {
             "decision": {
-                "behavior": "allow",
-                "message": "Auto-allowed by pattern: {}".format(matchedPattern)
+                "behavior": "allow"
             }
         }
         print(json.dumps(output))
