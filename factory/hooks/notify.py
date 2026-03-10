@@ -2,7 +2,8 @@
 Cross-platform desktop notification helper for hooks.
 Supports macOS, Linux, and Windows.
 
-Set "hookNotify": true in ~/.factory/settings.json to enable notifications.
+Enable notifications per-feature in ~/.factory/settings.json:
+  "hookNotifyPlanSave": true
 """
 import json
 import os
@@ -11,13 +12,18 @@ import shlex
 from pathlib import Path
 
 
-def isEnabled() -> bool:
-    """Check if notifications are enabled in settings.json."""
+def isEnabledFor(feature: str) -> bool:
+    """Check if notifications are enabled for a specific feature.
+
+    Checks hookNotify{Feature} setting.
+    Example: isEnabledFor("PlanSave") checks hookNotifyPlanSave.
+    """
     settingsFile = Path.home() / ".factory" / "settings.json"
     if settingsFile.exists():
         try:
             data = json.loads(settingsFile.read_text(encoding="utf-8"))
-            return data.get("hookNotify", False)
+            featureKey = "hookNotify{}".format(feature)
+            return data.get(featureKey, False)
         except (json.JSONDecodeError, IOError):
             pass
     return False
@@ -29,9 +35,6 @@ def escapeApplescript(s: str) -> str:
 
 
 def notify(title: str, message: str, subtitle: str = ""):
-    if not isEnabled():
-        return
-
     system = platform.system()
 
     if system == "Darwin":

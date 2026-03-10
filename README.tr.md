@@ -175,15 +175,17 @@ Ajanın sizinle nasıl iletişim kurduğunu şekillendiren özel bir persona tan
 
 ### Masaüstü Bildirimleri
 
-Masaüstü bildirimleri varsayılan olarak kapalıdır. Etkinleştirmek için `settings.json` dosyanıza `hookNotify` ekleyin:
+Masaüstü bildirimleri varsayılan olarak kapalıdır. `settings.json` dosyanızda özellik bazında etkinleştirebilirsiniz:
 
 ```json
 {
-  "hookNotify": true
+  "hookNotifyAutoAllow": true,
+  "hookNotifyPlanSave": true
 }
 ```
 
-Etkinleştirildiğinde, tamamlanan planlar ve diğer hook olayları için bildirim alırsınız.
+- `hookNotifyAutoAllow`: İzin listesinde olmayan tool'lar için bildirimler (yalnızca Claude Code, varsayılan: `true`)
+- `hookNotifyPlanSave`: Plan kaydedildiğinde bildirimler (varsayılan: `false`)
 
 ## Gereksinimler
 

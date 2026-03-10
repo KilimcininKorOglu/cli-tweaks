@@ -2,6 +2,7 @@
   "globalInjectFiles": [
     "~/.factory/AGENTS.md"
   ],
+  "hookNotifyPlanSave": false,
   "hooks": {
     "UserPromptSubmit": [
       {

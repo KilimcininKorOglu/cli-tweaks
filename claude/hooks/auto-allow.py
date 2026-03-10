@@ -18,7 +18,7 @@ from pathlib import Path
 
 # Import notify module from same directory
 sys.path.insert(0, str(Path(__file__).parent))
-from notify import notify
+from notify import notify, isEnabledFor
 
 DEBUG = True
 DEBUG_FILE = Path.home() / ".claude" / "auto-allow-debug.log"
@@ -148,11 +148,12 @@ def main():
     else:
         debugLog("NO MATCH - showing prompt")
         # Send notification for unmatched tools
-        if toolName == "Bash":
-            command = toolInput.get("command", "")[:50]
-            notify("Permission Required", "Bash: {}".format(command), "Not in allow list")
-        else:
-            notify("Permission Required", toolName, "Not in allow list")
+        if isEnabledFor("AutoAllow"):
+            if toolName == "Bash":
+                command = toolInput.get("command", "")[:50]
+                notify("Permission Required", "Bash: {}".format(command), "Not in allow list")
+            else:
+                notify("Permission Required", toolName, "Not in allow list")
 
     # No output = show normal permission prompt
     sys.exit(0)

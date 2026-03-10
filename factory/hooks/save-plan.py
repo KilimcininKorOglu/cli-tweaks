@@ -15,7 +15,7 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from notify import notify
+from notify import notify, isEnabledFor
 
 try:
     inputData = json.load(sys.stdin)
@@ -61,7 +61,8 @@ content += plan
 filepath.write_text(content, encoding="utf-8")
 
 # Send cross-platform notification
-notify("Droid CLI Plan Complete", f"Plan saved: {filename}", subtitle=title)
+if isEnabledFor("PlanSave"):
+    notify("Droid CLI Plan Complete", "Plan saved: {}".format(filename), subtitle=title)
 
 # Output context for Droid
 output = {

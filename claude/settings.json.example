@@ -2,6 +2,8 @@
   "globalInjectFiles": [
     "~/.claude/CLAUDE.md"
   ],
+  "hookNotifyAutoAllow": true,
+  "hookNotifyPlanSave": false,
   "hooks": {
     "PermissionRequest": [
       {

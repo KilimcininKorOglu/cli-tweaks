@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from notify import notify
+from notify import notify, isEnabledFor
 
 
 def getSlugFromTranscript(transcriptPath: str) -> str:
@@ -54,7 +54,7 @@ if plansDir.exists():
             planName = planFiles[0].stem
 
 # Send notification
-if planName:
+if planName and isEnabledFor("PlanSave"):
     notify("Plan Complete", planName, subtitle="Claude Code")
 
 sys.exit(0)

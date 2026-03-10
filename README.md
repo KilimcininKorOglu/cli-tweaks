@@ -175,15 +175,17 @@ The `global-inject.py` hook injects all listed files at session start and after 
 
 ### Desktop Notifications
 
-Desktop notifications are disabled by default. To enable them, add `hookNotify` to your `settings.json`:
+Desktop notifications are disabled by default. Enable them per-feature in your `settings.json`:
 
 ```json
 {
-  "hookNotify": true
+  "hookNotifyAutoAllow": true,
+  "hookNotifyPlanSave": true
 }
 ```
 
-When enabled, you'll receive notifications for completed plans and other hook events.
+- `hookNotifyAutoAllow`: Notifications for tools not in the allow list (Claude Code only, default: `true`)
+- `hookNotifyPlanSave`: Notifications when plans are saved (default: `false`)
 
 ## Requirements
 
