@@ -13,7 +13,23 @@ Output: JSON with decision.behavior = "allow" or empty (show prompt)
 import json
 import re
 import sys
+from datetime import datetime
 from pathlib import Path
+
+DEBUG = True
+DEBUG_FILE = Path.home() / ".claude" / "auto-allow-debug.log"
+
+
+def debugLog(message: str):
+    """Write debug message to log file."""
+    if not DEBUG:
+        return
+    try:
+        with open(DEBUG_FILE, "a", encoding="utf-8") as f:
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            f.write("[{}] {}\n".format(timestamp, message))
+    except IOError:
+        pass
 
 
 def loadAllowList() -> list:
@@ -95,21 +111,30 @@ def findMatchingPattern(toolName: str, toolInput: dict, allowList: list) -> str:
 
 
 def main():
+    debugLog("Hook triggered")
     try:
         inputData = json.load(sys.stdin)
-    except (json.JSONDecodeError, IOError):
+        debugLog("Input: {}".format(json.dumps(inputData)))
+    except (json.JSONDecodeError, IOError) as e:
+        debugLog("Failed to parse input: {}".format(str(e)))
         sys.exit(0)
 
     toolName = inputData.get("tool_name", "")
     toolInput = inputData.get("tool_input", {})
 
+    debugLog("Tool: {}, Input: {}".format(toolName, json.dumps(toolInput)))
+
     if not toolName:
+        debugLog("No tool_name, exiting")
         sys.exit(0)
 
     allowList = loadAllowList()
+    debugLog("Allow list has {} patterns".format(len(allowList)))
+
     matchedPattern = findMatchingPattern(toolName, toolInput, allowList)
 
     if matchedPattern:
+        debugLog("MATCHED: {}".format(matchedPattern))
         output = {
             "decision": {
                 "behavior": "allow",
@@ -117,6 +142,8 @@ def main():
             }
         }
         print(json.dumps(output))
+    else:
+        debugLog("NO MATCH - showing prompt")
 
     # No output = show normal permission prompt
     sys.exit(0)
