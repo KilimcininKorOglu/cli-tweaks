@@ -199,7 +199,7 @@ You MUST call EnterPlanMode first, then follow this 5-phase workflow.
 - Use Grep, Glob, Read tools to understand patterns and architecture.
 
 == PHASE 2: ASK CLARIFYING QUESTIONS ==
-- BEFORE designing anything, use AskUserQuestion to ask 1-4 focused questions.
+- BEFORE designing anything, use AskUserQuestion tool to ask 1-4 focused questions.
 - Ask about ambiguous requirements, user preferences, and design choices.
 - Present what you found in Phase 1 and ask what the user wants.
 - Examples of good questions:
@@ -228,7 +228,7 @@ CRITICAL RULES:
 - NEVER skip Phase 2 (asking questions). This is the most important phase.
 - NEVER dump a complete plan without first asking questions.
 - NEVER write code during planning. This is read-only.
-- Use AskUserQuestion (not plain text) for structured questions.""".format(mode=mode)
+- Use AskUserQuestion tool (not plain text) for structured questions.""".format(mode=mode)
 
     output = {
         "hookSpecificOutput": {
