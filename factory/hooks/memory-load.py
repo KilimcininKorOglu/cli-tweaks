@@ -2,7 +2,7 @@
 """
 SessionStart hook: loads auto memory into context at session start.
 
-Reads ~/.factory/memory/<project>/MEMORY.md (first 200 lines) and injects
+Reads ~/.cli-tweaks/memory/<project>/MEMORY.md (first 200 lines) and injects
 it as context along with instructions for the memory system.
 """
 import json
@@ -18,7 +18,7 @@ except json.JSONDecodeError:
 cwd = inputData.get("cwd", os.getcwd())
 projectName = os.path.basename(cwd)
 
-memoryDir = Path.home() / ".factory" / "memory" / projectName
+memoryDir = Path.home() / ".cli-tweaks" / "memory" / projectName
 memoryFile = memoryDir / "MEMORY.md"
 
 # Load memory content (first 200 lines, like Claude Code)

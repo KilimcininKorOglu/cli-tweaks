@@ -22,7 +22,7 @@ if stopHookActive:
 
 cwd = inputData.get("cwd", os.getcwd())
 projectName = os.path.basename(cwd)
-memoryDir = Path.home() / ".claude" / "memory" / projectName
+memoryDir = Path.home() / ".cli-tweaks" / "memory" / projectName
 
 # Ensure memory directory exists
 memoryDir.mkdir(parents=True, exist_ok=True)

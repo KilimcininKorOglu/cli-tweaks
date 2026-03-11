@@ -143,9 +143,9 @@ Completed plans are saved to `~/.factory/plans/<project>/` (or `~/.claude/plans/
 
 ### Auto Memory
 
-The memory system gives your agent persistent, project-scoped memory across sessions:
+The memory system gives your agent persistent, project-scoped memory across sessions. Memory is stored in a shared location (`~/.cli-tweaks/memory/`) so both Factory Droid and Claude Code can access the same knowledge base:
 
-- On session start, `memory-load.py` reads `~/.factory/memory/<project>/MEMORY.md` and injects it
+- On session start, `memory-load.py` reads `~/.cli-tweaks/memory/<project>/MEMORY.md` and injects it
 - On context compaction, memory is automatically re-injected alongside instruction files
 - On session end, `memory-save.py` reminds the agent to save anything new it learned
 - Memory files are organized per project with a main index and topic files
@@ -197,6 +197,7 @@ Desktop notifications are disabled by default. Enable them per-feature in your `
 | Feature                  | Factory Droid        | Claude Code          |
 |--------------------------|----------------------|----------------------|
 | Global config dir        | `~/.factory/`        | `~/.claude/`         |
+| Shared data dir          | `~/.cli-tweaks/`     | `~/.cli-tweaks/`     |
 | Hook config file         | `settings.json`      | `settings.json`      |
 | Plan mode exit event     | `ExitSpecMode`       | `ExitPlanMode`       |
 | User question tool       | `AskUser`            | `AskUserQuestion`    |

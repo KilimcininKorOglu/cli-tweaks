@@ -22,7 +22,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from notify import notify, isEnabledFor
 
-DEBUG_FILE = Path.home() / ".claude" / "auto-allow-debug.log"
+DEBUG_FILE = Path.home() / ".cli-tweaks" / "logs" / "auto-allow-debug.log"
 
 
 def debugLog(message: str):

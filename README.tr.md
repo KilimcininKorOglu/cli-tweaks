@@ -143,9 +143,9 @@ Tamamlanan planlar masaüstü bildirimleriyle birlikte `~/.factory/plans/<proje>
 
 ### Otomatik Bellek
 
-Bellek sistemi, ajana oturumlar arası kalıcı ve projeye özel bir bellek sağlar:
+Bellek sistemi, ajana oturumlar arası kalıcı ve projeye özel bir bellek sağlar. Bellek, ortak bir konumda (`~/.cli-tweaks/memory/`) saklanır, böylece hem Factory Droid hem de Claude Code aynı bilgi tabanına erişebilir:
 
-- Oturum başında `memory-load.py`, `~/.factory/memory/<proje>/MEMORY.md` dosyasını okur ve bağlama enjekte eder
+- Oturum başında `memory-load.py`, `~/.cli-tweaks/memory/<proje>/MEMORY.md` dosyasını okur ve bağlama enjekte eder
 - Bağlam sıkıştırmasında bellek, talimat dosyalarıyla birlikte otomatik olarak yeniden enjekte edilir
 - Oturum sonunda `memory-save.py`, ajanın yeni öğrendiklerini kaydetmesini hatırlatır
 - Bellek dosyaları proje bazında ana indeks ve konu dosyalarıyla düzenlenir
@@ -197,6 +197,7 @@ Masaüstü bildirimleri varsayılan olarak kapalıdır. `settings.json` dosyanı
 | Özellik                    | Factory Droid        | Claude Code          |
 |----------------------------|----------------------|----------------------|
 | Global yapılandırma dizini | `~/.factory/`        | `~/.claude/`         |
+| Ortak veri dizini          | `~/.cli-tweaks/`     | `~/.cli-tweaks/`     |
 | Hook yapılandırma dosyası  | `settings.json`      | `settings.json`      |
 | Plan modu çıkış olayı      | `ExitSpecMode`       | `ExitPlanMode`       |
 | Kullanıcı soru aracı       | `AskUser`            | `AskUserQuestion`    |
