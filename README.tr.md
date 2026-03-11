@@ -11,10 +11,10 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | Hook                  | Olay                 | Açıklama                                                                                                     |
 |-----------------------|----------------------|--------------------------------------------------------------------------------------------------------------|
 | `plan-mode.py`        | UserPromptSubmit     | Anahtar kelime veya karmaşıklık puanlamasıyla planlama ihtiyacını tespit eder, 5 fazlı iş akışı enjekte eder |
-| `save-plan.py`        | PostToolUse          | Tamamlanan planları diske kaydeder, masaüstü bildirimi gönderir                                              |
+| `save-plan.py`        | PostToolUse          | Planları diske kaydeder (Factory) veya yalnızca bildirim gönderir (Claude Code)                              |
 | `memory-load.py`      | SessionStart/compact | Projeye özel belleği (MEMORY.md + konu dosyaları) bağlama yükler                                             |
 | `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                           |
-| `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra AGENTS.md veya CLAUDE.md'yi yeniden enjekte eder                               |
+| `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                            |
 | `global-inject.py`    | SessionStart/compact | settings.json listesindeki global kullanıcı dosyalarını (AGENTS.md, SOUL.md vb.) enjekte eder                |
 | `auto-allow.py`       | PermissionRequest    | settings.json izin listesiyle eşleşen tool'ları otomatik onaylar, eşleşmeyenleri bildirir (yalnızca Claude Code) |
 | `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                              |

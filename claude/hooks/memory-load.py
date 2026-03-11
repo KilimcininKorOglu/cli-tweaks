@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SessionStart hook: loads auto memory into context at session start.
+SessionStart/compact hook: loads auto memory into context.
 
 Reads ~/.cli-tweaks/memory/<project>/MEMORY.md (first 200 lines) and injects
 it as context along with instructions for the memory system.

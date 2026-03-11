@@ -11,10 +11,10 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | Hook                  | Event                | Description                                                                                    |
 |-----------------------|----------------------|------------------------------------------------------------------------------------------------|
 | `plan-mode.py`        | UserPromptSubmit     | Detects planning needs via keywords or complexity scoring, injects a 5-phase planning workflow |
-| `save-plan.py`        | PostToolUse          | Saves completed plans to disk with desktop notifications                                       |
+| `save-plan.py`        | PostToolUse          | Saves plans to disk (Factory) or sends notification only (Claude Code)                         |
 | `memory-load.py`      | SessionStart/compact | Loads project-specific memory (MEMORY.md + topic files) into context                           |
 | `memory-save.py`      | Stop                 | Reminds the agent to save learnings before the session ends                                    |
-| `compact-reinject.py` | SessionStart:compact | Re-injects AGENTS.md or CLAUDE.md after context compaction                                     |
+| `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
 | `global-inject.py`    | SessionStart/compact | Injects global user files (AGENTS.md, SOUL.md, etc.) from settings.json list                   |
 | `auto-allow.py`       | PermissionRequest    | Auto-approves tools matching settings.json allow list, notifies on mismatch (Claude Code only) |
 | `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |

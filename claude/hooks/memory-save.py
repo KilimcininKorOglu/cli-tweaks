@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Stop hook: reminds Droid to save learnings to memory before ending.
+Stop hook: reminds the agent to save learnings to memory before ending.
 
-On first stop (stop_hook_active=false): blocks and asks Droid to save memory.
-On second stop (stop_hook_active=true): allows Droid to stop normally.
+On first stop (stop_hook_active=false): blocks and asks agent to save memory.
+On second stop (stop_hook_active=true): allows agent to stop normally.
 """
 import json
 import os
@@ -15,7 +15,7 @@ try:
 except json.JSONDecodeError:
     sys.exit(0)
 
-# If already triggered once this turn, let Droid stop
+# If already triggered once this turn, let agent stop
 stopHookActive = inputData.get("stop_hook_active", False)
 if stopHookActive:
     sys.exit(0)

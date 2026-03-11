@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SessionStart hook: injects global user instruction files into context.
+SessionStart/compact hook: injects global user instruction files into context.
 
 Reads file paths from ~/.claude/settings.json "globalInjectFiles" array.
 Injects contents at session start and after context compaction.
