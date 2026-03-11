@@ -10,25 +10,27 @@ Input: JSON with tool_name, tool_input
 Output: JSON with decision.behavior = "allow" or empty (show prompt)
 """
 
+# Set to True to enable debug logging
+DEBUG_LOG = False
+
 import json
 import re
 import sys
-from datetime import datetime
 from pathlib import Path
 
 # Import notify module from same directory
 sys.path.insert(0, str(Path(__file__).parent))
 from notify import notify, isEnabledFor
 
-DEBUG = True
 DEBUG_FILE = Path.home() / ".claude" / "auto-allow-debug.log"
 
 
 def debugLog(message: str):
     """Write debug message to log file."""
-    if not DEBUG:
+    if not DEBUG_LOG:
         return
     try:
+        from datetime import datetime
         with open(DEBUG_FILE, "a", encoding="utf-8") as f:
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             f.write("[{}] {}\n".format(timestamp, message))
@@ -118,7 +120,6 @@ def main():
     debugLog("Hook triggered")
     try:
         inputData = json.load(sys.stdin)
-        debugLog("Input: {}".format(json.dumps(inputData)))
     except (json.JSONDecodeError, IOError) as e:
         debugLog("Failed to parse input: {}".format(str(e)))
         sys.exit(0)
