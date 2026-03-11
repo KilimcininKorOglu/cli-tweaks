@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın.
+Factory Droid, Claude Code ve OpenCode için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın.
 
 ## İçerik
 
@@ -42,6 +42,8 @@ cli-tweaks/
   claude/            <-- Claude Code (copy to ~/.claude/)
     hooks/
     skills/
+  opencode/          <-- OpenCode (copy to ~/.config/opencode/)
+    plugins/
   SOUL.md.template   <-- Özel persona şablonu
 ```
 
@@ -59,6 +61,9 @@ npx degit KilimcininKorOglu/cli-tweaks/factory ~/.factory
 
 # Claude Code
 npx degit KilimcininKorOglu/cli-tweaks/claude ~/.claude
+
+# OpenCode
+npx degit KilimcininKorOglu/cli-tweaks/opencode/plugins ~/.config/opencode/plugins
 ```
 
 **Mevcut kurulumla birleştirme**:
@@ -77,6 +82,12 @@ npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
 cp -r /tmp/cli-tweaks-hooks/* ~/.claude/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.claude/skills/
 rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
+
+# OpenCode
+npx degit KilimcininKorOglu/cli-tweaks/opencode/plugins /tmp/cli-tweaks-plugins
+mkdir -p ~/.config/opencode/plugins
+cp -r /tmp/cli-tweaks-plugins/* ~/.config/opencode/plugins/
+rm -rf /tmp/cli-tweaks-plugins
 ```
 
 ### Alternatif: git clone
@@ -92,16 +103,21 @@ cp -r factory/skills/* ~/.factory/skills/
 # Claude Code
 cp -r claude/hooks/* ~/.claude/hooks/
 cp -r claude/skills/* ~/.claude/skills/
+
+# OpenCode
+mkdir -p ~/.config/opencode/plugins
+cp opencode/plugins/* ~/.config/opencode/plugins/
 ```
 
 ### Hook Kaydı
 
 Dosyaları kopyaladıktan sonra, hook tanımlarını `settings.json` dosyanıza birleştirin:
 
-| Platform      | Kaynak                          | Hedef                      |
-|---------------|---------------------------------|----------------------------|
-| Factory Droid | `factory/settings.json.example` | `~/.factory/settings.json` |
-| Claude Code   | `claude/settings.json.example`  | `~/.claude/settings.json`  |
+| Platform      | Kaynak                             | Hedef                               |
+|---------------|------------------------------------|-------------------------------------|
+| Factory Droid | `factory/settings.json.example`    | `~/.factory/settings.json`          |
+| Claude Code   | `claude/settings.json.example`     | `~/.claude/settings.json`           |
+| OpenCode      | `opencode/opencode.json.example`   | `~/.config/opencode/opencode.json`  |
 
 Örnek dosyadaki `hooks` bölümünü mevcut ayarlarınıza kopyalayın veya örneği başlangıç noktası olarak kullanın.
 
@@ -189,23 +205,25 @@ Masaüstü bildirimleri varsayılan olarak kapalıdır. `settings.json` dosyanı
 
 ## Gereksinimler
 
-- Python 3.8+
-- Factory Droid veya Claude Code (veya her ikisi)
+- Python 3.8+ (Factory Droid, Claude Code)
+- Bun runtime (OpenCode -- OpenCode tarafından otomatik kurulur)
+- Factory Droid, Claude Code veya OpenCode
 
 ## Platform Farklılıkları
 
-| Özellik                    | Factory Droid        | Claude Code          |
-|----------------------------|----------------------|----------------------|
-| Global yapılandırma dizini | `~/.factory/`        | `~/.claude/`         |
-| Ortak veri dizini          | `~/.cli-tweaks/`     | `~/.cli-tweaks/`     |
-| Hook yapılandırma dosyası  | `settings.json`      | `settings.json`      |
-| Plan modu çıkış olayı      | `ExitSpecMode`       | `ExitPlanMode`       |
-| Kullanıcı soru aracı       | `AskUser`            | `AskUserQuestion`    |
-| Yeniden enjeksiyon hedefi  | `AGENTS.md`          | `CLAUDE.md`          |
-| Subagent terminolojisi     | "worker"             | "Explore"            |
-| `/init-claude` skill'i     | Evet (CLAUDE.md)     | Hayır (yerleşik)     |
-| `/initialize` skill'i      | Hayır                | Evet (AGENTS.md)     |
-| `auto-allow.py` hook'u     | Hayır                | Evet (v2.0.45+)      |
+| Özellik                    | Factory Droid        | Claude Code          | OpenCode                 |
+|----------------------------|----------------------|----------------------|--------------------------|
+| Global yapılandırma dizini | `~/.factory/`        | `~/.claude/`         | `~/.config/opencode/`    |
+| Ortak veri dizini          | `~/.cli-tweaks/`     | `~/.cli-tweaks/`     | `~/.cli-tweaks/`         |
+| Hook yapılandırma dosyası  | `settings.json`      | `settings.json`      | `opencode.json`          |
+| Plan modu çıkış olayı      | `ExitSpecMode`       | `ExitPlanMode`       | Yerleşik (Tab tuşu)      |
+| Kullanıcı soru aracı       | `AskUser`            | `AskUserQuestion`    | N/A                      |
+| Yeniden enjeksiyon hedefi  | `AGENTS.md`          | `CLAUDE.md`          | Native rules sistemi     |
+| Subagent terminolojisi     | "worker"             | "Explore"            | N/A                      |
+| Plugin runtime             | Python 3.8+          | Python 3.8+          | JS/TS (Bun)              |
+| `/init-claude` skill'i     | Evet (CLAUDE.md)     | Hayır (yerleşik)     | Hayır                    |
+| `/initialize` skill'i      | Hayır                | Evet (AGENTS.md)     | Hayır                    |
+| `auto-allow.py` hook'u     | Hayır                | Evet (v2.0.45+)      | Hayır                    |
 
 ## Lisans
 

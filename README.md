@@ -2,7 +2,7 @@
 
 [Türkçe](README.tr.md)
 
-A collection of hooks and skills for Factory Droid and Claude Code that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box.
+A collection of hooks and skills for Factory Droid, Claude Code, and OpenCode that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box.
 
 ## What's Included
 
@@ -42,6 +42,8 @@ cli-tweaks/
   claude/            <-- Claude Code (copy to ~/.claude/)
     hooks/
     skills/
+  opencode/          <-- OpenCode (copy to ~/.config/opencode/)
+    plugins/
   SOUL.md.template   <-- Custom persona template
 ```
 
@@ -59,6 +61,9 @@ npx degit KilimcininKorOglu/cli-tweaks/factory ~/.factory
 
 # Claude Code
 npx degit KilimcininKorOglu/cli-tweaks/claude ~/.claude
+
+# OpenCode
+npx degit KilimcininKorOglu/cli-tweaks/opencode/plugins ~/.config/opencode/plugins
 ```
 
 **Merge with existing setup**:
@@ -77,6 +82,12 @@ npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
 cp -r /tmp/cli-tweaks-hooks/* ~/.claude/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.claude/skills/
 rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
+
+# OpenCode
+npx degit KilimcininKorOglu/cli-tweaks/opencode/plugins /tmp/cli-tweaks-plugins
+mkdir -p ~/.config/opencode/plugins
+cp -r /tmp/cli-tweaks-plugins/* ~/.config/opencode/plugins/
+rm -rf /tmp/cli-tweaks-plugins
 ```
 
 ### Alternative: git clone
@@ -92,16 +103,21 @@ cp -r factory/skills/* ~/.factory/skills/
 # Claude Code
 cp -r claude/hooks/* ~/.claude/hooks/
 cp -r claude/skills/* ~/.claude/skills/
+
+# OpenCode
+mkdir -p ~/.config/opencode/plugins
+cp opencode/plugins/* ~/.config/opencode/plugins/
 ```
 
 ### Hook Registration
 
 After copying the files, register hooks by merging the hook definitions into your `settings.json`:
 
-| Platform      | Source                        | Target                     |
-|---------------|-------------------------------|----------------------------|
-| Factory Droid | `factory/settings.json.example` | `~/.factory/settings.json` |
-| Claude Code   | `claude/settings.json.example`  | `~/.claude/settings.json`  |
+| Platform      | Source                           | Target                              |
+|---------------|----------------------------------|-------------------------------------|
+| Factory Droid | `factory/settings.json.example`  | `~/.factory/settings.json`          |
+| Claude Code   | `claude/settings.json.example`   | `~/.claude/settings.json`           |
+| OpenCode      | `opencode/opencode.json.example` | `~/.config/opencode/opencode.json`  |
 
 Copy the `hooks` section from the example file into your existing settings, or use the example as a starting point.
 
@@ -189,23 +205,25 @@ Desktop notifications are disabled by default. Enable them per-feature in your `
 
 ## Requirements
 
-- Python 3.8+
-- Factory Droid or Claude Code (or both)
+- Python 3.8+ (Factory Droid, Claude Code)
+- Bun runtime (OpenCode -- auto-installed by OpenCode)
+- Factory Droid, Claude Code, or OpenCode
 
 ## Platform Differences
 
-| Feature                  | Factory Droid        | Claude Code          |
-|--------------------------|----------------------|----------------------|
-| Global config dir        | `~/.factory/`        | `~/.claude/`         |
-| Shared data dir          | `~/.cli-tweaks/`     | `~/.cli-tweaks/`     |
-| Hook config file         | `settings.json`      | `settings.json`      |
-| Plan mode exit event     | `ExitSpecMode`       | `ExitPlanMode`       |
-| User question tool       | `AskUser`            | `AskUserQuestion`    |
-| Re-injection target      | `AGENTS.md`          | `CLAUDE.md`          |
-| Subagent terminology     | "worker"             | "Explore"            |
-| `/init-claude` skill     | Yes (CLAUDE.md)      | No (built-in)        |
-| `/initialize` skill      | No                   | Yes (AGENTS.md)      |
-| `auto-allow.py` hook     | No                   | Yes (v2.0.45+)       |
+| Feature                  | Factory Droid        | Claude Code          | OpenCode                 |
+|--------------------------|----------------------|----------------------|--------------------------|
+| Global config dir        | `~/.factory/`        | `~/.claude/`         | `~/.config/opencode/`    |
+| Shared data dir          | `~/.cli-tweaks/`     | `~/.cli-tweaks/`     | `~/.cli-tweaks/`         |
+| Hook config file         | `settings.json`      | `settings.json`      | `opencode.json`          |
+| Plan mode exit event     | `ExitSpecMode`       | `ExitPlanMode`       | Built-in (Tab key)       |
+| User question tool       | `AskUser`            | `AskUserQuestion`    | N/A                      |
+| Re-injection target      | `AGENTS.md`          | `CLAUDE.md`          | Native rules system      |
+| Subagent terminology     | "worker"             | "Explore"            | N/A                      |
+| Plugin runtime           | Python 3.8+          | Python 3.8+          | JS/TS (Bun)              |
+| `/init-claude` skill     | Yes (CLAUDE.md)      | No (built-in)        | No                       |
+| `/initialize` skill      | No                   | Yes (AGENTS.md)      | No                       |
+| `auto-allow.py` hook     | No                   | Yes (v2.0.45+)       | No                       |
 
 ## License
 
