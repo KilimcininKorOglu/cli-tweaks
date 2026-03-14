@@ -31,12 +31,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.factory/hooks/global-inject.py",
-            "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "python3 ~/.factory/hooks/memory-load.py",
+            "command": "python3 ~/.factory/hooks/session-start.py",
             "timeout": 10
           }
         ]
@@ -51,12 +46,7 @@
           },
           {
             "type": "command",
-            "command": "python3 ~/.factory/hooks/global-inject.py",
-            "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "python3 ~/.factory/hooks/memory-load.py",
+            "command": "python3 ~/.factory/hooks/session-start.py",
             "timeout": 10
           }
         ]

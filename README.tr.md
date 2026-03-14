@@ -10,12 +10,11 @@ Factory Droid, Claude Code, OpenCode ve Codex CLI için planlama otomasyonu, kal
 
 | Hook                  | Olay                 | Açıklama                                                                                                     |
 |-----------------------|----------------------|--------------------------------------------------------------------------------------------------------------|
+| `session-start.py`    | SessionStart/compact | Global kullanıcı dosyalarını ve proje belleğini bağlama enjekte eder                                         |
 | `plan-mode.py`        | UserPromptSubmit     | Anahtar kelime veya karmaşıklık puanlamasıyla planlama ihtiyacını tespit eder, 5 fazlı iş akışı enjekte eder |
 | `save-plan.py`        | PostToolUse          | Planları diske kaydeder (Factory) veya yalnızca bildirim gönderir (Claude Code)                              |
-| `memory-load.py`      | SessionStart/compact | Projeye özel belleği (MEMORY.md + konu dosyaları) bağlama yükler                                             |
 | `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                           |
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                            |
-| `global-inject.py`    | SessionStart/compact | settings.json listesindeki global kullanıcı dosyalarını (AGENTS.md, SOUL.md vb.) enjekte eder                |
 | `auto-allow.py`       | PermissionRequest    | settings.json izin listesiyle eşleşen tool'ları otomatik onaylar, eşleşmeyenleri bildirir (yalnızca Claude Code) |
 | `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                              |
 
@@ -148,7 +147,7 @@ cp factory/hooks/save-plan.py ~/.factory/hooks/
 cp factory/hooks/notify.py ~/.factory/hooks/
 
 # Yalnızca bellek sistemi
-cp factory/hooks/memory-load.py ~/.factory/hooks/
+cp factory/hooks/session-start.py ~/.factory/hooks/
 cp factory/hooks/memory-save.py ~/.factory/hooks/
 
 # Yalnızca commit skill'i
@@ -177,7 +176,7 @@ Tamamlanan planlar masaüstü bildirimleriyle birlikte `~/.factory/plans/<proje>
 
 Bellek sistemi, ajana oturumlar arası kalıcı ve projeye özel bir bellek sağlar. Bellek, ortak bir konumda (`~/.cli-tweaks/memory/`) saklanır, böylece hem Factory Droid hem de Claude Code aynı bilgi tabanına erişebilir:
 
-- Oturum başında `memory-load.py`, `~/.cli-tweaks/memory/<proje>/MEMORY.md` dosyasını okur ve bağlama enjekte eder
+- Oturum başında `session-start.py`, `~/.cli-tweaks/memory/<proje>/MEMORY.md` dosyasını okur ve bağlama enjekte eder
 - Bağlam sıkıştırmasında bellek, talimat dosyalarıyla birlikte otomatik olarak yeniden enjekte edilir
 - Oturum sonunda `memory-save.py`, ajanın yeni öğrendiklerini kaydetmesini hatırlatır
 - Bellek dosyaları proje bazında ana indeks ve konu dosyalarıyla düzenlenir
@@ -203,7 +202,7 @@ Ajanın sizinle nasıl iletişim kurduğunu şekillendiren özel bir persona tan
 }
 ```
 
-`global-inject.py` hook'u listelenen tüm dosyaları oturum başında ve bağlam sıkıştırmasından sonra enjekte eder. `SOUL.md.template` dosyasında örnek bir "sert sevgi" personası bulunur -- kopyalayıp kendi tercihinize göre özelleştirin.
+`session-start.py` hook'u listelenen tüm dosyaları oturum başında ve bağlam sıkıştırmasından sonra enjekte eder. `SOUL.md.template` dosyasında örnek bir "sert sevgi" personası bulunur -- kopyalayıp kendi tercihinize göre özelleştirin.
 
 ### Masaüstü Bildirimleri
 

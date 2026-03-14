@@ -10,12 +10,11 @@ A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, and C
 
 | Hook                  | Event                | Description                                                                                    |
 |-----------------------|----------------------|------------------------------------------------------------------------------------------------|
+| `session-start.py`    | SessionStart/compact | Injects global user files and project memory into context                                      |
 | `plan-mode.py`        | UserPromptSubmit     | Detects planning needs via keywords or complexity scoring, injects a 5-phase planning workflow |
 | `save-plan.py`        | PostToolUse          | Saves plans to disk (Factory) or sends notification only (Claude Code)                         |
-| `memory-load.py`      | SessionStart/compact | Loads project-specific memory (MEMORY.md + topic files) into context                           |
 | `memory-save.py`      | Stop                 | Reminds the agent to save learnings before the session ends                                    |
 | `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
-| `global-inject.py`    | SessionStart/compact | Injects global user files (AGENTS.md, SOUL.md, etc.) from settings.json list                   |
 | `auto-allow.py`       | PermissionRequest    | Auto-approves tools matching settings.json allow list, notifies on mismatch (Claude Code only) |
 | `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |
 
@@ -148,7 +147,7 @@ cp factory/hooks/save-plan.py ~/.factory/hooks/
 cp factory/hooks/notify.py ~/.factory/hooks/
 
 # Just the memory system
-cp factory/hooks/memory-load.py ~/.factory/hooks/
+cp factory/hooks/session-start.py ~/.factory/hooks/
 cp factory/hooks/memory-save.py ~/.factory/hooks/
 
 # Just the commit skill
@@ -177,7 +176,7 @@ Completed plans are saved to `~/.factory/plans/<project>/` (or `~/.claude/plans/
 
 The memory system gives your agent persistent, project-scoped memory across sessions. Memory is stored in a shared location (`~/.cli-tweaks/memory/`) so both Factory Droid and Claude Code can access the same knowledge base:
 
-- On session start, `memory-load.py` reads `~/.cli-tweaks/memory/<project>/MEMORY.md` and injects it
+- On session start, `session-start.py` reads `~/.cli-tweaks/memory/<project>/MEMORY.md` and injects it
 - On context compaction, memory is automatically re-injected alongside instruction files
 - On session end, `memory-save.py` reminds the agent to save anything new it learned
 - Memory files are organized per project with a main index and topic files
@@ -203,7 +202,7 @@ You can define a custom persona that shapes how the agent communicates with you.
 }
 ```
 
-The `global-inject.py` hook injects all listed files at session start and after context compaction. A template is provided in `SOUL.md.template` with an example "tough love" persona -- copy and customize it to your preference.
+The `session-start.py` hook injects all listed files at session start and after context compaction. A template is provided in `SOUL.md.template` with an example "tough love" persona -- copy and customize it to your preference.
 
 ### Desktop Notifications
 

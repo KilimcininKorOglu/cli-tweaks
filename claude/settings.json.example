@@ -43,12 +43,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/hooks/global-inject.py",
-            "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "python3 ~/.claude/hooks/memory-load.py",
+            "command": "python3 ~/.claude/hooks/session-start.py",
             "timeout": 10
           }
         ]
@@ -63,12 +58,7 @@
           },
           {
             "type": "command",
-            "command": "python3 ~/.claude/hooks/global-inject.py",
-            "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "python3 ~/.claude/hooks/memory-load.py",
+            "command": "python3 ~/.claude/hooks/session-start.py",
             "timeout": 10
           }
         ]

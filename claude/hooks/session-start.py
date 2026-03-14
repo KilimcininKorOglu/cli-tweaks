@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
-SessionStart/compact hook: loads auto memory into context.
-
-Reads ~/.cli-tweaks/memory/<project>/MEMORY.md (first 200 lines) and injects
-it as context along with instructions for the memory system.
+SessionStart hook: injects global user instructions + auto memory into context.
+Combines global-inject.py and memory-load.py into a single script to work around
+Claude Code not concatenating additionalContext from multiple hooks.
 """
 import json
 import os
@@ -17,17 +16,40 @@ except json.JSONDecodeError:
 
 cwd = inputData.get("cwd", os.getcwd())
 projectName = os.path.basename(cwd)
+parts = []
 
+# --- Global inject (from globalInjectFiles in ~/.claude/settings.json) ---
+settingsFile = Path.home() / ".claude" / "settings.json"
+if settingsFile.exists():
+    try:
+        data = json.loads(settingsFile.read_text(encoding="utf-8"))
+        fileList = data.get("globalInjectFiles", [])
+        contents = []
+        for filePath in fileList:
+            expanded = os.path.expanduser(filePath)
+            path = Path(expanded)
+            if path.exists():
+                try:
+                    content = path.read_text(encoding="utf-8").strip()
+                    if content:
+                        contents.append(f"# From {filePath}\n{content}")
+                except IOError:
+                    pass
+        if contents:
+            combined = "\n\n---\n\n".join(contents)
+            parts.append(f"[GLOBAL USER INSTRUCTIONS]\n{combined}")
+    except (json.JSONDecodeError, IOError):
+        pass
+
+# --- Memory load ---
 memoryDir = Path.home() / ".cli-tweaks" / "memory" / projectName
 memoryFile = memoryDir / "MEMORY.md"
 
-# Load memory content (first 200 lines, like Claude Code)
 memoryContent = ""
 if memoryFile.exists():
     lines = memoryFile.read_text(encoding="utf-8").splitlines()
     memoryContent = "\n".join(lines[:200])
 
-# List topic files
 topicFiles = []
 if memoryDir.exists():
     topicFiles = [
@@ -35,10 +57,8 @@ if memoryDir.exists():
         if f.name != "MEMORY.md" and f.is_file()
     ]
 
-# Build context
-parts = []
-
-parts.append("""[AUTO MEMORY SYSTEM]
+memParts = []
+memParts.append("""[AUTO MEMORY SYSTEM]
 You have a persistent memory system that carries knowledge across sessions.
 Memory location: {memoryDir}
 
@@ -69,18 +89,23 @@ How to save:
 ))
 
 if memoryContent:
-    parts.append("\n[LOADED MEMORY]\n" + memoryContent)
+    memParts.append("\n[LOADED MEMORY]\n" + memoryContent)
 else:
-    parts.append("\n[NO MEMORY YET] This is the first session for project '{project}'. "
-                 "Start building memory as you learn about this project.".format(
-                     project=projectName))
+    memParts.append("\n[NO MEMORY YET] This is the first session for project '{project}'. "
+                    "Start building memory as you learn about this project.".format(
+                        project=projectName))
 
 if topicFiles:
     listing = "\n".join("- " + f for f in topicFiles)
-    parts.append("\n[TOPIC FILES AVAILABLE]\n" + listing +
-                 "\nRead these with file tools when you need detailed information.")
+    memParts.append("\n[TOPIC FILES AVAILABLE]\n" + listing +
+                    "\nRead these with file tools when you need detailed information.")
 
-context = "\n".join(parts)
+parts.append("\n".join(memParts))
+
+if not parts:
+    sys.exit(0)
+
+context = "\n\n".join(parts)
 
 output = {
     "hookSpecificOutput": {
