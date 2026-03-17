@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-Factory Droid, Claude Code, OpenCode ve Codex CLI için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın.
+Factory Droid, Claude Code, OpenCode, Codex CLI ve Pi Agent için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın.
 
 ## İçerik
 
@@ -63,6 +63,10 @@ cli-tweaks/
     plugins/
   codex/             <-- Codex CLI (copy to ~/.codex/)
     skills/
+  pi/                <-- Pi Agent (pi install veya ~/.pi/agent/ dizinine kopyala)
+    extensions/
+    skills/
+    package.json
   SOUL.md.template   <-- Özel persona şablonu
 ```
 
@@ -86,6 +90,9 @@ npx degit KilimcininKorOglu/cli-tweaks/opencode/plugins ~/.config/opencode/plugi
 
 # Codex CLI
 npx degit KilimcininKorOglu/cli-tweaks/codex/skills ~/.codex/skills
+
+# Pi Agent (paket kurulumu -- önerilen)
+pi install git:github.com/KilimcininKorOglu/cli-tweaks
 ```
 
 **Mevcut kurulumla birleştirme**:
@@ -116,6 +123,14 @@ npx degit KilimcininKorOglu/cli-tweaks/codex/skills /tmp/cli-tweaks-skills
 mkdir -p ~/.codex/skills
 cp -r /tmp/cli-tweaks-skills/* ~/.codex/skills/
 rm -rf /tmp/cli-tweaks-skills
+
+# Pi Agent (paket kurulumu tercih edilir, ama manuel de çalışır)
+npx degit KilimcininKorOglu/cli-tweaks/pi/skills /tmp/cli-tweaks-skills
+npx degit KilimcininKorOglu/cli-tweaks/pi/extensions /tmp/cli-tweaks-extensions
+mkdir -p ~/.pi/agent/skills ~/.pi/agent/extensions
+cp -r /tmp/cli-tweaks-skills/* ~/.pi/agent/skills/
+cp -r /tmp/cli-tweaks-extensions/* ~/.pi/agent/extensions/
+rm -rf /tmp/cli-tweaks-skills /tmp/cli-tweaks-extensions
 ```
 
 ### Alternatif: git clone
@@ -139,6 +154,11 @@ cp opencode/plugins/* ~/.config/opencode/plugins/
 # Codex CLI
 mkdir -p ~/.codex/skills
 cp -r codex/skills/* ~/.codex/skills/
+
+# Pi Agent
+mkdir -p ~/.pi/agent/skills ~/.pi/agent/extensions
+cp -r pi/skills/* ~/.pi/agent/skills/
+cp pi/extensions/* ~/.pi/agent/extensions/
 ```
 
 ### Hook Kaydı
@@ -240,25 +260,26 @@ Masaüstü bildirimleri varsayılan olarak kapalıdır. `settings.json` dosyanı
 
 - Python 3.8+ (Factory Droid, Claude Code)
 - Bun runtime (OpenCode -- OpenCode tarafından otomatik kurulur)
-- Factory Droid, Claude Code, OpenCode veya Codex CLI
+- Node.js (Pi Agent -- Pi Agent ile birlikte kurulur)
+- Factory Droid, Claude Code, OpenCode, Codex CLI veya Pi Agent
 
 ## Platform Farklılıkları
 
-| Özellik                    | Factory Droid        | Claude Code          | OpenCode                 | Codex CLI                |
-|----------------------------|----------------------|----------------------|--------------------------|--------------------------|
-| Global yapılandırma dizini | `~/.factory/`        | `~/.claude/`         | `~/.config/opencode/`    | `~/.codex/`              |
-| Ortak veri dizini          | `~/.cli-tweaks/`     | `~/.cli-tweaks/`     | `~/.cli-tweaks/`         | N/A (yerleşik bellek)    |
-| Hook yapılandırma dosyası  | `settings.json`      | `settings.json`      | `opencode.json`          | `config.toml`            |
-| Plan modu çıkış olayı      | `ExitSpecMode`       | `ExitPlanMode`       | Yerleşik (Tab tuşu)      | Yerleşik (Shift+Tab)     |
-| Kullanıcı soru aracı       | `AskUser`            | `AskUserQuestion`    | N/A                      | `AskUserQuestion`        |
-| Yeniden enjeksiyon hedefi  | `AGENTS.md`          | `CLAUDE.md`          | Native rules sistemi     | `AGENTS.md` (native)     |
-| Subagent terminolojisi     | "worker"             | "Explore"            | N/A                      | N/A                      |
-| Plugin runtime             | Python 3.8+          | Python 3.8+          | JS/TS (Bun)              | N/A (yalnızca skill'ler) |
-| Skill çağırma ön eki       | `/`                  | `/`                  | `/`                      | `$`                      |
-| Bellek sistemi             | Hook tabanlı         | Hook tabanlı         | Plugin tabanlı           | Yerleşik                 |
-| `/init-claude` skill'i     | Evet (CLAUDE.md)     | Hayır (yerleşik)     | Hayır                    | Hayır                    |
-| `/initialize` skill'i      | Hayır                | Evet (AGENTS.md)     | Hayır                    | Evet (AGENTS.md)         |
-| `auto-allow.py` hook'u     | Hayır                | Evet (v2.0.45+)      | Hayır                    | Hayır (OS seviyesi sandbox) |
+| Özellik                    | Factory Droid        | Claude Code          | OpenCode                 | Codex CLI                   | Pi Agent                    |
+|----------------------------|----------------------|----------------------|--------------------------|-----------------------------|-----------------------------|
+| Global yapılandırma dizini | `~/.factory/`        | `~/.claude/`         | `~/.config/opencode/`    | `~/.codex/`                 | `~/.pi/agent/`              |
+| Ortak veri dizini          | `~/.cli-tweaks/`     | `~/.cli-tweaks/`     | `~/.cli-tweaks/`         | N/A (yerleşik bellek)       | `~/.cli-tweaks/`            |
+| Hook yapılandırma dosyası  | `settings.json`      | `settings.json`      | `opencode.json`          | `config.toml`               | `settings.json`             |
+| Plan modu çıkış olayı      | `ExitSpecMode`       | `ExitPlanMode`       | Yerleşik (Tab tuşu)      | Yerleşik (Shift+Tab)        | Extension tabanlı           |
+| Kullanıcı soru aracı       | `AskUser`            | `AskUserQuestion`    | N/A                      | `AskUserQuestion`           | Extension tabanlı           |
+| Yeniden enjeksiyon hedefi  | `AGENTS.md`          | `CLAUDE.md`          | Native rules sistemi     | `AGENTS.md` (native)        | `AGENTS.md` (native)        |
+| Subagent terminolojisi     | "worker"             | "Explore"            | N/A                      | N/A                         | Extension tabanlı           |
+| Plugin runtime             | Python 3.8+          | Python 3.8+          | JS/TS (Bun)              | N/A (yalnızca skill'ler)    | JS/TS (Node.js)             |
+| Skill çağırma ön eki       | `/`                  | `/`                  | `/`                      | `$`                         | `/skill:`                   |
+| Bellek sistemi             | Hook tabanlı         | Hook tabanlı         | Plugin tabanlı           | Yerleşik                    | Extension tabanlı           |
+| `/init-claude` skill'i     | Evet (CLAUDE.md)     | Hayır (yerleşik)     | Hayır                    | Hayır                       | Evet (CLAUDE.md)            |
+| `/initialize` skill'i      | Hayır                | Evet (AGENTS.md)     | Hayır                    | Evet (AGENTS.md)            | Hayır                       |
+| `auto-allow.py` hook'u     | Hayır                | Evet (v2.0.45+)      | Hayır                    | Hayır (OS seviyesi sandbox) | Hayır (izin sistemi yok)    |
 
 ## Lisans
 

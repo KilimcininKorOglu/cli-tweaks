@@ -2,7 +2,7 @@
 
 [Türkçe](README.tr.md)
 
-A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, and Codex CLI that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box.
+A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, Codex CLI, and Pi Agent that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box.
 
 ## What's Included
 
@@ -63,6 +63,10 @@ cli-tweaks/
     plugins/
   codex/             <-- Codex CLI (copy to ~/.codex/)
     skills/
+  pi/                <-- Pi Agent (pi install or copy to ~/.pi/agent/)
+    extensions/
+    skills/
+    package.json
   SOUL.md.template   <-- Custom persona template
 ```
 
@@ -86,6 +90,9 @@ npx degit KilimcininKorOglu/cli-tweaks/opencode/plugins ~/.config/opencode/plugi
 
 # Codex CLI
 npx degit KilimcininKorOglu/cli-tweaks/codex/skills ~/.codex/skills
+
+# Pi Agent (package install -- recommended)
+pi install git:github.com/KilimcininKorOglu/cli-tweaks
 ```
 
 **Merge with existing setup**:
@@ -116,6 +123,14 @@ npx degit KilimcininKorOglu/cli-tweaks/codex/skills /tmp/cli-tweaks-skills
 mkdir -p ~/.codex/skills
 cp -r /tmp/cli-tweaks-skills/* ~/.codex/skills/
 rm -rf /tmp/cli-tweaks-skills
+
+# Pi Agent (package install is preferred, but manual also works)
+npx degit KilimcininKorOglu/cli-tweaks/pi/skills /tmp/cli-tweaks-skills
+npx degit KilimcininKorOglu/cli-tweaks/pi/extensions /tmp/cli-tweaks-extensions
+mkdir -p ~/.pi/agent/skills ~/.pi/agent/extensions
+cp -r /tmp/cli-tweaks-skills/* ~/.pi/agent/skills/
+cp -r /tmp/cli-tweaks-extensions/* ~/.pi/agent/extensions/
+rm -rf /tmp/cli-tweaks-skills /tmp/cli-tweaks-extensions
 ```
 
 ### Alternative: git clone
@@ -139,6 +154,11 @@ cp opencode/plugins/* ~/.config/opencode/plugins/
 # Codex CLI
 mkdir -p ~/.codex/skills
 cp -r codex/skills/* ~/.codex/skills/
+
+# Pi Agent
+mkdir -p ~/.pi/agent/skills ~/.pi/agent/extensions
+cp -r pi/skills/* ~/.pi/agent/skills/
+cp pi/extensions/* ~/.pi/agent/extensions/
 ```
 
 ### Hook Registration
@@ -240,25 +260,26 @@ Desktop notifications are disabled by default. Enable them per-feature in your `
 
 - Python 3.8+ (Factory Droid, Claude Code)
 - Bun runtime (OpenCode -- auto-installed by OpenCode)
-- Factory Droid, Claude Code, OpenCode, or Codex CLI
+- Node.js (Pi Agent -- installed with Pi Agent)
+- Factory Droid, Claude Code, OpenCode, Codex CLI, or Pi Agent
 
 ## Platform Differences
 
-| Feature                  | Factory Droid        | Claude Code          | OpenCode                 | Codex CLI                |
-|--------------------------|----------------------|----------------------|--------------------------|--------------------------|
-| Global config dir        | `~/.factory/`        | `~/.claude/`         | `~/.config/opencode/`    | `~/.codex/`              |
-| Shared data dir          | `~/.cli-tweaks/`     | `~/.cli-tweaks/`     | `~/.cli-tweaks/`         | N/A (built-in memory)    |
-| Hook config file         | `settings.json`      | `settings.json`      | `opencode.json`          | `config.toml`            |
-| Plan mode exit event     | `ExitSpecMode`       | `ExitPlanMode`       | Built-in (Tab key)       | Built-in (Shift+Tab)     |
-| User question tool       | `AskUser`            | `AskUserQuestion`    | N/A                      | `AskUserQuestion`        |
-| Re-injection target      | `AGENTS.md`          | `CLAUDE.md`          | Native rules system      | `AGENTS.md` (native)     |
-| Subagent terminology     | "worker"             | "Explore"            | N/A                      | N/A                      |
-| Plugin runtime           | Python 3.8+          | Python 3.8+          | JS/TS (Bun)              | N/A (skills only)        |
-| Skill invocation prefix  | `/`                  | `/`                  | `/`                      | `$`                      |
-| Memory system            | Hook-based           | Hook-based           | Plugin-based             | Built-in                 |
-| `/init-claude` skill     | Yes (CLAUDE.md)      | No (built-in)        | No                       | No                       |
-| `/initialize` skill      | No                   | Yes (AGENTS.md)      | No                       | Yes (AGENTS.md)          |
-| `auto-allow.py` hook     | No                   | Yes (v2.0.45+)       | No                       | No (OS-level sandbox)    |
+| Feature                  | Factory Droid        | Claude Code          | OpenCode                 | Codex CLI                | Pi Agent                 |
+|--------------------------|----------------------|----------------------|--------------------------|--------------------------|--------------------------|
+| Global config dir        | `~/.factory/`        | `~/.claude/`         | `~/.config/opencode/`    | `~/.codex/`              | `~/.pi/agent/`           |
+| Shared data dir          | `~/.cli-tweaks/`     | `~/.cli-tweaks/`     | `~/.cli-tweaks/`         | N/A (built-in memory)    | `~/.cli-tweaks/`         |
+| Hook config file         | `settings.json`      | `settings.json`      | `opencode.json`          | `config.toml`            | `settings.json`          |
+| Plan mode exit event     | `ExitSpecMode`       | `ExitPlanMode`       | Built-in (Tab key)       | Built-in (Shift+Tab)     | Extension-based          |
+| User question tool       | `AskUser`            | `AskUserQuestion`    | N/A                      | `AskUserQuestion`        | Extension-based          |
+| Re-injection target      | `AGENTS.md`          | `CLAUDE.md`          | Native rules system      | `AGENTS.md` (native)     | `AGENTS.md` (native)     |
+| Subagent terminology     | "worker"             | "Explore"            | N/A                      | N/A                      | Extension-based          |
+| Plugin runtime           | Python 3.8+          | Python 3.8+          | JS/TS (Bun)              | N/A (skills only)        | JS/TS (Node.js)          |
+| Skill invocation prefix  | `/`                  | `/`                  | `/`                      | `$`                      | `/skill:`                |
+| Memory system            | Hook-based           | Hook-based           | Plugin-based             | Built-in                 | Extension-based          |
+| `/init-claude` skill     | Yes (CLAUDE.md)      | No (built-in)        | No                       | No                       | Yes (CLAUDE.md)          |
+| `/initialize` skill      | No                   | Yes (AGENTS.md)      | No                       | Yes (AGENTS.md)          | No                       |
+| `auto-allow.py` hook     | No                   | Yes (v2.0.45+)       | No                       | No (OS-level sandbox)    | No (no permission system)|
 
 ## License
 
