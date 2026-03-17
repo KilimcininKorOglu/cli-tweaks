@@ -1,7 +1,7 @@
 ---
 name: initialize
 description: >
-  This skill MUST be invoked when the user says "initialize", "init",
+  This skill MUST be invoked when the user says "initialize"
   "başlat", "AGENTS.md oluştur", "create AGENTS.md" or any variation
   requesting project initialization for AI agents. SHOULD also invoke
   when user mentions "setup AI rules", "configure agents", "agent

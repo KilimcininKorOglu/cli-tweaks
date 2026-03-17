@@ -20,16 +20,34 @@ A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, and C
 
 ### Skills
 
-| Skill                              | Command           | Description                                                                      |
-|------------------------------------|-------------------|----------------------------------------------------------------------------------|
-| `commit`                           | `/commit`         | Conventional commits with repo style mimicry, smart staging, git safety protocol |
-| `task-plan`                        | `/task-plan`      | PRD breakdown into features with autonomous execution and checkpointing          |
-| `bug-report`                       | `/bug-report`     | Systematic bug analysis and structured report generation                         |
-| `dead-code`                        | `/dead-code`      | Dead code audit with 3-phase analysis and cleanup roadmap                        |
-| `git-flow`                         | `/git-flow`       | Structured branch management with strict validation rules                        |
-| `initialize` (Claude Code only)    | `/initialize`     | Creates AGENTS.md by scanning the codebase                                       |
-| `init-claude` (Factory Droid only) | `/init-claude`    | Creates CLAUDE.md by scanning the codebase                                       |
-| `implement-plan`                   | `/implement-plan` | Interactive planning with mandatory user questions                               |
+| Skill                              | Command                | Description                                                                      |
+|------------------------------------|------------------------|----------------------------------------------------------------------------------|
+| `commit`                           | `/commit`              | Conventional commits with repo style mimicry, smart staging, git safety protocol |
+| `task-plan`                        | `/task-plan`           | PRD breakdown into features with autonomous execution and checkpointing          |
+| `bug-report`                       | `/bug-report`          | Systematic bug analysis and structured report generation                         |
+| `dead-code`                        | `/dead-code`           | Dead code audit with 3-phase analysis and cleanup roadmap                        |
+| `git-flow`                         | `/git-flow`            | Structured branch management with strict validation rules                        |
+| `initialize` (Claude Code only)    | `/initialize`          | Creates AGENTS.md by scanning the codebase                                       |
+| `init-claude` (Factory Droid only) | `/init-claude`         | Creates CLAUDE.md by scanning the codebase                                       |
+| `implement-plan`                   | `/implement-plan`      | Interactive planning with mandatory user questions                               |
+| `frontend-design`                  | `/frontend-design`     | Distinctive, production-grade frontend interfaces                                |
+| `tech-debt`                        | `/tech-debt`           | Technical debt mapping, measurement, and prioritization                          |
+| `test-review`                      | `/test-review`         | Test suite quality, coverage gaps, and strategy review                           |
+| `error-review`                     | `/error-review`        | Error message quality and information disclosure audit                           |
+| `ai-code-audit`                    | `/ai-code-audit`       | AI-generated code detection, security, and quality review                        |
+| `api-audit`                        | `/api-audit`           | API performance, resilience, and contract testing audit                          |
+| `cache-audit`                      | `/cache-audit`         | Caching strategy, consistency, and security analysis                             |
+| `disaster-recovery`                | `/disaster-recovery`   | Disaster recovery and business continuity assessment                             |
+| `feature-flags-audit`              | `/feature-flags-audit` | Feature flag hygiene, rollout safety, and experimentation                        |
+| `integration-security`             | `/integration-security`| Third-party integration and webhook security analysis                            |
+| `observability-audit`              | `/observability-audit` | Logging, metrics, health checks, and debugging readiness                         |
+| `payment-security`                 | `/payment-security`    | Payment flow and financial transaction security audit                            |
+| `queue-audit`                      | `/queue-audit`         | Queue and async job management resilience analysis                               |
+| `release-discipline`               | `/release-discipline`  | Version control, change management, and release process                          |
+| `serialization-audit`              | `/serialization-audit` | Data serialization and transformation security review                            |
+| `session-audit`                    | `/session-audit`       | Session management and state persistence security                                |
+| `tenant-isolation`                 | `/tenant-isolation`    | Multi-tenant data isolation and leakage audit                                    |
+| `upload-security`                  | `/upload-security`     | File upload and media processing security audit                                  |
 
 ## Directory Structure
 

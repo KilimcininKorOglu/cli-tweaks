@@ -1,7 +1,7 @@
 ---
 name: init-claude
 description: >
-  This skill MUST be invoked when the user says "init", "initialize",
+  This skill MUST be invoked when the user says "initialize",
   "başlat", "CLAUDE.md oluştur", "create CLAUDE.md" or any variation
   requesting CLAUDE.md creation. SHOULD also invoke when user mentions
   "setup Claude rules", "configure Claude Code". Analyzes the codebase
