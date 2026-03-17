@@ -1,6 +1,0 @@
-# Codex CLI configuration for cli-tweaks
-# Copy to ~/.codex/config.toml and adjust as needed.
-# Codex automatically reads AGENTS.md from the project root.
-
-# model = "o4-mini"
-# approval_mode = "suggest"
