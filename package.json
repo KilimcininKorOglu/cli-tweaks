@@ -1,6 +1,7 @@
 {
   "name": "cli-tweaks",
   "version": "1.0.0",
+  "private": true,
   "description": "Persistent memory, plan saving, desktop notifications, and 25+ skills for Pi Agent",
   "keywords": ["pi-package"],
   "license": "MIT",
@@ -9,8 +10,8 @@
     "url": "https://github.com/KilimcininKorOglu/cli-tweaks"
   },
   "pi": {
-    "extensions": ["./extensions"],
-    "skills": ["./skills"]
+    "extensions": ["./pi/extensions"],
+    "skills": ["./pi/skills"]
   },
   "peerDependencies": {
     "@mariozechner/pi-coding-agent": "*"
