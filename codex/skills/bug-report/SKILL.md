@@ -82,6 +82,7 @@ Expected: [What should happen]
 Root Cause: [Why it happens - if determinable]
 Impact: [User/system/business impact]
 Verification: [How you confirmed this bug - specific code path or logic trace]
+Suggested Commit: [Conventional commit message for the fix, e.g. "fix: prevent XSS in user input sanitizer"]
 ```
 
 ### Step 5: ID Management
@@ -135,4 +136,5 @@ Last Bug ID: BUG-[XXX]
 - Respect existing code patterns when suggesting fixes
 - Group related bugs together
 - If `bugs.md` or `bug.md` exists, merge into new report and delete old file
+- Suggested Commit messages must follow conventional commits (fix:, refactor:, etc.) and NEVER include bug IDs
 - IMPORTANT: Always write the report in English only, regardless of conversation language
