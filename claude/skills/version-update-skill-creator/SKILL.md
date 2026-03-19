@@ -8,7 +8,6 @@ description: >
   skill'i kur", "setup version bumping", or asks to automate version management
   for the current project. Scans the project for version files, build commands,
   and changelog, then generates a tailored version-update skill in .claude/skills/.
-argument-hint: ""
 ---
 
 # Version Update Skill Creator
