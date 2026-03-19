@@ -33,7 +33,21 @@ Map the project structure:
 - Look for existing `BUG-REPORT.md` to continue ID sequence
 - Scan for `TODO`, `FIXME`, `HACK`, `XXX`, `BUG` comments
 
+### Scanning Scope
+
+Always skip non-source directories and generated files:
+- `node_modules/`, `vendor/`, `dist/`, `build/`, `.next/`, `__pycache__/`, `.venv/`
+- Lock files (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`, `Gemfile.lock`, `poetry.lock`)
+- Minified files (`*.min.js`, `*.min.css`), source maps, compiled output
+- Third-party code, vendored dependencies, and auto-generated files
+- Focus exclusively on project-authored source code
+
 ### Step 2: Bug Discovery
+
+For large repositories (50+ source files), scan in parallel:
+- Spawn up to 3 sub-agents to scan different areas simultaneously
+- Split by category (security, logic, code quality) or by directory (frontend, backend, shared)
+- Merge findings and deduplicate before generating the report
 
 Scan for these categories:
 
