@@ -58,7 +58,18 @@ Scan for these categories:
 | MEDIUM   | Swallowed exceptions, edge cases, integration problems                    |
 | LOW      | Deprecated APIs, dead code, N+1 queries, technical debt                   |
 
-### Step 3: Document Each Bug
+### Step 3: Verify Each Finding
+
+Every potential bug MUST be verified on the actual code before reporting:
+- Read the suspect file and trace the full code path (callers, callees, error handlers)
+- Confirm the bug is real -- not a pattern you misread, not handled elsewhere, not a deliberate choice
+- Check if existing tests already cover the case (if a test exists and passes, it is likely not a bug)
+- If you cannot reproduce or confirm the logic flaw by reading the code, discard the finding
+- NEVER report a bug based on assumptions or pattern matching alone
+
+Only verified findings proceed to documentation.
+
+### Step 4: Document Each Bug
 
 ```
 BUG-[ID]: [Brief description]
@@ -71,15 +82,16 @@ Problem: [What's wrong - current behavior]
 Expected: [What should happen]
 Root Cause: [Why it happens - if determinable]
 Impact: [User/system/business impact]
+Verification: [How you confirmed this bug - specific code path or logic trace]
 ```
 
-### Step 4: ID Management
+### Step 5: ID Management
 
 Bug IDs must never reset. Always increment from the highest existing ID.
 Check `BUG-REPORT.md`, `bugs.md`, `bug.md` for existing IDs.
 If no existing bugs, start from BUG-001.
 
-### Step 5: Generate Report
+### Step 6: Generate Report
 
 Save to `BUG-REPORT.md` in repository root:
 
@@ -119,7 +131,7 @@ Last Bug ID: BUG-[XXX]
 
 ## Notes
 
-- Be thorough but avoid false positives
+- Zero false positives is more important than completeness -- only report verified bugs
 - For complex bugs, explain potential solutions without implementing
 - Respect existing code patterns when suggesting fixes
 - Group related bugs together
