@@ -48,6 +48,7 @@ Factory Droid, Claude Code, OpenCode, Codex CLI ve Pi Agent için planlama otoma
 | `session-audit`                        | `/session-audit`       | Oturum yönetimi ve durum kalıcılığı güvenlik denetimi        |
 | `tenant-isolation`                     | `/tenant-isolation`    | Çok kiracılı veri izolasyonu ve sızıntı denetimi             |
 | `upload-security`                      | `/upload-security`     | Dosya yükleme ve medya işleme güvenlik denetimi              |
+| `version-update-skill-creator`         | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur |
 
 ## Dizin Yapısı
 
@@ -66,7 +67,7 @@ cli-tweaks/
   pi/                <-- Pi Agent (pi install veya ~/.pi/agent/ dizinine kopyala)
     extensions/
     skills/
-    package.json
+  package.json       <-- Pi Package manifest (keşif için repo kökünde)
   SOUL.md.template   <-- Özel persona şablonu
 ```
 
@@ -212,7 +213,7 @@ Tamamlanan planlar masaüstü bildirimleriyle birlikte `~/.factory/plans/<proje>
 
 ### Otomatik Bellek
 
-Bellek sistemi, ajana oturumlar arası kalıcı ve projeye özel bir bellek sağlar. Bellek, ortak bir konumda (`~/.cli-tweaks/memory/`) saklanır, böylece hem Factory Droid hem de Claude Code aynı bilgi tabanına erişebilir:
+Bellek sistemi, ajana oturumlar arası kalıcı ve projeye özel bir bellek sağlar. Bellek, ortak bir konumda (`~/.cli-tweaks/memory/`) saklanır, böylece Factory Droid, Claude Code, OpenCode ve Pi Agent aynı bilgi tabanına erişebilir:
 
 - Oturum başında `session-start.py`, `~/.cli-tweaks/memory/<proje>/MEMORY.md` dosyasını okur ve bağlama enjekte eder
 - Bağlam sıkıştırmasında bellek, talimat dosyalarıyla birlikte otomatik olarak yeniden enjekte edilir
@@ -244,7 +245,7 @@ Ajanın sizinle nasıl iletişim kurduğunu şekillendiren özel bir persona tan
 
 ### Masaüstü Bildirimleri
 
-Masaüstü bildirimleri varsayılan olarak kapalıdır. `settings.json` dosyanızda özellik bazında etkinleştirebilirsiniz:
+Masaüstü bildirimleri `settings.json` dosyanızda özellik bazında yapılandırılır:
 
 ```json
 {

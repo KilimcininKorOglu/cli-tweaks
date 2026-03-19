@@ -48,6 +48,7 @@ A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, Codex
 | `session-audit`                    | `/session-audit`       | Session management and state persistence security                                |
 | `tenant-isolation`                 | `/tenant-isolation`    | Multi-tenant data isolation and leakage audit                                    |
 | `upload-security`                  | `/upload-security`     | File upload and media processing security audit                                  |
+| `version-update-skill-creator`     | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill              |
 
 ## Directory Structure
 
@@ -66,7 +67,7 @@ cli-tweaks/
   pi/                <-- Pi Agent (pi install or copy to ~/.pi/agent/)
     extensions/
     skills/
-    package.json
+  package.json       <-- Pi Package manifest (at repo root for discovery)
   SOUL.md.template   <-- Custom persona template
 ```
 
@@ -212,7 +213,7 @@ Completed plans are saved to `~/.factory/plans/<project>/` (or `~/.claude/plans/
 
 ### Auto Memory
 
-The memory system gives your agent persistent, project-scoped memory across sessions. Memory is stored in a shared location (`~/.cli-tweaks/memory/`) so both Factory Droid and Claude Code can access the same knowledge base:
+The memory system gives your agent persistent, project-scoped memory across sessions. Memory is stored in a shared location (`~/.cli-tweaks/memory/`) so Factory Droid, Claude Code, OpenCode, and Pi Agent can all access the same knowledge base:
 
 - On session start, `session-start.py` reads `~/.cli-tweaks/memory/<project>/MEMORY.md` and injects it
 - On context compaction, memory is automatically re-injected alongside instruction files
@@ -244,7 +245,7 @@ The `session-start.py` hook injects all listed files at session start and after 
 
 ### Desktop Notifications
 
-Desktop notifications are disabled by default. Enable them per-feature in your `settings.json`:
+Desktop notifications are configured per-feature in your `settings.json`:
 
 ```json
 {
