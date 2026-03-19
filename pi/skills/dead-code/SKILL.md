@@ -73,98 +73,53 @@ Assign each finding a Risk Level:
 
 ## Output Format
 
-Generate `DEAD-CODE.md` with three sections:
+All findings are written to `BUG-REPORT.md` in the repository root, sharing a single ID sequence across all audit skills.
 
-### Section 1: Findings Table
+Check `BUG-REPORT.md` for existing IDs and increment from the highest. If none exists, start from BUG-001.
 
-```markdown
-| # | File | Line(s) | Symbol | Category | Risk | Confidence | Action |
-|---|------|---------|--------|----------|------|------------|--------|
+For each verified finding:
+
+```
+BUG-[ID]: [Brief description]
+Severity: CRITICAL | HIGH | MEDIUM | LOW
+Status: NEW
+File: [path/to/file.ext:line_number]
+Component: [affected module/feature]
+
+Problem: [What's wrong - current behavior]
+Expected: [What should happen]
+Root Cause: [Why it happens - if determinable]
+Impact: [User/system/business impact]
+Verification: [How you confirmed this - specific code path or logic trace]
+Suggested Commit: [Conventional commit message, e.g. "fix: add rate limiting to payment endpoint"]
 ```
 
-Categories: `UNREACHABLE_DECL` / `DEAD_FLOW` / `PHANTOM_DEP`
-
-Actions: `DELETE` / `RENAME_TO_UNDERSCORE` / `MOVE_TO_ARCHIVE` / `MANUAL_VERIFY` / `SUPPRESS_WITH_COMMENT`
-
-### Section 2: Cleanup Roadmap
-
-Group findings into three sequential batches based on Risk Level.
-
-For each batch, list:
-- Estimated LOC removed
-- Potential bundle/binary size impact
-- Suggested refactoring order (which files to touch first to avoid cascading errors)
-
-### Section 3: Executive Summary
+If `BUG-REPORT.md` already exists, append new findings and update the summary table.
+If it does not exist, create it with:
 
 ```markdown
-| Metric                       | Count |
-|------------------------------|-------|
-| Total findings               |       |
-| High-confidence deletes      |       |
-| Estimated LOC removed        |       |
-| Estimated dead imports       |       |
-| Files safe to delete entirely|       |
-| Estimated build time improvement |   |
-```
-
-End with a one-paragraph assessment of overall codebase health and the top-3 highest-impact actions.
-
-## Report Template
-
-```markdown
-# Dead Code Audit Report - [Repository Name]
-
+# Bug Analysis Report - [Repository Name]
 Generated: [Current Date]
-Scope: [Full codebase | src/ | custom path]
+Last Bug ID: BUG-[XXX]
 
-## Executive Summary
-
-| Metric                         | Count |
-|--------------------------------|-------|
-| Total findings                 | X     |
-| High-confidence deletes        | X     |
-| Estimated LOC removed          | X     |
-| Estimated dead imports         | X     |
-| Files safe to delete entirely  | X     |
-
-[One-paragraph codebase health assessment]
+## Summary
+| Severity     | Count |
+|--------------|-------|
+| Critical     | X     |
+| High         | X     |
+| Medium       | X     |
+| Low          | X     |
+| **Total**    | **X** |
 
 ## Findings
+[All findings grouped by severity]
 
-| # | File | Line(s) | Symbol | Category | Risk | Confidence | Action |
-|---|------|---------|--------|----------|------|------------|--------|
-| 1 | path/file.ts | 42-50 | unusedFunc | UNREACHABLE_DECL | HIGH | 95% | DELETE |
-
-## Cleanup Roadmap
-
-### Batch 1: High Risk (Safe Deletes)
-- Estimated LOC: X
-- Files: [list]
-- Order: [suggested sequence]
-
-### Batch 2: Medium Risk (Verify First)
-- Estimated LOC: X
-- Files: [list]
-- Verification steps: [what to check]
-
-### Batch 3: Low Risk (Human Review)
-- Estimated LOC: X
-- Files: [list]
-- Why flagged: [exemption reasons]
-
-## Top 3 Recommended Actions
-
-1. [Highest impact action]
-2. [Second highest]
-3. [Third highest]
+## Recommendations
+[Suggested fixes and preventive measures]
 ```
 
 ## Notes
 
-- Be thorough but avoid false positives
-- Always check for dynamic usage before marking as dead
-- Respect existing code patterns
-- Group related findings together
-- If previous `DEAD-CODE.md` exists, compare and note changes
+- Zero false positives is more important than completeness -- only report verified findings
+- Suggested Commit messages follow conventional commits and NEVER include bug IDs
 - IMPORTANT: Always write the report in English only, regardless of conversation language
