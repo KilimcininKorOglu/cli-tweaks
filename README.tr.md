@@ -8,47 +8,47 @@ Factory Droid, Claude Code, OpenCode, Codex CLI ve Pi Agent için planlama otoma
 
 ### Hook'lar
 
-| Hook                  | Olay                 | Açıklama                                                                                                     |
-|-----------------------|----------------------|--------------------------------------------------------------------------------------------------------------|
-| `session-start.py`    | SessionStart/compact | Global kullanıcı dosyalarını ve proje belleğini bağlama enjekte eder                                         |
-| `plan-mode.py`        | UserPromptSubmit     | Anahtar kelime veya karmaşıklık puanlamasıyla planlama ihtiyacını tespit eder, 5 fazlı iş akışı enjekte eder |
-| `save-plan.py`        | PostToolUse          | Planları diske kaydeder (Factory) veya yalnızca bildirim gönderir (Claude Code)                              |
-| `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                           |
-| `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                            |
+| Hook                  | Olay                 | Açıklama                                                                                                         |
+|-----------------------|----------------------|------------------------------------------------------------------------------------------------------------------|
+| `session-start.py`    | SessionStart/compact | Global kullanıcı dosyalarını ve proje belleğini bağlama enjekte eder                                             |
+| `plan-mode.py`        | UserPromptSubmit     | Anahtar kelime veya karmaşıklık puanlamasıyla planlama ihtiyacını tespit eder, 5 fazlı iş akışı enjekte eder     |
+| `save-plan.py`        | PostToolUse          | Planları diske kaydeder (Factory) veya yalnızca bildirim gönderir (Claude Code)                                  |
+| `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                               |
+| `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                |
 | `auto-allow.py`       | PermissionRequest    | settings.json izin listesiyle eşleşen tool'ları otomatik onaylar, eşleşmeyenleri bildirir (yalnızca Claude Code) |
-| `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                              |
+| `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                                  |
 
 ### Skill'ler
 
-| Skill                                  | Komut                  | Açıklama                                                     |
-|----------------------------------------|------------------------|--------------------------------------------------------------|
-| `commit`                               | `/commit`              | Repo stilini taklit eden conventional commit'ler             |
-| `task-plan`                            | `/task-plan`           | PRD'yi özelliklere ayırma ve otonom yürütme                  |
-| `bug-report`                           | `/bug-report`          | Sistematik hata analizi ve yapılandırılmış rapor oluşturma   |
-| `dead-code`                            | `/dead-code`           | 3 fazlı analiz ve temizlik yol haritasıyla ölü kod denetimi  |
-| `git-flow`                             | `/git-flow`            | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi  |
-| `initialize` (yalnızca Claude Code)    | `/initialize`          | Kod tabanını tarayarak AGENTS.md oluşturur                   |
-| `init-claude` (yalnızca Factory Droid) | `/init-claude`         | Kod tabanını tarayarak CLAUDE.md oluşturur                   |
-| `implement-plan`                       | `/implement-plan`      | Zorunlu kullanıcı sorularıyla interaktif planlama            |
-| `frontend-design`                      | `/frontend-design`     | Özgün, prodüksiyon kalitesinde frontend arayüzleri           |
-| `tech-debt`                            | `/tech-debt`           | Teknik borç haritalama, ölçüm ve önceliklendirme            |
-| `test-review`                          | `/test-review`         | Test paketi kalitesi, kapsam boşlukları ve strateji inceleme |
-| `error-review`                         | `/error-review`        | Hata mesajı kalitesi ve bilgi sızıntısı denetimi             |
-| `ai-code-audit`                        | `/ai-code-audit`       | Yapay zeka üretimi kod tespiti, güvenlik ve kalite inceleme  |
-| `api-audit`                            | `/api-audit`           | API performans, dayanıklılık ve sözleşme testi denetimi      |
-| `cache-audit`                          | `/cache-audit`         | Önbellek stratejisi, tutarlılık ve güvenlik analizi           |
-| `disaster-recovery`                    | `/disaster-recovery`   | Felaket kurtarma ve iş sürekliliği değerlendirmesi           |
-| `feature-flags-audit`                  | `/feature-flags-audit` | Feature flag hijyeni, dağıtım güvenliği ve deney yönetimi    |
-| `integration-security`                 | `/integration-security`| Üçüncü taraf entegrasyon ve webhook güvenlik analizi          |
-| `observability-audit`                  | `/observability-audit` | Loglama, metrikler, sağlık kontrolleri ve hata ayıklama      |
-| `payment-security`                     | `/payment-security`    | Ödeme akışı ve finansal işlem güvenlik denetimi              |
-| `queue-audit`                          | `/queue-audit`         | Kuyruk ve asenkron iş yönetimi dayanıklılık analizi          |
-| `release-discipline`                   | `/release-discipline`  | Versiyon kontrolü, değişiklik yönetimi ve sürüm süreci      |
-| `serialization-audit`                  | `/serialization-audit` | Veri serileştirme ve dönüştürme güvenlik incelemesi          |
-| `session-audit`                        | `/session-audit`       | Oturum yönetimi ve durum kalıcılığı güvenlik denetimi        |
-| `tenant-isolation`                     | `/tenant-isolation`    | Çok kiracılı veri izolasyonu ve sızıntı denetimi             |
-| `upload-security`                      | `/upload-security`     | Dosya yükleme ve medya işleme güvenlik denetimi              |
-| `version-update-skill-creator`         | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur |
+| Skill                                  | Komut                           | Açıklama                                                     |
+|----------------------------------------|---------------------------------|--------------------------------------------------------------|
+| `commit`                               | `/commit`                       | Repo stilini taklit eden conventional commit'ler             |
+| `task-plan`                            | `/task-plan`                    | PRD'yi özelliklere ayırma ve otonom yürütme                  |
+| `bug-report`                           | `/bug-report`                   | Sistematik hata analizi ve yapılandırılmış rapor oluşturma   |
+| `dead-code`                            | `/dead-code`                    | 3 fazlı analiz ve temizlik yol haritasıyla ölü kod denetimi  |
+| `git-flow`                             | `/git-flow`                     | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi  |
+| `initialize` (yalnızca Claude Code)    | `/initialize`                   | Kod tabanını tarayarak AGENTS.md oluşturur                   |
+| `init-claude` (yalnızca Factory Droid) | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                   |
+| `implement-plan`                       | `/implement-plan`               | Zorunlu kullanıcı sorularıyla interaktif planlama            |
+| `frontend-design`                      | `/frontend-design`              | Özgün, prodüksiyon kalitesinde frontend arayüzleri           |
+| `tech-debt`                            | `/tech-debt`                    | Teknik borç haritalama, ölçüm ve önceliklendirme             |
+| `test-review`                          | `/test-review`                  | Test paketi kalitesi, kapsam boşlukları ve strateji inceleme |
+| `error-review`                         | `/error-review`                 | Hata mesajı kalitesi ve bilgi sızıntısı denetimi             |
+| `ai-code-audit`                        | `/ai-code-audit`                | Yapay zeka üretimi kod tespiti, güvenlik ve kalite inceleme  |
+| `api-audit`                            | `/api-audit`                    | API performans, dayanıklılık ve sözleşme testi denetimi      |
+| `cache-audit`                          | `/cache-audit`                  | Önbellek stratejisi, tutarlılık ve güvenlik analizi          |
+| `disaster-recovery`                    | `/disaster-recovery`            | Felaket kurtarma ve iş sürekliliği değerlendirmesi           |
+| `feature-flags-audit`                  | `/feature-flags-audit`          | Feature flag hijyeni, dağıtım güvenliği ve deney yönetimi    |
+| `integration-security`                 | `/integration-security`         | Üçüncü taraf entegrasyon ve webhook güvenlik analizi         |
+| `observability-audit`                  | `/observability-audit`          | Loglama, metrikler, sağlık kontrolleri ve hata ayıklama      |
+| `payment-security`                     | `/payment-security`             | Ödeme akışı ve finansal işlem güvenlik denetimi              |
+| `queue-audit`                          | `/queue-audit`                  | Kuyruk ve asenkron iş yönetimi dayanıklılık analizi          |
+| `release-discipline`                   | `/release-discipline`           | Versiyon kontrolü, değişiklik yönetimi ve sürüm süreci       |
+| `serialization-audit`                  | `/serialization-audit`          | Veri serileştirme ve dönüştürme güvenlik incelemesi          |
+| `session-audit`                        | `/session-audit`                | Oturum yönetimi ve durum kalıcılığı güvenlik denetimi        |
+| `tenant-isolation`                     | `/tenant-isolation`             | Çok kiracılı veri izolasyonu ve sızıntı denetimi             |
+| `upload-security`                      | `/upload-security`              | Dosya yükleme ve medya işleme güvenlik denetimi              |
+| `version-update-skill-creator`         | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur      |
 
 ## Dizin Yapısı
 
@@ -166,12 +166,12 @@ cp pi/extensions/* ~/.pi/agent/extensions/
 
 Dosyaları kopyaladıktan sonra, hook tanımlarını `settings.json` dosyanıza birleştirin:
 
-| Platform      | Kaynak                             | Hedef                               |
-|---------------|------------------------------------|-------------------------------------|
-| Factory Droid | `factory/settings.json.example`    | `~/.factory/settings.json`          |
-| Claude Code   | `claude/settings.json.example`     | `~/.claude/settings.json`           |
-| OpenCode      | `opencode/opencode.json.example`   | `~/.config/opencode/opencode.json`  |
-| Codex CLI     | `codex/config.toml.example`        | `~/.codex/config.toml`              |
+| Platform      | Kaynak                           | Hedef                              |
+|---------------|----------------------------------|------------------------------------|
+| Factory Droid | `factory/settings.json.example`  | `~/.factory/settings.json`         |
+| Claude Code   | `claude/settings.json.example`   | `~/.claude/settings.json`          |
+| OpenCode      | `opencode/opencode.json.example` | `~/.config/opencode/opencode.json` |
+| Codex CLI     | `codex/config.toml.example`      | `~/.codex/config.toml`             |
 
 Örnek dosyadaki `hooks` bölümünü mevcut ayarlarınıza kopyalayın veya örneği başlangıç noktası olarak kullanın.
 
@@ -266,21 +266,21 @@ Masaüstü bildirimleri `settings.json` dosyanızda özellik bazında yapıland�
 
 ## Platform Farklılıkları
 
-| Özellik                    | Factory Droid        | Claude Code          | OpenCode                 | Codex CLI                   | Pi Agent                    |
-|----------------------------|----------------------|----------------------|--------------------------|-----------------------------|-----------------------------|
-| Global yapılandırma dizini | `~/.factory/`        | `~/.claude/`         | `~/.config/opencode/`    | `~/.codex/`                 | `~/.pi/agent/`              |
-| Ortak veri dizini          | `~/.cli-tweaks/`     | `~/.cli-tweaks/`     | `~/.cli-tweaks/`         | N/A (yerleşik bellek)       | `~/.cli-tweaks/`            |
-| Hook yapılandırma dosyası  | `settings.json`      | `settings.json`      | `opencode.json`          | `config.toml`               | `settings.json`             |
-| Plan modu çıkış olayı      | `ExitSpecMode`       | `ExitPlanMode`       | Yerleşik (Tab tuşu)      | Yerleşik (Shift+Tab)        | Extension tabanlı           |
-| Kullanıcı soru aracı       | `AskUser`            | `AskUserQuestion`    | N/A                      | `AskUserQuestion`           | Extension tabanlı           |
-| Yeniden enjeksiyon hedefi  | `AGENTS.md`          | `CLAUDE.md`          | Native rules sistemi     | `AGENTS.md` (native)        | `AGENTS.md` (native)        |
-| Subagent terminolojisi     | "worker"             | "Explore"            | N/A                      | N/A                         | Extension tabanlı           |
-| Plugin runtime             | Python 3.8+          | Python 3.8+          | JS/TS (Bun)              | N/A (yalnızca skill'ler)    | JS/TS (Node.js)             |
-| Skill çağırma ön eki       | `/`                  | `/`                  | `/`                      | `$`                         | `/skill:`                   |
-| Bellek sistemi             | Hook tabanlı         | Hook tabanlı         | Plugin tabanlı           | Yerleşik                    | Extension tabanlı           |
-| `/init-claude` skill'i     | Evet (CLAUDE.md)     | Hayır (yerleşik)     | Hayır                    | Hayır                       | Evet (CLAUDE.md)            |
-| `/initialize` skill'i      | Hayır                | Evet (AGENTS.md)     | Hayır                    | Evet (AGENTS.md)            | Hayır                       |
-| `auto-allow.py` hook'u     | Hayır                | Evet (v2.0.45+)      | Hayır                    | Hayır (OS seviyesi sandbox) | Hayır (izin sistemi yok)    |
+| Özellik                    | Factory Droid    | Claude Code       | OpenCode              | Codex CLI                   | Pi Agent                 |
+|----------------------------|------------------|-------------------|-----------------------|-----------------------------|--------------------------|
+| Global yapılandırma dizini | `~/.factory/`    | `~/.claude/`      | `~/.config/opencode/` | `~/.codex/`                 | `~/.pi/agent/`           |
+| Ortak veri dizini          | `~/.cli-tweaks/` | `~/.cli-tweaks/`  | `~/.cli-tweaks/`      | N/A (yerleşik bellek)       | `~/.cli-tweaks/`         |
+| Hook yapılandırma dosyası  | `settings.json`  | `settings.json`   | `opencode.json`       | `config.toml`               | `settings.json`          |
+| Plan modu çıkış olayı      | `ExitSpecMode`   | `ExitPlanMode`    | Yerleşik (Tab tuşu)   | Yerleşik (Shift+Tab)        | Extension tabanlı        |
+| Kullanıcı soru aracı       | `AskUser`        | `AskUserQuestion` | N/A                   | `AskUserQuestion`           | Extension tabanlı        |
+| Yeniden enjeksiyon hedefi  | `AGENTS.md`      | `CLAUDE.md`       | Native rules sistemi  | `AGENTS.md` (native)        | `AGENTS.md` (native)     |
+| Subagent terminolojisi     | "worker"         | "Explore"         | N/A                   | N/A                         | Extension tabanlı        |
+| Plugin runtime             | Python 3.8+      | Python 3.8+       | JS/TS (Bun)           | N/A (yalnızca skill'ler)    | JS/TS (Node.js)          |
+| Skill çağırma ön eki       | `/`              | `/`               | `/`                   | `$`                         | `/skill:`                |
+| Bellek sistemi             | Hook tabanlı     | Hook tabanlı      | Plugin tabanlı        | Yerleşik                    | Extension tabanlı        |
+| `/init-claude` skill'i     | Evet (CLAUDE.md) | Hayır (yerleşik)  | Hayır                 | Hayır                       | Evet (CLAUDE.md)         |
+| `/initialize` skill'i      | Hayır            | Evet (AGENTS.md)  | Hayır                 | Evet (AGENTS.md)            | Hayır                    |
+| `auto-allow.py` hook'u     | Hayır            | Evet (v2.0.45+)   | Hayır                 | Hayır (OS seviyesi sandbox) | Hayır (izin sistemi yok) |
 
 ## Lisans
 

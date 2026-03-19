@@ -20,35 +20,35 @@ A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, Codex
 
 ### Skills
 
-| Skill                              | Command                | Description                                                                      |
-|------------------------------------|------------------------|----------------------------------------------------------------------------------|
-| `commit`                           | `/commit`              | Conventional commits with repo style mimicry, smart staging, git safety protocol |
-| `task-plan`                        | `/task-plan`           | PRD breakdown into features with autonomous execution and checkpointing          |
-| `bug-report`                       | `/bug-report`          | Systematic bug analysis and structured report generation                         |
-| `dead-code`                        | `/dead-code`           | Dead code audit with 3-phase analysis and cleanup roadmap                        |
-| `git-flow`                         | `/git-flow`            | Structured branch management with strict validation rules                        |
-| `initialize` (Claude Code only)    | `/initialize`          | Creates AGENTS.md by scanning the codebase                                       |
-| `init-claude` (Factory Droid only) | `/init-claude`         | Creates CLAUDE.md by scanning the codebase                                       |
-| `implement-plan`                   | `/implement-plan`      | Interactive planning with mandatory user questions                               |
-| `frontend-design`                  | `/frontend-design`     | Distinctive, production-grade frontend interfaces                                |
-| `tech-debt`                        | `/tech-debt`           | Technical debt mapping, measurement, and prioritization                          |
-| `test-review`                      | `/test-review`         | Test suite quality, coverage gaps, and strategy review                           |
-| `error-review`                     | `/error-review`        | Error message quality and information disclosure audit                           |
-| `ai-code-audit`                    | `/ai-code-audit`       | AI-generated code detection, security, and quality review                        |
-| `api-audit`                        | `/api-audit`           | API performance, resilience, and contract testing audit                          |
-| `cache-audit`                      | `/cache-audit`         | Caching strategy, consistency, and security analysis                             |
-| `disaster-recovery`                | `/disaster-recovery`   | Disaster recovery and business continuity assessment                             |
-| `feature-flags-audit`              | `/feature-flags-audit` | Feature flag hygiene, rollout safety, and experimentation                        |
-| `integration-security`             | `/integration-security`| Third-party integration and webhook security analysis                            |
-| `observability-audit`              | `/observability-audit` | Logging, metrics, health checks, and debugging readiness                         |
-| `payment-security`                 | `/payment-security`    | Payment flow and financial transaction security audit                            |
-| `queue-audit`                      | `/queue-audit`         | Queue and async job management resilience analysis                               |
-| `release-discipline`               | `/release-discipline`  | Version control, change management, and release process                          |
-| `serialization-audit`              | `/serialization-audit` | Data serialization and transformation security review                            |
-| `session-audit`                    | `/session-audit`       | Session management and state persistence security                                |
-| `tenant-isolation`                 | `/tenant-isolation`    | Multi-tenant data isolation and leakage audit                                    |
-| `upload-security`                  | `/upload-security`     | File upload and media processing security audit                                  |
-| `version-update-skill-creator`     | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill              |
+| Skill                              | Command                         | Description                                                                      |
+|------------------------------------|---------------------------------|----------------------------------------------------------------------------------|
+| `commit`                           | `/commit`                       | Conventional commits with repo style mimicry, smart staging, git safety protocol |
+| `task-plan`                        | `/task-plan`                    | PRD breakdown into features with autonomous execution and checkpointing          |
+| `bug-report`                       | `/bug-report`                   | Systematic bug analysis and structured report generation                         |
+| `dead-code`                        | `/dead-code`                    | Dead code audit with 3-phase analysis and cleanup roadmap                        |
+| `git-flow`                         | `/git-flow`                     | Structured branch management with strict validation rules                        |
+| `initialize` (Claude Code only)    | `/initialize`                   | Creates AGENTS.md by scanning the codebase                                       |
+| `init-claude` (Factory Droid only) | `/init-claude`                  | Creates CLAUDE.md by scanning the codebase                                       |
+| `implement-plan`                   | `/implement-plan`               | Interactive planning with mandatory user questions                               |
+| `frontend-design`                  | `/frontend-design`              | Distinctive, production-grade frontend interfaces                                |
+| `tech-debt`                        | `/tech-debt`                    | Technical debt mapping, measurement, and prioritization                          |
+| `test-review`                      | `/test-review`                  | Test suite quality, coverage gaps, and strategy review                           |
+| `error-review`                     | `/error-review`                 | Error message quality and information disclosure audit                           |
+| `ai-code-audit`                    | `/ai-code-audit`                | AI-generated code detection, security, and quality review                        |
+| `api-audit`                        | `/api-audit`                    | API performance, resilience, and contract testing audit                          |
+| `cache-audit`                      | `/cache-audit`                  | Caching strategy, consistency, and security analysis                             |
+| `disaster-recovery`                | `/disaster-recovery`            | Disaster recovery and business continuity assessment                             |
+| `feature-flags-audit`              | `/feature-flags-audit`          | Feature flag hygiene, rollout safety, and experimentation                        |
+| `integration-security`             | `/integration-security`         | Third-party integration and webhook security analysis                            |
+| `observability-audit`              | `/observability-audit`          | Logging, metrics, health checks, and debugging readiness                         |
+| `payment-security`                 | `/payment-security`             | Payment flow and financial transaction security audit                            |
+| `queue-audit`                      | `/queue-audit`                  | Queue and async job management resilience analysis                               |
+| `release-discipline`               | `/release-discipline`           | Version control, change management, and release process                          |
+| `serialization-audit`              | `/serialization-audit`          | Data serialization and transformation security review                            |
+| `session-audit`                    | `/session-audit`                | Session management and state persistence security                                |
+| `tenant-isolation`                 | `/tenant-isolation`             | Multi-tenant data isolation and leakage audit                                    |
+| `upload-security`                  | `/upload-security`              | File upload and media processing security audit                                  |
+| `version-update-skill-creator`     | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill                        |
 
 ## Directory Structure
 
@@ -166,12 +166,12 @@ cp pi/extensions/* ~/.pi/agent/extensions/
 
 After copying the files, register hooks by merging the hook definitions into your `settings.json`:
 
-| Platform      | Source                           | Target                              |
-|---------------|----------------------------------|-------------------------------------|
-| Factory Droid | `factory/settings.json.example`  | `~/.factory/settings.json`          |
-| Claude Code   | `claude/settings.json.example`   | `~/.claude/settings.json`           |
-| OpenCode      | `opencode/opencode.json.example` | `~/.config/opencode/opencode.json`  |
-| Codex CLI     | `codex/config.toml.example`      | `~/.codex/config.toml`              |
+| Platform      | Source                           | Target                             |
+|---------------|----------------------------------|------------------------------------|
+| Factory Droid | `factory/settings.json.example`  | `~/.factory/settings.json`         |
+| Claude Code   | `claude/settings.json.example`   | `~/.claude/settings.json`          |
+| OpenCode      | `opencode/opencode.json.example` | `~/.config/opencode/opencode.json` |
+| Codex CLI     | `codex/config.toml.example`      | `~/.codex/config.toml`             |
 
 Copy the `hooks` section from the example file into your existing settings, or use the example as a starting point.
 
@@ -266,21 +266,21 @@ Desktop notifications are configured per-feature in your `settings.json`:
 
 ## Platform Differences
 
-| Feature                  | Factory Droid        | Claude Code          | OpenCode                 | Codex CLI                | Pi Agent                 |
-|--------------------------|----------------------|----------------------|--------------------------|--------------------------|--------------------------|
-| Global config dir        | `~/.factory/`        | `~/.claude/`         | `~/.config/opencode/`    | `~/.codex/`              | `~/.pi/agent/`           |
-| Shared data dir          | `~/.cli-tweaks/`     | `~/.cli-tweaks/`     | `~/.cli-tweaks/`         | N/A (built-in memory)    | `~/.cli-tweaks/`         |
-| Hook config file         | `settings.json`      | `settings.json`      | `opencode.json`          | `config.toml`            | `settings.json`          |
-| Plan mode exit event     | `ExitSpecMode`       | `ExitPlanMode`       | Built-in (Tab key)       | Built-in (Shift+Tab)     | Extension-based          |
-| User question tool       | `AskUser`            | `AskUserQuestion`    | N/A                      | `AskUserQuestion`        | Extension-based          |
-| Re-injection target      | `AGENTS.md`          | `CLAUDE.md`          | Native rules system      | `AGENTS.md` (native)     | `AGENTS.md` (native)     |
-| Subagent terminology     | "worker"             | "Explore"            | N/A                      | N/A                      | Extension-based          |
-| Plugin runtime           | Python 3.8+          | Python 3.8+          | JS/TS (Bun)              | N/A (skills only)        | JS/TS (Node.js)          |
-| Skill invocation prefix  | `/`                  | `/`                  | `/`                      | `$`                      | `/skill:`                |
-| Memory system            | Hook-based           | Hook-based           | Plugin-based             | Built-in                 | Extension-based          |
-| `/init-claude` skill     | Yes (CLAUDE.md)      | No (built-in)        | No                       | No                       | Yes (CLAUDE.md)          |
-| `/initialize` skill      | No                   | Yes (AGENTS.md)      | No                       | Yes (AGENTS.md)          | No                       |
-| `auto-allow.py` hook     | No                   | Yes (v2.0.45+)       | No                       | No (OS-level sandbox)    | No (no permission system)|
+| Feature                 | Factory Droid    | Claude Code       | OpenCode              | Codex CLI             | Pi Agent                  |
+|-------------------------|------------------|-------------------|-----------------------|-----------------------|---------------------------|
+| Global config dir       | `~/.factory/`    | `~/.claude/`      | `~/.config/opencode/` | `~/.codex/`           | `~/.pi/agent/`            |
+| Shared data dir         | `~/.cli-tweaks/` | `~/.cli-tweaks/`  | `~/.cli-tweaks/`      | N/A (built-in memory) | `~/.cli-tweaks/`          |
+| Hook config file        | `settings.json`  | `settings.json`   | `opencode.json`       | `config.toml`         | `settings.json`           |
+| Plan mode exit event    | `ExitSpecMode`   | `ExitPlanMode`    | Built-in (Tab key)    | Built-in (Shift+Tab)  | Extension-based           |
+| User question tool      | `AskUser`        | `AskUserQuestion` | N/A                   | `AskUserQuestion`     | Extension-based           |
+| Re-injection target     | `AGENTS.md`      | `CLAUDE.md`       | Native rules system   | `AGENTS.md` (native)  | `AGENTS.md` (native)      |
+| Subagent terminology    | "worker"         | "Explore"         | N/A                   | N/A                   | Extension-based           |
+| Plugin runtime          | Python 3.8+      | Python 3.8+       | JS/TS (Bun)           | N/A (skills only)     | JS/TS (Node.js)           |
+| Skill invocation prefix | `/`              | `/`               | `/`                   | `$`                   | `/skill:`                 |
+| Memory system           | Hook-based       | Hook-based        | Plugin-based          | Built-in              | Extension-based           |
+| `/init-claude` skill    | Yes (CLAUDE.md)  | No (built-in)     | No                    | No                    | Yes (CLAUDE.md)           |
+| `/initialize` skill     | No               | Yes (AGENTS.md)   | No                    | Yes (AGENTS.md)       | No                        |
+| `auto-allow.py` hook    | No               | Yes (v2.0.45+)    | No                    | No (OS-level sandbox) | No (no permission system) |
 
 ## License
 
