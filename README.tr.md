@@ -27,8 +27,8 @@ Factory Droid, Claude Code, OpenCode, Codex CLI ve Pi Agent için planlama otoma
 | `bug-report`                           | `/bug-report`                   | Sistematik hata analizi ve yapılandırılmış rapor oluşturma   |
 | `dead-code`                            | `/dead-code`                    | 3 fazlı analiz ve temizlik yol haritasıyla ölü kod denetimi  |
 | `git-flow`                             | `/git-flow`                     | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi  |
-| `initialize` (yalnızca Claude Code)    | `/initialize`                   | Kod tabanını tarayarak AGENTS.md oluşturur                   |
-| `init-claude` (yalnızca Factory Droid) | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                   |
+| `initialize` (Claude Code, Codex)      | `/initialize`                   | Kod tabanını tarayarak AGENTS.md oluşturur                   |
+| `init-claude` (Factory, Pi)            | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                   |
 | `implement-plan`                       | `/implement-plan`               | Zorunlu kullanıcı sorularıyla interaktif planlama            |
 | `frontend-design`                      | `/frontend-design`              | Özgün, prodüksiyon kalitesinde frontend arayüzleri           |
 | `tech-debt`                            | `/tech-debt`                    | Teknik borç haritalama, ölçüm ve önceliklendirme             |

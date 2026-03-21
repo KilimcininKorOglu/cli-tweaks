@@ -27,8 +27,8 @@ A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, Codex
 | `bug-report`                       | `/bug-report`                   | Systematic bug analysis and structured report generation                         |
 | `dead-code`                        | `/dead-code`                    | Dead code audit with 3-phase analysis and cleanup roadmap                        |
 | `git-flow`                         | `/git-flow`                     | Structured branch management with strict validation rules                        |
-| `initialize` (Claude Code only)    | `/initialize`                   | Creates AGENTS.md by scanning the codebase                                       |
-| `init-claude` (Factory Droid only) | `/init-claude`                  | Creates CLAUDE.md by scanning the codebase                                       |
+| `initialize` (Claude Code, Codex)  | `/initialize`                   | Creates AGENTS.md by scanning the codebase                                       |
+| `init-claude` (Factory, Pi)        | `/init-claude`                  | Creates CLAUDE.md by scanning the codebase                                       |
 | `implement-plan`                   | `/implement-plan`               | Interactive planning with mandatory user questions                               |
 | `frontend-design`                  | `/frontend-design`              | Distinctive, production-grade frontend interfaces                                |
 | `tech-debt`                        | `/tech-debt`                    | Technical debt mapping, measurement, and prioritization                          |
