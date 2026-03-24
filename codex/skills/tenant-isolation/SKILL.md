@@ -79,32 +79,36 @@ Verification: [How you confirmed this - specific code path or logic trace]
 Suggested Commit: [Conventional commit message, e.g. "fix: add rate limiting to payment endpoint"]
 ```
 
-If `BUG-REPORT.md` already exists, append new findings and update the summary table.
+If `BUG-REPORT.md` already exists, append new findings under `## Findings` and update the summary table.
 If it does not exist, create it with:
 
 ```markdown
 # Bug Analysis Report - [Repository Name]
+
 Generated: [Current Date]
 Last Bug ID: BUG-[XXX]
 
 ## Summary
-| Severity     | Count |
-|--------------|-------|
-| Critical     | X     |
-| High         | X     |
-| Medium       | X     |
-| Low          | X     |
-| **Total**    | **X** |
+
+| Severity  | Count  |
+|-----------|--------|
+| Critical  | X      |
+| High      | X      |
+| Medium    | X      |
+| Low       | X      |
+| **Total** | **X**  |
 
 ## Findings
-[All findings grouped by severity]
 
-## Recommendations
-[Suggested fixes and preventive measures]
+[All findings sorted by severity: CRITICAL first, LOW last]
 ```
 
 ## Notes
 
 - Zero false positives is more important than completeness -- only report verified findings
-- Suggested Commit messages follow conventional commits and NEVER include bug IDs
+- ALL findings go under a single `## Findings` section -- no custom grouping headers (no "Technical Debt", "Architecture", etc.)
+- Findings must be sorted by severity: CRITICAL first, then HIGH, MEDIUM, LOW
+- Each finding uses `### BUG-[ID]` heading with `---` separator between entries
+- Allowed commit types: fix, feat, refactor, chore, test, docs, perf, ci, build, security, cleanup
+- Suggested Commit messages NEVER include bug IDs
 - IMPORTANT: Always write the report in English only, regardless of conversation language

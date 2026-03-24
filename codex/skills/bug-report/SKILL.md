@@ -97,44 +97,32 @@ Save to `BUG-REPORT.md` in repository root:
 
 ```markdown
 # Bug Analysis Report - [Repository Name]
+
 Generated: [Current Date]
 Last Bug ID: BUG-[XXX]
 
 ## Summary
-| Severity     | Count |
-|--------------|-------|
-| Critical     | X     |
-| High         | X     |
-| Medium       | X     |
-| Low          | X     |
-| **Total**    | **X** |
 
-## Critical Bugs (Immediate Attention Required)
-[List critical bugs first]
+| Severity  | Count  |
+|-----------|--------|
+| Critical  | X      |
+| High      | X      |
+| Medium    | X      |
+| Low       | X      |
+| **Total** | **X**  |
 
-## All Bugs
-| ID      | Severity | Status | File              | Description |
-|---------|----------|--------|-------------------|-------------|
-| BUG-001 | CRITICAL | NEW    | path/file.ext:42  | Description |
+## Findings
 
-## Recommendations
-[Suggested fixes and preventive measures]
+[All findings sorted by severity: CRITICAL first, LOW last]
 ```
-
-## Priority Order
-
-1. Security vulnerabilities (always first)
-2. Data corruption risks
-3. System crashes
-4. Functional bugs by user impact
-5. Code quality issues
 
 ## Notes
 
 - Zero false positives is more important than completeness -- only report verified bugs
-- For complex bugs, explain potential solutions without implementing
-- Respect existing code patterns when suggesting fixes
-- Group related bugs together
+- ALL findings go under a single `## Findings` section -- no custom grouping headers (no "Technical Debt", "Architecture", etc.)
+- Findings must be sorted by severity: CRITICAL first, then HIGH, MEDIUM, LOW
+- Each finding uses `### BUG-[ID]` heading with `---` separator between entries
 - If `bugs.md` or `bug.md` exists, merge into new report and delete old file
-- Suggested Commit messages must follow conventional commits (fix:, refactor:, etc.) and NEVER include bug IDs
+- Allowed commit types: fix, feat, refactor, chore, test, docs, perf, ci, build, security, cleanup
+- Suggested Commit messages NEVER include bug IDs
 - IMPORTANT: Always write the report in English only, regardless of conversation language
