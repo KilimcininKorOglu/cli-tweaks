@@ -71,6 +71,16 @@ Compare with existing tasks:
 For each new feature, create `tasks/XXX-feature-name.md` using the
 [feature template](templates/feature.md).
 
+IMPORTANT RULES:
+1. Create 3-6 tasks per feature, each task should be 0.5-3 days of work
+2. Tasks should be atomic and independently testable
+3. Use realistic effort estimates based on complexity
+4. Dependencies MUST reference actual task IDs (T001, T002, etc.) or be "None"
+5. Do NOT use vague dependencies like "All backend features" or "Previous tasks"
+6. Success criteria must be specific and measurable
+7. Technical details should guide implementation
+8. Priority levels: P1=Critical, P2=High, P3=Medium, P4=Low
+
 Rules for existing features:
 - Preserve completed tasks (don't modify COMPLETED status)
 - Preserve in-progress tasks (keep progress)
