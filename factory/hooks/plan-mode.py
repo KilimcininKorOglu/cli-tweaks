@@ -202,11 +202,18 @@ matched = (explicitMatch or implicitMatch) and not skip
 if matched:
     mode = "explicit" if explicitMatch else "implicit"
 
-    context = """Spec mode is active
-[PLANNING MODE ACTIVE]
+    context = """[PLANNING MODE DETECTED]
 The user's request was detected as requiring planning (mode: {mode}).
 
+This hook can start a planning workflow, but it does NOT by itself prove that
+the runtime entered true Specification Mode.
+
 You MUST follow this 5-phase workflow. DO NOT skip phases.
+If the session explicitly indicates that Specification Mode is active, use the
+real spec-mode tools.
+If the session does NOT explicitly indicate Specification Mode is active,
+stay in normal mode, remain read-only during planning, and present the plan
+manually in chat instead of using ExitSpecMode.
 
 == PHASE 1: EXPLORE & UNDERSTAND ==
 - DO NOT write any code or edit any files.
@@ -233,23 +240,23 @@ You MUST follow this 5-phase workflow. DO NOT skip phases.
 - Each phase should end with manual verification steps.
 
 == PHASE 4: PRESENT THE PLAN ==
-- Use ExitSpecMode tool with "title" and "plan" parameters.
-- If there are multiple valid approaches, use "optionNames" parameter.
+- If the session explicitly says Specification Mode is active, use ExitSpecMode
+  with "title" and "plan" parameters.
+- Otherwise present the same plan directly in markdown with clear sections.
+- If there are multiple valid approaches, list them clearly.
 - The plan must be actionable with no TBD/TODO items.
 
 == PHASE 5: WAIT FOR APPROVAL ==
 - Only after the user explicitly approves, begin implementation.
-- If the user requests changes, revise and present again via ExitSpecMode.
+- If the user requests changes, revise and present again using the same method
+  that matched the current session state.
 
 CRITICAL RULES:
 - NEVER skip Phase 2 (asking questions). This is the most important phase.
 - NEVER dump a complete plan without first asking questions.
 - NEVER write code during planning. This is read-only.
 - Use AskUser tool (not plain text) for structured questions.
-
-You have an 'implement-plan' skill available. Use the Skill tool
-to invoke it with skill name 'implement-plan' for the detailed
-planning workflow.""".format(mode=mode)
+""".format(mode=mode)
 
     output = {
         "hookSpecificOutput": {
