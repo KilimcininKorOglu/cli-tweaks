@@ -1,7 +1,7 @@
 ---
 name: bug-report
 description: >
-  This skill MUST be invoked when the user asks for systematic bug analysis, or any focused audit such as "api audit", "cache audit", "disaster recovery", "error review", "feature flags audit", "integration security", "observability audit", "payment security", "queue audit", "release discipline", "serialization audit", "session audit", "tech debt", "tenant isolation", "test review", "upload security", "ai code audit", or "dead code". Use `/bug-report` for general scans and `/bug-report <subcommand>` for domain-specific audits. All modes write verified findings to BUG-REPORT.md using the shared report contract.
+  This skill MUST be invoked when the user asks for systematic bug analysis, or any focused audit such as "api audit", "auditcodex", "cache audit", "disaster recovery", "error review", "feature flags audit", "integration security", "observability audit", "payment security", "queue audit", "release discipline", "serialization audit", "session audit", "tech debt", "tenant isolation", "test review", "upload security", "ai code audit", or "dead code". Use `/bug-report` for general scans and `/bug-report <subcommand>` for domain-specific audits. All modes write verified findings to BUG-REPORT.md using the shared report contract.
 argument-hint: "[--severity critical|high|medium|low|all | <subcommand> [subcommand-options]]"
 ---
 
@@ -14,6 +14,7 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 ```bash
 /bug-report                              # Full repository bug analysis
 /bug-report --severity high              # General scan filtered by severity
+/bug-report auditcodex                   # Codex-backed diff audit
 /bug-report api-audit                    # Focused API audit
 /bug-report error-review                 # Focused error handling audit
 /bug-report dead-code                    # Focused dead-code audit
@@ -23,6 +24,7 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 
 | Subcommand | Command | Description |
 |------------|---------|-------------|
+| `auditcodex` | `/bug-report auditcodex` | Codex CLI diff audit with validated findings written to BUG-REPORT.md |
 | `api-audit` | `/bug-report api-audit` | API performance, resilience, contract, and lifecycle audit |
 | `cache-audit` | `/bug-report cache-audit` | Caching strategy, consistency, and Redis/security audit |
 | `disaster-recovery` | `/bug-report disaster-recovery` | Disaster recovery and business continuity readiness audit |
@@ -50,6 +52,7 @@ Use `/bug-report` when the user wants a broad repository scan for bugs, logic fl
 ### Focused Audit Mode
 Use `/bug-report <subcommand>` when the user asks for a specific audit domain. The domain-specific checklist lives in the matching file under `subcommands/`.
 
+- For `/bug-report auditcodex`: see [subcommands/auditcodex.md](subcommands/auditcodex.md)
 - For `/bug-report api-audit`: see [subcommands/api-audit.md](subcommands/api-audit.md)
 - For `/bug-report cache-audit`: see [subcommands/cache-audit.md](subcommands/cache-audit.md)
 - For `/bug-report disaster-recovery`: see [subcommands/disaster-recovery.md](subcommands/disaster-recovery.md)
@@ -105,7 +108,7 @@ For general `/bug-report`, scan broad bug categories:
 | MEDIUM | Swallowed exceptions, edge cases, integration problems |
 | LOW | Deprecated APIs, dead code, N+1 queries, technical debt |
 
-For `/bug-report <subcommand>`, follow the domain-specific checklist in the matching subcommand file.
+For `/bug-report <subcommand>`, follow the domain-specific checklist in the matching subcommand file. `auditcodex` is the exception to the repository-wide scan pattern: it audits the current diff (or last commit fallback) through Codex CLI and then writes only verified findings to `BUG-REPORT.md`.
 
 ### Step 3: Verify Each Finding
 

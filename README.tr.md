@@ -31,12 +31,12 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `implement-plan`               | `/implement-plan`               | Zorunlu kullanıcı sorularıyla interaktif planlama                         |
 | `frontend-design`              | `/frontend-design`              | Özgün, prodüksiyon kalitesinde frontend arayüzleri                        |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur                   |
-| `auditcodex`                   | `/auditcodex`                   | OpenAI Codex CLI ile bağımsız kod denetimi ve doğrulama                   |
 
 #### `bug-report` audit subcommand'leri
 
 | Alt komut | Komut | Açıklama |
 |-----------|-------|----------|
+| `auditcodex` | `/bug-report auditcodex` | Codex CLI ile diff tabanlı denetim ve doğrulanmış bulguların BUG-REPORT.md'ye yazılması |
 | `api-audit` | `/bug-report api-audit` | API performans, dayanıklılık, sözleşme ve yaşam döngüsü denetimi |
 | `cache-audit` | `/bug-report cache-audit` | Önbellek stratejisi, tutarlılık ve Redis/güvenlik denetimi |
 | `disaster-recovery` | `/bug-report disaster-recovery` | Felaket kurtarma ve iş sürekliliği hazırlık denetimi |
@@ -56,7 +56,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `ai-code-audit` | `/bug-report ai-code-audit` | Yapay zeka üretimi kod tespiti, güvenlik ve kalite denetimi |
 | `dead-code` | `/bug-report dead-code` | Ölü kod, kullanılmayan tanımlar ve temizlik denetimi |
 
-> Geçiş notu: `/api-audit` ve `/error-review` gibi bağımsız audit komutları artık `/bug-report <subcommand>` altında toplandı.
+> Geçiş notu: `/api-audit`, `/error-review` ve `/auditcodex` gibi bağımsız audit komutları artık `/bug-report <subcommand>` altında toplandı.
 
 ## Dizin Yapısı
 

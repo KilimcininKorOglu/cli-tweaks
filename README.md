@@ -31,12 +31,12 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `implement-plan`               | `/implement-plan`               | Interactive planning with mandatory user questions                                |
 | `frontend-design`              | `/frontend-design`              | Distinctive, production-grade frontend interfaces                                 |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill                         |
-| `auditcodex`                   | `/auditcodex`                   | Independent code review via OpenAI Codex CLI with validated findings              |
 
 #### `bug-report` audit subcommands
 
 | Subcommand | Command | Description |
 |------------|---------|-------------|
+| `auditcodex` | `/bug-report auditcodex` | Codex CLI diff audit with validated findings written to BUG-REPORT.md |
 | `api-audit` | `/bug-report api-audit` | API performance, resilience, contract, and lifecycle audit |
 | `cache-audit` | `/bug-report cache-audit` | Caching strategy, consistency, and Redis/security audit |
 | `disaster-recovery` | `/bug-report disaster-recovery` | Disaster recovery and business continuity readiness audit |
@@ -56,7 +56,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `ai-code-audit` | `/bug-report ai-code-audit` | AI-generated code detection, security, and quality audit |
 | `dead-code` | `/bug-report dead-code` | Dead code, unused declarations, and cleanup audit |
 
-> Migration note: standalone audit commands such as `/api-audit` and `/error-review` are now consolidated under `/bug-report <subcommand>`.
+> Migration note: standalone audit commands such as `/api-audit`, `/error-review`, and `/auditcodex` are now consolidated under `/bug-report <subcommand>`.
 
 ## Directory Structure
 
