@@ -20,36 +20,43 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 
 ### Skill'ler
 
-| Skill                                  | Komut                           | Açıklama                                                     |
-|----------------------------------------|---------------------------------|--------------------------------------------------------------|
-| `commit`                               | `/commit`                       | Repo stilini taklit eden conventional commit'ler             |
-| `task-plan`                            | `/task-plan`                    | PRD'yi özelliklere ayırma ve otonom yürütme                  |
-| `bug-report`                           | `/bug-report`                   | Sistematik hata analizi ve yapılandırılmış rapor oluşturma   |
-| `dead-code`                            | `/dead-code`                    | 3 fazlı analiz ve temizlik yol haritasıyla ölü kod denetimi  |
-| `git-flow`                             | `/git-flow`                     | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi  |
-| `initialize`                           | `/initialize`                   | Kod tabanını tarayarak AGENTS.md oluşturur                   |
-| `init-claude`                          | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                   |
-| `implement-plan`                       | `/implement-plan`               | Zorunlu kullanıcı sorularıyla interaktif planlama            |
-| `frontend-design`                      | `/frontend-design`              | Özgün, prodüksiyon kalitesinde frontend arayüzleri           |
-| `tech-debt`                            | `/tech-debt`                    | Teknik borç haritalama, ölçüm ve önceliklendirme             |
-| `test-review`                          | `/test-review`                  | Test paketi kalitesi, kapsam boşlukları ve strateji inceleme |
-| `error-review`                         | `/error-review`                 | Hata mesajı kalitesi ve bilgi sızıntısı denetimi             |
-| `ai-code-audit`                        | `/ai-code-audit`                | Yapay zeka üretimi kod tespiti, güvenlik ve kalite inceleme  |
-| `api-audit`                            | `/api-audit`                    | API performans, dayanıklılık ve sözleşme testi denetimi      |
-| `cache-audit`                          | `/cache-audit`                  | Önbellek stratejisi, tutarlılık ve güvenlik analizi          |
-| `disaster-recovery`                    | `/disaster-recovery`            | Felaket kurtarma ve iş sürekliliği değerlendirmesi           |
-| `feature-flags-audit`                  | `/feature-flags-audit`          | Feature flag hijyeni, dağıtım güvenliği ve deney yönetimi    |
-| `integration-security`                 | `/integration-security`         | Üçüncü taraf entegrasyon ve webhook güvenlik analizi         |
-| `observability-audit`                  | `/observability-audit`          | Loglama, metrikler, sağlık kontrolleri ve hata ayıklama      |
-| `payment-security`                     | `/payment-security`             | Ödeme akışı ve finansal işlem güvenlik denetimi              |
-| `queue-audit`                          | `/queue-audit`                  | Kuyruk ve asenkron iş yönetimi dayanıklılık analizi          |
-| `release-discipline`                   | `/release-discipline`           | Versiyon kontrolü, değişiklik yönetimi ve sürüm süreci       |
-| `serialization-audit`                  | `/serialization-audit`          | Veri serileştirme ve dönüştürme güvenlik incelemesi          |
-| `session-audit`                        | `/session-audit`                | Oturum yönetimi ve durum kalıcılığı güvenlik denetimi        |
-| `tenant-isolation`                     | `/tenant-isolation`             | Çok kiracılı veri izolasyonu ve sızıntı denetimi             |
-| `upload-security`                      | `/upload-security`              | Dosya yükleme ve medya işleme güvenlik denetimi              |
-| `version-update-skill-creator`         | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur      |
-| `auditcodex`                           | `/auditcodex`                   | OpenAI Codex CLI ile bağımsız kod denetimi ve doğrulama      |
+| Skill                          | Komut                           | Açıklama                                                                  |
+|--------------------------------|---------------------------------|---------------------------------------------------------------------------|
+| `commit`                       | `/commit`                       | Repo stilini taklit eden conventional commit'ler                          |
+| `task-plan`                    | `/task-plan`                    | PRD'yi özelliklere ayırma ve otonom yürütme                               |
+| `bug-report`                   | `/bug-report`                   | Genel hata analizi ve `BUG-REPORT.md` yazan odaklı audit subcommand'leri |
+| `git-flow`                     | `/git-flow`                     | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi               |
+| `initialize`                   | `/initialize`                   | Kod tabanını tarayarak AGENTS.md oluşturur                                |
+| `init-claude`                  | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                                |
+| `implement-plan`               | `/implement-plan`               | Zorunlu kullanıcı sorularıyla interaktif planlama                         |
+| `frontend-design`              | `/frontend-design`              | Özgün, prodüksiyon kalitesinde frontend arayüzleri                        |
+| `version-update-skill-creator` | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur                   |
+| `auditcodex`                   | `/auditcodex`                   | OpenAI Codex CLI ile bağımsız kod denetimi ve doğrulama                   |
+
+#### `bug-report` audit subcommand'leri
+
+| Alt komut | Komut | Açıklama |
+|-----------|-------|----------|
+| `api-audit` | `/bug-report api-audit` | API performans, dayanıklılık, sözleşme ve yaşam döngüsü denetimi |
+| `cache-audit` | `/bug-report cache-audit` | Önbellek stratejisi, tutarlılık ve Redis/güvenlik denetimi |
+| `disaster-recovery` | `/bug-report disaster-recovery` | Felaket kurtarma ve iş sürekliliği hazırlık denetimi |
+| `error-review` | `/bug-report error-review` | Hata mesajı kalitesi, bilgi sızıntısı ve fallback denetimi |
+| `feature-flags-audit` | `/bug-report feature-flags-audit` | Feature flag hijyeni, rollout güvenliği ve deney denetimi |
+| `integration-security` | `/bug-report integration-security` | Üçüncü taraf entegrasyon, webhook ve OAuth güvenlik denetimi |
+| `observability-audit` | `/bug-report observability-audit` | Loglama, metrik, tracing ve hata ayıklanabilirlik denetimi |
+| `payment-security` | `/bug-report payment-security` | Ödeme akışı ve finansal işlem güvenlik denetimi |
+| `queue-audit` | `/bug-report queue-audit` | Kuyruk, worker, retry ve DLQ dayanıklılık denetimi |
+| `release-discipline` | `/bug-report release-discipline` | Versiyon kontrolü, review süreci ve release discipline denetimi |
+| `serialization-audit` | `/bug-report serialization-audit` | Serileştirme, parsing ve veri dönüşüm güvenlik denetimi |
+| `session-audit` | `/bug-report session-audit` | Oturum yaşam döngüsü, cookie, CSRF ve state yönetimi denetimi |
+| `tech-debt` | `/bug-report tech-debt` | Teknik borç haritalama ve önceliklendirme denetimi |
+| `tenant-isolation` | `/bug-report tenant-isolation` | Çok kiracılı izolasyon ve tenantlar arası sızıntı denetimi |
+| `test-review` | `/bug-report test-review` | Test paketi kalitesi, kapsam boşlukları ve strateji denetimi |
+| `upload-security` | `/bug-report upload-security` | Dosya yükleme ve medya işleme güvenlik denetimi |
+| `ai-code-audit` | `/bug-report ai-code-audit` | Yapay zeka üretimi kod tespiti, güvenlik ve kalite denetimi |
+| `dead-code` | `/bug-report dead-code` | Ölü kod, kullanılmayan tanımlar ve temizlik denetimi |
+
+> Geçiş notu: `/api-audit` ve `/error-review` gibi bağımsız audit komutları artık `/bug-report <subcommand>` altında toplandı.
 
 ## Dizin Yapısı
 
