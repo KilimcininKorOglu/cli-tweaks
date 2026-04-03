@@ -202,7 +202,26 @@ matched = (explicitMatch or implicitMatch) and not skip
 if matched:
     mode = "explicit" if explicitMatch else "implicit"
 
-    context = """[PLANNING MODE DETECTED]
+    if explicitMatch:
+        context = """Spec mode is active. The user indicated that they do not want you to execute yet -- you MUST NOT make any edits, run any non-readonly tools (including changing configs or making commits), or otherwise make any changes to the system.
+
+Instead, you should:
+1. Answer the user's query with a generated spec using the ExitSpecMode tool.
+2. When you're done researching, present your spec by calling the ExitSpecMode tool, which will prompt the user to confirm the spec. Do NOT make any file changes or run any tools that modify the system state in any way until the user has confirmed the spec.
+3. Use the AskUser tool to gather requirements and clarify decisions before finalizing your spec. This is encouraged in spec mode to ensure your implementation plan matches user expectations.
+
+When your spec involves architecture, data flows, state machines, or complex interactions, include Mermaid diagrams (using ```mermaid code blocks) in your plan to visualize the design.
+
+Planning trigger details:
+- The user's request was explicitly detected as planning (mode: {mode}).
+- Explore with read-only tools first.
+- Ask focused clarification questions before finalizing.
+- Include file:line references for codebase claims.
+- Include a "What We're NOT Doing" section.
+- The final planning response must be an ExitSpecMode tool call.
+""".format(mode=mode)
+    else:
+        context = """[PLANNING MODE DETECTED]
 The user's request was detected as requiring planning (mode: {mode}).
 
 This hook can start a planning workflow, but it does NOT by itself prove that
