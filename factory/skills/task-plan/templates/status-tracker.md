@@ -42,8 +42,4 @@ Use this template for `tasks/tasks-status.md`:
 ## Risk Items
 [Tasks at risk]
 
-## Recent Merges
-| Branch                           | Feature | Merged     | Commit |
-|----------------------------------|---------|------------|--------|
-| feature/F001-user-registration   | F001    | 2024-01-15 | abc123 |
 ```

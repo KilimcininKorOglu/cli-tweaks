@@ -31,32 +31,11 @@ After each task completion:
 2. Update `tasks/tasks-status.md`
 3. Update `tasks/run-state.md` with current position (see [run-state template](../templates/run-state.md))
 4. Update `tasks/task-execution-plan.md`
-5. Git commit
-
-## Git Workflow
-
-### Start Feature (first task of feature)
-```bash
-git checkout main
-git checkout -b feature/FXXX-short-description
-```
-
-### Complete Each Task (commit on feature branch)
-```bash
-git add -A
-git commit -m "feat(TXXX): [Task name] completed"
-```
-
-### Complete Feature (all tasks done)
-```bash
-git add -A
-git commit -m "feat(FXXX): [Feature name] completed"
-git checkout main
-git merge feature/FXXX-description --no-ff -m "Merge feature/FXXX: [Feature name]"
-```
-
-Feature must be merged to main BEFORE marking as COMPLETED.
-Branches are NEVER deleted.
+5. Git commit:
+   ```bash
+   git add -A
+   git commit -m "feat(TXXX): [Task name] completed"
+   ```
 
 ## Error Handling
 
@@ -97,7 +76,7 @@ T001: Kayit formu UI completed (45m)
 
 After feature completion (then continue immediately):
 ```
-F001: User Registration - COMPLETED & MERGED
+F001: User Registration - COMPLETED
   Tasks: 5/5 completed
   Duration: 2h 15m
   Feature Progress: [########............] 40% (2/5 features)
@@ -124,5 +103,4 @@ ALL TASKS COMPLETED
   Duration: 4h 30m
   Tasks: 10/10 completed
   Features: 2/2 completed
-  Git: All branches merged to main
 ```

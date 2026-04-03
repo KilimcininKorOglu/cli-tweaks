@@ -6,7 +6,7 @@ description: >
   "görevleri oluştur" or any variation requesting task breakdown from a
   specification document. SHOULD also invoke when user mentions "feature
   breakdown", "sprint planning", "task tracking", or wants to manage a
-  structured development workflow with features, tasks, and git branches.
+  structured development workflow with features and tasks.
 argument-hint: "[PRD path | add <description> | status | run]"
 ---
 
@@ -107,17 +107,6 @@ Each task must include:
 7. **Files to Touch**: File paths (new/update/delete)
 
 Task sizing: Atomic tasks 0.5-5 days, Features 1-6 weeks, Milestones 1-3 months.
-
-## Git Integration
-
-See [subcommands/run.md](subcommands/run.md) for full git workflow.
-
-Branch strategy: one branch per feature, one commit per task.
-```
-feature/FXXX-short-description
-```
-
-Branches are NEVER deleted to preserve history.
 
 ## Subcommand Details
 

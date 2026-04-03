@@ -11,7 +11,6 @@ Use this template for `tasks/run-state.md` (checkpoint file for `/task-plan run`
 
 ## Current Position
 - **Current Feature:** F001
-- **Current Branch:** feature/F001-user-registration
 - **Current Task:** T003
 - **Next Task:** T004
 
@@ -26,7 +25,7 @@ Use this template for `tasks/run-state.md` (checkpoint file for `/task-plan run`
 Priority-sorted remaining tasks:
 1. T004 (P1, F001) - blocked by T003
 2. T005 (P2, F001) - blocked by T004
-3. T006 (P2, F002) - no deps, new feature branch needed
+3. T006 (P2, F002) - no deps
 
 ## Error Log
 | Task | Attempt | Error                          | Timestamp |
