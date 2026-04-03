@@ -49,6 +49,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `tenant-isolation`                     | `/tenant-isolation`             | Çok kiracılı veri izolasyonu ve sızıntı denetimi             |
 | `upload-security`                      | `/upload-security`              | Dosya yükleme ve medya işleme güvenlik denetimi              |
 | `version-update-skill-creator`         | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur      |
+| `auditcodex`                           | `/auditcodex`                   | OpenAI Codex CLI ile bağımsız kod denetimi ve doğrulama      |
 
 ## Dizin Yapısı
 

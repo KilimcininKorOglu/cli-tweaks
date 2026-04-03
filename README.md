@@ -49,6 +49,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `tenant-isolation`                 | `/tenant-isolation`             | Multi-tenant data isolation and leakage audit                                    |
 | `upload-security`                  | `/upload-security`              | File upload and media processing security audit                                  |
 | `version-update-skill-creator`     | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill                        |
+| `auditcodex`                       | `/auditcodex`                   | Independent code review via OpenAI Codex CLI with validated findings             |
 
 ## Directory Structure
 
