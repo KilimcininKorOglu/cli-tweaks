@@ -45,8 +45,8 @@ Use this template when creating `tasks/XXX-feature-name.md`:
 
 #### Files to Touch
 
-- ` + "`path/to/file.go`" + ` (new)
-- ` + "`path/to/existing.go`" + ` (update)
+- `path/to/file.go` (new)
+- `path/to/existing.go` (update)
 
 #### Dependencies
 
