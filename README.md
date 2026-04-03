@@ -2,7 +2,7 @@
 
 [Türkçe](README.tr.md)
 
-A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, Codex CLI, and Pi Agent that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box.
+A collection of hooks and skills for Factory Droid and Claude Code that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box.
 
 ## What's Included
 
@@ -27,8 +27,8 @@ A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, Codex
 | `bug-report`                       | `/bug-report`                   | Systematic bug analysis and structured report generation                         |
 | `dead-code`                        | `/dead-code`                    | Dead code audit with 3-phase analysis and cleanup roadmap                        |
 | `git-flow`                         | `/git-flow`                     | Structured branch management with strict validation rules                        |
-| `initialize` (Claude Code, Codex)  | `/initialize`                   | Creates AGENTS.md by scanning the codebase                                       |
-| `init-claude` (Factory, Pi)        | `/init-claude`                  | Creates CLAUDE.md by scanning the codebase                                       |
+| `initialize`                       | `/initialize`                   | Creates AGENTS.md by scanning the codebase                                       |
+| `init-claude`                      | `/init-claude`                  | Creates CLAUDE.md by scanning the codebase                                       |
 | `implement-plan`                   | `/implement-plan`               | Interactive planning with mandatory user questions                               |
 | `frontend-design`                  | `/frontend-design`              | Distinctive, production-grade frontend interfaces                                |
 | `tech-debt`                        | `/tech-debt`                    | Technical debt mapping, measurement, and prioritization                          |
@@ -60,14 +60,6 @@ cli-tweaks/
   claude/            <-- Claude Code (copy to ~/.claude/)
     hooks/
     skills/
-  opencode/          <-- OpenCode (copy to ~/.config/opencode/)
-    plugins/
-  codex/             <-- Codex CLI (copy to ~/.codex/)
-    skills/
-  pi/                <-- Pi Agent (pi install or copy to ~/.pi/agent/)
-    extensions/
-    skills/
-  package.json       <-- Pi Package manifest (at repo root for discovery)
   SOUL.md.template   <-- Custom persona template
 ```
 
@@ -85,15 +77,6 @@ npx degit KilimcininKorOglu/cli-tweaks/factory ~/.factory
 
 # Claude Code
 npx degit KilimcininKorOglu/cli-tweaks/claude ~/.claude
-
-# OpenCode
-npx degit KilimcininKorOglu/cli-tweaks/opencode/plugins ~/.config/opencode/plugins
-
-# Codex CLI
-npx degit KilimcininKorOglu/cli-tweaks/codex/skills ~/.codex/skills
-
-# Pi Agent (package install -- recommended)
-pi install git:github.com/KilimcininKorOglu/cli-tweaks
 ```
 
 **Merge with existing setup**:
@@ -112,26 +95,6 @@ npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
 cp -r /tmp/cli-tweaks-hooks/* ~/.claude/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.claude/skills/
 rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
-
-# OpenCode
-npx degit KilimcininKorOglu/cli-tweaks/opencode/plugins /tmp/cli-tweaks-plugins
-mkdir -p ~/.config/opencode/plugins
-cp -r /tmp/cli-tweaks-plugins/* ~/.config/opencode/plugins/
-rm -rf /tmp/cli-tweaks-plugins
-
-# Codex CLI
-npx degit KilimcininKorOglu/cli-tweaks/codex/skills /tmp/cli-tweaks-skills
-mkdir -p ~/.codex/skills
-cp -r /tmp/cli-tweaks-skills/* ~/.codex/skills/
-rm -rf /tmp/cli-tweaks-skills
-
-# Pi Agent (package install is preferred, but manual also works)
-npx degit KilimcininKorOglu/cli-tweaks/pi/skills /tmp/cli-tweaks-skills
-npx degit KilimcininKorOglu/cli-tweaks/pi/extensions /tmp/cli-tweaks-extensions
-mkdir -p ~/.pi/agent/skills ~/.pi/agent/extensions
-cp -r /tmp/cli-tweaks-skills/* ~/.pi/agent/skills/
-cp -r /tmp/cli-tweaks-extensions/* ~/.pi/agent/extensions/
-rm -rf /tmp/cli-tweaks-skills /tmp/cli-tweaks-extensions
 ```
 
 ### Alternative: git clone
@@ -147,31 +110,16 @@ cp -r factory/skills/* ~/.factory/skills/
 # Claude Code
 cp -r claude/hooks/* ~/.claude/hooks/
 cp -r claude/skills/* ~/.claude/skills/
-
-# OpenCode
-mkdir -p ~/.config/opencode/plugins
-cp opencode/plugins/* ~/.config/opencode/plugins/
-
-# Codex CLI
-mkdir -p ~/.codex/skills
-cp -r codex/skills/* ~/.codex/skills/
-
-# Pi Agent
-mkdir -p ~/.pi/agent/skills ~/.pi/agent/extensions
-cp -r pi/skills/* ~/.pi/agent/skills/
-cp pi/extensions/* ~/.pi/agent/extensions/
 ```
 
 ### Hook Registration
 
 After copying the files, register hooks by merging the hook definitions into your `settings.json`:
 
-| Platform      | Source                           | Target                             |
-|---------------|----------------------------------|------------------------------------|
-| Factory Droid | `factory/settings.json.example`  | `~/.factory/settings.json`         |
-| Claude Code   | `claude/settings.json.example`   | `~/.claude/settings.json`          |
-| OpenCode      | `opencode/opencode.json.example` | `~/.config/opencode/opencode.json` |
-| Codex CLI     | `codex/config.toml.example`      | `~/.codex/config.toml`             |
+| Platform      | Source                          | Target                     |
+|---------------|---------------------------------|----------------------------|
+| Factory Droid | `factory/settings.json.example` | `~/.factory/settings.json` |
+| Claude Code   | `claude/settings.json.example`  | `~/.claude/settings.json`  |
 
 Copy the `hooks` section from the example file into your existing settings, or use the example as a starting point.
 
@@ -213,7 +161,7 @@ Completed plans are saved to `~/.factory/plans/<project>/` (or `~/.claude/plans/
 
 ### Auto Memory
 
-The memory system gives your agent persistent, project-scoped memory across sessions. Memory is stored in a shared location (`~/.cli-tweaks/memory/`) so Factory Droid, Claude Code, OpenCode, and Pi Agent can all access the same knowledge base:
+The memory system gives your agent persistent, project-scoped memory across sessions. Memory is stored in a shared location (`~/.cli-tweaks/memory/`) so Factory Droid and Claude Code can both access the same knowledge base:
 
 - On session start, `session-start.py` reads `~/.cli-tweaks/memory/<project>/MEMORY.md` and injects it
 - On context compaction, memory is automatically re-injected alongside instruction files
@@ -260,27 +208,22 @@ Desktop notifications are configured per-feature in your `settings.json`:
 ## Requirements
 
 - Python 3.8+ (Factory Droid, Claude Code)
-- Bun runtime (OpenCode -- auto-installed by OpenCode)
-- Node.js (Pi Agent -- installed with Pi Agent)
-- Factory Droid, Claude Code, OpenCode, Codex CLI, or Pi Agent
 
 ## Platform Differences
 
-| Feature                 | Factory Droid    | Claude Code       | OpenCode              | Codex CLI             | Pi Agent                  |
-|-------------------------|------------------|-------------------|-----------------------|-----------------------|---------------------------|
-| Global config dir       | `~/.factory/`    | `~/.claude/`      | `~/.config/opencode/` | `~/.codex/`           | `~/.pi/agent/`            |
-| Shared data dir         | `~/.cli-tweaks/` | `~/.cli-tweaks/`  | `~/.cli-tweaks/`      | N/A (built-in memory) | `~/.cli-tweaks/`          |
-| Hook config file        | `settings.json`  | `settings.json`   | `opencode.json`       | `config.toml`         | `settings.json`           |
-| Plan mode exit event    | `ExitSpecMode`   | `ExitPlanMode`    | Built-in (Tab key)    | Built-in (Shift+Tab)  | Extension-based           |
-| User question tool      | `AskUser`        | `AskUserQuestion` | N/A                   | `AskUserQuestion`     | Extension-based           |
-| Re-injection target     | `AGENTS.md`      | `CLAUDE.md`       | Native rules system   | `AGENTS.md` (native)  | `AGENTS.md` (native)      |
-| Subagent terminology    | "worker"         | "Explore"         | N/A                   | N/A                   | Extension-based           |
-| Plugin runtime          | Python 3.8+      | Python 3.8+       | JS/TS (Bun)           | N/A (skills only)     | JS/TS (Node.js)           |
-| Skill invocation prefix | `/`              | `/`               | `/`                   | `$`                   | `/skill:`                 |
-| Memory system           | Hook-based       | Hook-based        | Plugin-based          | Built-in              | Extension-based           |
-| `/init-claude` skill    | Yes (CLAUDE.md)  | No (built-in)     | No                    | No                    | Yes (CLAUDE.md)           |
-| `/initialize` skill     | No               | Yes (AGENTS.md)   | No                    | Yes (AGENTS.md)       | No                        |
-| `auto-allow.py` hook    | No               | Yes (v2.0.45+)    | No                    | No (OS-level sandbox) | No (no permission system) |
+| Feature                 | Factory Droid    | Claude Code       |
+|-------------------------|------------------|-------------------|
+| Global config dir       | `~/.factory/`    | `~/.claude/`      |
+| Shared data dir         | `~/.cli-tweaks/` | `~/.cli-tweaks/`  |
+| Hook config file        | `settings.json`  | `settings.json`   |
+| Plan mode exit event    | `ExitSpecMode`   | `ExitPlanMode`    |
+| User question tool      | `AskUser`        | `AskUserQuestion` |
+| Re-injection target     | `AGENTS.md`      | `CLAUDE.md`       |
+| Subagent terminology    | "worker"         | "Explore"         |
+| Skill invocation prefix | `/`              | `/`               |
+| `/init-claude` skill    | Yes (CLAUDE.md)  | No (built-in)     |
+| `/initialize` skill     | No               | Yes (AGENTS.md)   |
+| `auto-allow.py` hook    | No               | Yes (v2.0.45+)    |
 
 ## License
 

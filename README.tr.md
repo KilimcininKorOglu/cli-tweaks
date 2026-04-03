@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-Factory Droid, Claude Code, OpenCode, Codex CLI ve Pi Agent için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın.
+Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın.
 
 ## İçerik
 
@@ -27,8 +27,8 @@ Factory Droid, Claude Code, OpenCode, Codex CLI ve Pi Agent için planlama otoma
 | `bug-report`                           | `/bug-report`                   | Sistematik hata analizi ve yapılandırılmış rapor oluşturma   |
 | `dead-code`                            | `/dead-code`                    | 3 fazlı analiz ve temizlik yol haritasıyla ölü kod denetimi  |
 | `git-flow`                             | `/git-flow`                     | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi  |
-| `initialize` (Claude Code, Codex)      | `/initialize`                   | Kod tabanını tarayarak AGENTS.md oluşturur                   |
-| `init-claude` (Factory, Pi)            | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                   |
+| `initialize`                           | `/initialize`                   | Kod tabanını tarayarak AGENTS.md oluşturur                   |
+| `init-claude`                          | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                   |
 | `implement-plan`                       | `/implement-plan`               | Zorunlu kullanıcı sorularıyla interaktif planlama            |
 | `frontend-design`                      | `/frontend-design`              | Özgün, prodüksiyon kalitesinde frontend arayüzleri           |
 | `tech-debt`                            | `/tech-debt`                    | Teknik borç haritalama, ölçüm ve önceliklendirme             |
@@ -60,14 +60,6 @@ cli-tweaks/
   claude/            <-- Claude Code (copy to ~/.claude/)
     hooks/
     skills/
-  opencode/          <-- OpenCode (copy to ~/.config/opencode/)
-    plugins/
-  codex/             <-- Codex CLI (copy to ~/.codex/)
-    skills/
-  pi/                <-- Pi Agent (pi install veya ~/.pi/agent/ dizinine kopyala)
-    extensions/
-    skills/
-  package.json       <-- Pi Package manifest (keşif için repo kökünde)
   SOUL.md.template   <-- Özel persona şablonu
 ```
 
@@ -85,15 +77,6 @@ npx degit KilimcininKorOglu/cli-tweaks/factory ~/.factory
 
 # Claude Code
 npx degit KilimcininKorOglu/cli-tweaks/claude ~/.claude
-
-# OpenCode
-npx degit KilimcininKorOglu/cli-tweaks/opencode/plugins ~/.config/opencode/plugins
-
-# Codex CLI
-npx degit KilimcininKorOglu/cli-tweaks/codex/skills ~/.codex/skills
-
-# Pi Agent (paket kurulumu -- önerilen)
-pi install git:github.com/KilimcininKorOglu/cli-tweaks
 ```
 
 **Mevcut kurulumla birleştirme**:
@@ -112,26 +95,6 @@ npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
 cp -r /tmp/cli-tweaks-hooks/* ~/.claude/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.claude/skills/
 rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
-
-# OpenCode
-npx degit KilimcininKorOglu/cli-tweaks/opencode/plugins /tmp/cli-tweaks-plugins
-mkdir -p ~/.config/opencode/plugins
-cp -r /tmp/cli-tweaks-plugins/* ~/.config/opencode/plugins/
-rm -rf /tmp/cli-tweaks-plugins
-
-# Codex CLI
-npx degit KilimcininKorOglu/cli-tweaks/codex/skills /tmp/cli-tweaks-skills
-mkdir -p ~/.codex/skills
-cp -r /tmp/cli-tweaks-skills/* ~/.codex/skills/
-rm -rf /tmp/cli-tweaks-skills
-
-# Pi Agent (paket kurulumu tercih edilir, ama manuel de çalışır)
-npx degit KilimcininKorOglu/cli-tweaks/pi/skills /tmp/cli-tweaks-skills
-npx degit KilimcininKorOglu/cli-tweaks/pi/extensions /tmp/cli-tweaks-extensions
-mkdir -p ~/.pi/agent/skills ~/.pi/agent/extensions
-cp -r /tmp/cli-tweaks-skills/* ~/.pi/agent/skills/
-cp -r /tmp/cli-tweaks-extensions/* ~/.pi/agent/extensions/
-rm -rf /tmp/cli-tweaks-skills /tmp/cli-tweaks-extensions
 ```
 
 ### Alternatif: git clone
@@ -147,31 +110,16 @@ cp -r factory/skills/* ~/.factory/skills/
 # Claude Code
 cp -r claude/hooks/* ~/.claude/hooks/
 cp -r claude/skills/* ~/.claude/skills/
-
-# OpenCode
-mkdir -p ~/.config/opencode/plugins
-cp opencode/plugins/* ~/.config/opencode/plugins/
-
-# Codex CLI
-mkdir -p ~/.codex/skills
-cp -r codex/skills/* ~/.codex/skills/
-
-# Pi Agent
-mkdir -p ~/.pi/agent/skills ~/.pi/agent/extensions
-cp -r pi/skills/* ~/.pi/agent/skills/
-cp pi/extensions/* ~/.pi/agent/extensions/
 ```
 
 ### Hook Kaydı
 
 Dosyaları kopyaladıktan sonra, hook tanımlarını `settings.json` dosyanıza birleştirin:
 
-| Platform      | Kaynak                           | Hedef                              |
-|---------------|----------------------------------|------------------------------------|
-| Factory Droid | `factory/settings.json.example`  | `~/.factory/settings.json`         |
-| Claude Code   | `claude/settings.json.example`   | `~/.claude/settings.json`          |
-| OpenCode      | `opencode/opencode.json.example` | `~/.config/opencode/opencode.json` |
-| Codex CLI     | `codex/config.toml.example`      | `~/.codex/config.toml`             |
+| Platform      | Kaynak                          | Hedef                      |
+|---------------|---------------------------------|----------------------------|
+| Factory Droid | `factory/settings.json.example` | `~/.factory/settings.json` |
+| Claude Code   | `claude/settings.json.example`  | `~/.claude/settings.json`  |
 
 Örnek dosyadaki `hooks` bölümünü mevcut ayarlarınıza kopyalayın veya örneği başlangıç noktası olarak kullanın.
 
@@ -213,7 +161,7 @@ Tamamlanan planlar masaüstü bildirimleriyle birlikte `~/.factory/plans/<proje>
 
 ### Otomatik Bellek
 
-Bellek sistemi, ajana oturumlar arası kalıcı ve projeye özel bir bellek sağlar. Bellek, ortak bir konumda (`~/.cli-tweaks/memory/`) saklanır, böylece Factory Droid, Claude Code, OpenCode ve Pi Agent aynı bilgi tabanına erişebilir:
+Bellek sistemi, ajana oturumlar arası kalıcı ve projeye özel bir bellek sağlar. Bellek, ortak bir konumda (`~/.cli-tweaks/memory/`) saklanır, böylece Factory Droid ve Claude Code aynı bilgi tabanına erişebilir:
 
 - Oturum başında `session-start.py`, `~/.cli-tweaks/memory/<proje>/MEMORY.md` dosyasını okur ve bağlama enjekte eder
 - Bağlam sıkıştırmasında bellek, talimat dosyalarıyla birlikte otomatik olarak yeniden enjekte edilir
@@ -260,27 +208,22 @@ Masaüstü bildirimleri `settings.json` dosyanızda özellik bazında yapıland�
 ## Gereksinimler
 
 - Python 3.8+ (Factory Droid, Claude Code)
-- Bun runtime (OpenCode -- OpenCode tarafından otomatik kurulur)
-- Node.js (Pi Agent -- Pi Agent ile birlikte kurulur)
-- Factory Droid, Claude Code, OpenCode, Codex CLI veya Pi Agent
 
 ## Platform Farklılıkları
 
-| Özellik                    | Factory Droid    | Claude Code       | OpenCode              | Codex CLI                   | Pi Agent                 |
-|----------------------------|------------------|-------------------|-----------------------|-----------------------------|--------------------------|
-| Global yapılandırma dizini | `~/.factory/`    | `~/.claude/`      | `~/.config/opencode/` | `~/.codex/`                 | `~/.pi/agent/`           |
-| Ortak veri dizini          | `~/.cli-tweaks/` | `~/.cli-tweaks/`  | `~/.cli-tweaks/`      | N/A (yerleşik bellek)       | `~/.cli-tweaks/`         |
-| Hook yapılandırma dosyası  | `settings.json`  | `settings.json`   | `opencode.json`       | `config.toml`               | `settings.json`          |
-| Plan modu çıkış olayı      | `ExitSpecMode`   | `ExitPlanMode`    | Yerleşik (Tab tuşu)   | Yerleşik (Shift+Tab)        | Extension tabanlı        |
-| Kullanıcı soru aracı       | `AskUser`        | `AskUserQuestion` | N/A                   | `AskUserQuestion`           | Extension tabanlı        |
-| Yeniden enjeksiyon hedefi  | `AGENTS.md`      | `CLAUDE.md`       | Native rules sistemi  | `AGENTS.md` (native)        | `AGENTS.md` (native)     |
-| Subagent terminolojisi     | "worker"         | "Explore"         | N/A                   | N/A                         | Extension tabanlı        |
-| Plugin runtime             | Python 3.8+      | Python 3.8+       | JS/TS (Bun)           | N/A (yalnızca skill'ler)    | JS/TS (Node.js)          |
-| Skill çağırma ön eki       | `/`              | `/`               | `/`                   | `$`                         | `/skill:`                |
-| Bellek sistemi             | Hook tabanlı     | Hook tabanlı      | Plugin tabanlı        | Yerleşik                    | Extension tabanlı        |
-| `/init-claude` skill'i     | Evet (CLAUDE.md) | Hayır (yerleşik)  | Hayır                 | Hayır                       | Evet (CLAUDE.md)         |
-| `/initialize` skill'i      | Hayır            | Evet (AGENTS.md)  | Hayır                 | Evet (AGENTS.md)            | Hayır                    |
-| `auto-allow.py` hook'u     | Hayır            | Evet (v2.0.45+)   | Hayır                 | Hayır (OS seviyesi sandbox) | Hayır (izin sistemi yok) |
+| Özellik                    | Factory Droid    | Claude Code       |
+|----------------------------|------------------|-------------------|
+| Global yapılandırma dizini | `~/.factory/`    | `~/.claude/`      |
+| Ortak veri dizini          | `~/.cli-tweaks/` | `~/.cli-tweaks/`  |
+| Hook yapılandırma dosyası  | `settings.json`  | `settings.json`   |
+| Plan modu çıkış olayı      | `ExitSpecMode`   | `ExitPlanMode`    |
+| Kullanıcı soru aracı       | `AskUser`        | `AskUserQuestion` |
+| Yeniden enjeksiyon hedefi  | `AGENTS.md`      | `CLAUDE.md`       |
+| Subagent terminolojisi     | "worker"         | "Explore"         |
+| Skill çağırma ön eki       | `/`              | `/`               |
+| `/init-claude` skill'i     | Evet (CLAUDE.md) | Hayır (yerleşik)  |
+| `/initialize` skill'i      | Hayır            | Evet (AGENTS.md)  |
+| `auto-allow.py` hook'u     | Hayır            | Evet (v2.0.45+)   |
 
 ## Lisans
 
