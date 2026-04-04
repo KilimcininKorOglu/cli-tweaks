@@ -10,8 +10,6 @@ description: >-
 
 You are performing a focused security assessment to find SQL injection vulnerabilities in a codebase. This skill uses a two-phase approach with subagents: **construction** (find all places where SQL queries are built unsafely) then **taint** (confirm whether user-supplied input reaches those construction sites).
 
-**Prerequisites**: `security/architecture.md` must exist. Run `/bug-report sec-recon` first if it doesn't.
-
 ---
 
 ## What is SQL Injection
@@ -291,8 +289,6 @@ cursor.execute(f"SELECT * FROM products ORDER BY {sort_col}")
 
 ## Execution
 
-This skill runs in two phases using subagents. Pass the contents of `security/architecture.md` to both subagents as context.
-
 ### Phase 1: Find Vulnerable SQL Construction Sites
 
 Launch a subagent with the following instructions:
@@ -417,7 +413,6 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 
 ## Important Reminders
 
-- Read `security/architecture.md` and pass its content to both subagents as context.
 - Phase 2 must run AFTER Phase 1 completes — it depends on Phase 1 results.
 - **Phase 1 is purely structural**: flag any dynamic variable embedded in a SQL query string, regardless of origin. Do not attempt to trace user input in Phase 1 — that is Phase 2's job.
 - **Phase 2 is purely taint analysis**: for each site found in Phase 1, trace the interpolated variable back to its origin. If it comes from a user-controlled source, the site is a real vulnerability.

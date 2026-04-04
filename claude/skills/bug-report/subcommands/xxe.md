@@ -12,8 +12,6 @@ description: >-
 
 You are performing a focused security assessment to find XXE vulnerabilities in a codebase. This skill uses a two-phase approach with subagents: **recon** (find all XML parsing sites where external entities are not safely disabled) then **taint** (confirm whether user-supplied input reaches those parsers).
 
-**Prerequisites**: `security/architecture.md` must exist. Run `/bug-report sec-recon` first if it doesn't.
-
 ---
 
 ## What is XXE
@@ -299,8 +297,6 @@ func parseXML(data []byte) {
 
 ## Execution
 
-This skill runs in two phases using subagents. Pass the contents of `security/architecture.md` to both subagents as context.
-
 ### Phase 1: Find Vulnerable XML Parsing Sites
 
 Launch a subagent with the following instructions:
@@ -394,7 +390,6 @@ Launch a subagent with the following instructions:
 
 ### Between Phases: Check Recon Results
 
-
 ```
 No vulnerabilities found.
 ```
@@ -455,7 +450,6 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 
 ## Important Reminders
 
-- Read `security/architecture.md` and pass its content to both subagents as context.
 - Phase 2 must run AFTER Phase 1 completes — it depends on Phase 1 results.
 - **Phase 1 is purely structural**: flag any XML parsing call that lacks explicit external entity hardening, regardless of where the input comes from. Do not attempt to trace user input in Phase 1 — that is Phase 2's job.
 - **Phase 2 is purely taint analysis**: for each site found in Phase 1, trace the XML input back to its origin. If it comes from a user-controlled source, the site is a real vulnerability.

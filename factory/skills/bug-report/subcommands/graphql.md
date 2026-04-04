@@ -13,8 +13,6 @@ description: >-
 
 You are performing a focused security assessment to find GraphQL injection vulnerabilities. This skill uses a two-phase approach with subagents: **recon** (confirm GraphQL usage and find every location where a GraphQL operation document is assembled unsafely) then **taint** (confirm whether user-supplied input reaches those assembly sites).
 
-**Prerequisites**: `security/architecture.md` must exist. Run `/bug-report sec-recon` first if it doesn't.
-
 ---
 
 ## What is GraphQL Injection
@@ -116,8 +114,6 @@ document = "query { user { " + " ".join(ALLOWED.intersection(set(requested_field
 
 ## Execution
 
-This skill runs in two phases using subagents. Pass the contents of `security/architecture.md` to both subagents as context.
-
 ### Phase 1: GraphQL Technology Recon and Injection Candidate Sites
 
 Launch a subagent with the following instructions:
@@ -198,7 +194,6 @@ Launch a subagent with the following instructions:
 Launch a second subagent **after Phase 1 completes** and only if both gates passed (GraphQL used and at least one candidate site).
 
 >
-> **Context**: You will be given `security/architecture.md` and `Phase 1 findings`.
 >
 > **For each site, trace dynamic values backward**:
 >
@@ -232,7 +227,6 @@ Launch a second subagent **after Phase 1 completes** and only if both gates pass
 
 ## Important Reminders
 
-- Read `security/architecture.md` and pass its content to both subagents as context.
 - **If Phase 1 finds no GraphQL technology, skip Phase 2** — write the "No GraphQL technology detected" results file.
 - **If GraphQL is used but Phase 1 finds no injection candidates, skip Phase 2** — write "No vulnerabilities found."
 - Phase 1 does **not** trace taint; Phase 2 does.

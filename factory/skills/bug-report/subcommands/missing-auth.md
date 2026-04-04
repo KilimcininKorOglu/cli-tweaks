@@ -14,8 +14,6 @@ description: >-
 
 You are performing a focused security assessment to find missing authentication and broken function-level authorization vulnerabilities in a codebase. This skill uses a two-phase approach with subagents: **recon** (map endpoints and the permission system) then **verify** (check every endpoint for proper auth/authz gates).
 
-**Prerequisites**: `security/architecture.md` must exist. Run `/bug-report sec-recon` first if it doesn't.
-
 ---
 
 ## What This Skill Covers
@@ -331,8 +329,6 @@ public async Task<IActionResult> DeleteUser(int id) {
 
 ## Execution
 
-This skill runs in two phases using subagents. Pass the contents of `security/architecture.md` to both subagents as context.
-
 ### Phase 1: Recon — Map Endpoints and Permission System
 
 Launch a subagent with the following instructions:
@@ -462,7 +458,6 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 
 ## Important Reminders
 
-- Read `security/architecture.md` and pass its content to both subagents as context.
 - Phase 2 must run AFTER Phase 1 completes — it depends on Phase 1 results.
 - Focus on **vertical privilege escalation** (user → admin) and **unauthenticated access**. Horizontal escalation (user A → user B's resource) is covered by the IDOR skill.
 - Authentication (you are who you say you are) and authorization (you are allowed to do this) are separate concerns — check both.

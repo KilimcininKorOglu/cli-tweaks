@@ -14,8 +14,6 @@ description: >-
 
 You are performing a focused security assessment to find business logic vulnerabilities in a codebase. This skill uses a two-phase approach with subagents: **threat modeling** (understand the domain and generate attack scenarios) then **verify** (check whether those attack scenarios are exploitable).
 
-**Prerequisites**: `security/architecture.md` must exist. Run `/bug-report sec-recon` first if it doesn't.
-
 ---
 
 ## What are Business Logic Vulnerabilities
@@ -128,19 +126,16 @@ Use these categories to guide threat modeling. Not all categories apply to every
 
 ## Execution
 
-This skill runs in two phases using subagents. Pass the contents of `security/architecture.md` to both subagents as context.
-
 ### Phase 1: Threat Modeling — Domain Analysis & Attack Scenario Generation
 
 Launch a subagent with the following instructions:
 
-> **Goal**: Analyze the codebase to understand its business domain and generate a concrete, prioritized list of business logic attack scenarios specific to this application. Write results to `security/businesslogic-threats.md`.
+> **Goal**: Analyze the codebase to understand its business domain and generate a concrete, prioritized list of business logic attack scenarios specific to this application. Return findings in your response.
 >
 > **Context**: You will be given the project's architecture summary. Use it to understand what the application does, what features it has, and what business rules it is supposed to enforce. Focus entirely on understanding the domain — do not verify vulnerabilities yet.
 >
 > **Step 1 — Identify the business domain and features**:
 >
-> Read `security/architecture.md` and then explore the codebase to answer:
 > - What does this application do? (e-commerce, marketplace, SaaS, social platform, fintech, gaming, booking, etc.)
 > - What financial or transactional features exist? (payments, subscriptions, credits, tokens, wallets, invoices, refunds)
 > - What quantitative limits or rules exist? (ratings, scores, quantities, usage limits, quotas)
@@ -176,7 +171,7 @@ Launch a subagent with the following instructions:
 > - **Time/date logic**: Are time-limited offers enforced server-side?
 > - **Inventory logic**: Is stock validated atomically before reservation?
 >
-> **Output format** — write to `security/businesslogic-threats.md`:
+> **Output format** — return findings in your response in this format:
 >
 > ```markdown
 > # Business Logic Threat Model: [Project Name]
@@ -269,7 +264,6 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 
 ## Important Reminders
 
-- Read `security/architecture.md` and pass its content to both subagents as context.
 - Phase 2 must run **after** Phase 1 completes — it depends on the threat model output.
 - Focus strictly on **business logic flaws** — do not flag injection bugs, auth bypass, or IDOR issues here.
 - Threat modeling in Phase 1 should be **application-specific**: generic scenarios not grounded in the actual codebase are not useful.

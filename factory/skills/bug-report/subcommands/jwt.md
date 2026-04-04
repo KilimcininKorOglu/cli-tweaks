@@ -15,8 +15,6 @@ description: >-
 
 You are performing a focused security assessment to find insecure JSON Web Token (JWT) implementations. This skill uses a two-phase approach with subagents: **recon** (map the full JWT lifecycle — issuance, verification, and configuration) then **analysis** (identify every exploitable weakness in those verification sites).
 
-**Prerequisites**: `security/architecture.md` must exist. Run `/bug-report sec-recon` first if it doesn't.
-
 ---
 
 ## What is an Insecure JWT Implementation
@@ -250,8 +248,6 @@ jwt.verify(token, trustedKey, { algorithms: ['RS256'] });
 
 ## Execution
 
-This skill runs in two phases using subagents. Pass the contents of `security/architecture.md` to both subagents as context.
-
 ### Phase 1: Map the JWT Lifecycle
 
 Launch a subagent with the following instructions:
@@ -415,7 +411,6 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 
 ## Important Reminders
 
-- Read `security/architecture.md` and pass its content to both subagents as context.
 - Phase 2 must run AFTER Phase 1 completes — it depends on Phase 1 results.
 - **Phase 1 is purely discovery**: locate every JWT issuance, verification, and configuration site. Do not attempt to assess security in Phase 1 — that is Phase 2's job.
 - **Phase 2 is purely analysis**: for each verification site found in Phase 1, systematically check every vulnerability class. Do not search for new sites in Phase 2 — focus on what Phase 1 found.

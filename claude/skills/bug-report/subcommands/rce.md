@@ -12,8 +12,6 @@ description: >-
 
 You are performing a focused security assessment to find Remote Code Execution vulnerabilities in a codebase. This skill uses a two-phase approach with subagents: **sink discovery** (find all places where OS commands are executed, code is dynamically evaluated, or untrusted data is deserialized) then **taint analysis** (confirm whether user-supplied input reaches those sinks).
 
-**Prerequisites**: `security/architecture.md` must exist. Run `/bug-report sec-recon` first if it doesn't.
-
 ---
 
 ## What is Remote Code Execution
@@ -372,8 +370,6 @@ data = yaml.safe_load(user_input)  # only loads basic data types
 
 ## Execution
 
-This skill runs in two phases using subagents. Pass the contents of `security/architecture.md` to both subagents as context.
-
 ### Phase 1: Find Dangerous Execution Sinks
 
 Launch a subagent with the following instructions:
@@ -577,7 +573,6 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 
 ## Important Reminders
 
-- Read `security/architecture.md` and pass its content to both subagents as context.
 - Phase 2 must run AFTER Phase 1 completes — it depends on Phase 1 results.
 - **Phase 1 is purely structural**: flag any sink where a non-constant variable appears in a dangerous position, regardless of where that variable comes from. Do not trace user input in Phase 1.
 - **Phase 2 is purely taint analysis**: for each sink found in Phase 1, trace the dynamic argument back to its origin. If it comes from a user-controlled source, the site is a real vulnerability.
@@ -587,4 +582,4 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 - When in doubt, classify as "Needs Manual Review" rather than "Not Vulnerable". False negatives are worse than false positives in security assessment.
 - Taint can flow indirectly through middleware, helper functions, class attributes, and intermediate variables. Trace the full chain.
 - Second-order RCE is possible: a value stored from user input may later be deserialized or evaluated in a different code path (e.g., a user-supplied config stored in DB and later `eval()`'d by a cron job).
-- For Java deserialization: the presence of dangerous gadget libraries in the classpath (Apache Commons Collections, Spring Framework, etc.) determines exploitability. Flag the deserialization call; note any relevant libraries from `architecture.md`.
+- For Java deserialization: the presence of dangerous gadget libraries in the classpath (Apache Commons Collections, Spring Framework, etc.) determines exploitability. Flag the deserialization call; check the project's dependency manifest for relevant libraries.

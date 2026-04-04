@@ -13,8 +13,6 @@ description: >-
 
 You are performing a focused security assessment to find path traversal vulnerabilities in a codebase. This skill uses a two-phase approach with subagents: **sink discovery** (find all places where files are loaded using dynamically constructed paths) then **taint** (confirm whether user-supplied input reaches those sinks and can escape the intended directory).
 
-**Prerequisites**: `security/architecture.md` must exist. Run `/bug-report sec-recon` first if it doesn't.
-
 ---
 
 ## What is Path Traversal
@@ -283,8 +281,6 @@ with zipfile.ZipFile(user_zip) as zf:
 
 ## Execution
 
-This skill runs in two phases using subagents. Pass the contents of `security/architecture.md` to both subagents as context.
-
 ### Phase 1: Find File-Loading Sinks With Dynamic Paths
 
 Launch a subagent with the following instructions:
@@ -428,7 +424,6 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 
 ## Important Reminders
 
-- Read `security/architecture.md` and pass its content to both subagents as context.
 - Phase 2 must run AFTER Phase 1 completes — it depends on Phase 1 results.
 - **Phase 1 is purely structural**: flag any file-loading sink where the path has a dynamic component, regardless of origin. Do not attempt to trace user input in Phase 1 — that is Phase 2's job.
 - **Phase 2 is taint analysis + mitigation review**: for each sink found in Phase 1, (a) trace the path variable back to its origin and (b) check whether an effective mitigation prevents escape from the intended directory.

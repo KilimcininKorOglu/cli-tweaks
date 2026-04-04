@@ -10,8 +10,6 @@ description: >-
 
 You are performing a focused security assessment to find IDOR vulnerabilities in a codebase. This skill uses a two-phase approach with subagents: **recon** (find candidate endpoints) then **verify** (check authorization).
 
-**Prerequisites**: `security/architecture.md` must exist. Run `/bug-report sec-recon` first if it doesn't.
-
 ---
 
 ## What is IDOR
@@ -241,8 +239,6 @@ public async Task<IActionResult> GetProfile(int id) {
 
 ## Execution
 
-This skill runs in two phases using subagents. Pass the contents of `security/architecture.md` to both subagents as context.
-
 ### Phase 1: Recon — Find Candidate Endpoints
 
 Launch a subagent with the following instructions:
@@ -351,7 +347,6 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 
 ## Important Reminders
 
-- Read `security/architecture.md` and pass its content to both subagents as context.
 - Phase 2 must run AFTER Phase 1 completes — it depends on Phase 1 results.
 - Focus on **horizontal privilege escalation** (user-to-user). Vertical escalation (user-to-admin) is a different skill.
 - When in doubt, classify as "Needs Manual Review" rather than "Not Vulnerable". False negatives are worse than false positives in security assessment.
