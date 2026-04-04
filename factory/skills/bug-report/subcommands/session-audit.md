@@ -49,6 +49,10 @@ You are a security and architecture specialist reviewing session management and 
 - Is CORS configuration correct? (`Access-Control-Allow-Origin: *` is dangerous)
 - Is `Access-Control-Allow-Credentials: true` used with wildcard origin? (CRITICAL vulnerability)
 
+## JWT Deep Scan
+
+For a comprehensive code-level scan of JWT algorithm confusion, signature bypass, weak secrets, and missing claim validation, use `/bug-report jwt` — it runs automated two-phase detection beyond the checklist above.
+
 ## Shared Audit Rules
 
 Use the shared verification, ID management, output format, and report-writing rules from `../SKILL.md`.

@@ -1,7 +1,7 @@
 ---
 name: bug-report
 description: >
-  This skill MUST be invoked when the user asks for systematic bug analysis, or any focused audit such as "api audit", "auditcodex", "cache audit", "disaster recovery", "error review", "feature flags audit", "integration security", "observability audit", "payment security", "queue audit", "release discipline", "serialization audit", "session audit", "tech debt", "tenant isolation", "test review", "upload security", "ai code audit", or "dead code". Use `/bug-report` for general scans and `/bug-report <subcommand>` for domain-specific audits. All modes write verified findings to BUG-REPORT.md using the shared report contract.
+  This skill MUST be invoked when the user asks for systematic bug analysis, or any focused audit such as "api audit", "auditcodex", "cache audit", "disaster recovery", "error review", "feature flags audit", "integration security", "observability audit", "payment security", "queue audit", "release discipline", "serialization audit", "session audit", "tech debt", "tenant isolation", "test review", "upload security", "ai code audit", "dead code", or any security vulnerability scan such as "sql injection", "xss", "rce", "ssrf", "xxe", "idor", "jwt", "path traversal", "file upload", "ssti", "graphql injection", "business logic", "missing auth", or "security recon". Use `/bug-report` for general scans and `/bug-report <subcommand>` for domain-specific audits. All modes write verified findings to BUG-REPORT.md using the shared report contract.
 argument-hint: "[--severity critical|high|medium|low|all | <subcommand> [subcommand-options]]"
 ---
 
@@ -18,6 +18,21 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 /bug-report api-audit                    # Focused API audit
 /bug-report error-review                 # Focused error handling audit
 /bug-report dead-code                    # Focused dead-code audit
+
+# Security vulnerability scans (two-phase, subagent-based)
+/bug-report sec-recon                    # Codebase architecture map — run before deeper scans
+/bug-report sqli                         # SQL injection scan
+/bug-report xss                          # Cross-site scripting scan
+/bug-report rce                          # Remote code execution scan
+/bug-report ssrf                         # Server-side request forgery scan
+/bug-report xxe                          # XML external entity scan
+/bug-report idor                         # Insecure direct object reference scan
+/bug-report jwt                          # JWT weakness scan
+/bug-report path-traversal               # Path traversal scan
+/bug-report ssti                         # Server-side template injection scan
+/bug-report graphql                      # GraphQL injection scan
+/bug-report business-logic               # Business logic flaw scan
+/bug-report missing-auth                 # Missing authentication/authorization scan
 ```
 
 ## Subcommands
@@ -42,7 +57,20 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 | `test-review` | `/bug-report test-review` | Test suite quality, coverage gaps, and strategy audit |
 | `upload-security` | `/bug-report upload-security` | File upload and media processing security audit |
 | `ai-code-audit` | `/bug-report ai-code-audit` | AI-generated code detection, security, and quality audit |
-| `dead-code` | `/bug-report dead-code` | Dead code, unused declarations, and cleanup audit |
+| `dead-code`      | `/bug-report dead-code`      | Dead code, unused declarations, and cleanup audit |
+| `sec-recon`      | `/bug-report sec-recon`      | Codebase architecture map — run before deeper security scans |
+| `sqli`           | `/bug-report sqli`           | SQL injection two-phase detection |
+| `xss`            | `/bug-report xss`            | Cross-site scripting two-phase detection |
+| `rce`            | `/bug-report rce`            | Remote code execution and command injection detection |
+| `ssrf`           | `/bug-report ssrf`           | Server-side request forgery detection |
+| `xxe`            | `/bug-report xxe`            | XML external entity injection detection |
+| `idor`           | `/bug-report idor`           | Insecure direct object reference detection |
+| `jwt`            | `/bug-report jwt`            | JWT weakness and signature bypass detection |
+| `path-traversal` | `/bug-report path-traversal` | Path traversal and directory traversal detection |
+| `ssti`           | `/bug-report ssti`           | Server-side template injection detection |
+| `graphql`        | `/bug-report graphql`        | GraphQL injection and abuse detection |
+| `business-logic` | `/bug-report business-logic` | Business logic flaw and workflow bypass detection |
+| `missing-auth`   | `/bug-report missing-auth`   | Missing authentication and privilege escalation detection |
 
 ## Operating Modes
 
@@ -71,6 +99,19 @@ Use `/bug-report <subcommand>` when the user asks for a specific audit domain. T
 - For `/bug-report upload-security`: see [subcommands/upload-security.md](subcommands/upload-security.md)
 - For `/bug-report ai-code-audit`: see [subcommands/ai-code-audit.md](subcommands/ai-code-audit.md)
 - For `/bug-report dead-code`: see [subcommands/dead-code.md](subcommands/dead-code.md)
+- For `/bug-report sec-recon`: see [subcommands/sec-recon.md](subcommands/sec-recon.md)
+- For `/bug-report sqli`: see [subcommands/sqli.md](subcommands/sqli.md)
+- For `/bug-report xss`: see [subcommands/xss.md](subcommands/xss.md)
+- For `/bug-report rce`: see [subcommands/rce.md](subcommands/rce.md)
+- For `/bug-report ssrf`: see [subcommands/ssrf.md](subcommands/ssrf.md)
+- For `/bug-report xxe`: see [subcommands/xxe.md](subcommands/xxe.md)
+- For `/bug-report idor`: see [subcommands/idor.md](subcommands/idor.md)
+- For `/bug-report jwt`: see [subcommands/jwt.md](subcommands/jwt.md)
+- For `/bug-report path-traversal`: see [subcommands/path-traversal.md](subcommands/path-traversal.md)
+- For `/bug-report ssti`: see [subcommands/ssti.md](subcommands/ssti.md)
+- For `/bug-report graphql`: see [subcommands/graphql.md](subcommands/graphql.md)
+- For `/bug-report business-logic`: see [subcommands/business-logic.md](subcommands/business-logic.md)
+- For `/bug-report missing-auth`: see [subcommands/missing-auth.md](subcommands/missing-auth.md)
 
 ## Shared Workflow
 

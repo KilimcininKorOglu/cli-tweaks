@@ -51,6 +51,29 @@ Find and analyze ALL file upload and processing points in this codebase:
 - Is there directory traversal protection? (user cannot manipulate file path to download system files)
 - Are signed/expiring URLs used? (direct file path cannot be guessed)
 
+## 5. Code-Level Pattern Search
+
+Search the codebase for these dangerous patterns and trace each to confirm exploitability:
+
+**Extension validation**
+- Blocklist instead of allowlist: `BLOCKED = ['.php', ...]` with gaps (`.php3`, `.phtml`, `.phar`, `.php5`, `.shtml`)
+- Content-Type-only check: `if content_type not in ['image/jpeg'...]` — no extension or magic byte check
+- Case not normalized: `if ext == '.php'` instead of `ext.lower()`
+
+**Filename handling**
+- User filename used directly: `f.save(os.path.join(upload_dir, file.filename))` without `secure_filename()` or equivalent
+- Double extension not handled: `os.path.splitext(name)[1]` returns last dot — `shell.php.jpg` → `.jpg`
+
+**Storage location**
+- Web-accessible upload path: `static/uploads/`, `public/uploads/`, `webroot/`, `www/`
+- No UUID rename: stored filename matches or derives from user-supplied filename
+
+**Severity mapping**
+- Extension bypass → file executable in web root → CRITICAL
+- Web root storage without execution disabled → HIGH
+- Content-Type-only validation → HIGH
+- Missing UUID rename (info leak / collision risk) → LOW
+
 ## Shared Audit Rules
 
 Use the shared verification, ID management, output format, and report-writing rules from `../SKILL.md`.
