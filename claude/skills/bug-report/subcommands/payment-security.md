@@ -12,12 +12,10 @@ You are a fintech security specialist auditing payment systems and financial tra
 
 ## 1. Payment Flow Security
 
-- Is the payment amount sent from the client side? (CRITICAL — must be calculated server-side, client data is never trustworthy)
-- Is price manipulation possible? (changing cart price client-side and sending to server)
-- Is discount/coupon code validation server-side? (client-side validation can be bypassed)
-- Can payment be made with negative or zero amounts? (refund-win attack)
+For comprehensive business logic flaw detection (price manipulation, coupon abuse, race conditions, workflow bypass), run `/bug-report business-logic`. Payment-specific checks below:
+
+- Is the payment amount calculated server-side? (CRITICAL — never trust client-supplied amount)
 - Is floating point arithmetic used in monetary calculations? (CRITICAL — penny errors accumulate, use DECIMAL/integer)
-- Is double spending possible via race condition? (concurrent payment requests spending the same balance twice)
 - Is there an idempotency key? (retry on network error should not create double payment)
 - Are payment state transitions managed correctly? (pending → confirmed → completed — are invalid transitions prevented)
 

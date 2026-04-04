@@ -24,11 +24,7 @@ You are a security and architecture specialist reviewing session management and 
 
 - Where is session data stored? (server memory, file system, database, Redis, JWT)
 - Server-side storage: Is it scalable? Can it be shared across multiple server instances?
-- If JWT is used:
-  * Is there an algorithm "none" or "HS256 with public key" vulnerability?
-  * Is token size reasonable? (putting too much data in JWT wastes bandwidth on every request)
-  * Is there a token revocation mechanism? (JWT cannot be revoked by default — needs blocklist/short lifetime)
-  * Is sensitive data in the JWT payload? (JWT is not encrypted, only signed — anyone can read it)
+- If JWT is used: run `/bug-report jwt` for deep code-level scanning (algorithm confusion, signature bypass, weak secrets, missing claim validation). Basic check: is sensitive data in the JWT payload? (JWT is not encrypted, only signed)
 - Is session data encrypted? (mandatory especially for cookie-based sessions)
 
 ## 3. Cookies and Client-Side State
@@ -49,9 +45,7 @@ You are a security and architecture specialist reviewing session management and 
 - Is CORS configuration correct? (`Access-Control-Allow-Origin: *` is dangerous)
 - Is `Access-Control-Allow-Credentials: true` used with wildcard origin? (CRITICAL vulnerability)
 
-## JWT Deep Scan
 
-For a comprehensive code-level scan of JWT algorithm confusion, signature bypass, weak secrets, and missing claim validation, use `/bug-report jwt` — it runs automated two-phase detection beyond the checklist above.
 
 ## Shared Audit Rules
 

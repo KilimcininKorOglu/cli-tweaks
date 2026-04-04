@@ -32,7 +32,7 @@ Find every endpoint that receives webhooks and check:
 Find every mechanism that sends webhooks outbound and check:
 
 - Are outgoing webhooks signed? (so receivers can verify authenticity)
-- Are target URLs validated? (SSRF protection — should not send webhooks to internal network addresses)
+- Are target URLs validated? (SSRF protection — should not send webhooks to internal network addresses) → run `/bug-report ssrf` for deep code-level SSRF scan
 - Is there retry logic? With exponential backoff? With maximum retry limit?
 - Is there an alerting/notification mechanism for failed deliveries?
 - Is there a timeout on webhook sending? (does the system lock up if the target responds slowly)
