@@ -1,7 +1,7 @@
 ---
 name: bug-report
 description: >
-  This skill MUST be invoked when the user asks for systematic bug analysis, or any focused audit such as "api audit", "auditcodex", "cache audit", "disaster recovery", "error review", "feature flags audit", "integration security", "observability audit", "payment security", "queue audit", "release discipline", "serialization audit", "session audit", "tech debt", "tenant isolation", "test review", "upload security", "ai code audit", "dead code", any security vulnerability scan such as "sql injection", "xss", "rce", "ssrf", "xxe", "idor", "jwt", "path traversal", "file upload", "ssti", "graphql injection", "business logic", "missing auth", or "security recon", or a FULL security sweep such as "güvenlik taraması", "security scan", "full security scan", "run all security scans", or "security sweep". Use `/bug-report` for general scans, `/bug-report <subcommand>` for domain-specific audits, and `/bug-report security-sweep` to run all security scans in parallel. All modes write verified findings to BUG-REPORT.md using the shared report contract.
+  This skill MUST be invoked when the user asks for systematic bug analysis, or any focused audit such as "api audit", "auditcodex", "cache audit", "disaster recovery", "error review", "feature flags audit", "integration security", "observability audit", "queue audit", "release discipline", "serialization audit", "session audit", "tech debt", "tenant isolation", "test review", "upload security", "ai code audit", "dead code", any security vulnerability scan such as "sql injection", "xss", "rce", "ssrf", "xxe", "idor", "jwt", "path traversal", "file upload", "ssti", "graphql injection", "business logic", "missing auth", or "security recon", or a FULL security sweep such as "güvenlik taraması", "security scan", "full security scan", "run all security scans", or "security sweep". Use `/bug-report` for general scans, `/bug-report <subcommand>` for domain-specific audits, and `/bug-report security-sweep` to run all security scans in parallel. All modes write verified findings to BUG-REPORT.md using the shared report contract.
 argument-hint: "[--severity critical|high|medium|low|all | <subcommand> [subcommand-options]]"
 ---
 
@@ -48,7 +48,7 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 | `feature-flags-audit` | `/bug-report feature-flags-audit` | Feature flag hygiene, rollout safety, and experimentation audit |
 | `integration-security` | `/bug-report integration-security` | Third-party integration, webhook, and OAuth security audit |
 | `observability-audit` | `/bug-report observability-audit` | Logging, metrics, tracing, and debugging-readiness audit |
-| `payment-security` | `/bug-report payment-security` | Payment flow and financial transaction security audit |
+
 | `queue-audit` | `/bug-report queue-audit` | Queue, worker, retry, and DLQ resilience audit |
 | `release-discipline` | `/bug-report release-discipline` | Version control, review process, and release-discipline audit |
 | `serialization-audit` | `/bug-report serialization-audit` | Serialization, parsing, and data transformation security audit |
@@ -150,7 +150,6 @@ Use `/bug-report <subcommand>` when the user asks for a specific audit domain. T
 - For `/bug-report feature-flags-audit`: see [subcommands/feature-flags-audit.md](subcommands/feature-flags-audit.md)
 - For `/bug-report integration-security`: see [subcommands/integration-security.md](subcommands/integration-security.md)
 - For `/bug-report observability-audit`: see [subcommands/observability-audit.md](subcommands/observability-audit.md)
-- For `/bug-report payment-security`: see [subcommands/payment-security.md](subcommands/payment-security.md)
 - For `/bug-report queue-audit`: see [subcommands/queue-audit.md](subcommands/queue-audit.md)
 - For `/bug-report release-discipline`: see [subcommands/release-discipline.md](subcommands/release-discipline.md)
 - For `/bug-report serialization-audit`: see [subcommands/serialization-audit.md](subcommands/serialization-audit.md)

@@ -265,9 +265,38 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 ## Important Reminders
 
 - Phase 2 must run **after** Phase 1 completes — it depends on the threat model output.
+- For payment systems, include the payment-specific checklist below in your Phase 1 threat modeling.
 - Focus strictly on **business logic flaws** — do not flag injection bugs, auth bypass, or IDOR issues here.
 - Threat modeling in Phase 1 should be **application-specific**: generic scenarios not grounded in the actual codebase are not useful.
 - Server-side validation is the only valid protection. Client-side validation, frontend form constraints, and API documentation that says "must be positive" are not security controls.
 - Race conditions on financial operations are high-severity even if they appear to require exact timing — automated tools (Turbo Intruder, concurrent curl) make them trivial to exploit.
 - When in doubt, classify as "Needs Manual Review" rather than "Not Exploitable". False negatives in a security assessment are worse than false positives.
 - Pay attention to ORM and database-level constraints (CHECK constraints, unique indexes, transactions with locking) — these can provide enforcement that is not visible in application code alone.
+
+## Payment & Financial Systems Checklist
+
+If the application processes payments, also audit the following:
+
+**Payment flow**
+- Is the payment amount calculated server-side? (CRITICAL — never trust client-supplied amount)
+- Is floating point arithmetic used in monetary calculations? (CRITICAL — use DECIMAL/integer)
+- Is there an idempotency key? (network retries must not create double payments)
+- Are payment state transitions enforced? (pending → confirmed → completed — invalid transitions blocked)
+
+**Card data & PCI DSS**
+- Are credit card numbers stored on the server? (must not — use PSP tokenization)
+- Is card data (CVV, PAN) written to logs?
+- Does the payment form use the PSP's iframe/SDK rather than posting directly to the server?
+- Is 3D Secure verification implemented?
+
+**Refunds & cancellations**
+- Is refund authorization checked? (only authorized roles can trigger refunds)
+- Can a refund exceed the original transaction amount?
+- Is the refund operation atomic? (balance update + PSP call must succeed/fail together)
+- Are repeated refund requests prevented?
+
+**Accounting & audit trail**
+- Does every financial transaction leave an immutable audit log?
+- Is double-entry bookkeeping applied? (every debit balanced by a credit)
+- Is there a reconciliation mechanism to detect balance inconsistencies?
+- Are currency conversions recorded with exchange rate and timestamp?
