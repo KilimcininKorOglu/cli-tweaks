@@ -35,6 +35,8 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 
 #### `bug-report` audit subcommands
 
+**General audits**
+
 | Subcommand | Command | Description |
 |------------|---------|-------------|
 | `auditcodex` | `/bug-report auditcodex` | Codex CLI diff audit with validated findings written to BUG-REPORT.md |
@@ -43,19 +45,37 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `disaster-recovery` | `/bug-report disaster-recovery` | Disaster recovery and business continuity readiness audit |
 | `error-review` | `/bug-report error-review` | Error message quality, disclosure, and fallback-state audit |
 | `feature-flags-audit` | `/bug-report feature-flags-audit` | Feature flag hygiene, rollout safety, and experimentation audit |
-| `integration-security` | `/bug-report integration-security` | Third-party integration, webhook, and OAuth security audit |
 | `observability-audit` | `/bug-report observability-audit` | Logging, metrics, tracing, and debugging-readiness audit |
-| `payment-security` | `/bug-report payment-security` | Payment flow and financial transaction security audit |
 | `queue-audit` | `/bug-report queue-audit` | Queue, worker, retry, and DLQ resilience audit |
 | `release-discipline` | `/bug-report release-discipline` | Version control, review process, and release-discipline audit |
-| `serialization-audit` | `/bug-report serialization-audit` | Serialization, parsing, and data transformation security audit |
-| `session-audit` | `/bug-report session-audit` | Session lifecycle, cookies, CSRF, and state-management audit |
-| `tech-debt` | `/bug-report tech-debt` | Technical debt mapping and prioritization audit |
+| `tech-debt` | `/bug-report tech-debt` | Technical debt, dead code detection, and test quality audit |
 | `tenant-isolation` | `/bug-report tenant-isolation` | Multi-tenant isolation and cross-tenant leakage audit |
-| `test-review` | `/bug-report test-review` | Test suite quality, coverage gaps, and strategy audit |
-| `upload-security` | `/bug-report upload-security` | File upload and media processing security audit |
 | `ai-code-audit` | `/bug-report ai-code-audit` | AI-generated code detection, security, and quality audit |
-| `dead-code` | `/bug-report dead-code` | Dead code, unused declarations, and cleanup audit |
+
+**Security audits (checklist-based)**
+
+| Subcommand | Command | Description |
+|------------|---------|-------------|
+| `integration-security` | `/bug-report integration-security` | Third-party integration, webhook, OAuth, and SSRF audit |
+| `serialization-audit` | `/bug-report serialization-audit` | Serialization, parsing, XXE, and data transformation security audit |
+| `session-audit` | `/bug-report session-audit` | Session lifecycle, JWT vulnerability detection, cookies, and CSRF audit |
+| `upload-security` | `/bug-report upload-security` | File upload validation, storage, media processing, and download security audit |
+| `business-logic` | `/bug-report business-logic` | Business logic flaws, workflow bypass, race conditions, and payment security audit |
+
+**Security scans (two-phase automated code scanning)**
+
+| Subcommand | Command | Description |
+|------------|---------|-------------|
+| `security-sweep` | `/bug-report security-sweep` | Run all security scans in parallel via workers |
+| `sec-recon` | `/bug-report sec-recon` | Codebase architecture and security posture reconnaissance |
+| `access-control` | `/bug-report access-control` | IDOR and missing authentication/authorization detection |
+| `sqli` | `/bug-report sqli` | SQL injection detection |
+| `xss` | `/bug-report xss` | Cross-site scripting detection |
+| `rce` | `/bug-report rce` | Remote code execution and command injection detection |
+| `ssrf` | `/bug-report ssrf` | Server-side request forgery detection |
+| `ssti` | `/bug-report ssti` | Server-side template injection detection |
+| `path-traversal` | `/bug-report path-traversal` | Path traversal and directory traversal detection |
+| `graphql` | `/bug-report graphql` | GraphQL injection and abuse detection |
 
 > Migration note: standalone audit commands such as `/api-audit`, `/error-review`, and `/auditcodex` are now consolidated under `/bug-report <subcommand>`.
 

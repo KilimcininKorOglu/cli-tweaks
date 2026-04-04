@@ -35,6 +35,8 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 
 #### `bug-report` audit subcommand'leri
 
+**Genel denetimler**
+
 | Alt komut | Komut | Açıklama |
 |-----------|-------|----------|
 | `auditcodex` | `/bug-report auditcodex` | Codex CLI ile diff tabanlı denetim ve doğrulanmış bulguların BUG-REPORT.md'ye yazılması |
@@ -43,19 +45,37 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `disaster-recovery` | `/bug-report disaster-recovery` | Felaket kurtarma ve iş sürekliliği hazırlık denetimi |
 | `error-review` | `/bug-report error-review` | Hata mesajı kalitesi, bilgi sızıntısı ve fallback denetimi |
 | `feature-flags-audit` | `/bug-report feature-flags-audit` | Feature flag hijyeni, rollout güvenliği ve deney denetimi |
-| `integration-security` | `/bug-report integration-security` | Üçüncü taraf entegrasyon, webhook ve OAuth güvenlik denetimi |
 | `observability-audit` | `/bug-report observability-audit` | Loglama, metrik, tracing ve hata ayıklanabilirlik denetimi |
-| `payment-security` | `/bug-report payment-security` | Ödeme akışı ve finansal işlem güvenlik denetimi |
 | `queue-audit` | `/bug-report queue-audit` | Kuyruk, worker, retry ve DLQ dayanıklılık denetimi |
 | `release-discipline` | `/bug-report release-discipline` | Versiyon kontrolü, review süreci ve release discipline denetimi |
-| `serialization-audit` | `/bug-report serialization-audit` | Serileştirme, parsing ve veri dönüşüm güvenlik denetimi |
-| `session-audit` | `/bug-report session-audit` | Oturum yaşam döngüsü, cookie, CSRF ve state yönetimi denetimi |
-| `tech-debt` | `/bug-report tech-debt` | Teknik borç haritalama ve önceliklendirme denetimi |
+| `tech-debt` | `/bug-report tech-debt` | Teknik borç, ölü kod tespiti ve test kalitesi denetimi |
 | `tenant-isolation` | `/bug-report tenant-isolation` | Çok kiracılı izolasyon ve tenantlar arası sızıntı denetimi |
-| `test-review` | `/bug-report test-review` | Test paketi kalitesi, kapsam boşlukları ve strateji denetimi |
-| `upload-security` | `/bug-report upload-security` | Dosya yükleme ve medya işleme güvenlik denetimi |
 | `ai-code-audit` | `/bug-report ai-code-audit` | Yapay zeka üretimi kod tespiti, güvenlik ve kalite denetimi |
-| `dead-code` | `/bug-report dead-code` | Ölü kod, kullanılmayan tanımlar ve temizlik denetimi |
+
+**Güvenlik denetimleri (checklist tabanlı)**
+
+| Alt komut | Komut | Açıklama |
+|-----------|-------|----------|
+| `integration-security` | `/bug-report integration-security` | Üçüncü taraf entegrasyon, webhook, OAuth ve SSRF denetimi |
+| `serialization-audit` | `/bug-report serialization-audit` | Serileştirme, parsing, XXE ve veri dönüşüm güvenlik denetimi |
+| `session-audit` | `/bug-report session-audit` | Oturum yaşam döngüsü, JWT güvenlik taraması, cookie ve CSRF denetimi |
+| `upload-security` | `/bug-report upload-security` | Dosya yükleme doğrulama, depolama, medya işleme ve indirme güvenlik denetimi |
+| `business-logic` | `/bug-report business-logic` | İş mantığı açıkları, iş akışı atlatma, race condition ve ödeme güvenlik denetimi |
+
+**Güvenlik taramaları (iki fazlı otomatik kod taraması)**
+
+| Alt komut | Komut | Açıklama |
+|-----------|-------|----------|
+| `security-sweep` | `/bug-report security-sweep` | Tüm güvenlik taramalarını worker'larla paralel çalıştırır |
+| `sec-recon` | `/bug-report sec-recon` | Kod tabanı mimarisi ve güvenlik duruşu keşfi |
+| `access-control` | `/bug-report access-control` | IDOR ve eksik kimlik doğrulama/yetkilendirme tespiti |
+| `sqli` | `/bug-report sqli` | SQL injection tespiti |
+| `xss` | `/bug-report xss` | Cross-site scripting tespiti |
+| `rce` | `/bug-report rce` | Uzaktan kod yürütme ve komut enjeksiyonu tespiti |
+| `ssrf` | `/bug-report ssrf` | Sunucu taraflı istek sahteciliği tespiti |
+| `ssti` | `/bug-report ssti` | Sunucu taraflı şablon enjeksiyonu tespiti |
+| `path-traversal` | `/bug-report path-traversal` | Path traversal ve dizin geçişi tespiti |
+| `graphql` | `/bug-report graphql` | GraphQL enjeksiyon ve kötüye kullanım tespiti |
 
 > Geçiş notu: `/api-audit`, `/error-review` ve `/auditcodex` gibi bağımsız audit komutları artık `/bug-report <subcommand>` altında toplandı.
 
