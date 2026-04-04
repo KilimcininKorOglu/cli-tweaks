@@ -1,7 +1,7 @@
 ---
 name: bug-report
 description: >
-  This skill MUST be invoked when the user asks for systematic bug analysis, or any focused audit such as "api audit", "auditcodex", "cache audit", "disaster recovery", "error review", "feature flags audit", "integration security", "observability audit", "payment security", "queue audit", "release discipline", "serialization audit", "session audit", "tech debt", "tenant isolation", "test review", "upload security", "ai code audit", "dead code", or any security vulnerability scan such as "sql injection", "xss", "rce", "ssrf", "xxe", "idor", "jwt", "path traversal", "file upload", "ssti", "graphql injection", "business logic", "missing auth", or "security recon". Use `/bug-report` for general scans and `/bug-report <subcommand>` for domain-specific audits. All modes write verified findings to BUG-REPORT.md using the shared report contract.
+  This skill MUST be invoked when the user asks for systematic bug analysis, or any focused audit such as "api audit", "auditcodex", "cache audit", "disaster recovery", "error review", "feature flags audit", "integration security", "observability audit", "payment security", "queue audit", "release discipline", "serialization audit", "session audit", "tech debt", "tenant isolation", "test review", "upload security", "ai code audit", "dead code", any security vulnerability scan such as "sql injection", "xss", "rce", "ssrf", "xxe", "idor", "jwt", "path traversal", "file upload", "ssti", "graphql injection", "business logic", "missing auth", or "security recon", or a FULL security sweep such as "güvenlik taraması", "security scan", "full security scan", "run all security scans", or "security sweep". Use `/bug-report` for general scans, `/bug-report <subcommand>` for domain-specific audits, and `/bug-report security-sweep` to run all security scans in parallel. All modes write verified findings to BUG-REPORT.md using the shared report contract.
 argument-hint: "[--severity critical|high|medium|low|all | <subcommand> [subcommand-options]]"
 ---
 
@@ -18,6 +18,7 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 /bug-report api-audit                    # Focused API audit
 /bug-report error-review                 # Focused error handling audit
 /bug-report dead-code                    # Focused dead-code audit
+/bug-report security-sweep               # Run ALL security scans in parallel via workers
 
 # Security vulnerability scans (two-phase, subagent-based)
 /bug-report sec-recon                    # Codebase architecture map — run before deeper scans
@@ -58,6 +59,7 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 | `upload-security` | `/bug-report upload-security` | File upload and media processing security audit |
 | `ai-code-audit` | `/bug-report ai-code-audit` | AI-generated code detection, security, and quality audit |
 | `dead-code`      | `/bug-report dead-code`      | Dead code, unused declarations, and cleanup audit |
+| `security-sweep` | `/bug-report security-sweep` | Run all security scans in parallel via workers |
 | `sec-recon`      | `/bug-report sec-recon`      | Codebase architecture map — run before deeper security scans |
 | `sqli`           | `/bug-report sqli`           | SQL injection two-phase detection |
 | `xss`            | `/bug-report xss`            | Cross-site scripting two-phase detection |
@@ -76,6 +78,66 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 
 ### General Mode
 Use `/bug-report` when the user wants a broad repository scan for bugs, logic flaws, correctness issues, and high-confidence findings.
+
+### Full Security Sweep Mode
+
+Use `/bug-report security-sweep` (or when the user says "güvenlik taraması başlat", "run all security scans", "security sweep", etc.).
+
+Launch all security scan subcommands **in parallel** using workers. Each worker is fully autonomous — it reads its subcommand file, executes the two-phase scan, and writes confirmed findings directly to `BUG-REPORT.md`.
+
+**Execution order:**
+
+1. Run `sec-recon` first (inline, not as a worker) to establish the codebase context. This writes the reconnaissance entry to `BUG-REPORT.md`.
+
+2. Then launch all remaining scans **in parallel** as workers — one worker per subcommand:
+
+   | Worker | Subcommand file |
+   |--------|----------------|
+   | Worker 1 | `subcommands/sqli.md` |
+   | Worker 2 | `subcommands/xss.md` |
+   | Worker 3 | `subcommands/rce.md` |
+   | Worker 4 | `subcommands/ssrf.md` |
+   | Worker 5 | `subcommands/xxe.md` |
+   | Worker 6 | `subcommands/idor.md` |
+   | Worker 7 | `subcommands/jwt.md` |
+   | Worker 8 | `subcommands/path-traversal.md` |
+   | Worker 9 | `subcommands/ssti.md` |
+   | Worker 10 | `subcommands/graphql.md` |
+   | Worker 11 | `subcommands/business-logic.md` |
+   | Worker 12 | `subcommands/missing-auth.md` |
+
+3. Each worker prompt must include:
+   - The full content of its subcommand file as instructions
+   - The repository path to scan
+   - Instruction to write all confirmed findings to `BUG-REPORT.md` using the shared format, continuing the existing ID sequence
+
+4. After all workers complete, read `BUG-REPORT.md` and re-sort all findings by severity (CRITICAL → HIGH → MEDIUM → LOW), deduplicating any overlapping findings across workers.
+
+**Worker prompt template:**
+
+> You are a security scanner. Execute the following security scan on the repository at `[repo_path]`.
+> Write all confirmed [VULNERABLE] and [LIKELY VULNERABLE] findings to `BUG-REPORT.md` in the repository root using this format:
+>
+> ```
+> ### BUG-[ID]: [title]
+> Severity: CRITICAL | HIGH | MEDIUM | LOW
+> Status: NEW
+> File: path/to/file:line
+> Component: [module]
+>
+> Problem: [what's wrong]
+> Expected: [what should happen]
+> Root Cause: [why]
+> Impact: [impact]
+> Verification: [taint trace + test command]
+> Suggested Commit: [fix: ...]
+> ---
+> ```
+>
+> Read existing `BUG-REPORT.md` to continue the ID sequence. Do not write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries.
+>
+> Scan instructions:
+> [full content of subcommand file]
 
 ### Focused Audit Mode
 Use `/bug-report <subcommand>` when the user asks for a specific audit domain. The domain-specific checklist lives in the matching file under `subcommands/`.
@@ -99,6 +161,7 @@ Use `/bug-report <subcommand>` when the user asks for a specific audit domain. T
 - For `/bug-report upload-security`: see [subcommands/upload-security.md](subcommands/upload-security.md)
 - For `/bug-report ai-code-audit`: see [subcommands/ai-code-audit.md](subcommands/ai-code-audit.md)
 - For `/bug-report dead-code`: see [subcommands/dead-code.md](subcommands/dead-code.md)
+- For `/bug-report security-sweep`: see Full Security Sweep Mode section above
 - For `/bug-report sec-recon`: see [subcommands/sec-recon.md](subcommands/sec-recon.md)
 - For `/bug-report sqli`: see [subcommands/sqli.md](subcommands/sqli.md)
 - For `/bug-report xss`: see [subcommands/xss.md](subcommands/xss.md)
