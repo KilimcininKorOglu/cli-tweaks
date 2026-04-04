@@ -47,6 +47,77 @@ You are a security and reliability engineer reviewing data serialization, transf
 - Are large datasets processed via streaming? (loading everything into memory vs chunk-by-chunk processing)
 - Is data transformation logic tested? (edge cases: empty input, single item, very large input)
 
+## XML External Entity (XXE) Deep Scan
+
+XML parsers that have external entity resolution enabled are vulnerable to XXE. Run an automated two-phase scan when the codebase parses XML from user-supplied input.
+
+### What XXE Is
+
+XXE occurs when an XML parser processes a document containing an external entity reference and the parser has entity resolution enabled. An attacker who can supply XML can read arbitrary local files, probe internal services (SSRF), trigger DoS (Billion Laughs), or execute OS commands in some stacks.
+
+### Patterns That Prevent XXE
+
+```python
+# Python — defusedxml (always safe)
+import defusedxml.ElementTree as ET
+tree = ET.parse(source)
+
+# Python — lxml with hardening
+parser = etree.XMLParser(resolve_entities=False, no_network=True, load_dtd=False)
+
+# Java — DocumentBuilderFactory
+dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+
+# .NET
+XmlReaderSettings settings = new XmlReaderSettings {
+    DtdProcessing = DtdProcessing.Prohibit, XmlResolver = null
+};
+```
+
+### Phase 1: Find Vulnerable XML Parsing Sites
+
+Launch a subagent with the following instructions:
+
+> **Goal**: Find every XML parsing call in the codebase where external entity resolution is NOT explicitly disabled. Return findings in your response.
+>
+> **Flag these patterns (vulnerable — no hardening adjacent)**:
+> - Python: `xml.etree.ElementTree.*`, `xml.dom.minidom.*`, `xml.sax.*`, `lxml.etree.*` without `resolve_entities=False`
+> - Java: `DocumentBuilderFactory`, `SAXParserFactory`, `XMLInputFactory`, `TransformerFactory` — any instantiation without the disallow-doctype-decl / external-entity features set
+> - PHP: `simplexml_load_string()`, `DOMDocument::loadXML()` — without `libxml_disable_entity_loader(true)` or `LIBXML_NONET`
+> - .NET: `XmlDocument`, `XmlTextReader`, `XPathDocument` — without `DtdProcessing.Prohibit` and `XmlResolver = null`
+> - Node.js: `libxmljs.parseXmlString()`, `node-expat`
+> - Ruby: `Nokogiri::XML(...) { |c| c.noent }` (noent enables entity expansion)
+>
+> **Skip** (safe): `defusedxml` usage, Nokogiri default (no options), Go `encoding/xml` standard library, Java parsers with `disallow-doctype-decl=true`.
+>
+> Return findings as structured markdown with file, lines, parser used, missing hardening, and code snippet.
+
+If Phase 1 finds no vulnerable parsing sites, skip Phase 2.
+
+### Phase 2: Trace User Input to Vulnerable Parsers
+
+Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings as context. Instructions:
+
+> For each parsing site, trace the XML input to its origin:
+> - **Direct**: HTTP request body, file upload, query params
+> - **Indirect**: user-supplied URL fetched and parsed, user input embedded in XML template
+> - **Server-side only**: bundled config file at startup — NOT exploitable
+>
+> Assess: is the response returned (reflected XXE) or only side effects observable (blind XXE via DNS/HTTP callback)?
+>
+> **Output format** — write confirmed findings to `BUG-REPORT.md` using the shared report format from `../SKILL.md`.
+>
+> **Severity mapping**:
+> - Local file read or internal SSRF → HIGH
+> - Limited reachability → MEDIUM
+>
+> Do **NOT** write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
+
+**Key reminders**: `LIBXML_NOENT` in PHP EXPANDS entities — it does NOT protect. Blind XXE is still exploitable via DNS/HTTP callbacks. Trace full async pipelines (file uploaded in one handler, parsed in a background job).
+
+---
+
 ## Shared Audit Rules
 
 Use the shared verification, ID management, output format, and report-writing rules from `../SKILL.md`.
