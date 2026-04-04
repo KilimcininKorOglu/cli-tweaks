@@ -28,7 +28,8 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `git-flow`                     | `/git-flow`                     | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi               |
 | `initialize`                   | `/initialize`                   | Kod tabanını tarayarak AGENTS.md oluşturur                                |
 | `init-claude`                  | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                                |
-| `implement-plan`               | `/implement-plan`               | Zorunlu kullanıcı sorularıyla interaktif planlama                         |
+| `implement-plan`               | `/implement-plan`               | Açık plan tetiklerinde ExitSpecMode-first override destekli planlama      |
+| `redate-commits`               | `/redate-commits`               | Commit tarihlerini seçilen aralığa yayar, güvenli iş akışı uyarıları verir |
 | `frontend-design`              | `/frontend-design`              | Özgün, prodüksiyon kalitesinde frontend arayüzleri                        |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur                   |
 
