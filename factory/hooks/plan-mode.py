@@ -203,35 +203,23 @@ if matched:
     mode = "explicit" if explicitMatch else "implicit"
 
     if explicitMatch:
-        shortExplicitPrompt = len(prompt.strip()) <= 40
-        if shortExplicitPrompt:
-            context = """Spec mode is active. The user requested explicit planning.
+        context = """Spec mode is active. The user requested explicit planning.
 
 Hard requirement for this turn:
 - Your NEXT assistant response MUST be a single ExitSpecMode tool call.
 - Do NOT send a normal text reply.
-- Do NOT call AskUser first for short explicit triggers.
+- Do NOT call AskUser before ExitSpecMode.
 - Stay read-only and do not run any modifying tools.
 
-If scope is minimal/unclear, create a concise assumption-based plan and submit it via ExitSpecMode.
-"""
-        else:
-            context = """Spec mode is active. The user indicated that they do not want you to execute yet -- you MUST NOT make any edits, run any non-readonly tools (including changing configs or making commits), or otherwise make any changes to the system.
-
-Instead, you should:
-1. Answer the user's query with a generated spec using the ExitSpecMode tool.
-2. When you're done researching, present your spec by calling the ExitSpecMode tool, which will prompt the user to confirm the spec. Do NOT make any file changes or run any tools that modify the system state in any way until the user has confirmed the spec.
-3. Use AskUser only when absolutely required by missing decisions; if you can proceed with reasonable assumptions, finalize via ExitSpecMode directly.
-
-When your spec involves architecture, data flows, state machines, or complex interactions, include Mermaid diagrams (using ```mermaid code blocks) in your plan to visualize the design.
+If scope/details are unclear, include concise assumptions and open questions
+inside the plan body that you pass to ExitSpecMode, instead of asking first.
 
 Planning trigger details:
 - The user's request was explicitly detected as planning (mode: {mode}).
-- Explore with read-only tools first.
-- Include file:line references for codebase claims.
+- Explore with read-only tools first when needed.
+- Include file:line references for codebase claims when available.
 - Include a "What We're NOT Doing" section.
 - The final planning response must be an ExitSpecMode tool call.
-- Do not finish with plain text; finish with ExitSpecMode.
 """.format(mode=mode)
     else:
         context = """[PLANNING MODE DETECTED]
