@@ -28,7 +28,6 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 /bug-report ssrf                         # Server-side request forgery scan
 /bug-report xxe                          # XML external entity scan
 /bug-report idor                         # Insecure direct object reference scan
-/bug-report jwt                          # JWT weakness scan
 /bug-report path-traversal               # Path traversal scan
 /bug-report ssti                         # Server-side template injection scan
 /bug-report graphql                      # GraphQL injection scan
@@ -52,7 +51,7 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 | `queue-audit` | `/bug-report queue-audit` | Queue, worker, retry, and DLQ resilience audit |
 | `release-discipline` | `/bug-report release-discipline` | Version control, review process, and release-discipline audit |
 | `serialization-audit` | `/bug-report serialization-audit` | Serialization, parsing, and data transformation security audit |
-| `session-audit` | `/bug-report session-audit` | Session lifecycle, cookies, CSRF, and state-management audit |
+| `session-audit` | `/bug-report session-audit` | Session lifecycle, JWT vulnerability detection, cookies, CSRF, and state-management audit |
 | `tech-debt` | `/bug-report tech-debt` | Technical debt mapping and prioritization audit |
 | `tenant-isolation` | `/bug-report tenant-isolation` | Multi-tenant isolation and cross-tenant leakage audit |
 | `test-review` | `/bug-report test-review` | Test suite quality, coverage gaps, and strategy audit |
@@ -67,7 +66,7 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 | `ssrf`           | `/bug-report ssrf`           | Server-side request forgery detection |
 | `xxe`            | `/bug-report xxe`            | XML external entity injection detection |
 | `idor`           | `/bug-report idor`           | Insecure direct object reference detection |
-| `jwt`            | `/bug-report jwt`            | JWT weakness and signature bypass detection |
+
 | `path-traversal` | `/bug-report path-traversal` | Path traversal and directory traversal detection |
 | `ssti`           | `/bug-report ssti`           | Server-side template injection detection |
 | `graphql`        | `/bug-report graphql`        | GraphQL injection and abuse detection |
@@ -99,8 +98,7 @@ Launch all security scan subcommands **in parallel** using workers. Each worker 
    | Worker 4 | `subcommands/ssrf.md` |
    | Worker 5 | `subcommands/xxe.md` |
    | Worker 6 | `subcommands/idor.md` |
-   | Worker 7 | `subcommands/jwt.md` |
-   | Worker 8 | `subcommands/path-traversal.md` |
+   | Worker 7 | `subcommands/path-traversal.md` |
    | Worker 9 | `subcommands/ssti.md` |
    | Worker 10 | `subcommands/graphql.md` |
    | Worker 11 | `subcommands/business-logic.md` |
@@ -168,7 +166,6 @@ Use `/bug-report <subcommand>` when the user asks for a specific audit domain. T
 - For `/bug-report ssrf`: see [subcommands/ssrf.md](subcommands/ssrf.md)
 - For `/bug-report xxe`: see [subcommands/xxe.md](subcommands/xxe.md)
 - For `/bug-report idor`: see [subcommands/idor.md](subcommands/idor.md)
-- For `/bug-report jwt`: see [subcommands/jwt.md](subcommands/jwt.md)
 - For `/bug-report path-traversal`: see [subcommands/path-traversal.md](subcommands/path-traversal.md)
 - For `/bug-report ssti`: see [subcommands/ssti.md](subcommands/ssti.md)
 - For `/bug-report graphql`: see [subcommands/graphql.md](subcommands/graphql.md)
