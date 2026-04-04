@@ -7,7 +7,7 @@ description: >
   when user asks "how should I implement X", "en iyi yaklaşım ne", or
   wants a technical specification. Creates detailed implementation plans
   through interactive research and iteration, breaking down tasks into
-  phases with mandatory user questions via AskUser.
+  phases with conditional AskUser clarification based on planning mode.
 ---
 
 # Implementation Planning
@@ -24,6 +24,17 @@ Given a task or ticket:
 4. Verify any user corrections against code before accepting
 5. Outline the phase structure, get approval
 6. Detail each phase, then present with ExitSpecMode
+
+## Explicit Planning Override (Highest Priority)
+
+When an explicit planning/spec trigger is active (for example `planla` or injected
+`Spec mode is active` context), this override takes precedence over the generic flow:
+
+1. The NEXT assistant response MUST be a single `ExitSpecMode` tool call.
+2. Do NOT call `AskUser` before that `ExitSpecMode` call.
+3. If scope is unclear, include assumptions and open questions inside the plan body
+   passed to `ExitSpecMode` instead of asking first.
+4. Stay read-only while preparing the plan.
 
 ## When to Plan (Use This Skill)
 
@@ -81,11 +92,13 @@ Only skip planning for simple tasks:
    - Launch up to 3 workers IN PARALLEL for faster exploration
 3. Build an informed understanding of the codebase before asking anything.
 
-### Step 2: Ask Clarifying Questions (MOST IMPORTANT STEP)
+### Step 2: Ask Clarifying Questions (Normal Planning Path)
 
-THIS IS THE MOST CRITICAL STEP. Never skip it.
+This step is mandatory for the normal planning path.
+If the explicit planning override is active, skip this step until after the first
+`ExitSpecMode` submission.
 
-Before designing any plan, you MUST use the AskUser tool to ask 1-4 focused questions. The goal is to understand what the user actually wants before committing to an approach.
+Before designing a normal-path plan, you MUST use the AskUser tool to ask 1-4 focused questions. The goal is to understand what the user actually wants before committing to an approach.
 
 What to ask about:
 - Ambiguous requirements ("Should X include Y or just Z?")
@@ -114,12 +127,16 @@ Example AskUser usage:
 [option] Minimal (just the happy path first)
 ```
 
-Rules:
+Rules (normal path):
 - ALWAYS ask at least one question, even if the request seems clear
 - If the request is very specific, confirm your understanding with a verification question
 - DO NOT proceed to Step 3 until you get answers
 - DO NOT ask questions in plain text -- always use AskUser tool
 - If user corrections conflict with what you found in code, present the discrepancy as a question
+
+Explicit override rules:
+- DO NOT call `AskUser` before the initial `ExitSpecMode` call.
+- Put unresolved questions into assumptions/open questions inside the plan body.
 
 ### Step 3: Design the Plan
 
@@ -130,6 +147,9 @@ After getting user answers:
 3. Design a concrete plan based on user's chosen direction.
 
 ### Step 4: Present the Plan
+
+For explicit planning override, your next response must already be a single
+`ExitSpecMode` tool call (no plain-text interim response).
 
 Build the complete plan following the template below and present it using ExitSpecMode tool with:
 - `title`: A descriptive plan title
@@ -176,6 +196,7 @@ Manual verification:
 
 ### Do
 - Read files FULLY before planning
+- In explicit planning override, call `ExitSpecMode` first and defer `AskUser`
 - Include file:line references for all claims
 - Use worker subagents for research (they work in read-only mode)
 - Verify claims against code
@@ -191,6 +212,7 @@ Manual verification:
 - Assume -- verify with code
 - Write any code or edit any files during planning
 - Skip the "What We're NOT Doing" section
+- Call `AskUser` before `ExitSpecMode` when explicit planning override is active
 
 ### No Open Questions Rule
 
@@ -235,7 +257,7 @@ If you encounter open questions during planning:
 | Mistake                              | Why It's Wrong                        | Do This Instead                                    |
 |--------------------------------------|---------------------------------------|----------------------------------------------------|
 | Dumping a complete plan immediately  | User can't course-correct early       | Present understanding first, get buy-in at each step |
-| Skipping clarifying questions        | You'll plan the wrong thing           | ALWAYS use AskUser before designing the plan       |
+| Skipping clarifying questions in normal path | You'll plan the wrong thing | Use AskUser in normal path; in explicit override, submit ExitSpecMode first |
 | Asking questions in plain text       | User gets unstructured wall of text   | Use AskUser tool for structured multiple-choice    |
 | Accepting user corrections blindly   | User may be wrong or outdated         | Verify corrections against code before proceeding  |
 | Leaving "TBD" or "TODO" in plan      | Plan should be actionable             | Resolve all questions before finalizing            |
