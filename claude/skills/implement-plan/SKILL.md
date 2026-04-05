@@ -23,7 +23,21 @@ Given a task or ticket:
 3. Present understanding with `file:line` references, ask only unanswerable questions
 4. Verify any user corrections against code before accepting
 5. Outline the phase structure, get approval
-6. Detail each phase, then present with ExitPlanMode
+6. Detail each phase, write to the plan file, then call ExitPlanMode
+
+## Explicit Planning Override (Highest Priority)
+
+When an explicit planning trigger is active (for example `planla` or injected
+`EXPLICIT PLANNING REQUEST` context), this override takes precedence over the
+normal planning flow:
+
+1. Call `EnterPlanMode` to enter plan mode.
+2. Research the codebase with `Explore` subagents, Grep, Glob, Read tools.
+3. Write the complete plan to the plan file.
+4. Call `ExitPlanMode` (no parameters -- it reads from the plan file).
+5. Do NOT call `AskUserQuestion` before `ExitPlanMode`.
+6. If scope is unclear, include assumptions and open questions inside the plan body.
+7. Stay read-only while preparing the plan.
 
 ## When to Plan (Use This Skill)
 
@@ -81,11 +95,13 @@ Only skip planning for simple tasks:
    - Launch up to 3 `Explore` agents IN PARALLEL for faster exploration
 3. Build an informed understanding of the codebase before asking anything.
 
-### Step 2: Ask Clarifying Questions (MOST IMPORTANT STEP)
+### Step 2: Ask Clarifying Questions (Normal Planning Path)
 
-THIS IS THE MOST CRITICAL STEP. Never skip it.
+This step is mandatory for the normal planning path.
+If the explicit planning override is active, skip this step until after the
+initial plan presentation via `ExitPlanMode`.
 
-Before designing any plan, you MUST use the AskUserQuestion tool to ask 1-4 focused questions. The goal is to understand what the user actually wants before committing to an approach.
+Before designing a normal-path plan, you MUST use the AskUserQuestion tool to ask 1-4 focused questions. The goal is to understand what the user actually wants before committing to an approach.
 
 What to ask about:
 - Ambiguous requirements ("Should X include Y or just Z?")
@@ -114,12 +130,16 @@ Example AskUserQuestion usage:
 [option] Minimal (just the happy path first)
 ```
 
-Rules:
+Rules (normal path):
 - ALWAYS ask at least one question, even if the request seems clear
 - If the request is very specific, confirm your understanding with a verification question
 - DO NOT proceed to Step 3 until you get answers
 - DO NOT ask questions in plain text -- always use AskUserQuestion tool
 - If user corrections conflict with what you found in code, present the discrepancy as a question
+
+Explicit override rules:
+- DO NOT call `AskUserQuestion` before the initial `ExitPlanMode` call.
+- Put unresolved questions into assumptions/open questions inside the plan body.
 
 ### Step 3: Design the Plan
 
@@ -131,9 +151,13 @@ After getting user answers:
 
 ### Step 4: Present the Plan
 
-Build the complete plan following the template below and present it using ExitPlanMode tool with:
-- `title`: A descriptive plan title
-- `plan`: The full plan in markdown format
+Write the complete plan to the plan file following the template below, then call
+ExitPlanMode to present it. ExitPlanMode reads from the plan file -- do NOT pass
+title or plan as parameters.
+
+For the explicit planning override, your next response after entering plan mode
+should be a single `ExitPlanMode` call once the plan file is written (no
+plain-text interim response).
 
 ## Plan Template
 
@@ -182,6 +206,7 @@ Manual verification:
 - Get buy-in at each step
 - Assume TDD for automated tests -- don't add explicit "write tests" steps
 - Include manual verification checkpoints at phase boundaries
+- In explicit planning override, call EnterPlanMode first and defer AskUserQuestion
 - Use ExitPlanMode with optionNames when presenting multiple approaches
 
 ### Don't
@@ -191,6 +216,7 @@ Manual verification:
 - Assume -- verify with code
 - Write any code or edit any files during planning
 - Skip the "What We're NOT Doing" section
+- Call AskUserQuestion before ExitPlanMode when explicit planning override is active
 
 ### No Open Questions Rule
 
@@ -235,7 +261,8 @@ If you encounter open questions during planning:
 | Mistake                              | Why It's Wrong                        | Do This Instead                                    |
 |--------------------------------------|---------------------------------------|----------------------------------------------------|
 | Dumping a complete plan immediately  | User can't course-correct early       | Present understanding first, get buy-in at each step |
-| Skipping clarifying questions        | You'll plan the wrong thing           | ALWAYS use AskUserQuestion before designing the plan       |
+| Skipping clarifying questions in normal path | You'll plan the wrong thing | Use AskUserQuestion in normal path; in explicit override, submit ExitPlanMode first |
+| Passing params to ExitPlanMode       | Claude Code ExitPlanMode reads from plan file | Write plan to file first, call ExitPlanMode without params |
 | Asking questions in plain text       | User gets unstructured wall of text   | Use AskUserQuestion tool for structured multiple-choice    |
 | Accepting user corrections blindly   | User may be wrong or outdated         | Verify corrections against code before proceeding  |
 | Leaving "TBD" or "TODO" in plan      | Plan should be actionable             | Resolve all questions before finalizing            |

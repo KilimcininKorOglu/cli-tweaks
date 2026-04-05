@@ -188,51 +188,27 @@ matched = (explicitMatch or implicitMatch) and not skip
 if matched:
     mode = "explicit" if explicitMatch else "implicit"
 
-    context = """[PLANNING MODE ACTIVE]
-The user's request was detected as requiring planning (mode: {mode}).
+    if explicitMatch:
+        context = """[EXPLICIT PLANNING REQUEST]
+The user explicitly requested planning (detected keyword match).
 
-You MUST call EnterPlanMode first, then follow this 5-phase workflow.
+You have an 'implement-plan' skill available. Use the Skill tool to invoke it
+with skill name 'implement-plan'.
 
-== PHASE 1: EXPLORE & UNDERSTAND ==
-- DO NOT write any code or edit any files.
-- Spawn up to 3 Explore sub-agents IN PARALLEL via Task tool.
-- Use Grep, Glob, Read tools to understand patterns and architecture.
+The skill's "Explicit Planning Override" applies: call EnterPlanMode immediately,
+research the codebase, write the plan to the plan file, then call ExitPlanMode.
+Do NOT call AskUserQuestion before ExitPlanMode for explicit planning triggers."""
+    else:
+        context = """[IMPLICIT PLANNING DETECTED]
+The user's request was detected as complex enough to benefit from planning
+(complexity score: {score}).
 
-== PHASE 2: ASK CLARIFYING QUESTIONS ==
-- BEFORE designing anything, use AskUserQuestion tool to ask 1-4 focused questions.
-- Ask about ambiguous requirements, user preferences, and design choices.
-- Present what you found in Phase 1 and ask what the user wants.
-- Examples of good questions:
-  * "I found X pattern in the codebase. Should we follow it or try Y?"
-  * "There are two approaches: A (pros/cons) vs B (pros/cons). Which?"
-  * "The scope could include X, Y, Z. Should we include all or start smaller?"
-- DO NOT proceed to Phase 3 until you get answers.
-- ALWAYS ask at least one question to confirm your understanding.
+You have an 'implement-plan' skill available. Use the Skill tool to invoke it
+with skill name 'implement-plan' for a structured planning workflow.
 
-== PHASE 3: DESIGN THE PLAN ==
-- Based on user answers, design a concrete implementation plan.
-- Optionally spawn Plan sub-agents via Task tool for complex designs.
-- Include file:line references for all claims about existing code.
-- Include a "What We're NOT Doing" section to bound scope.
-- Write the plan to the plan file.
-
-== PHASE 4: PRESENT THE PLAN ==
-- Use ExitPlanMode to present the completed plan.
-- The plan must be actionable with no TBD/TODO items.
-
-== PHASE 5: WAIT FOR APPROVAL ==
-- Only after the user explicitly approves, begin implementation.
-- If the user requests changes, re-enter plan mode and revise.
-
-CRITICAL RULES:
-- NEVER skip Phase 2 (asking questions). This is the most important phase.
-- NEVER dump a complete plan without first asking questions.
-- NEVER write code during planning. This is read-only.
-- Use AskUserQuestion tool (not plain text) for structured questions.
-
-You have an 'implement-plan' skill available. Use the Skill tool
-to invoke it with skill name 'implement-plan' for the detailed
-planning workflow.""".format(mode=mode)
+Follow the skill's normal planning path: research, ask clarifying questions
+via AskUserQuestion, design the plan, then present with ExitPlanMode.""".format(
+            score=complexityScore)
 
     output = {
         "hookSpecificOutput": {
