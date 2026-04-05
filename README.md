@@ -28,7 +28,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `git-flow`                     | `/git-flow`                     | Structured branch management with strict validation rules                         |
 | `initialize`                   | `/initialize`                   | Creates AGENTS.md by scanning the codebase                                        |
 | `init-claude`                  | `/init-claude`                  | Creates CLAUDE.md by scanning the codebase                                        |
-| `implement-plan`               | `/implement-plan`               | Interactive planning with explicit ExitSpecMode-first override support            |
+| `implement-plan`               | `/implement-plan`               | Structured implementation planning with research, questions, and phased design    |
 | `redate-commits`               | `/redate-commits`               | Rewrites commit dates across a selected range with safe workflow warnings         |
 | `frontend-design`              | `/frontend-design`              | Distinctive, production-grade frontend interfaces                                 |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill                         |
