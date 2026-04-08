@@ -353,9 +353,15 @@ Launch a subagent with the following instructions:
 > [Repeat for each sink]
 > ```
 
-### Phase 2: Trace User Input to File-Loading Sinks and Check for Escape
+### Phase 2: Batched Verify — Trace User Input to File-Loading Sinks and Check for Escape
 
-Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings as context. Instructions:
+After Phase 1 completes, count the numbered sink sections (`### 1.`, `### 2.`, ...) from Phase 1 findings.
+
+**If 3 or fewer sinks**: Launch a single subagent with all sinks (skip batching).
+
+**If more than 3 sinks**: Split into batches of up to 3 each. Launch all batch subagents **in parallel**. Each subagent returns findings in its response (NOT to a file).
+
+Give each batch subagent the following instructions (include assigned sinks from Phase 1):
 
 >
 > **Context**: You will be given the project's architecture summary and the Phase 1 recon output. Use the architecture to understand request entry points, middleware, and how data flows through the application.
@@ -408,23 +414,53 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 > - **Not Vulnerable**: The path variable is server-side only, OR an effective mitigation (`realpath` + prefix check, `basename`, strict allowlist, safe framework helper) is correctly applied.
 > - **Needs Manual Review**: Cannot determine the variable's origin with confidence (passes through opaque helpers or complex conditional flows), or the mitigation logic is non-standard and hard to evaluate statically.
 >
-> **Output format** — write confirmed findings to `BUG-REPORT.md` using the shared report format from `../SKILL.md`. Read existing `BUG-REPORT.md` first to continue the ID sequence (start at BUG-001 if none exists).
+> **Output format** — return findings in your response using this format:
 >
-> **Severity mapping**:
+> ```markdown
+> # Path Traversal Batch [N] Results
+>
+> ## Findings
+>
+> ### [VULNERABLE] Descriptive name
+> - **File**: `path/to/file.ext` (lines X-Y)
+> - **Endpoint / function**: [route or function name]
+> - **Issue**: [description of taint flow + missing mitigation]
+> - **Taint trace**: [Step-by-step from source to file sink]
+> - **Impact**: [What attacker can access/overwrite]
+> - **Remediation**: [realpath + prefix check, basename, etc.]
+> - **Dynamic test**: [curl command or payload]
+>
+> ### [LIKELY VULNERABLE] / [NOT VULNERABLE] / [NEEDS MANUAL REVIEW]
+> [Similar format]
+> ```
+>
+> **Severity mapping** (for use in Phase 3 reporting):
 > - Sensitive or config files accessible → HIGH
 > - Write capability → HIGH
 > - Non-sensitive files → MEDIUM
->
-> For **Verification**: include the full taint trace and a dynamic test command or payload.
-> For **Suggested Commit**: conventional commit message without BUG-IDs.
->
-> Do **NOT** write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
+
+### Phase 3: Merge & Report
+
+After all Phase 2 subagents complete:
+
+1. Collect all batch responses.
+2. Extract only **[VULNERABLE]** and **[LIKELY VULNERABLE]** findings.
+3. Write confirmed findings to `BUG-REPORT.md` using the shared format from `../SKILL.md`:
+   - Read existing `BUG-REPORT.md` to continue the ID sequence (start at BUG-001 if none exists)
+   - Each finding as `### BUG-[ID]: [title]` with severity per the mapping above
+   - For **Verification**: include the full taint trace and a dynamic test command or payload
+   - For **Suggested Commit**: conventional commit message without BUG-IDs
+4. Append the completion marker: `<!-- scan:path-traversal completed -->`
+5. Do NOT write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
 
 ---
 
 ## Important Reminders
 
-- Phase 2 must run AFTER Phase 1 completes — it depends on Phase 1 results.
+- Phase 1 returns findings in response — do not write to files.
+- Phase 2 batches run AFTER Phase 1 completes. Phase 3 runs AFTER all batches complete.
+- Batch size is **3 sinks per subagent**. If 1-3 total, use a single subagent. Launch all batches **in parallel**.
+- Each batch subagent receives only its assigned sinks, not all Phase 1 findings.
 - **Phase 1 is purely structural**: flag any file-loading sink where the path has a dynamic component, regardless of origin. Do not attempt to trace user input in Phase 1 — that is Phase 2's job.
 - **Phase 2 is taint analysis + mitigation review**: for each sink found in Phase 1, (a) trace the path variable back to its origin and (b) check whether an effective mitigation prevents escape from the intended directory.
 - `os.path.join` and `path.join` alone do **not** prevent traversal — `os.path.join('/base', '../etc/passwd')` resolves to `/etc/passwd`. Only `realpath` + prefix check prevents this.
