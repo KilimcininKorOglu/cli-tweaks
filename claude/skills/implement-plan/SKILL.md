@@ -1,7 +1,7 @@
 ---
 name: implement-plan
 description: >
-  This skill MUST be invoked when the user says "plan this", "planla",
+  This skill MUST be invoked when the user says "plan this", "planla", "planlar mısın", "plan yap",
   "tasarla", "design this", "implementation plan", "nasıl implement ederiz"
   or any variation requesting implementation planning. SHOULD also invoke
   when user asks "how should I implement X", "en iyi yaklaşım ne", or
