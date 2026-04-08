@@ -1,7 +1,7 @@
 ---
 name: bug-report
 description: >
-  This skill MUST be invoked when the user asks for systematic bug analysis, or any focused audit such as "api audit", "auditcodex", "cache audit", "disaster recovery", "error review", "feature flags audit", "integration security", "observability audit", "queue audit", "release discipline", "serialization audit", "session audit", "tech debt", "tenant isolation", "test review", "upload security", "ai code audit", "dead code", any security vulnerability scan such as "sql injection", "xss", "rce", "ssrf", "xxe", "access control", "path traversal", "file upload", "ssti", "graphql injection", "business logic", "missing auth", or "security recon", or a FULL security sweep such as "güvenlik taraması", "security scan", "full security scan", "run all security scans", or "security sweep". Use `/bug-report` for general scans, `/bug-report <subcommand>` for domain-specific audits, and `/bug-report security-sweep` to run all security scans in parallel. All modes write verified findings to BUG-REPORT.md using the shared report contract.
+  This skill MUST be invoked when the user asks for systematic bug analysis, or any focused audit such as "api audit", "auditcodex", "cache audit", "disaster recovery", "error review", "feature flags audit", "integration security", "observability audit", "queue audit", "release discipline", "serialization audit", "session audit", "tech debt", "tenant isolation", "test review", "upload security", "ai code audit", "dead code", any security vulnerability scan such as "sql injection", "xss", "rce", "ssrf", "xxe", "access control", "path traversal", "file upload", "ssti", "graphql injection", "business logic", "missing auth", "hardcoded secrets", "hardcoded keys", or "security recon", or a FULL security sweep such as "güvenlik taraması", "security scan", "full security scan", "run all security scans", or "security sweep". Use `/bug-report` for general scans, `/bug-report <subcommand>` for domain-specific audits, and `/bug-report security-sweep` to run all security scans in parallel. All modes write verified findings to BUG-REPORT.md using the shared report contract.
 argument-hint: "[--severity critical|high|medium|low|all | <subcommand> [subcommand-options]]"
 ---
 
@@ -19,7 +19,7 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 /bug-report error-review                 # Focused error handling audit
 /bug-report security-sweep               # Run ALL security scans in parallel via workers
 
-# Security vulnerability scans (two-phase, subagent-based)
+# Security vulnerability scans (three-phase: recon, batched verify, merge)
 /bug-report sec-recon                    # Codebase architecture map — run before deeper scans
 /bug-report sqli                         # SQL injection scan
 /bug-report xss                          # Cross-site scripting scan
@@ -30,6 +30,7 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 /bug-report ssti                         # Server-side template injection scan
 /bug-report graphql                      # GraphQL injection scan
 /bug-report business-logic               # Business logic flaw scan
+/bug-report hardcoded-secrets            # Hardcoded API key, token, password scan
 ```
 
 ## Subcommands
@@ -65,6 +66,7 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 | `ssti`           | `/bug-report ssti`           | Server-side template injection detection |
 | `graphql`        | `/bug-report graphql`        | GraphQL injection and abuse detection |
 | `business-logic` | `/bug-report business-logic` | Business logic flaw and workflow bypass detection |
+| `hardcoded-secrets` | `/bug-report hardcoded-secrets` | Hardcoded API key, token, and password detection |
 
 ## Operating Modes
 
@@ -75,28 +77,28 @@ Use `/bug-report` when the user wants a broad repository scan for bugs, logic fl
 
 Use `/bug-report security-sweep` (or when the user says "güvenlik taraması başlat", "run all security scans", "security sweep", etc.).
 
-Launch all security scan subcommands **in parallel** using workers. Each worker is fully autonomous — it reads its subcommand file, executes the two-phase scan, and writes confirmed findings directly to `BUG-REPORT.md`.
+Launch all security scan subcommands **in parallel** using workers. Each worker is fully autonomous — it reads its subcommand file, executes the three-phase scan (recon, batched verify, merge), and writes confirmed findings directly to `BUG-REPORT.md`.
+
+**Resume support:** Before launching each worker, read `BUG-REPORT.md` and check for its completion marker (`<!-- scan:SUBCOMMAND completed -->`). Skip that worker if the marker exists. This enables resuming interrupted sweeps without re-running completed scans.
 
 **Execution order:**
 
 1. Run `sec-recon` first (inline, not as a worker) to establish the codebase context. This writes the reconnaissance entry to `BUG-REPORT.md`.
 
-2. Then launch all remaining scans **in parallel** as workers — one worker per subcommand:
+2. Then launch all remaining scans **in parallel** as workers — one worker per subcommand. Skip any worker whose completion marker already exists in `BUG-REPORT.md`:
 
-   | Worker | Subcommand file |
-   |--------|----------------|
-   | Worker 1 | `subcommands/sqli.md` |
-   | Worker 2 | `subcommands/xss.md` |
-   | Worker 3 | `subcommands/rce.md` |
-   | Worker 4 | `subcommands/ssrf.md` |
-   | Worker 5 | `subcommands/xxe.md` |
-   | Worker 6 | `subcommands/idor.md` |
-   | Worker 7 | `subcommands/access-control.md` |
-   | Worker 8 | `subcommands/path-traversal.md` |
-   | Worker 9 | `subcommands/ssti.md` |
-   | Worker 10 | `subcommands/graphql.md` |
-   | Worker 11 | `subcommands/business-logic.md` |
-   | Worker 12 | `subcommands/missing-auth.md` |
+   | Worker   | Subcommand file                      | Completion marker             |
+   |----------|--------------------------------------|-------------------------------|
+   | Worker 1 | `subcommands/sqli.md`                | `<!-- scan:sqli completed -->` |
+   | Worker 2 | `subcommands/xss.md`                 | `<!-- scan:xss completed -->`  |
+   | Worker 3 | `subcommands/rce.md`                 | `<!-- scan:rce completed -->`  |
+   | Worker 4 | `subcommands/ssrf.md`                | `<!-- scan:ssrf completed -->` |
+   | Worker 5 | `subcommands/access-control.md`      | `<!-- scan:access-control completed -->` |
+   | Worker 6 | `subcommands/path-traversal.md`      | `<!-- scan:path-traversal completed -->` |
+   | Worker 7 | `subcommands/ssti.md`                | `<!-- scan:ssti completed -->` |
+   | Worker 8 | `subcommands/graphql.md`             | `<!-- scan:graphql completed -->` |
+   | Worker 9 | `subcommands/business-logic.md`      | `<!-- scan:business-logic completed -->` |
+   | Worker 10 | `subcommands/hardcoded-secrets.md`  | `<!-- scan:hardcoded-secrets completed -->` |
 
 3. Each worker prompt must include:
    - The full content of its subcommand file as instructions
@@ -161,6 +163,7 @@ Use `/bug-report <subcommand>` when the user asks for a specific audit domain. T
 - For `/bug-report ssti`: see [subcommands/ssti.md](subcommands/ssti.md)
 - For `/bug-report graphql`: see [subcommands/graphql.md](subcommands/graphql.md)
 - For `/bug-report business-logic`: see [subcommands/business-logic.md](subcommands/business-logic.md)
+- For `/bug-report hardcoded-secrets`: see [subcommands/hardcoded-secrets.md](subcommands/hardcoded-secrets.md)
 
 ## Shared Workflow
 
