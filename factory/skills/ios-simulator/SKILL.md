@@ -23,19 +23,19 @@ Build, test, and automate iOS applications using accessibility-driven semantic n
 bash scripts/sim_health_check.sh
 
 # 2. Launch app
-python scripts/app_launcher.py --launch com.example.app
+node scripts/appLauncher.js --launch com.example.app
 
 # 3. Map screen elements
-python scripts/screen_mapper.py
+node scripts/screenMapper.js
 
 # 4. Tap button by text
-python scripts/navigator.py --find-text "Login" --tap
+node scripts/navigator.js --find-text "Login" --tap
 
 # 5. Enter text in field
-python scripts/navigator.py --find-type TextField --enter-text "user@test.com"
+node scripts/navigator.js --find-type TextField --enter-text "user@test.com"
 
 # 6. Check accessibility
-python scripts/accessibility_audit.py
+node scripts/accessibilityAudit.js
 ```
 
 All scripts support `--help` for options and `--json` for machine-readable output.
@@ -46,8 +46,8 @@ Always prefer the accessibility tree over screenshots:
 
 | Method | Token Cost | Reliability | Use When |
 |--------|-----------|-------------|----------|
-| `screen_mapper.py` | ~10 tokens | High | Default — see what's on screen |
-| `navigator.py --find-*` | ~5 tokens | High | Interact with elements |
+| `screenMapper.js` | ~10 tokens | High | Default — see what's on screen |
+| `navigator.js --find-*` | ~5 tokens | High | Interact with elements |
 | Screenshot | 1,600-6,300 tokens | Medium | Visual verification, bug reports, diff only |
 
 ## 21 Scripts by Category
@@ -56,47 +56,47 @@ Always prefer the accessibility tree over screenshots:
 
 | Script | Purpose | Key Options |
 |--------|---------|-------------|
-| `build_and_test.py` | Xcode build + test with result parsing | `--project`, `--scheme`, `--clean`, `--test` |
-| `log_monitor.py` | Real-time log monitoring with filtering | `--app`, `--severity`, `--follow`, `--duration` |
+| `buildAndTest.js` | Xcode build + test with result parsing | `--project`, `--scheme`, `--clean`, `--test` |
+| `logMonitor.js` | Real-time log monitoring with filtering | `--app`, `--severity`, `--follow`, `--duration` |
 
 ### Navigation and Interaction (5)
 
 | Script | Purpose | Key Options |
 |--------|---------|-------------|
-| `screen_mapper.py` | Analyze current screen, list elements | `--verbose`, `--hints` |
-| `navigator.py` | Find + interact with elements semantically | `--find-text`, `--find-type`, `--find-id`, `--tap`, `--enter-text` |
-| `gesture.py` | Swipes, scrolls, pinches, long press | `--swipe`, `--scroll`, `--pinch`, `--refresh` |
-| `keyboard.py` | Text input + hardware buttons | `--type`, `--key`, `--button`, `--clear`, `--dismiss` |
-| `app_launcher.py` | App lifecycle (launch, terminate, install) | `--launch`, `--terminate`, `--install`, `--open-url` |
+| `screenMapper.js` | Analyze current screen, list elements | `--verbose`, `--hints` |
+| `navigator.js` | Find + interact with elements semantically | `--find-text`, `--find-type`, `--find-id`, `--tap`, `--enter-text` |
+| `gesture.js` | Swipes, scrolls, pinches, long press | `--swipe`, `--scroll`, `--pinch`, `--refresh` |
+| `keyboard.js` | Text input + hardware buttons | `--type`, `--key`, `--button`, `--clear`, `--dismiss` |
+| `appLauncher.js` | App lifecycle (launch, terminate, install) | `--launch`, `--terminate`, `--install`, `--open-url` |
 
 ### Testing and Analysis (5)
 
 | Script | Purpose | Key Options |
 |--------|---------|-------------|
-| `accessibility_audit.py` | WCAG compliance check | `--verbose`, `--output` |
-| `visual_diff.py` | Screenshot pixel comparison | `--threshold`, `--output`, `--details` |
-| `test_recorder.py` | Auto-document test execution | `--test-name`, `--output` |
-| `app_state_capture.py` | Debugging snapshot (screen + logs + hierarchy) | `--app-bundle-id`, `--output` |
+| `accessibilityAudit.js` | WCAG compliance check | `--verbose`, `--output` |
+| `visualDiff.js` | Screenshot pixel comparison | `--threshold`, `--output`, `--details` |
+| `testRecorder.js` | Auto-document test execution | `--test-name`, `--output` |
+| `appStateCapture.js` | Debugging snapshot (screen + logs + hierarchy) | `--app-bundle-id`, `--output` |
 | `sim_health_check.sh` | Environment verification | (no options) |
 
 ### Permissions and Advanced (4)
 
 | Script | Purpose | Key Options |
 |--------|---------|-------------|
-| `clipboard.py` | Clipboard management for paste testing | `--copy`, `--expected` |
-| `status_bar.py` | Override status bar appearance | `--preset`, `--time`, `--battery-level` |
-| `push_notification.py` | Simulated push notifications | `--bundle-id`, `--title`, `--body`, `--payload` |
-| `privacy_manager.py` | Grant/revoke app permissions (13 services) | `--bundle-id`, `--grant`, `--revoke`, `--reset` |
+| `clipboard.js` | Clipboard management for paste testing | `--copy`, `--expected` |
+| `statusBar.js` | Override status bar appearance | `--preset`, `--time`, `--battery-level` |
+| `pushNotification.js` | Simulated push notifications | `--bundle-id`, `--title`, `--body`, `--payload` |
+| `privacyManager.js` | Grant/revoke app permissions (13 services) | `--bundle-id`, `--grant`, `--revoke`, `--reset` |
 
 ### Device Lifecycle (5)
 
 | Script | Purpose | Key Options |
 |--------|---------|-------------|
-| `simctl_boot.py` | Boot simulator | `--udid`, `--name`, `--wait-ready`, `--all`, `--type` |
-| `simctl_shutdown.py` | Shutdown simulator | `--udid`, `--name`, `--verify`, `--all` |
-| `simctl_create.py` | Create new simulator | `--device`, `--runtime`, `--name` |
-| `simctl_delete.py` | Delete simulator | `--udid`, `--name`, `--yes`, `--old N` |
-| `simctl_erase.py` | Factory reset (preserves UDID) | `--udid`, `--name`, `--verify`, `--booted` |
+| `simctlBoot.js` | Boot simulator | `--udid`, `--name`, `--wait-ready`, `--all`, `--type` |
+| `simctlShutdown.js` | Shutdown simulator | `--udid`, `--name`, `--verify`, `--all` |
+| `simctlCreate.js` | Create new simulator | `--device`, `--runtime`, `--name` |
+| `simctlDelete.js` | Delete simulator | `--udid`, `--name`, `--yes`, `--old N` |
+| `simctlErase.js` | Factory reset (preserves UDID) | `--udid`, `--name`, `--verify`, `--booted` |
 
 ## Common Patterns
 
@@ -118,28 +118,28 @@ Always prefer the accessibility tree over screenshots:
 ### Login Flow Test
 
 ```bash
-python scripts/app_launcher.py --launch com.example.app
-python scripts/screen_mapper.py
-python scripts/navigator.py --find-type TextField --index 0 --enter-text "user@test.com"
-python scripts/navigator.py --find-type SecureTextField --enter-text "password"
-python scripts/navigator.py --find-text "Login" --tap
-python scripts/accessibility_audit.py
+node scripts/appLauncher.js --launch com.example.app
+node scripts/screenMapper.js
+node scripts/navigator.js --find-type TextField --index 0 --enter-text "user@test.com"
+node scripts/navigator.js --find-type SecureTextField --enter-text "password"
+node scripts/navigator.js --find-text "Login" --tap
+node scripts/accessibilityAudit.js
 ```
 
 ### Permission Test
 
 ```bash
-python scripts/privacy_manager.py --bundle-id com.example.app --grant camera,location
+node scripts/privacyManager.js --bundle-id com.example.app --grant camera,location
 # Test app with permissions...
-python scripts/privacy_manager.py --bundle-id com.example.app --revoke camera,location
+node scripts/privacyManager.js --bundle-id com.example.app --revoke camera,location
 ```
 
 ### CI/CD Device Lifecycle
 
 ```bash
-DEVICE_ID=$(python scripts/simctl_create.py --device "iPhone 16 Pro" --json | jq -r '.new_udid')
-python scripts/build_and_test.py --project MyApp.xcodeproj --test
-python scripts/simctl_delete.py --udid $DEVICE_ID --yes
+DEVICE_ID=$(node scripts/simctlCreate.js --device "iPhone 16 Pro" --json | jq -r '.new_udid')
+node scripts/buildAndTest.js --project MyApp.xcodeproj --test
+node scripts/simctlDelete.js --udid $DEVICE_ID --yes
 ```
 
 ## Quick Diagnostics
@@ -147,7 +147,7 @@ python scripts/simctl_delete.py --udid $DEVICE_ID --yes
 | Problem | Solution |
 |---------|----------|
 | Script can't find simulator | Run `sim_health_check.sh` — is any simulator booted? |
-| Navigator can't find element | Run `screen_mapper.py --verbose` to see all elements |
+| Navigator can't find element | Run `screenMapper.js --verbose` to see all elements |
 | Build fails with scheme error | Check `--scheme` matches Xcode exactly (case-sensitive) |
 | Permission grant fails | Use exact service names: `camera`, `location`, `photos`, `contacts` |
 | Screenshot too expensive | Use `--screenshot-size quarter` for minimal token cost |
@@ -159,7 +159,7 @@ python scripts/simctl_delete.py --udid $DEVICE_ID --yes
 - Xcode Command Line Tools (`xcode-select --install`)
 - Python 3
 - IDB (optional — `brew tap facebook/fb && brew install idb-companion`)
-- Pillow (optional — `pip3 install pillow` for visual_diff.py)
+- Pillow (optional — `pip3 install pillow` for visualDiff.js)
 
 ## References
 
