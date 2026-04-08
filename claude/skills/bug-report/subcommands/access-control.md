@@ -111,9 +111,15 @@ Launch a subagent with the following instructions:
 > ### 1. [name] — File: path:lines — Endpoint: METHOD /path/:id — Operation: read/update/delete — Object: [model]
 > ```
 
-### Phase 2: Verify — Check Both IDOR and Auth/Role Issues
+### Phase 2: Batched Verify — Check Both IDOR and Auth/Role Issues
 
-Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings as context. Instructions:
+After Phase 1 completes, count the total numbered items from both Part A (endpoints) and Part B (IDOR candidates).
+
+**If 3 or fewer items total**: Launch a single subagent with all items (skip batching).
+
+**If more than 3 items**: Split into batches of up to 3 each. Launch all batch subagents **in parallel**. Each subagent returns findings in its response (NOT to a file).
+
+Give each batch subagent the following instructions (include assigned items from Phase 1):
 
 > **For IDOR candidates (Part B from Phase 1)**, check:
 >
@@ -136,23 +142,55 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 > - **Likely Vulnerable**: Check exists but incomplete, bypassable, or conditional.
 > - **Not Vulnerable**: Proper checks in place.
 >
-> **Output format** — write confirmed findings to `BUG-REPORT.md` using the shared report format from `../SKILL.md`.
+> **Output format** — return findings in your response using this format:
 >
-> **Severity mapping**:
+> ```markdown
+> # Access Control Batch [N] Results
+>
+> ## Findings
+>
+> ### [VULNERABLE] Descriptive name
+> - **File**: `path/to/file.ext` (lines X-Y)
+> - **Endpoint**: [METHOD /path]
+> - **Type**: [IDOR / Missing Auth / Missing Role Check]
+> - **Issue**: [description]
+> - **Impact**: [What attacker can access/do]
+> - **Remediation**: [ownership check, auth middleware, etc.]
+> - **Dynamic test**: [curl command or payload]
+>
+> ### [LIKELY VULNERABLE] / [NOT VULNERABLE] / [NEEDS MANUAL REVIEW]
+> [Similar format]
+> ```
+>
+> **Severity mapping** (for use in Phase 3 reporting):
 > - IDOR on financial, PII, or health data → HIGH
 > - IDOR on non-sensitive data → MEDIUM
 > - IDOR with write/delete capability → HIGH
-> - Unauthenticated admin/data-mutating endpoint → CRITICAL–HIGH
+> - Unauthenticated admin/data-mutating endpoint → CRITICAL-HIGH
 > - Authenticated but missing role check on admin function → HIGH
 > - Missing check on non-sensitive endpoint → MEDIUM
->
-> Do **NOT** write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
+
+### Phase 3: Merge & Report
+
+After all Phase 2 subagents complete:
+
+1. Collect all batch responses.
+2. Extract only **[VULNERABLE]** and **[LIKELY VULNERABLE]** findings.
+3. Write confirmed findings to `BUG-REPORT.md` using the shared format from `../SKILL.md`:
+   - Read existing `BUG-REPORT.md` to continue the ID sequence (start at BUG-001 if none exists)
+   - Each finding as `### BUG-[ID]: [title]` with severity per the mapping above
+   - For **Verification**: include the full taint trace and a dynamic test command or payload
+   - For **Suggested Commit**: conventional commit message without BUG-IDs
+4. Append the completion marker: `<!-- scan:access-control completed -->`
+5. Do NOT write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
 
 ---
 
 ## Important Reminders
 
-- Phase 2 must run AFTER Phase 1 completes.
+- Phase 1 returns findings in response — do not write to files.
+- Phase 2 batches run AFTER Phase 1 completes. Phase 3 runs AFTER all batches complete.
+- Batch size is **3 items per subagent**. If 1-3 total, use a single subagent. Launch all batches **in parallel**.
 - Trace the full code path: route → middleware → controller → service → data access.
 - Middleware order matters: middleware registered AFTER the route handler does not protect it.
 - A missing check on one HTTP method (e.g., DELETE) is a full vulnerability even if GET is protected.

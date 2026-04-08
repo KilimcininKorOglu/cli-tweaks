@@ -189,9 +189,15 @@ Launch a subagent with the following instructions:
 > [Repeat for each site; if none, write "No injection candidate sites found." under the heading]
 > ```
 
-### Phase 2: Trace User Input to Injection Candidate Sites
+### Phase 2: Batched Verify — Trace User Input to Injection Candidate Sites
 
-Launch a second subagent **after Phase 1 completes** and only if both gates passed (GraphQL used and at least one candidate site).
+After Phase 1 completes (and only if both gates passed: GraphQL used and at least one candidate site), count the numbered site sections (`### 1.`, `### 2.`, ...) from Phase 1 findings.
+
+**If 3 or fewer sites**: Launch a single subagent with all sites (skip batching).
+
+**If more than 3 sites**: Split into batches of up to 3 each. Launch all batch subagents **in parallel**. Each subagent returns findings in its response (NOT to a file).
+
+Give each batch subagent the following instructions (include assigned sites from Phase 1):
 
 >
 >
@@ -212,23 +218,50 @@ Launch a second subagent **after Phase 1 completes** and only if both gates pass
 > - **Not Vulnerable**: Server-side-only or effective allowlist / static document path
 > - **Needs Manual Review**: Opaque flow
 >
-> **Output format** — write confirmed findings to `BUG-REPORT.md` using the shared report format from `../SKILL.md`. Read existing `BUG-REPORT.md` first to continue the ID sequence (start at BUG-001 if none exists).
+> **Output format** — return findings in your response using this format:
 >
-> **Severity mapping**:
+> ```markdown
+> # GraphQL Batch [N] Results
+>
+> ## Findings
+>
+> ### [VULNERABLE] Descriptive name
+> - **File**: `path/to/file.ext` (lines X-Y)
+> - **Endpoint / function**: [route or resolver]
+> - **Issue**: [description of taint flow]
+> - **Taint trace**: [Step-by-step from source to document construction]
+> - **Impact**: [What attacker can do]
+> - **Remediation**: [Static documents, allowlist, etc.]
+> - **Dynamic test**: [curl command or payload]
+>
+> ### [LIKELY VULNERABLE] / [NOT VULNERABLE] / [NEEDS MANUAL REVIEW]
+> [Similar format]
+> ```
+>
+> **Severity mapping** (for use in Phase 3 reporting):
 > - Unauthorized data access / mutation → HIGH
 > - Introspection / batching abuse → MEDIUM
->
-> For **Verification**: include the full taint trace and a dynamic test command or payload.
-> For **Suggested Commit**: conventional commit message without BUG-IDs.
->
-> Do **NOT** write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
+
+### Phase 3: Merge & Report
+
+After all Phase 2 subagents complete:
+
+1. Collect all batch responses.
+2. Extract only **[VULNERABLE]** and **[LIKELY VULNERABLE]** findings.
+3. Write confirmed findings to `BUG-REPORT.md` using the shared format from `../SKILL.md`:
+   - Read existing `BUG-REPORT.md` to continue the ID sequence (start at BUG-001 if none exists)
+   - Each finding as `### BUG-[ID]: [title]` with severity per the mapping above
+   - For **Verification**: include the full taint trace and a dynamic test command or payload
+   - For **Suggested Commit**: conventional commit message without BUG-IDs
+4. Append the completion marker: `<!-- scan:graphql completed -->`
+5. Do NOT write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
 
 ---
 
 ## Important Reminders
 
-- **If Phase 1 finds no GraphQL technology, skip Phase 2** — write the "No GraphQL technology detected" results file.
-- **If GraphQL is used but Phase 1 finds no injection candidates, skip Phase 2** — write "No vulnerabilities found."
+- **If Phase 1 finds no GraphQL technology, skip Phase 2 and Phase 3**.
+- **If GraphQL is used but Phase 1 finds no injection candidates, skip Phase 2 and Phase 3**.
 - Phase 1 does **not** trace taint; Phase 2 does.
 - Resolver-layer SQL/NoSQL issues belong to other skills; this skill targets **operation document** construction.
 - When in doubt, classify as "Needs Manual Review" rather than "Not Vulnerable".

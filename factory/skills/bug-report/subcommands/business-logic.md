@@ -199,9 +199,15 @@ Launch a subagent with the following instructions:
 > [List any categories from the checklist that are not relevant to this application and why]
 > ```
 
-### Phase 2: Verify — Check Whether Scenarios Are Exploitable
+### Phase 2: Batched Verify — Check Whether Scenarios Are Exploitable
 
-Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings as context. Instructions:
+After Phase 1 completes, count the numbered scenario sections (`### Scenario 1`, `### Scenario 2`, ...) from Phase 1 findings.
+
+**If 3 or fewer scenarios**: Launch a single subagent with all scenarios (skip batching).
+
+**If more than 3 scenarios**: Split into batches of up to 3 each. Launch all batch subagents **in parallel**. Each subagent returns findings in its response (NOT to a file).
+
+Give each batch subagent the following instructions (include assigned scenarios from Phase 1):
 
 >
 > **Context**: You will be given the project's architecture summary and the threat model. Use the architecture summary to understand validation patterns, ORM usage, and where business rules are typically enforced.
@@ -248,23 +254,53 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 > - **Not Exploitable**: Proper server-side enforcement exists and covers edge cases.
 > - **Needs Manual Review**: Cannot determine with confidence (complex logic, external service dependency, etc.).
 >
-> **Output format** — write confirmed findings to `BUG-REPORT.md` using the shared report format from `../SKILL.md`. Read existing `BUG-REPORT.md` first to continue the ID sequence (start at BUG-001 if none exists).
+> **Output format** — return findings in your response using this format:
 >
-> **Severity mapping**:
+> ```markdown
+> # Business Logic Batch [N] Results
+>
+> ## Findings
+>
+> ### [EXPLOITABLE] Descriptive name
+> - **File**: `path/to/file.ext` (lines X-Y)
+> - **Endpoint / feature**: [route or feature name]
+> - **Scenario**: [attack description]
+> - **Issue**: [missing/incomplete server-side validation]
+> - **Impact**: [financial loss, privilege escalation, etc.]
+> - **Remediation**: [server-side validation, atomic transactions, etc.]
+> - **Dynamic test**: [curl command or race condition payload]
+>
+> ### [LIKELY EXPLOITABLE] / [NOT EXPLOITABLE] / [NEEDS MANUAL REVIEW]
+> [Similar format]
+> ```
+>
+> **Severity mapping** (for use in Phase 3 reporting):
 > - Price manipulation, auth bypass, payment fraud → HIGH
 > - Race condition double-spend → HIGH
-> - Workflow bypass exposing sensitive features → MEDIUM–HIGH
->
-> For **Verification**: include the full taint trace and a dynamic test command or payload.
-> For **Suggested Commit**: conventional commit message without BUG-IDs.
->
-> Do **NOT** write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
+> - Workflow bypass exposing sensitive features → MEDIUM-HIGH
+
+### Phase 3: Merge & Report
+
+After all Phase 2 subagents complete:
+
+1. Collect all batch responses.
+2. Extract only **[EXPLOITABLE]** and **[LIKELY EXPLOITABLE]** findings.
+3. Write confirmed findings to `BUG-REPORT.md` using the shared format from `../SKILL.md`:
+   - Read existing `BUG-REPORT.md` to continue the ID sequence (start at BUG-001 if none exists)
+   - Each finding as `### BUG-[ID]: [title]` with severity per the mapping above
+   - For **Verification**: include the full taint trace and a dynamic test command or payload
+   - For **Suggested Commit**: conventional commit message without BUG-IDs
+4. Append the completion marker: `<!-- scan:business-logic completed -->`
+5. Do NOT write [NOT EXPLOITABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
 
 ---
 
 ## Important Reminders
 
-- Phase 2 must run **after** Phase 1 completes — it depends on the threat model output.
+- Phase 1 returns findings in response — do not write to files.
+- Phase 2 batches run AFTER Phase 1 completes. Phase 3 runs AFTER all batches complete.
+- Batch size is **3 scenarios per subagent**. If 1-3 total, use a single subagent. Launch all batches **in parallel**.
+- Each batch subagent receives only its assigned scenarios, not all Phase 1 findings.
 - For payment systems, include the payment-specific checklist below in your Phase 1 threat modeling.
 - Focus strictly on **business logic flaws** — do not flag injection bugs, auth bypass, or IDOR issues here.
 - Threat modeling in Phase 1 should be **application-specific**: generic scenarios not grounded in the actual codebase are not useful.
