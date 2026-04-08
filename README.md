@@ -11,7 +11,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | Hook                  | Event                | Description                                                                                    |
 |-----------------------|----------------------|------------------------------------------------------------------------------------------------|
 | `session-start.py`    | SessionStart/compact | Injects global user files and project memory into context                                      |
-| `plan-mode.py`        | UserPromptSubmit     | Detects planning needs via keywords or complexity scoring, injects a 5-phase planning workflow |
+| `plan-mode.py`        | UserPromptSubmit     | Detects planning needs via keywords or complexity scoring, delegates to implement-plan skill   |
 | `save-plan.py`        | PostToolUse          | Saves plans to disk (Factory) or sends notification only (Claude Code)                         |
 | `memory-save.py`      | Stop                 | Reminds the agent to save learnings before the session ends                                    |
 | `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
@@ -32,6 +32,11 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `redate-commits`               | `/redate-commits`               | Rewrites commit dates across a selected range with safe workflow warnings         |
 | `frontend-design`              | `/frontend-design`              | Distinctive, production-grade frontend interfaces                                 |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill                         |
+| `ai-seo`                       | `/ai-seo`                       | GEO optimization for AI search engines with 8 analysis subcommands                |
+| `draft-to-article`             | `/draft-to-article`             | Format drafts for X Articles, LinkedIn, or Medium/Substack                        |
+| `design-ref`                   | `/design-ref`                   | 27-site design system catalog with URL-based generator                            |
+| `ios-uikit`                    | `/ios-uikit`                    | Programmatic UIKit development with 20 reference documents                        |
+| `ios-simulator`                | `/ios-simulator`                | iOS simulator automation with 33 Node.js scripts for semantic navigation          |
 
 #### `bug-report` audit subcommands
 
@@ -62,7 +67,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `upload-security` | `/bug-report upload-security` | File upload validation, storage, media processing, and download security audit |
 | `business-logic` | `/bug-report business-logic` | Business logic flaws, workflow bypass, race conditions, and payment security audit |
 
-**Security scans (two-phase automated code scanning)**
+**Security scans (three-phase: recon, batched verify, merge)**
 
 | Subcommand | Command | Description |
 |------------|---------|-------------|
@@ -76,6 +81,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `ssti` | `/bug-report ssti` | Server-side template injection detection |
 | `path-traversal` | `/bug-report path-traversal` | Path traversal and directory traversal detection |
 | `graphql` | `/bug-report graphql` | GraphQL injection and abuse detection |
+| `hardcoded-secrets` | `/bug-report hardcoded-secrets` | Hardcoded API key, token, and password detection |
 
 > Migration note: standalone audit commands such as `/api-audit`, `/error-review`, and `/auditcodex` are now consolidated under `/bug-report <subcommand>`.
 

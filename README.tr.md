@@ -11,7 +11,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | Hook                  | Olay                 | Açıklama                                                                                                         |
 |-----------------------|----------------------|------------------------------------------------------------------------------------------------------------------|
 | `session-start.py`    | SessionStart/compact | Global kullanıcı dosyalarını ve proje belleğini bağlama enjekte eder                                             |
-| `plan-mode.py`        | UserPromptSubmit     | Anahtar kelime veya karmaşıklık puanlamasıyla planlama ihtiyacını tespit eder, 5 fazlı iş akışı enjekte eder     |
+| `plan-mode.py`        | UserPromptSubmit     | Anahtar kelime veya karmaşıklık puanlamasıyla planlama ihtiyacını tespit eder, implement-plan skill'ine yönlendirir |
 | `save-plan.py`        | PostToolUse          | Planları diske kaydeder (Factory) veya yalnızca bildirim gönderir (Claude Code)                                  |
 | `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                               |
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                |
@@ -32,6 +32,11 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `redate-commits`               | `/redate-commits`               | Commit tarihlerini seçilen aralığa yayar, güvenli iş akışı uyarıları verir |
 | `frontend-design`              | `/frontend-design`              | Özgün, prodüksiyon kalitesinde frontend arayüzleri                        |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur                   |
+| `ai-seo`                       | `/ai-seo`                       | AI arama motorları için GEO optimizasyonu, 8 analiz alt komutu            |
+| `draft-to-article`             | `/draft-to-article`             | Taslakları X Articles, LinkedIn veya Medium/Substack formatına dönüştürme |
+| `design-ref`                   | `/design-ref`                   | 27 siteli tasarım sistemi kataloğu ve URL tabanlı üretici                 |
+| `ios-uikit`                    | `/ios-uikit`                    | 20 referans belgeyle programatik UIKit geliştirme                         |
+| `ios-simulator`                | `/ios-simulator`                | 33 Node.js script ile iOS simülatör otomasyonu                            |
 
 #### `bug-report` audit subcommand'leri
 
@@ -62,7 +67,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `upload-security` | `/bug-report upload-security` | Dosya yükleme doğrulama, depolama, medya işleme ve indirme güvenlik denetimi |
 | `business-logic` | `/bug-report business-logic` | İş mantığı açıkları, iş akışı atlatma, race condition ve ödeme güvenlik denetimi |
 
-**Güvenlik taramaları (iki fazlı otomatik kod taraması)**
+**Güvenlik taramaları (üç fazlı: keşif, toplu doğrulama, birleştirme)**
 
 | Alt komut | Komut | Açıklama |
 |-----------|-------|----------|
@@ -76,6 +81,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `ssti` | `/bug-report ssti` | Sunucu taraflı şablon enjeksiyonu tespiti |
 | `path-traversal` | `/bug-report path-traversal` | Path traversal ve dizin geçişi tespiti |
 | `graphql` | `/bug-report graphql` | GraphQL enjeksiyon ve kötüye kullanım tespiti |
+| `hardcoded-secrets` | `/bug-report hardcoded-secrets` | Sabit kodlanmış API anahtarı, token ve şifre tespiti |
 
 > Geçiş notu: `/api-audit`, `/error-review` ve `/auditcodex` gibi bağımsız audit komutları artık `/bug-report <subcommand>` altında toplandı.
 
