@@ -359,9 +359,15 @@ Launch a subagent with the following instructions:
 > [Repeat for each site]
 > ```
 
-### Phase 2: Trace User Input to Vulnerable Construction Sites
+### Phase 2: Batched Verify — Trace User Input to Vulnerable Construction Sites
 
-Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings as context. Instructions:
+After Phase 1 completes, count the numbered site sections (`### 1.`, `### 2.`, ...) from Phase 1 findings.
+
+**If 3 or fewer sites**: Launch a single subagent with all sites (skip batching).
+
+**If more than 3 sites**: Split into batches of up to 3 each. Launch all batch subagents **in parallel**. Each subagent returns findings in its response (NOT to a file).
+
+Give each batch subagent the following instructions (include assigned sites from Phase 1):
 
 >
 > **Context**: You will be given the project's architecture summary and the Phase 1 recon output. Use the architecture to understand request entry points, middleware, and how data flows through the application.
@@ -398,22 +404,52 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 > - **Not Vulnerable**: The variable is server-side only, OR effective parameterization / allowlist validation is in place.
 > - **Needs Manual Review**: Cannot determine the variable's origin with confidence (passes through opaque helpers, complex conditional flows, or external libraries).
 >
-> **Output format** — write confirmed findings to `BUG-REPORT.md` using the shared report format from `../SKILL.md`. Read existing `BUG-REPORT.md` first to continue the ID sequence (start at BUG-001 if none exists).
+> **Output format** — return findings in your response using this format:
 >
-> **Severity mapping**:
+> ```markdown
+> # SQLi Batch [N] Results
+>
+> ## Findings
+>
+> ### [VULNERABLE] Descriptive name
+> - **File**: `path/to/file.ext` (lines X-Y)
+> - **Endpoint / function**: [route or function name]
+> - **Issue**: [e.g., "HTTP query param `username` flows directly into f-string SELECT query"]
+> - **Taint trace**: [Step-by-step from entry point to construction site]
+> - **Impact**: [What attacker can do]
+> - **Remediation**: [Parameterized query, ORM equivalent, or allowlist for identifiers]
+> - **Dynamic test**: [sqlmap command or manual curl payload]
+>
+> ### [LIKELY VULNERABLE] / [NOT VULNERABLE] / [NEEDS MANUAL REVIEW]
+> [Similar format with appropriate fields]
+> ```
+>
+> **Severity mapping** (for use in Phase 3 reporting):
 > - Authentication/admin endpoint → CRITICAL
 > - General data extraction → HIGH
->
-> For **Verification**: include the full taint trace and a dynamic test command or payload.
-> For **Suggested Commit**: conventional commit message without BUG-IDs.
->
-> Do **NOT** write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
+
+### Phase 3: Merge & Report
+
+After all Phase 2 subagents complete:
+
+1. Collect all batch responses.
+2. Extract only **[VULNERABLE]** and **[LIKELY VULNERABLE]** findings.
+3. Write confirmed findings to `BUG-REPORT.md` using the shared format from `../SKILL.md`:
+   - Read existing `BUG-REPORT.md` to continue the ID sequence (start at BUG-001 if none exists)
+   - Each finding as `### BUG-[ID]: [title]` with severity per the mapping above
+   - For **Verification**: include the full taint trace and a dynamic test command or payload
+   - For **Suggested Commit**: conventional commit message without BUG-IDs
+4. Append the completion marker: `<!-- scan:sqli completed -->`
+5. Do NOT write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
 
 ---
 
 ## Important Reminders
 
-- Phase 2 must run AFTER Phase 1 completes — it depends on Phase 1 results.
+- Phase 1 returns findings in response — do not write to files.
+- Phase 2 batches run AFTER Phase 1 completes. Phase 3 runs AFTER all batches complete.
+- Batch size is **3 sites per subagent**. If 1-3 total, use a single subagent. Launch all batches **in parallel**.
+- Each batch subagent receives only its assigned sites, not all Phase 1 findings.
 - **Phase 1 is purely structural**: flag any dynamic variable embedded in a SQL query string, regardless of origin. Do not attempt to trace user input in Phase 1 — that is Phase 2's job.
 - **Phase 2 is purely taint analysis**: for each site found in Phase 1, trace the interpolated variable back to its origin. If it comes from a user-controlled source, the site is a real vulnerability.
 - Focus on **raw SQL and ORM raw/unsafe methods**. Standard ORM query builder calls (`.filter()`, `.where(col: val)`, `.find()`) are safe by default — do not flag them.
