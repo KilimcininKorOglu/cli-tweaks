@@ -63,7 +63,7 @@ Then implement working code (HTML/CSS/JS, React, Vue, etc.) that is:
 - **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
 - **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions. Focus on high-impact moments: one well-orchestrated page load with staggered reveals creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise.
 - **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.
-- **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, grain overlays.
+- **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, grain overlays.
 
 ### Anti-Patterns (NEVER)
 
@@ -71,6 +71,8 @@ Then implement working code (HTML/CSS/JS, React, Vue, etc.) that is:
 - Cookie-cutter design that lacks context-specific character
 - Same choices across generations (vary themes, fonts, aesthetics every time)
 - Holding back — show what can truly be created when committing fully to a distinctive vision
+- Gradients of any kind — no linear, radial, or mesh gradients anywhere
+- Unnecessary hover effects — only add hover states when they serve a clear functional purpose
 
 ### Implementation
 
