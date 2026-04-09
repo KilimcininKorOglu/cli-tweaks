@@ -85,19 +85,33 @@ Only verified findings proceed to documentation.
 ### Step 4: Document Each Finding
 
 ```
-BUG-[ID]: [Brief description]
+### BUG-[ID]: [Brief description]
+
 Severity: CRITICAL | HIGH | MEDIUM | LOW
+
 Status: NEW | CONFIRMED | IN_PROGRESS | FIXED | WONT_FIX
+
 File: [path/to/file.ext:line_number]
+
 Component: [affected module/feature]
 
+Suggested Commit: `[conventional commit message, e.g. "fix: prevent XSS in user input sanitizer"]`
+
+
 Problem: [What's wrong - current behavior]
+
 Expected: [What should happen]
+
 Root Cause: [Why it happens - if determinable]
+
 Impact: [User/system/business impact]
+
 Verification: [How you confirmed this finding - specific code path or logic trace]
-Suggested Commit: [Conventional commit message for the fix, e.g. "fix: prevent XSS in user input sanitizer"]
+
+---
 ```
+
+Note: Suggested Commit goes BEFORE Problem. Each field separated by a blank line. Suggested Commit value wrapped in backticks. Entry ends with `---` separator.
 
 ### Step 5: ID Management
 
@@ -124,6 +138,10 @@ Last Bug ID: BUG-[XXX]
 | Medium    | X      |
 | Low       | X      |
 | **Total** | **X**  |
+
+## System Architecture
+
+[sec-recon output is here — only if sec-recon was run]
 
 ## Findings
 
