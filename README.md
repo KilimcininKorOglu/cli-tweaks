@@ -30,11 +30,10 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `init-claude`                  | `/init-claude`                  | Creates CLAUDE.md by scanning the codebase                                       |
 | `implement-plan`               | `/implement-plan`               | Structured implementation planning with research, questions, and phased design   |
 | `redate-commits`               | `/redate-commits`               | Rewrites commit dates across a selected range with safe workflow warnings        |
-| `frontend-design`              | `/frontend-design`              | Distinctive, production-grade frontend interfaces                                |
+| `frontend-design`              | `/frontend-design`              | Frontend code generation with 27-site design system catalog                      |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill                        |
 | `ai-seo`                       | `/ai-seo`                       | GEO optimization for AI search engines with 8 analysis subcommands               |
 | `draft-to-article`             | `/draft-to-article`             | Format drafts for X Articles, LinkedIn, or Medium/Substack                       |
-| `design-ref`                   | `/design-ref`                   | 27-site design system catalog with URL-based generator                           |
 | `ios-uikit`                    | `/ios-uikit`                    | Programmatic UIKit development with 20 reference documents                       |
 | `ios-simulator`                | `/ios-simulator`                | iOS simulator automation with 33 Node.js scripts for semantic navigation         |
 
@@ -70,7 +69,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 
 | Subcommand          | Command                         | Description                                               |
 |---------------------|---------------------------------|-----------------------------------------------------------|
-| `security-sweep`    | `/bug-report security-sweep`    | Run all security scans in parallel via workers            |
+| `security-sweep`    | `/bug-report security-sweep`    | Run all 24 security scans in parallel via workers         |
 | `sec-recon`         | `/bug-report sec-recon`         | Codebase architecture and security posture reconnaissance |
 | `access-control`    | `/bug-report access-control`    | IDOR and missing authentication/authorization detection   |
 | `sqli`              | `/bug-report sqli`              | SQL injection detection                                   |
@@ -81,6 +80,20 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `path-traversal`    | `/bug-report path-traversal`    | Path traversal and directory traversal detection          |
 | `graphql`           | `/bug-report graphql`           | GraphQL injection and abuse detection                     |
 | `hardcoded-secrets` | `/bug-report hardcoded-secrets` | Hardcoded API key, token, and password detection          |
+| `cors`              | `/bug-report cors`              | CORS misconfiguration and cross-origin attack detection   |
+| `open-redirect`     | `/bug-report open-redirect`     | Open redirect and URL manipulation detection              |
+| `nosqli`            | `/bug-report nosqli`            | NoSQL injection (MongoDB, Redis, Elasticsearch) detection |
+| `dependency-audit`  | `/bug-report dependency-audit`  | Supply chain security, CVE, and typosquatting audit       |
+| `data-exposure`     | `/bug-report data-exposure`     | Sensitive data exposure in logs, errors, and APIs         |
+| `crypto`            | `/bug-report crypto`            | Cryptography weakness detection (weak algorithms, keys)   |
+| `ci-cd`             | `/bug-report ci-cd`             | CI/CD pipeline security (GitHub Actions, GitLab CI)       |
+| `docker`            | `/bug-report docker`            | Container security (Dockerfile, docker-compose)           |
+| `rate-limiting`     | `/bug-report rate-limiting`     | Rate limiting and brute force protection audit            |
+| `websocket`         | `/bug-report websocket`         | WebSocket security (origin, auth, message injection)      |
+| `header-injection`  | `/bug-report header-injection`  | HTTP header injection and CRLF detection                  |
+| `clickjacking`      | `/bug-report clickjacking`      | Clickjacking protection (X-Frame-Options, CSP)            |
+| `mass-assignment`   | `/bug-report mass-assignment`   | Mass assignment and parameter pollution detection         |
+| `ldap`              | `/bug-report ldap`              | LDAP injection in search filters and DN construction      |
 
 ## Directory Structure
 
@@ -181,13 +194,15 @@ Then add the corresponding hook entries to your `settings.json`.
 
 ### Planning Mode
 
-When you type something like "plan this feature" or submit a complex request (detected via scoring), the hook injects a 5-phase workflow:
+When you type something like "plan this feature" or submit a complex request (detected via scoring), the hook delegates to the `implement-plan` skill which follows a structured workflow:
 
-1. **Explore** -- Gather codebase context
-2. **Ask Questions** -- Clarify requirements with the user (mandatory)
+1. **Explore** -- Gather codebase context with parallel subagents
+2. **Ask Questions** -- Clarify requirements with the user
 3. **Design** -- Draft the implementation plan
-4. **Present** -- Show the plan for approval
+4. **Present** -- Show the plan for approval via ExitPlanMode/ExitSpecMode
 5. **Wait** -- Do not start coding until approved
+
+For explicit triggers (e.g., "planla"), the skill presents the plan immediately without asking questions first.
 
 Completed plans are saved to `~/.factory/plans/<project>/` (or `~/.claude/plans/<project>/`) with desktop notifications.
 

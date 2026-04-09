@@ -30,11 +30,10 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `init-claude`                  | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                                      |
 | `implement-plan`               | `/implement-plan`               | Araştırma, netleştirme ve fazlı tasarım ile yapılandırılmış uygulama planlaması |
 | `redate-commits`               | `/redate-commits`               | Commit tarihlerini seçilen aralığa yayar, güvenli iş akışı uyarıları verir      |
-| `frontend-design`              | `/frontend-design`              | Özgün, prodüksiyon kalitesinde frontend arayüzleri                              |
+| `frontend-design`              | `/frontend-design`              | 27 siteli tasarım kataloğu ile frontend kod üretimi                             |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur                         |
 | `ai-seo`                       | `/ai-seo`                       | AI arama motorları için GEO optimizasyonu, 8 analiz alt komutu                  |
 | `draft-to-article`             | `/draft-to-article`             | Taslakları X Articles, LinkedIn veya Medium/Substack formatına dönüştürme       |
-| `design-ref`                   | `/design-ref`                   | 27 siteli tasarım sistemi kataloğu ve URL tabanlı üretici                       |
 | `ios-uikit`                    | `/ios-uikit`                    | 20 referans belgeyle programatik UIKit geliştirme                               |
 | `ios-simulator`                | `/ios-simulator`                | 33 Node.js script ile iOS simülatör otomasyonu                                  |
 
@@ -70,7 +69,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 
 | Alt komut           | Komut                           | Açıklama                                                  |
 |---------------------|---------------------------------|-----------------------------------------------------------|
-| `security-sweep`    | `/bug-report security-sweep`    | Tüm güvenlik taramalarını worker'larla paralel çalıştırır |
+| `security-sweep`    | `/bug-report security-sweep`    | 24 güvenlik taramasını worker'larla paralel çalıştırır    |
 | `sec-recon`         | `/bug-report sec-recon`         | Kod tabanı mimarisi ve güvenlik duruşu keşfi              |
 | `access-control`    | `/bug-report access-control`    | IDOR ve eksik kimlik doğrulama/yetkilendirme tespiti      |
 | `sqli`              | `/bug-report sqli`              | SQL injection tespiti                                     |
@@ -81,6 +80,20 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `path-traversal`    | `/bug-report path-traversal`    | Path traversal ve dizin geçişi tespiti                    |
 | `graphql`           | `/bug-report graphql`           | GraphQL enjeksiyon ve kötüye kullanım tespiti             |
 | `hardcoded-secrets` | `/bug-report hardcoded-secrets` | Sabit kodlanmış API anahtarı, token ve şifre tespiti      |
+| `cors`              | `/bug-report cors`              | CORS yanlış yapılandırma ve cross-origin saldırı tespiti  |
+| `open-redirect`     | `/bug-report open-redirect`     | Açık yönlendirme ve URL manipülasyonu tespiti             |
+| `nosqli`            | `/bug-report nosqli`            | NoSQL injection (MongoDB, Redis, Elasticsearch) tespiti   |
+| `dependency-audit`  | `/bug-report dependency-audit`  | Tedarik zinciri güvenliği, CVE ve typosquatting denetimi  |
+| `data-exposure`     | `/bug-report data-exposure`     | Log, hata ve API yanıtlarında hassas veri sızıntısı       |
+| `crypto`            | `/bug-report crypto`            | Zayıf şifreleme algoritması ve sabit anahtar tespiti      |
+| `ci-cd`             | `/bug-report ci-cd`             | CI/CD pipeline güvenliği (GitHub Actions, GitLab CI)      |
+| `docker`            | `/bug-report docker`            | Konteyner güvenliği (Dockerfile, docker-compose)          |
+| `rate-limiting`     | `/bug-report rate-limiting`     | Hız sınırlama ve brute force koruması denetimi            |
+| `websocket`         | `/bug-report websocket`         | WebSocket güvenliği (origin, auth, mesaj enjeksiyonu)     |
+| `header-injection`  | `/bug-report header-injection`  | HTTP başlık enjeksiyonu ve CRLF tespiti                   |
+| `clickjacking`      | `/bug-report clickjacking`      | Clickjacking koruması (X-Frame-Options, CSP)              |
+| `mass-assignment`   | `/bug-report mass-assignment`   | Toplu atama ve parametre kirlenmesi tespiti               |
+| `ldap`              | `/bug-report ldap`              | LDAP enjeksiyonu tespiti                                  |
 
 ## Dizin Yapısı
 
