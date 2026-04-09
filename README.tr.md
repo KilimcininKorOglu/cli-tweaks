@@ -8,82 +8,79 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 
 ### Hook'lar
 
-| Hook                  | Olay                 | Açıklama                                                                                                         |
-|-----------------------|----------------------|------------------------------------------------------------------------------------------------------------------|
-| `session-start.py`    | SessionStart/compact | Global kullanıcı dosyalarını ve proje belleğini bağlama enjekte eder                                             |
+| Hook                  | Olay                 | Açıklama                                                                                                            |
+|-----------------------|----------------------|---------------------------------------------------------------------------------------------------------------------|
+| `session-start.py`    | SessionStart/compact | Global kullanıcı dosyalarını ve proje belleğini bağlama enjekte eder                                                |
 | `plan-mode.py`        | UserPromptSubmit     | Anahtar kelime veya karmaşıklık puanlamasıyla planlama ihtiyacını tespit eder, implement-plan skill'ine yönlendirir |
-| `save-plan.py`        | PostToolUse          | Planları diske kaydeder (Factory) veya yalnızca bildirim gönderir (Claude Code)                                  |
-| `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                               |
-| `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                |
-| `auto-allow.py`       | PermissionRequest    | settings.json izin listesiyle eşleşen tool'ları otomatik onaylar, eşleşmeyenleri bildirir (yalnızca Claude Code) |
-| `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                                  |
+| `save-plan.py`        | PostToolUse          | Planları diske kaydeder (Factory) veya yalnızca bildirim gönderir (Claude Code)                                     |
+| `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                                  |
+| `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                   |
+| `auto-allow.py`       | PermissionRequest    | settings.json izin listesiyle eşleşen tool'ları otomatik onaylar, eşleşmeyenleri bildirir (yalnızca Claude Code)    |
+| `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                                     |
 
 ### Skill'ler
 
-| Skill                          | Komut                           | Açıklama                                                                  |
-|--------------------------------|---------------------------------|---------------------------------------------------------------------------|
-| `commit`                       | `/commit`                       | Repo stilini taklit eden conventional commit'ler                          |
-| `task-plan`                    | `/task-plan`                    | PRD'yi özelliklere ayırma ve otonom yürütme                               |
-| `bug-report`                   | `/bug-report`                   | Genel hata analizi ve `BUG-REPORT.md` yazan odaklı audit subcommand'leri |
-| `git-flow`                     | `/git-flow`                     | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi               |
-| `initialize`                   | `/initialize`                   | Kod tabanını tarayarak AGENTS.md oluşturur                                |
-| `init-claude`                  | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                                |
+| Skill                          | Komut                           | Açıklama                                                                        |
+|--------------------------------|---------------------------------|---------------------------------------------------------------------------------|
+| `commit`                       | `/commit`                       | Repo stilini taklit eden conventional commit'ler                                |
+| `task-plan`                    | `/task-plan`                    | PRD'yi özelliklere ayırma ve otonom yürütme                                     |
+| `bug-report`                   | `/bug-report`                   | Genel hata analizi ve `BUG-REPORT.md` yazan odaklı audit subcommand'leri        |
+| `git-flow`                     | `/git-flow`                     | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi                     |
+| `initialize`                   | `/initialize`                   | Kod tabanını tarayarak AGENTS.md oluşturur                                      |
+| `init-claude`                  | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                                      |
 | `implement-plan`               | `/implement-plan`               | Araştırma, netleştirme ve fazlı tasarım ile yapılandırılmış uygulama planlaması |
-| `redate-commits`               | `/redate-commits`               | Commit tarihlerini seçilen aralığa yayar, güvenli iş akışı uyarıları verir |
-| `frontend-design`              | `/frontend-design`              | Özgün, prodüksiyon kalitesinde frontend arayüzleri                        |
-| `version-update-skill-creator` | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur                   |
-| `ai-seo`                       | `/ai-seo`                       | AI arama motorları için GEO optimizasyonu, 8 analiz alt komutu            |
-| `draft-to-article`             | `/draft-to-article`             | Taslakları X Articles, LinkedIn veya Medium/Substack formatına dönüştürme |
-| `design-ref`                   | `/design-ref`                   | 27 siteli tasarım sistemi kataloğu ve URL tabanlı üretici                 |
-| `ios-uikit`                    | `/ios-uikit`                    | 20 referans belgeyle programatik UIKit geliştirme                         |
-| `ios-simulator`                | `/ios-simulator`                | 33 Node.js script ile iOS simülatör otomasyonu                            |
+| `redate-commits`               | `/redate-commits`               | Commit tarihlerini seçilen aralığa yayar, güvenli iş akışı uyarıları verir      |
+| `frontend-design`              | `/frontend-design`              | Özgün, prodüksiyon kalitesinde frontend arayüzleri                              |
+| `version-update-skill-creator` | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur                         |
+| `ai-seo`                       | `/ai-seo`                       | AI arama motorları için GEO optimizasyonu, 8 analiz alt komutu                  |
+| `draft-to-article`             | `/draft-to-article`             | Taslakları X Articles, LinkedIn veya Medium/Substack formatına dönüştürme       |
+| `design-ref`                   | `/design-ref`                   | 27 siteli tasarım sistemi kataloğu ve URL tabanlı üretici                       |
+| `ios-uikit`                    | `/ios-uikit`                    | 20 referans belgeyle programatik UIKit geliştirme                               |
+| `ios-simulator`                | `/ios-simulator`                | 33 Node.js script ile iOS simülatör otomasyonu                                  |
 
 #### `bug-report` audit subcommand'leri
 
 **Genel denetimler**
 
-| Alt komut | Komut | Açıklama |
-|-----------|-------|----------|
-| `auditcodex` | `/bug-report auditcodex` | Codex CLI ile diff tabanlı denetim ve doğrulanmış bulguların BUG-REPORT.md'ye yazılması |
-| `api-audit` | `/bug-report api-audit` | API performans, dayanıklılık, sözleşme ve yaşam döngüsü denetimi |
-| `cache-audit` | `/bug-report cache-audit` | Önbellek stratejisi, tutarlılık ve Redis/güvenlik denetimi |
-| `disaster-recovery` | `/bug-report disaster-recovery` | Felaket kurtarma ve iş sürekliliği hazırlık denetimi |
-| `error-review` | `/bug-report error-review` | Hata mesajı kalitesi, bilgi sızıntısı ve fallback denetimi |
-| `feature-flags-audit` | `/bug-report feature-flags-audit` | Feature flag hijyeni, rollout güvenliği ve deney denetimi |
-| `observability-audit` | `/bug-report observability-audit` | Loglama, metrik, tracing ve hata ayıklanabilirlik denetimi |
-| `queue-audit` | `/bug-report queue-audit` | Kuyruk, worker, retry ve DLQ dayanıklılık denetimi |
-| `release-discipline` | `/bug-report release-discipline` | Versiyon kontrolü, review süreci ve release discipline denetimi |
-| `tech-debt` | `/bug-report tech-debt` | Teknik borç, ölü kod tespiti ve test kalitesi denetimi |
-| `tenant-isolation` | `/bug-report tenant-isolation` | Çok kiracılı izolasyon ve tenantlar arası sızıntı denetimi |
-| `ai-code-audit` | `/bug-report ai-code-audit` | Yapay zeka üretimi kod tespiti, güvenlik ve kalite denetimi |
+| Alt komut             | Komut                             | Açıklama                                                         |
+|-----------------------|-----------------------------------|------------------------------------------------------------------|
+| `api-audit`           | `/bug-report api-audit`           | API performans, dayanıklılık, sözleşme ve yaşam döngüsü denetimi |
+| `cache-audit`         | `/bug-report cache-audit`         | Önbellek stratejisi, tutarlılık ve Redis/güvenlik denetimi       |
+| `disaster-recovery`   | `/bug-report disaster-recovery`   | Felaket kurtarma ve iş sürekliliği hazırlık denetimi             |
+| `error-review`        | `/bug-report error-review`        | Hata mesajı kalitesi, bilgi sızıntısı ve fallback denetimi       |
+| `feature-flags-audit` | `/bug-report feature-flags-audit` | Feature flag hijyeni, rollout güvenliği ve deney denetimi        |
+| `observability-audit` | `/bug-report observability-audit` | Loglama, metrik, tracing ve hata ayıklanabilirlik denetimi       |
+| `queue-audit`         | `/bug-report queue-audit`         | Kuyruk, worker, retry ve DLQ dayanıklılık denetimi               |
+| `release-discipline`  | `/bug-report release-discipline`  | Versiyon kontrolü, review süreci ve release discipline denetimi  |
+| `tech-debt`           | `/bug-report tech-debt`           | Teknik borç, ölü kod tespiti ve test kalitesi denetimi           |
+| `tenant-isolation`    | `/bug-report tenant-isolation`    | Çok kiracılı izolasyon ve tenantlar arası sızıntı denetimi       |
+| `ai-code-audit`       | `/bug-report ai-code-audit`       | Yapay zeka üretimi kod tespiti, güvenlik ve kalite denetimi      |
 
 **Güvenlik denetimleri (checklist tabanlı)**
 
-| Alt komut | Komut | Açıklama |
-|-----------|-------|----------|
-| `integration-security` | `/bug-report integration-security` | Üçüncü taraf entegrasyon, webhook, OAuth ve SSRF denetimi |
-| `serialization-audit` | `/bug-report serialization-audit` | Serileştirme, parsing, XXE ve veri dönüşüm güvenlik denetimi |
-| `session-audit` | `/bug-report session-audit` | Oturum yaşam döngüsü, JWT güvenlik taraması, cookie ve CSRF denetimi |
-| `upload-security` | `/bug-report upload-security` | Dosya yükleme doğrulama, depolama, medya işleme ve indirme güvenlik denetimi |
-| `business-logic` | `/bug-report business-logic` | İş mantığı açıkları, iş akışı atlatma, race condition ve ödeme güvenlik denetimi |
+| Alt komut              | Komut                              | Açıklama                                                                         |
+|------------------------|------------------------------------|----------------------------------------------------------------------------------|
+| `integration-security` | `/bug-report integration-security` | Üçüncü taraf entegrasyon, webhook, OAuth ve SSRF denetimi                        |
+| `serialization-audit`  | `/bug-report serialization-audit`  | Serileştirme, parsing, XXE ve veri dönüşüm güvenlik denetimi                     |
+| `session-audit`        | `/bug-report session-audit`        | Oturum yaşam döngüsü, JWT güvenlik taraması, cookie ve CSRF denetimi             |
+| `upload-security`      | `/bug-report upload-security`      | Dosya yükleme doğrulama, depolama, medya işleme ve indirme güvenlik denetimi     |
+| `business-logic`       | `/bug-report business-logic`       | İş mantığı açıkları, iş akışı atlatma, race condition ve ödeme güvenlik denetimi |
 
 **Güvenlik taramaları (üç fazlı: keşif, toplu doğrulama, birleştirme)**
 
-| Alt komut | Komut | Açıklama |
-|-----------|-------|----------|
-| `security-sweep` | `/bug-report security-sweep` | Tüm güvenlik taramalarını worker'larla paralel çalıştırır |
-| `sec-recon` | `/bug-report sec-recon` | Kod tabanı mimarisi ve güvenlik duruşu keşfi |
-| `access-control` | `/bug-report access-control` | IDOR ve eksik kimlik doğrulama/yetkilendirme tespiti |
-| `sqli` | `/bug-report sqli` | SQL injection tespiti |
-| `xss` | `/bug-report xss` | Cross-site scripting tespiti |
-| `rce` | `/bug-report rce` | Uzaktan kod yürütme ve komut enjeksiyonu tespiti |
-| `ssrf` | `/bug-report ssrf` | Sunucu taraflı istek sahteciliği tespiti |
-| `ssti` | `/bug-report ssti` | Sunucu taraflı şablon enjeksiyonu tespiti |
-| `path-traversal` | `/bug-report path-traversal` | Path traversal ve dizin geçişi tespiti |
-| `graphql` | `/bug-report graphql` | GraphQL enjeksiyon ve kötüye kullanım tespiti |
-| `hardcoded-secrets` | `/bug-report hardcoded-secrets` | Sabit kodlanmış API anahtarı, token ve şifre tespiti |
-
-> Geçiş notu: `/api-audit`, `/error-review` ve `/auditcodex` gibi bağımsız audit komutları artık `/bug-report <subcommand>` altında toplandı.
+| Alt komut           | Komut                           | Açıklama                                                  |
+|---------------------|---------------------------------|-----------------------------------------------------------|
+| `security-sweep`    | `/bug-report security-sweep`    | Tüm güvenlik taramalarını worker'larla paralel çalıştırır |
+| `sec-recon`         | `/bug-report sec-recon`         | Kod tabanı mimarisi ve güvenlik duruşu keşfi              |
+| `access-control`    | `/bug-report access-control`    | IDOR ve eksik kimlik doğrulama/yetkilendirme tespiti      |
+| `sqli`              | `/bug-report sqli`              | SQL injection tespiti                                     |
+| `xss`               | `/bug-report xss`               | Cross-site scripting tespiti                              |
+| `rce`               | `/bug-report rce`               | Uzaktan kod yürütme ve komut enjeksiyonu tespiti          |
+| `ssrf`              | `/bug-report ssrf`              | Sunucu taraflı istek sahteciliği tespiti                  |
+| `ssti`              | `/bug-report ssti`              | Sunucu taraflı şablon enjeksiyonu tespiti                 |
+| `path-traversal`    | `/bug-report path-traversal`    | Path traversal ve dizin geçişi tespiti                    |
+| `graphql`           | `/bug-report graphql`           | GraphQL enjeksiyon ve kötüye kullanım tespiti             |
+| `hardcoded-secrets` | `/bug-report hardcoded-secrets` | Sabit kodlanmış API anahtarı, token ve şifre tespiti      |
 
 ## Dizin Yapısı
 

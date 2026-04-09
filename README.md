@@ -23,67 +23,64 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | Skill                          | Command                         | Description                                                                      |
 |--------------------------------|---------------------------------|----------------------------------------------------------------------------------|
 | `commit`                       | `/commit`                       | Conventional commits with repo style mimicry, smart staging, git safety protocol |
-| `task-plan`                    | `/task-plan`                    | PRD breakdown into features with autonomous execution and checkpointing           |
-| `bug-report`                   | `/bug-report`                   | General bug analysis plus focused audit subcommands writing to BUG-REPORT.md      |
-| `git-flow`                     | `/git-flow`                     | Structured branch management with strict validation rules                         |
-| `initialize`                   | `/initialize`                   | Creates AGENTS.md by scanning the codebase                                        |
-| `init-claude`                  | `/init-claude`                  | Creates CLAUDE.md by scanning the codebase                                        |
-| `implement-plan`               | `/implement-plan`               | Structured implementation planning with research, questions, and phased design    |
-| `redate-commits`               | `/redate-commits`               | Rewrites commit dates across a selected range with safe workflow warnings         |
-| `frontend-design`              | `/frontend-design`              | Distinctive, production-grade frontend interfaces                                 |
-| `version-update-skill-creator` | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill                         |
-| `ai-seo`                       | `/ai-seo`                       | GEO optimization for AI search engines with 8 analysis subcommands                |
-| `draft-to-article`             | `/draft-to-article`             | Format drafts for X Articles, LinkedIn, or Medium/Substack                        |
-| `design-ref`                   | `/design-ref`                   | 27-site design system catalog with URL-based generator                            |
-| `ios-uikit`                    | `/ios-uikit`                    | Programmatic UIKit development with 20 reference documents                        |
-| `ios-simulator`                | `/ios-simulator`                | iOS simulator automation with 33 Node.js scripts for semantic navigation          |
+| `task-plan`                    | `/task-plan`                    | PRD breakdown into features with autonomous execution and checkpointing          |
+| `bug-report`                   | `/bug-report`                   | General bug analysis plus focused audit subcommands writing to BUG-REPORT.md     |
+| `git-flow`                     | `/git-flow`                     | Structured branch management with strict validation rules                        |
+| `initialize`                   | `/initialize`                   | Creates AGENTS.md by scanning the codebase                                       |
+| `init-claude`                  | `/init-claude`                  | Creates CLAUDE.md by scanning the codebase                                       |
+| `implement-plan`               | `/implement-plan`               | Structured implementation planning with research, questions, and phased design   |
+| `redate-commits`               | `/redate-commits`               | Rewrites commit dates across a selected range with safe workflow warnings        |
+| `frontend-design`              | `/frontend-design`              | Distinctive, production-grade frontend interfaces                                |
+| `version-update-skill-creator` | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill                        |
+| `ai-seo`                       | `/ai-seo`                       | GEO optimization for AI search engines with 8 analysis subcommands               |
+| `draft-to-article`             | `/draft-to-article`             | Format drafts for X Articles, LinkedIn, or Medium/Substack                       |
+| `design-ref`                   | `/design-ref`                   | 27-site design system catalog with URL-based generator                           |
+| `ios-uikit`                    | `/ios-uikit`                    | Programmatic UIKit development with 20 reference documents                       |
+| `ios-simulator`                | `/ios-simulator`                | iOS simulator automation with 33 Node.js scripts for semantic navigation         |
 
 #### `bug-report` audit subcommands
 
 **General audits**
 
-| Subcommand | Command | Description |
-|------------|---------|-------------|
-| `auditcodex` | `/bug-report auditcodex` | Codex CLI diff audit with validated findings written to BUG-REPORT.md |
-| `api-audit` | `/bug-report api-audit` | API performance, resilience, contract, and lifecycle audit |
-| `cache-audit` | `/bug-report cache-audit` | Caching strategy, consistency, and Redis/security audit |
-| `disaster-recovery` | `/bug-report disaster-recovery` | Disaster recovery and business continuity readiness audit |
-| `error-review` | `/bug-report error-review` | Error message quality, disclosure, and fallback-state audit |
+| Subcommand            | Command                           | Description                                                     |
+|-----------------------|-----------------------------------|-----------------------------------------------------------------|
+| `api-audit`           | `/bug-report api-audit`           | API performance, resilience, contract, and lifecycle audit      |
+| `cache-audit`         | `/bug-report cache-audit`         | Caching strategy, consistency, and Redis/security audit         |
+| `disaster-recovery`   | `/bug-report disaster-recovery`   | Disaster recovery and business continuity readiness audit       |
+| `error-review`        | `/bug-report error-review`        | Error message quality, disclosure, and fallback-state audit     |
 | `feature-flags-audit` | `/bug-report feature-flags-audit` | Feature flag hygiene, rollout safety, and experimentation audit |
-| `observability-audit` | `/bug-report observability-audit` | Logging, metrics, tracing, and debugging-readiness audit |
-| `queue-audit` | `/bug-report queue-audit` | Queue, worker, retry, and DLQ resilience audit |
-| `release-discipline` | `/bug-report release-discipline` | Version control, review process, and release-discipline audit |
-| `tech-debt` | `/bug-report tech-debt` | Technical debt, dead code detection, and test quality audit |
-| `tenant-isolation` | `/bug-report tenant-isolation` | Multi-tenant isolation and cross-tenant leakage audit |
-| `ai-code-audit` | `/bug-report ai-code-audit` | AI-generated code detection, security, and quality audit |
+| `observability-audit` | `/bug-report observability-audit` | Logging, metrics, tracing, and debugging-readiness audit        |
+| `queue-audit`         | `/bug-report queue-audit`         | Queue, worker, retry, and DLQ resilience audit                  |
+| `release-discipline`  | `/bug-report release-discipline`  | Version control, review process, and release-discipline audit   |
+| `tech-debt`           | `/bug-report tech-debt`           | Technical debt, dead code detection, and test quality audit     |
+| `tenant-isolation`    | `/bug-report tenant-isolation`    | Multi-tenant isolation and cross-tenant leakage audit           |
+| `ai-code-audit`       | `/bug-report ai-code-audit`       | AI-generated code detection, security, and quality audit        |
 
 **Security audits (checklist-based)**
 
-| Subcommand | Command | Description |
-|------------|---------|-------------|
-| `integration-security` | `/bug-report integration-security` | Third-party integration, webhook, OAuth, and SSRF audit |
-| `serialization-audit` | `/bug-report serialization-audit` | Serialization, parsing, XXE, and data transformation security audit |
-| `session-audit` | `/bug-report session-audit` | Session lifecycle, JWT vulnerability detection, cookies, and CSRF audit |
-| `upload-security` | `/bug-report upload-security` | File upload validation, storage, media processing, and download security audit |
-| `business-logic` | `/bug-report business-logic` | Business logic flaws, workflow bypass, race conditions, and payment security audit |
+| Subcommand             | Command                            | Description                                                                        |
+|------------------------|------------------------------------|------------------------------------------------------------------------------------|
+| `integration-security` | `/bug-report integration-security` | Third-party integration, webhook, OAuth, and SSRF audit                            |
+| `serialization-audit`  | `/bug-report serialization-audit`  | Serialization, parsing, XXE, and data transformation security audit                |
+| `session-audit`        | `/bug-report session-audit`        | Session lifecycle, JWT vulnerability detection, cookies, and CSRF audit            |
+| `upload-security`      | `/bug-report upload-security`      | File upload validation, storage, media processing, and download security audit     |
+| `business-logic`       | `/bug-report business-logic`       | Business logic flaws, workflow bypass, race conditions, and payment security audit |
 
 **Security scans (three-phase: recon, batched verify, merge)**
 
-| Subcommand | Command | Description |
-|------------|---------|-------------|
-| `security-sweep` | `/bug-report security-sweep` | Run all security scans in parallel via workers |
-| `sec-recon` | `/bug-report sec-recon` | Codebase architecture and security posture reconnaissance |
-| `access-control` | `/bug-report access-control` | IDOR and missing authentication/authorization detection |
-| `sqli` | `/bug-report sqli` | SQL injection detection |
-| `xss` | `/bug-report xss` | Cross-site scripting detection |
-| `rce` | `/bug-report rce` | Remote code execution and command injection detection |
-| `ssrf` | `/bug-report ssrf` | Server-side request forgery detection |
-| `ssti` | `/bug-report ssti` | Server-side template injection detection |
-| `path-traversal` | `/bug-report path-traversal` | Path traversal and directory traversal detection |
-| `graphql` | `/bug-report graphql` | GraphQL injection and abuse detection |
-| `hardcoded-secrets` | `/bug-report hardcoded-secrets` | Hardcoded API key, token, and password detection |
-
-> Migration note: standalone audit commands such as `/api-audit`, `/error-review`, and `/auditcodex` are now consolidated under `/bug-report <subcommand>`.
+| Subcommand          | Command                         | Description                                               |
+|---------------------|---------------------------------|-----------------------------------------------------------|
+| `security-sweep`    | `/bug-report security-sweep`    | Run all security scans in parallel via workers            |
+| `sec-recon`         | `/bug-report sec-recon`         | Codebase architecture and security posture reconnaissance |
+| `access-control`    | `/bug-report access-control`    | IDOR and missing authentication/authorization detection   |
+| `sqli`              | `/bug-report sqli`              | SQL injection detection                                   |
+| `xss`               | `/bug-report xss`               | Cross-site scripting detection                            |
+| `rce`               | `/bug-report rce`               | Remote code execution and command injection detection     |
+| `ssrf`              | `/bug-report ssrf`              | Server-side request forgery detection                     |
+| `ssti`              | `/bug-report ssti`              | Server-side template injection detection                  |
+| `path-traversal`    | `/bug-report path-traversal`    | Path traversal and directory traversal detection          |
+| `graphql`           | `/bug-report graphql`           | GraphQL injection and abuse detection                     |
+| `hardcoded-secrets` | `/bug-report hardcoded-secrets` | Hardcoded API key, token, and password detection          |
 
 ## Directory Structure
 

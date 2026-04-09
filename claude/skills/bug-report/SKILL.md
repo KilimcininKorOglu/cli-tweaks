@@ -1,7 +1,7 @@
 ---
 name: bug-report
 description: >
-  This skill MUST be invoked when the user asks for systematic bug analysis, or any focused audit such as "api audit", "auditcodex", "cache audit", "disaster recovery", "error review", "feature flags audit", "integration security", "observability audit", "queue audit", "release discipline", "serialization audit", "session audit", "tech debt", "tenant isolation", "test review", "upload security", "ai code audit", "dead code", any security vulnerability scan such as "sql injection", "xss", "rce", "ssrf", "xxe", "access control", "path traversal", "file upload", "ssti", "graphql injection", "business logic", "missing auth", "hardcoded secrets", "hardcoded keys", or "security recon", or a FULL security sweep such as "güvenlik taraması", "security scan", "full security scan", "run all security scans", or "security sweep". Use `/bug-report` for general scans, `/bug-report <subcommand>` for domain-specific audits, and `/bug-report security-sweep` to run all security scans in parallel. All modes write verified findings to BUG-REPORT.md using the shared report contract.
+  This skill MUST be invoked when the user asks for systematic bug analysis, or any focused audit such as "api audit", "cache audit", "disaster recovery", "error review", "feature flags audit", "integration security", "observability audit", "queue audit", "release discipline", "serialization audit", "session audit", "tech debt", "tenant isolation", "test review", "upload security", "ai code audit", "dead code", any security vulnerability scan such as "sql injection", "xss", "rce", "ssrf", "xxe", "access control", "path traversal", "file upload", "ssti", "graphql injection", "business logic", "missing auth", "hardcoded secrets", "hardcoded keys", or "security recon", or a FULL security sweep such as "güvenlik taraması", "security scan", "full security scan", "run all security scans", or "security sweep". Use `/bug-report` for general scans, `/bug-report <subcommand>` for domain-specific audits, and `/bug-report security-sweep` to run all security scans in parallel. All modes write verified findings to BUG-REPORT.md using the shared report contract.
 argument-hint: "[--severity critical|high|medium|low|all | <subcommand> [subcommand-options]]"
 ---
 
@@ -14,7 +14,6 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 ```bash
 /bug-report                              # Full repository bug analysis
 /bug-report --severity high              # General scan filtered by severity
-/bug-report auditcodex                   # Codex-backed diff audit
 /bug-report api-audit                    # Focused API audit
 /bug-report error-review                 # Focused error handling audit
 /bug-report security-sweep               # Run ALL security scans in parallel via workers
@@ -37,7 +36,6 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 
 | Subcommand | Command | Description |
 |------------|---------|-------------|
-| `auditcodex` | `/bug-report auditcodex` | Codex CLI diff audit with validated findings written to BUG-REPORT.md |
 | `api-audit` | `/bug-report api-audit` | API performance, resilience, contract, and lifecycle audit |
 | `cache-audit` | `/bug-report cache-audit` | Caching strategy, consistency, and Redis/security audit |
 | `disaster-recovery` | `/bug-report disaster-recovery` | Disaster recovery and business continuity readiness audit |
@@ -45,7 +43,6 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 | `feature-flags-audit` | `/bug-report feature-flags-audit` | Feature flag hygiene, rollout safety, and experimentation audit |
 | `integration-security` | `/bug-report integration-security` | Third-party integration, webhook, and OAuth security audit |
 | `observability-audit` | `/bug-report observability-audit` | Logging, metrics, tracing, and debugging-readiness audit |
-
 | `queue-audit` | `/bug-report queue-audit` | Queue, worker, retry, and DLQ resilience audit |
 | `release-discipline` | `/bug-report release-discipline` | Version control, review process, and release-discipline audit |
 | `serialization-audit` | `/bug-report serialization-audit` | Serialization, parsing, XXE, and data transformation security audit |
@@ -61,7 +58,6 @@ Analyze the repository either broadly (`/bug-report`) or through a focused audit
 | `xss`            | `/bug-report xss`            | Cross-site scripting two-phase detection |
 | `rce`            | `/bug-report rce`            | Remote code execution and command injection detection |
 | `ssrf`           | `/bug-report ssrf`           | Server-side request forgery detection |
-
 | `path-traversal` | `/bug-report path-traversal` | Path traversal and directory traversal detection |
 | `ssti`           | `/bug-report ssti`           | Server-side template injection detection |
 | `graphql`        | `/bug-report graphql`        | GraphQL injection and abuse detection |
@@ -136,7 +132,6 @@ Launch all security scan subcommands **in parallel** using workers. Each worker 
 ### Focused Audit Mode
 Use `/bug-report <subcommand>` when the user asks for a specific audit domain. The domain-specific checklist lives in the matching file under `subcommands/`.
 
-- For `/bug-report auditcodex`: see [subcommands/auditcodex.md](subcommands/auditcodex.md)
 - For `/bug-report api-audit`: see [subcommands/api-audit.md](subcommands/api-audit.md)
 - For `/bug-report cache-audit`: see [subcommands/cache-audit.md](subcommands/cache-audit.md)
 - For `/bug-report disaster-recovery`: see [subcommands/disaster-recovery.md](subcommands/disaster-recovery.md)
@@ -201,7 +196,7 @@ For general `/bug-report`, scan broad bug categories:
 | MEDIUM | Swallowed exceptions, edge cases, integration problems |
 | LOW | Deprecated APIs, dead code, N+1 queries, technical debt |
 
-For `/bug-report <subcommand>`, follow the domain-specific checklist in the matching subcommand file. `auditcodex` is the exception to the repository-wide scan pattern: it audits the current diff (or last commit fallback) through Codex CLI and then writes only verified findings to `BUG-REPORT.md`.
+For `/bug-report <subcommand>`, follow the domain-specific checklist in the matching subcommand file.
 
 ### Step 3: Verify Each Finding
 
