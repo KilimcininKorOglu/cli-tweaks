@@ -4,7 +4,10 @@ description: >
   This skill MUST be invoked for bug analysis, security auditing, or any focused
   audit such as "api audit", "error review", "cache audit", "tech debt", or any
   security scan such as "sql injection", "xss", "rce", "ssrf", "access control",
-  "hardcoded secrets", "güvenlik taraması", "security scan", or "security sweep".
+  "hardcoded secrets", "cors", "open redirect", "nosql injection", "dependency audit",
+  "data exposure", "crypto", "ci/cd security", "docker security", "rate limiting",
+  "websocket", "header injection", "clickjacking", "mass assignment",
+  "güvenlik taraması", "security scan", or "security sweep".
   Use `/bug-report` for full audit, `/bug-report <subcommand>` for focused audits,
   `/bug-report security-sweep` for security-only parallel scans.
 argument-hint: "[--severity critical|high|medium|low|all | <subcommand>]"
@@ -93,6 +96,19 @@ that worker if the marker exists.
    | Worker 23 | `subcommands/graphql.md`                | `<!-- scan:graphql completed -->`            |
    | Worker 24 | `subcommands/business-logic.md`         | `<!-- scan:business-logic completed -->`     |
    | Worker 25 | `subcommands/hardcoded-secrets.md`      | `<!-- scan:hardcoded-secrets completed -->`  |
+   | Worker 26 | `subcommands/cors.md`                   | `<!-- scan:cors completed -->`               |
+   | Worker 27 | `subcommands/open-redirect.md`          | `<!-- scan:open-redirect completed -->`      |
+   | Worker 28 | `subcommands/nosqli.md`                 | `<!-- scan:nosqli completed -->`             |
+   | Worker 29 | `subcommands/data-exposure.md`          | `<!-- scan:data-exposure completed -->`      |
+   | Worker 30 | `subcommands/crypto.md`                 | `<!-- scan:crypto completed -->`             |
+   | Worker 31 | `subcommands/header-injection.md`       | `<!-- scan:header-injection completed -->`   |
+   | Worker 32 | `subcommands/websocket.md`              | `<!-- scan:websocket completed -->`          |
+   | Worker 33 | `subcommands/mass-assignment.md`        | `<!-- scan:mass-assignment completed -->`    |
+   | Worker 34 | `subcommands/rate-limiting.md`          | `<!-- scan:rate-limiting completed -->`      |
+   | Worker 35 | `subcommands/ci-cd.md`                  | `<!-- scan:ci-cd completed -->`              |
+   | Worker 36 | `subcommands/docker.md`                 | `<!-- scan:docker completed -->`             |
+   | Worker 37 | `subcommands/clickjacking.md`           | `<!-- scan:clickjacking completed -->`       |
+   | Worker 38 | `subcommands/dependency-audit.md`       | `<!-- scan:dependency-audit completed -->`   |
 
 3. Each worker prompt must include:
    - The full content of its subcommand file as instructions
@@ -173,6 +189,19 @@ This runs ONLY the security scan subcommands (not general audits).
    | Worker 8  | `subcommands/graphql.md`            | `<!-- scan:graphql completed -->`          |
    | Worker 9  | `subcommands/business-logic.md`     | `<!-- scan:business-logic completed -->`   |
    | Worker 10 | `subcommands/hardcoded-secrets.md`  | `<!-- scan:hardcoded-secrets completed -->` |
+   | Worker 11 | `subcommands/cors.md`               | `<!-- scan:cors completed -->`             |
+   | Worker 12 | `subcommands/open-redirect.md`      | `<!-- scan:open-redirect completed -->`    |
+   | Worker 13 | `subcommands/nosqli.md`             | `<!-- scan:nosqli completed -->`           |
+   | Worker 14 | `subcommands/data-exposure.md`      | `<!-- scan:data-exposure completed -->`    |
+   | Worker 15 | `subcommands/crypto.md`             | `<!-- scan:crypto completed -->`           |
+   | Worker 16 | `subcommands/header-injection.md`   | `<!-- scan:header-injection completed -->`  |
+   | Worker 17 | `subcommands/websocket.md`          | `<!-- scan:websocket completed -->`        |
+   | Worker 18 | `subcommands/mass-assignment.md`    | `<!-- scan:mass-assignment completed -->`  |
+   | Worker 19 | `subcommands/rate-limiting.md`      | `<!-- scan:rate-limiting completed -->`    |
+   | Worker 20 | `subcommands/ci-cd.md`              | `<!-- scan:ci-cd completed -->`            |
+   | Worker 21 | `subcommands/docker.md`             | `<!-- scan:docker completed -->`           |
+   | Worker 22 | `subcommands/clickjacking.md`       | `<!-- scan:clickjacking completed -->`     |
+   | Worker 23 | `subcommands/dependency-audit.md`   | `<!-- scan:dependency-audit completed -->`  |
 
 3. Use the same worker prompt template from Full Audit above.
 
@@ -255,3 +284,16 @@ Last Bug ID: BUG-[XXX]
 | `graphql`              | GraphQL injection and abuse detection                                    |
 | `business-logic`       | Business logic flaw and workflow bypass detection                        |
 | `hardcoded-secrets`    | Hardcoded API key, token, and password detection                         |
+| `cors`                 | CORS misconfiguration and cross-origin attack detection                  |
+| `open-redirect`        | Open redirect and URL manipulation detection                             |
+| `nosqli`               | NoSQL injection (MongoDB, Redis, Elasticsearch) detection                |
+| `dependency-audit`     | Supply chain security, CVE detection, typosquatting audit                |
+| `data-exposure`        | Sensitive data exposure in logs, errors, and API responses               |
+| `crypto`               | Cryptography weakness detection (weak algorithms, hardcoded keys)        |
+| `ci-cd`                | CI/CD pipeline security (GitHub Actions, GitLab CI)                      |
+| `docker`               | Container security (Dockerfile, docker-compose)                          |
+| `rate-limiting`        | Rate limiting and brute force protection audit                           |
+| `websocket`            | WebSocket security (origin validation, auth, message injection)          |
+| `header-injection`     | HTTP header injection and CRLF detection                                 |
+| `clickjacking`         | Clickjacking protection (X-Frame-Options, CSP frame-ancestors)           |
+| `mass-assignment`      | Mass assignment and parameter pollution detection                        |
