@@ -131,17 +131,11 @@ If `--severity` flag provided, filter final report to only that severity level.
 > Finding format:
 > ```
 > ### BUG-[ID]: [title]
->
 > Severity: CRITICAL | HIGH | MEDIUM | LOW
->
 > Status: NEW
->
 > File: path/to/file:line
->
 > Component: [module]
->
 > Suggested Commit: `[fix: ...]`
->
 >
 > Problem: [what's wrong]
 >
@@ -247,7 +241,9 @@ Last Bug ID: BUG-[XXX]
 - Sorted by severity: CRITICAL, HIGH, MEDIUM, LOW
 - Each finding: `### BUG-[ID]` heading, `---` separator between entries
 - Suggested Commit BEFORE Problem, wrapped in backticks
-- Blank line between each field
+- Header fields (Severity, Status, File, Component, Suggested Commit) on consecutive lines — no blank lines between them
+- One blank line between Suggested Commit and Problem
+- Blank line between each body field (Problem, Expected, Root Cause, Impact, Verification)
 - Bug IDs never reset — increment from highest existing ID
 - If `bugs.md` or `bug.md` exists, merge and delete old file
 - Suggested Commit messages NEVER include bug IDs
