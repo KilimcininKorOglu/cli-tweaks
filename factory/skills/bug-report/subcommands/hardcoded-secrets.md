@@ -210,7 +210,9 @@ After all Phase 2 subagents complete:
 3. Write confirmed findings to `BUG-REPORT.md` using the shared format from `../SKILL.md`:
    - Read existing `BUG-REPORT.md` to continue the ID sequence (start at BUG-001 if none exists)
    - Each finding as `### BUG-[ID]: [title]` with severity based on exposure level
-   - Include all fields: Problem, Expected, Root Cause, Impact, Verification, Suggested Commit
+   - For **Suggested Commit**: place BEFORE Problem field, wrap value in backticks, conventional commit message without BUG-IDs
+   - Include all fields: Severity, Status, File, Component, Suggested Commit, Problem, Expected, Root Cause, Impact, Verification
+   - Separate each field with a blank line; end each entry with a `---` separator
 4. Append the completion marker: `<!-- scan:hardcoded-secrets completed -->`
 5. Do NOT write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
 
