@@ -1,164 +1,39 @@
 ---
 name: bug-report
 description: >
-  This skill MUST be invoked when the user asks for systematic bug analysis, or any focused audit such as "api audit", "cache audit", "disaster recovery", "error review", "feature flags audit", "integration security", "observability audit", "queue audit", "release discipline", "serialization audit", "session audit", "tech debt", "tenant isolation", "test review", "upload security", "ai code audit", "dead code", any security vulnerability scan such as "sql injection", "xss", "rce", "ssrf", "xxe", "access control", "path traversal", "file upload", "ssti", "graphql injection", "business logic", "missing auth", "hardcoded secrets", "hardcoded keys", or "security recon", or a FULL security sweep such as "güvenlik taraması", "security scan", "full security scan", "run all security scans", or "security sweep". Use `/bug-report` for general scans, `/bug-report <subcommand>` for domain-specific audits, and `/bug-report security-sweep` to run all security scans in parallel. All modes write verified findings to BUG-REPORT.md using the shared report contract.
-argument-hint: "[--severity critical|high|medium|low|all | <subcommand> [subcommand-options]]"
+  Systematic bug analysis and security auditing. Use `/bug-report` for general
+  scans, `/bug-report <subcommand>` for focused audits, `/bug-report security-sweep`
+  for parallel security scans. All modes write verified findings to BUG-REPORT.md.
+argument-hint: "[--severity critical|high|medium|low|all | <subcommand>]"
 ---
 
-# Bug Analysis & Audit Router
+# Bug Analysis & Audit
 
-Analyze the repository either broadly (`/bug-report`) or through a focused audit subcommand (`/bug-report <subcommand>`).
+## What To Do Right Now
 
-## Usage
+Parse the user's command and follow exactly ONE of these three paths:
 
-```bash
-/bug-report                              # Full repository bug analysis
-/bug-report --severity high              # General scan filtered by severity
-/bug-report api-audit                    # Focused API audit
-/bug-report error-review                 # Focused error handling audit
-/bug-report security-sweep               # Run ALL security scans in parallel via workers
+### Path A: Subcommand provided (`/bug-report <name>`)
 
-# Security vulnerability scans (three-phase: recon, batched verify, merge)
-/bug-report sec-recon                    # Codebase architecture map — run before deeper scans
-/bug-report sqli                         # SQL injection scan
-/bug-report xss                          # Cross-site scripting scan
-/bug-report rce                          # Remote code execution scan
-/bug-report access-control               # IDOR + missing auth/authz detection
-/bug-report ssrf                         # Server-side request forgery scan
-/bug-report path-traversal               # Path traversal scan
-/bug-report ssti                         # Server-side template injection scan
-/bug-report graphql                      # GraphQL injection scan
-/bug-report business-logic               # Business logic flaw scan
-/bug-report hardcoded-secrets            # Hardcoded API key, token, password scan
-```
+If the user provided an argument that matches a subcommand from the reference
+table at the bottom of this file:
 
-## Subcommands
+1. Read the full content of `subcommands/<name>.md` using the Read tool.
+2. Execute the instructions in that file as your complete workflow.
+3. STOP. Do not continue reading this file. The subcommand file is your workflow.
 
-| Subcommand | Command | Description |
-|------------|---------|-------------|
-| `api-audit` | `/bug-report api-audit` | API performance, resilience, contract, and lifecycle audit |
-| `cache-audit` | `/bug-report cache-audit` | Caching strategy, consistency, and Redis/security audit |
-| `disaster-recovery` | `/bug-report disaster-recovery` | Disaster recovery and business continuity readiness audit |
-| `error-review` | `/bug-report error-review` | Error message quality, disclosure, and fallback-state audit |
-| `feature-flags-audit` | `/bug-report feature-flags-audit` | Feature flag hygiene, rollout safety, and experimentation audit |
-| `integration-security` | `/bug-report integration-security` | Third-party integration, webhook, and OAuth security audit |
-| `observability-audit` | `/bug-report observability-audit` | Logging, metrics, tracing, and debugging-readiness audit |
-| `queue-audit` | `/bug-report queue-audit` | Queue, worker, retry, and DLQ resilience audit |
-| `release-discipline` | `/bug-report release-discipline` | Version control, review process, and release-discipline audit |
-| `serialization-audit` | `/bug-report serialization-audit` | Serialization, parsing, XXE, and data transformation security audit |
-| `session-audit`  | `/bug-report session-audit`  | Session lifecycle, JWT vulnerability detection, cookies, CSRF, and state-management audit |
-| `tech-debt`      | `/bug-report tech-debt`      | Technical debt, dead code, and test quality audit |
-| `tenant-isolation` | `/bug-report tenant-isolation` | Multi-tenant isolation and cross-tenant leakage audit |
-| `access-control`   | `/bug-report access-control`   | IDOR and missing authentication/authorization detection |
-| `upload-security` | `/bug-report upload-security` | File upload and media processing security audit |
-| `ai-code-audit` | `/bug-report ai-code-audit` | AI-generated code detection, security, and quality audit |
-| `security-sweep` | `/bug-report security-sweep` | Run all security scans in parallel via workers |
-| `sec-recon`      | `/bug-report sec-recon`      | Codebase architecture map — run before deeper security scans |
-| `sqli`           | `/bug-report sqli`           | SQL injection two-phase detection |
-| `xss`            | `/bug-report xss`            | Cross-site scripting two-phase detection |
-| `rce`            | `/bug-report rce`            | Remote code execution and command injection detection |
-| `ssrf`           | `/bug-report ssrf`           | Server-side request forgery detection |
-| `path-traversal` | `/bug-report path-traversal` | Path traversal and directory traversal detection |
-| `ssti`           | `/bug-report ssti`           | Server-side template injection detection |
-| `graphql`        | `/bug-report graphql`        | GraphQL injection and abuse detection |
-| `business-logic` | `/bug-report business-logic` | Business logic flaw and workflow bypass detection |
-| `hardcoded-secrets` | `/bug-report hardcoded-secrets` | Hardcoded API key, token, and password detection |
+Exception: `security-sweep` is Path B below, not a subcommand file.
 
-## Operating Modes
+### Path B: Security sweep (`/bug-report security-sweep`)
 
-### General Mode
-Use `/bug-report` when the user wants a broad repository scan for bugs, logic flaws, correctness issues, and high-confidence findings.
+Jump to the **Security Sweep Orchestration** section below and follow it.
 
-### Full Security Sweep Mode
+### Path C: General scan (`/bug-report` with no subcommand)
 
-Use `/bug-report security-sweep` (or when the user says "güvenlik taraması başlat", "run all security scans", "security sweep", etc.).
+Execute the **Shared Workflow** below from Step 1 through Step 6.
+If `--severity` flag provided, filter findings by that severity level.
 
-Launch all security scan subcommands **in parallel** using workers. Each worker is fully autonomous — it reads its subcommand file, executes the three-phase scan (recon, batched verify, merge), and writes confirmed findings directly to `BUG-REPORT.md`.
-
-**Resume support:** Before launching each worker, read `BUG-REPORT.md` and check for its completion marker (`<!-- scan:SUBCOMMAND completed -->`). Skip that worker if the marker exists. This enables resuming interrupted sweeps without re-running completed scans.
-
-**Execution order:**
-
-1. Run `sec-recon` first (inline, not as a worker) to establish the codebase context. This writes the reconnaissance entry to `BUG-REPORT.md`.
-
-2. Then launch all remaining scans **in parallel** as workers — one worker per subcommand. Skip any worker whose completion marker already exists in `BUG-REPORT.md`:
-
-   | Worker   | Subcommand file                      | Completion marker             |
-   |----------|--------------------------------------|-------------------------------|
-   | Worker 1 | `subcommands/sqli.md`                | `<!-- scan:sqli completed -->` |
-   | Worker 2 | `subcommands/xss.md`                 | `<!-- scan:xss completed -->`  |
-   | Worker 3 | `subcommands/rce.md`                 | `<!-- scan:rce completed -->`  |
-   | Worker 4 | `subcommands/ssrf.md`                | `<!-- scan:ssrf completed -->` |
-   | Worker 5 | `subcommands/access-control.md`      | `<!-- scan:access-control completed -->` |
-   | Worker 6 | `subcommands/path-traversal.md`      | `<!-- scan:path-traversal completed -->` |
-   | Worker 7 | `subcommands/ssti.md`                | `<!-- scan:ssti completed -->` |
-   | Worker 8 | `subcommands/graphql.md`             | `<!-- scan:graphql completed -->` |
-   | Worker 9 | `subcommands/business-logic.md`      | `<!-- scan:business-logic completed -->` |
-   | Worker 10 | `subcommands/hardcoded-secrets.md`  | `<!-- scan:hardcoded-secrets completed -->` |
-
-3. Each worker prompt must include:
-   - The full content of its subcommand file as instructions
-   - The repository path to scan
-   - Instruction to write all confirmed findings to `BUG-REPORT.md` using the shared format, continuing the existing ID sequence
-
-4. After all workers complete, read `BUG-REPORT.md` and re-sort all findings by severity (CRITICAL → HIGH → MEDIUM → LOW), deduplicating any overlapping findings across workers.
-
-**Worker prompt template:**
-
-> You are a security scanner. Execute the following security scan on the repository at `[repo_path]`.
-> Write all confirmed [VULNERABLE] and [LIKELY VULNERABLE] findings to `BUG-REPORT.md` in the repository root using this format:
->
-> ```
-> ### BUG-[ID]: [title]
-> Severity: CRITICAL | HIGH | MEDIUM | LOW
-> Status: NEW
-> File: path/to/file:line
-> Component: [module]
->
-> Problem: [what's wrong]
-> Expected: [what should happen]
-> Root Cause: [why]
-> Impact: [impact]
-> Verification: [taint trace + test command]
-> Suggested Commit: [fix: ...]
-> ---
-> ```
->
-> Read existing `BUG-REPORT.md` to continue the ID sequence. Do not write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries.
->
-> Scan instructions:
-> [full content of subcommand file]
-
-### Focused Audit Mode
-Use `/bug-report <subcommand>` when the user asks for a specific audit domain. The domain-specific checklist lives in the matching file under `subcommands/`.
-
-- For `/bug-report api-audit`: see [subcommands/api-audit.md](subcommands/api-audit.md)
-- For `/bug-report cache-audit`: see [subcommands/cache-audit.md](subcommands/cache-audit.md)
-- For `/bug-report disaster-recovery`: see [subcommands/disaster-recovery.md](subcommands/disaster-recovery.md)
-- For `/bug-report error-review`: see [subcommands/error-review.md](subcommands/error-review.md)
-- For `/bug-report feature-flags-audit`: see [subcommands/feature-flags-audit.md](subcommands/feature-flags-audit.md)
-- For `/bug-report integration-security`: see [subcommands/integration-security.md](subcommands/integration-security.md)
-- For `/bug-report observability-audit`: see [subcommands/observability-audit.md](subcommands/observability-audit.md)
-- For `/bug-report queue-audit`: see [subcommands/queue-audit.md](subcommands/queue-audit.md)
-- For `/bug-report release-discipline`: see [subcommands/release-discipline.md](subcommands/release-discipline.md)
-- For `/bug-report serialization-audit`: see [subcommands/serialization-audit.md](subcommands/serialization-audit.md)
-- For `/bug-report session-audit`: see [subcommands/session-audit.md](subcommands/session-audit.md)
-- For `/bug-report tech-debt`: see [subcommands/tech-debt.md](subcommands/tech-debt.md)
-- For `/bug-report tenant-isolation`: see [subcommands/tenant-isolation.md](subcommands/tenant-isolation.md)
-- For `/bug-report access-control`: see [subcommands/access-control.md](subcommands/access-control.md)
-- For `/bug-report upload-security`: see [subcommands/upload-security.md](subcommands/upload-security.md)
-- For `/bug-report ai-code-audit`: see [subcommands/ai-code-audit.md](subcommands/ai-code-audit.md)
-- For `/bug-report security-sweep`: see Full Security Sweep Mode section above
-- For `/bug-report sec-recon`: see [subcommands/sec-recon.md](subcommands/sec-recon.md)
-- For `/bug-report sqli`: see [subcommands/sqli.md](subcommands/sqli.md)
-- For `/bug-report xss`: see [subcommands/xss.md](subcommands/xss.md)
-- For `/bug-report rce`: see [subcommands/rce.md](subcommands/rce.md)
-- For `/bug-report ssrf`: see [subcommands/ssrf.md](subcommands/ssrf.md)
-- For `/bug-report path-traversal`: see [subcommands/path-traversal.md](subcommands/path-traversal.md)
-- For `/bug-report ssti`: see [subcommands/ssti.md](subcommands/ssti.md)
-- For `/bug-report graphql`: see [subcommands/graphql.md](subcommands/graphql.md)
-- For `/bug-report business-logic`: see [subcommands/business-logic.md](subcommands/business-logic.md)
-- For `/bug-report hardcoded-secrets`: see [subcommands/hardcoded-secrets.md](subcommands/hardcoded-secrets.md)
+---
 
 ## Shared Workflow
 
@@ -187,16 +62,14 @@ For large repositories (50+ source files), scan in parallel:
 - Split by category (security, logic, code quality) or by directory (frontend, backend, shared)
 - Merge findings and deduplicate before generating the report
 
-For general `/bug-report`, scan broad bug categories:
+Scan broad bug categories:
 
 | Severity | Examples |
 |----------|----------|
 | CRITICAL | SQL injection, XSS, CSRF, auth bypass, data corruption, crashes, leaks |
-| HIGH | Logic errors, race conditions, missing validation, wrong API contracts |
-| MEDIUM | Swallowed exceptions, edge cases, integration problems |
-| LOW | Deprecated APIs, dead code, N+1 queries, technical debt |
-
-For `/bug-report <subcommand>`, follow the domain-specific checklist in the matching subcommand file.
+| HIGH     | Logic errors, race conditions, missing validation, wrong API contracts |
+| MEDIUM   | Swallowed exceptions, edge cases, integration problems |
+| LOW      | Deprecated APIs, dead code, N+1 queries, technical debt |
 
 ### Step 3: Verify Each Finding
 
@@ -257,13 +130,111 @@ Last Bug ID: BUG-[XXX]
 [All findings sorted by severity: CRITICAL first, LOW last]
 ```
 
-## Notes
+---
+
+## Report Rules
 
 - Zero false positives is more important than completeness -- only report verified findings
-- ALL findings go under a single `## Findings` section -- no custom grouping headers (no "Technical Debt", "Architecture", etc.)
-- Findings must be sorted by severity: CRITICAL first, then HIGH, MEDIUM, LOW
+- ALL findings go under a single `## Findings` section -- no custom grouping headers
+- Findings sorted by severity: CRITICAL first, then HIGH, MEDIUM, LOW
 - Each finding uses `### BUG-[ID]` heading with `---` separator between entries
 - If `bugs.md` or `bug.md` exists, merge into new report and delete old file
 - Allowed commit types: fix, feat, refactor, chore, test, docs, perf, ci, build, security, cleanup
 - Suggested Commit messages NEVER include bug IDs
-- IMPORTANT: Always write the report in English only, regardless of conversation language
+- Always write the report in English only, regardless of conversation language
+
+---
+
+## Security Sweep Orchestration
+
+Use when the user says `/bug-report security-sweep`, "guvenlik taramasi baslat", "run all security scans", or "security sweep".
+
+Launch all security scan subcommands **in parallel** using workers. Each worker is fully autonomous -- it reads its subcommand file, executes the three-phase scan (recon, batched verify, merge), and writes confirmed findings directly to `BUG-REPORT.md`.
+
+**Resume support:** Before launching each worker, read `BUG-REPORT.md` and check for its completion marker (`<!-- scan:SUBCOMMAND completed -->`). Skip that worker if the marker exists.
+
+**Execution order:**
+
+1. Run `sec-recon` first (inline, not as a worker) to establish the codebase context. This writes the reconnaissance entry to `BUG-REPORT.md`.
+
+2. Then launch all remaining scans **in parallel** as workers. Skip any worker whose completion marker already exists in `BUG-REPORT.md`:
+
+   | Worker    | Subcommand file                     | Completion marker                          |
+   |-----------|--------------------------------------|--------------------------------------------|
+   | Worker 1  | `subcommands/sqli.md`               | `<!-- scan:sqli completed -->`             |
+   | Worker 2  | `subcommands/xss.md`                | `<!-- scan:xss completed -->`              |
+   | Worker 3  | `subcommands/rce.md`                | `<!-- scan:rce completed -->`              |
+   | Worker 4  | `subcommands/ssrf.md`               | `<!-- scan:ssrf completed -->`             |
+   | Worker 5  | `subcommands/access-control.md`     | `<!-- scan:access-control completed -->`   |
+   | Worker 6  | `subcommands/path-traversal.md`     | `<!-- scan:path-traversal completed -->`   |
+   | Worker 7  | `subcommands/ssti.md`               | `<!-- scan:ssti completed -->`             |
+   | Worker 8  | `subcommands/graphql.md`            | `<!-- scan:graphql completed -->`          |
+   | Worker 9  | `subcommands/business-logic.md`     | `<!-- scan:business-logic completed -->`   |
+   | Worker 10 | `subcommands/hardcoded-secrets.md`  | `<!-- scan:hardcoded-secrets completed -->` |
+
+3. Each worker prompt must include:
+   - The full content of its subcommand file as instructions
+   - The repository path to scan
+   - Instruction to write all confirmed findings to `BUG-REPORT.md` using the shared format, continuing the existing ID sequence
+
+4. After all workers complete, read `BUG-REPORT.md` and re-sort all findings by severity (CRITICAL -> HIGH -> MEDIUM -> LOW), deduplicating any overlapping findings across workers.
+
+**Worker prompt template:**
+
+> You are a security scanner. Execute the following security scan on the repository at `[repo_path]`.
+> Write all confirmed [VULNERABLE] and [LIKELY VULNERABLE] findings to `BUG-REPORT.md` in the repository root using this format:
+>
+> ```
+> ### BUG-[ID]: [title]
+> Severity: CRITICAL | HIGH | MEDIUM | LOW
+> Status: NEW
+> File: path/to/file:line
+> Component: [module]
+>
+> Problem: [what's wrong]
+> Expected: [what should happen]
+> Root Cause: [why]
+> Impact: [impact]
+> Verification: [taint trace + test command]
+> Suggested Commit: [fix: ...]
+> ---
+> ```
+>
+> Read existing `BUG-REPORT.md` to continue the ID sequence. Do not write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries.
+>
+> Scan instructions:
+> [full content of subcommand file]
+
+---
+
+## Subcommand Reference
+
+| Subcommand             | Description                                                              |
+|------------------------|--------------------------------------------------------------------------|
+| `auditcodex`           | Codex CLI diff audit with validated findings                             |
+| `api-audit`            | API performance, resilience, contract, and lifecycle audit               |
+| `cache-audit`          | Caching strategy, consistency, and Redis/security audit                  |
+| `disaster-recovery`    | Disaster recovery and business continuity readiness audit                |
+| `error-review`         | Error message quality, disclosure, and fallback-state audit              |
+| `feature-flags-audit`  | Feature flag hygiene, rollout safety, and experimentation audit          |
+| `integration-security` | Third-party integration, webhook, and OAuth security audit               |
+| `observability-audit`  | Logging, metrics, tracing, and debugging-readiness audit                 |
+| `queue-audit`          | Queue, worker, retry, and DLQ resilience audit                           |
+| `release-discipline`   | Version control, review process, and release-discipline audit            |
+| `serialization-audit`  | Serialization, parsing, XXE, and data transformation security audit      |
+| `session-audit`        | Session lifecycle, JWT vulnerability, cookies, CSRF audit                |
+| `tech-debt`            | Technical debt, dead code, and test quality audit                        |
+| `tenant-isolation`     | Multi-tenant isolation and cross-tenant leakage audit                    |
+| `access-control`       | IDOR and missing authentication/authorization detection                  |
+| `upload-security`      | File upload and media processing security audit                          |
+| `ai-code-audit`        | AI-generated code detection, security, and quality audit                 |
+| `sec-recon`            | Codebase architecture and security posture reconnaissance                |
+| `sqli`                 | SQL injection three-phase detection                                      |
+| `xss`                  | Cross-site scripting three-phase detection                               |
+| `rce`                  | Remote code execution and command injection detection                    |
+| `ssrf`                 | Server-side request forgery detection                                    |
+| `path-traversal`       | Path traversal and directory traversal detection                         |
+| `ssti`                 | Server-side template injection detection                                 |
+| `graphql`              | GraphQL injection and abuse detection                                    |
+| `business-logic`       | Business logic flaw and workflow bypass detection                        |
+| `hardcoded-secrets`    | Hardcoded API key, token, and password detection                         |
