@@ -48,6 +48,13 @@ You are a security and architecture specialist reviewing session management and 
 - What is the CSRF strategy for SPA (single page applications)? (custom header, double submit cookie)
 - Is CORS configuration correct? (`Access-Control-Allow-Origin: *` is dangerous)
 - Is `Access-Control-Allow-Credentials: true` used with wildcard origin? (CRITICAL vulnerability)
+- **CSRF token presence**: Do all state-changing endpoints (POST/PUT/DELETE) validate a CSRF token? Search for unprotected mutation routes
+- **CSRF token binding**: Is token bound to user's session (per-user)? Global/static tokens are bypassable — attacker uses own token for victim
+- **SameSite cookie analysis**: Session cookies must have `SameSite=Strict` or `SameSite=Lax`. `SameSite=None; Secure` still allows cross-origin requests and is vulnerable context
+- **JSON content-type bypass**: APIs accepting `application/json` may still be vulnerable if they also accept `application/x-www-form-urlencoded` or `text/plain` (both sendable via HTML form without CORS preflight)
+- **Framework-specific CSRF exemptions**: Search for explicit CSRF bypasses — `@csrf_exempt` (Django), `VerifyCsrfToken::$except` (Laravel), `csrf(false)` (Express), `[IgnoreAntiforgeryToken]` (ASP.NET), `skip_before_action :verify_authenticity_token` (Rails)
+- **Double-submit cookie pattern**: If used, verify cookie value matches header/body value AND cookie is `HttpOnly` (non-HttpOnly cookie can be overwritten via XSS, defeating the pattern)
+- **Referer/Origin header validation**: If app relies on Referer/Origin checking instead of tokens, verify it cannot be bypassed (missing header fallback, subdomain matching, regex flaws)
 
 
 

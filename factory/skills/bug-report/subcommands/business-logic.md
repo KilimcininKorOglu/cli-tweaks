@@ -239,6 +239,25 @@ Give each batch subagent the following instructions (include assigned scenarios 
 > - Is stock/balance check and decrement done atomically (in a single DB transaction or with row-level locking)?
 > - Is there any idempotency key or deduplication logic to prevent duplicate concurrent requests?
 >
+> **Database-level protections to look for:**
+> - `SELECT ... FOR UPDATE` (row-level lock) — prevents concurrent reads of same resource
+> - Transaction isolation level: `SERIALIZABLE` prevents phantom reads, `READ COMMITTED` doesn't prevent TOCTOU
+> - Optimistic locking: version column (`WHERE version = ?` then `SET version = version + 1`) — check if version mismatch is handled
+> - Unique constraints: database-level uniqueness prevents duplicate creation
+> - `INSERT ... ON CONFLICT DO NOTHING` (PostgreSQL) / `INSERT IGNORE` (MySQL)
+>
+> **Application-level protections:**
+> - Mutex/semaphore around critical sections
+> - Idempotency keys on payment/transfer endpoints
+> - Redis-based distributed locks (`SETNX` with TTL)
+> - Rate limiting per-user on sensitive operations
+>
+> **Framework-specific patterns:**
+> - Django: `select_for_update()`, `F()` expressions for atomic updates
+> - Rails: `with_lock`, `lock!`, optimistic locking via `lock_version`
+> - Express/Node: No built-in locking — must use Redis or DB locks
+> - Spring: `@Transactional(isolation = Isolation.SERIALIZABLE)`, `@Lock(LockModeType.PESSIMISTIC_WRITE)`
+>
 > **6. For entitlement/subscription scenarios**:
 > - Is the user's current plan/tier checked at the point of feature access?
 > - Or is it cached at login/session start and never re-evaluated?

@@ -32,7 +32,7 @@ Find every endpoint that receives webhooks and check:
 Find every mechanism that sends webhooks outbound and check:
 
 - Are outgoing webhooks signed? (so receivers can verify authenticity)
-- Are target URLs validated? (SSRF protection — should not send webhooks to internal network addresses)
+- Are target URLs validated? (SSRF protection — should not send webhooks to internal network addresses) → run `/bug-report ssrf` for deep code-level SSRF scan
 - Is there retry logic? With exponential backoff? With maximum retry limit?
 - Is there an alerting/notification mechanism for failed deliveries?
 - Is there a timeout on webhook sending? (does the system lock up if the target responds slowly)
@@ -58,6 +58,18 @@ Find every call to external APIs and check:
 - Is token revocation or expiry handled gracefully?
 - Is the OAuth state parameter used for CSRF protection?
 - Are scopes requested with the principle of least privilege? (no unnecessarily broad permissions)
+
+## 5. CORS Configuration Security
+
+Find every CORS configuration (middleware, response headers, proxy config) and check:
+
+- **Wildcard origin with credentials**: `Access-Control-Allow-Origin: *` combined with `Access-Control-Allow-Credentials: true` — browsers block this but misconfigured proxies may not
+- **Reflected origin**: Server echoes back the `Origin` header value without validation — allows any site to make credentialed requests
+- **Null origin allowed**: `Access-Control-Allow-Origin: null` — exploitable via sandboxed iframes and `data:` URIs
+- **Regex-based origin validation bypass**: `example.com.attacker.com` passes a naive regex check for `example.com`
+- **Missing preflight validation**: Server responds to OPTIONS with permissive headers but doesn't validate on actual request
+- **Overly permissive methods and headers**: `Access-Control-Allow-Methods` and `Access-Control-Allow-Headers` granting more than necessary
+- **CORS headers on sensitive endpoints**: Login, account settings, and admin API endpoints should have strict origin policies
 
 ## Shared Audit Rules
 

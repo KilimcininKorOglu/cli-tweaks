@@ -94,6 +94,15 @@ Launch a subagent with the following instructions:
 >
 > **What to ignore**: intentionally public endpoints, static assets, `/health`/`/ping`, endpoints where only the authenticated user's own ID is used.
 >
+> **Part C — Privilege escalation patterns**:
+>
+> Check for paths where an attacker can elevate from one privilege level to a higher one:
+> - **Role hierarchy traversal**: Can a user with role "editor" access "admin" functions by manipulating role parameters?
+> - **Decorator/middleware stacking bypass**: Are there routes where auth middleware is applied but role check is missing?
+> - **Horizontal to vertical escalation**: Can accessing another user's data (IDOR) also grant elevated privileges (e.g., accessing admin user's settings)?
+> - **Admin function access without role check**: Sensitive operations (user deletion, config change, bulk export) that check authentication but not authorization level
+> - **Parameter-based role switching**: Can `role=admin` or `isAdmin=true` be injected in request body to elevate privileges?
+>
 > **Output format** — return findings in your response:
 >
 > ```markdown
