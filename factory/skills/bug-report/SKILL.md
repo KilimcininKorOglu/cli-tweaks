@@ -5,8 +5,8 @@ description: >
   audit such as "api audit", "error review", "cache audit", "tech debt", or any
   security scan such as "sql injection", "xss", "rce", "ssrf", "access control",
   "hardcoded secrets", "güvenlik taraması", "security scan", or "security sweep".
-  Use `/bug-report` for general scans, `/bug-report <subcommand>` for focused
-  audits, `/bug-report security-sweep` for parallel security scans.
+  Use `/bug-report` for full audit, `/bug-report <subcommand>` for focused audits,
+  `/bug-report security-sweep` for security-only parallel scans.
 argument-hint: "[--severity critical|high|medium|low|all | <subcommand>]"
 ---
 
@@ -29,100 +29,158 @@ Exception: `security-sweep` is Path B below, not a subcommand file.
 
 ### Path B: Security sweep (`/bug-report security-sweep`)
 
-Jump to the **Security Sweep Orchestration** section below and follow it.
+If the user said `/bug-report security-sweep` OR used natural language like
+"güvenlik taraması başlat", "security scan", "run all security scans", or
+"security sweep" — jump to the **Security Sweep Orchestration** section below.
 
-### Path C: General scan (`/bug-report` with no subcommand)
+### Path C: Full audit (`/bug-report` with no subcommand)
 
-Execute the **Shared Workflow** below from Step 1 through Step 6.
-If `--severity` flag provided, filter findings by that severity level.
+Run ALL audit subcommands in parallel using workers. This is the comprehensive
+mode — every general audit and every security scan runs simultaneously.
+
+Jump to the **Full Audit Orchestration** section below.
+
+---
+
+## Full Audit Orchestration
+
+This runs when `/bug-report` is called with no subcommand. Launches ALL
+subcommands as parallel workers for comprehensive repository analysis.
+
+**Resume support:** Before launching each worker, read `BUG-REPORT.md` and
+check for its completion marker (`<!-- scan:SUBCOMMAND completed -->`). Skip
+that worker if the marker exists.
+
+**Execution order:**
+
+1. Run `sec-recon` first (inline, not as a worker) to establish codebase context.
+   This writes the reconnaissance entry to `BUG-REPORT.md`.
+
+2. Launch ALL remaining subcommands **in parallel** as workers. Skip any worker
+   whose completion marker already exists in `BUG-REPORT.md`:
+
+   **General audit workers:**
+
+   | Worker    | Subcommand file                         | Completion marker                            |
+   |-----------|-----------------------------------------|----------------------------------------------|
+   | Worker 1  | `subcommands/api-audit.md`              | `<!-- scan:api-audit completed -->`          |
+   | Worker 2  | `subcommands/cache-audit.md`            | `<!-- scan:cache-audit completed -->`        |
+   | Worker 3  | `subcommands/disaster-recovery.md`      | `<!-- scan:disaster-recovery completed -->`  |
+   | Worker 4  | `subcommands/error-review.md`           | `<!-- scan:error-review completed -->`       |
+   | Worker 5  | `subcommands/feature-flags-audit.md`    | `<!-- scan:feature-flags-audit completed -->` |
+   | Worker 6  | `subcommands/integration-security.md`   | `<!-- scan:integration-security completed -->` |
+   | Worker 7  | `subcommands/observability-audit.md`    | `<!-- scan:observability-audit completed -->` |
+   | Worker 8  | `subcommands/queue-audit.md`            | `<!-- scan:queue-audit completed -->`        |
+   | Worker 9  | `subcommands/release-discipline.md`     | `<!-- scan:release-discipline completed -->` |
+   | Worker 10 | `subcommands/serialization-audit.md`    | `<!-- scan:serialization-audit completed -->` |
+   | Worker 11 | `subcommands/session-audit.md`          | `<!-- scan:session-audit completed -->`      |
+   | Worker 12 | `subcommands/tech-debt.md`              | `<!-- scan:tech-debt completed -->`          |
+   | Worker 13 | `subcommands/tenant-isolation.md`       | `<!-- scan:tenant-isolation completed -->`   |
+   | Worker 14 | `subcommands/upload-security.md`        | `<!-- scan:upload-security completed -->`    |
+   | Worker 15 | `subcommands/ai-code-audit.md`          | `<!-- scan:ai-code-audit completed -->`      |
+
+   **Security scan workers:**
+
+   | Worker    | Subcommand file                         | Completion marker                            |
+   |-----------|-----------------------------------------|----------------------------------------------|
+   | Worker 16 | `subcommands/access-control.md`         | `<!-- scan:access-control completed -->`     |
+   | Worker 17 | `subcommands/sqli.md`                   | `<!-- scan:sqli completed -->`               |
+   | Worker 18 | `subcommands/xss.md`                    | `<!-- scan:xss completed -->`                |
+   | Worker 19 | `subcommands/rce.md`                    | `<!-- scan:rce completed -->`                |
+   | Worker 20 | `subcommands/ssrf.md`                   | `<!-- scan:ssrf completed -->`               |
+   | Worker 21 | `subcommands/path-traversal.md`         | `<!-- scan:path-traversal completed -->`     |
+   | Worker 22 | `subcommands/ssti.md`                   | `<!-- scan:ssti completed -->`               |
+   | Worker 23 | `subcommands/graphql.md`                | `<!-- scan:graphql completed -->`            |
+   | Worker 24 | `subcommands/business-logic.md`         | `<!-- scan:business-logic completed -->`     |
+   | Worker 25 | `subcommands/hardcoded-secrets.md`      | `<!-- scan:hardcoded-secrets completed -->`  |
+
+3. Each worker prompt must include:
+   - The full content of its subcommand file as instructions
+   - The repository path to scan
+   - Instruction to write all confirmed findings to `BUG-REPORT.md` using the
+     shared format below, continuing the existing ID sequence
+
+4. After all workers complete, read `BUG-REPORT.md` and re-sort all findings by
+   severity (CRITICAL -> HIGH -> MEDIUM -> LOW), deduplicating overlapping findings.
+
+If `--severity` flag provided, filter final report to only that severity level.
+
+**Worker prompt template:**
+
+> You are an auditor. Execute the following audit on the repository at `[repo_path]`.
+> Read the full content of the subcommand file below and follow its instructions.
+> Write all confirmed findings to `BUG-REPORT.md` in the repository root.
+>
+> Finding format:
+> ```
+> ### BUG-[ID]: [title]
+>
+> Severity: CRITICAL | HIGH | MEDIUM | LOW
+>
+> Status: NEW
+>
+> File: path/to/file:line
+>
+> Component: [module]
+>
+> Suggested Commit: `[fix: ...]`
+>
+>
+> Problem: [what's wrong]
+>
+> Expected: [what should happen]
+>
+> Root Cause: [why]
+>
+> Impact: [impact]
+>
+> Verification: [how confirmed]
+>
+> ---
+> ```
+>
+> Read existing `BUG-REPORT.md` to continue the ID sequence.
+>
+> Subcommand instructions:
+> [full content of subcommand file]
 
 ---
 
-## Shared Workflow
+## Security Sweep Orchestration
 
-### Step 1: Repository Assessment
+Use when the user says `/bug-report security-sweep` or natural language like
+"güvenlik taraması başlat", "security scan", "run all security scans".
 
-Map the project structure:
-- Identify technology stack and dependencies
-- Find main entry points and critical paths
-- Check for existing tests and linting configurations
-- Look for existing `BUG-REPORT.md` to continue ID sequence
-- Scan for `TODO`, `FIXME`, `HACK`, `XXX`, `BUG` comments
+This runs ONLY the security scan subcommands (not general audits).
 
-### Scanning Scope
+**Resume support:** Same as Full Audit — check completion markers before launching.
 
-Always skip non-source directories and generated files:
-- `node_modules/`, `vendor/`, `dist/`, `build/`, `.next/`, `__pycache__/`, `.venv/`
-- Lock files (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`, `Gemfile.lock`, `poetry.lock`)
-- Minified files (`*.min.js`, `*.min.css`), source maps, compiled output
-- Third-party code, vendored dependencies, and auto-generated files
-- Focus exclusively on project-authored source code
+**Execution order:**
 
-### Step 2: Discovery
+1. Run `sec-recon` first (inline) to establish codebase context.
 
-For large repositories (50+ source files), scan in parallel:
-- Spawn up to 3 sub-agents to scan different areas simultaneously
-- Split by category (security, logic, code quality) or by directory (frontend, backend, shared)
-- Merge findings and deduplicate before generating the report
+2. Launch security scan workers **in parallel**:
 
-Scan broad bug categories:
+   | Worker    | Subcommand file                     | Completion marker                          |
+   |-----------|--------------------------------------|--------------------------------------------|
+   | Worker 1  | `subcommands/sqli.md`               | `<!-- scan:sqli completed -->`             |
+   | Worker 2  | `subcommands/xss.md`                | `<!-- scan:xss completed -->`              |
+   | Worker 3  | `subcommands/rce.md`                | `<!-- scan:rce completed -->`              |
+   | Worker 4  | `subcommands/ssrf.md`               | `<!-- scan:ssrf completed -->`             |
+   | Worker 5  | `subcommands/access-control.md`     | `<!-- scan:access-control completed -->`   |
+   | Worker 6  | `subcommands/path-traversal.md`     | `<!-- scan:path-traversal completed -->`   |
+   | Worker 7  | `subcommands/ssti.md`               | `<!-- scan:ssti completed -->`             |
+   | Worker 8  | `subcommands/graphql.md`            | `<!-- scan:graphql completed -->`          |
+   | Worker 9  | `subcommands/business-logic.md`     | `<!-- scan:business-logic completed -->`   |
+   | Worker 10 | `subcommands/hardcoded-secrets.md`  | `<!-- scan:hardcoded-secrets completed -->` |
 
-| Severity | Examples |
-|----------|----------|
-| CRITICAL | SQL injection, XSS, CSRF, auth bypass, data corruption, crashes, leaks |
-| HIGH     | Logic errors, race conditions, missing validation, wrong API contracts |
-| MEDIUM   | Swallowed exceptions, edge cases, integration problems |
-| LOW      | Deprecated APIs, dead code, N+1 queries, technical debt |
+3. Use the same worker prompt template from Full Audit above.
 
-### Step 3: Verify Each Finding
-
-Every potential finding MUST be verified on the actual code before reporting:
-- Read the suspect file and trace the full code path (callers, callees, error handlers)
-- Confirm the issue is real -- not a pattern you misread, not handled elsewhere, not a deliberate choice
-- Check if existing tests already cover the case (if a test exists and passes, it is likely not a bug)
-- If you cannot reproduce or confirm the logic flaw by reading the code, discard the finding
-- NEVER report a finding based on assumptions or pattern matching alone
-
-Only verified findings proceed to documentation.
-
-### Step 4: Document Each Finding
-
-```
-### BUG-[ID]: [Brief description]
-
-Severity: CRITICAL | HIGH | MEDIUM | LOW
-
-Status: NEW | CONFIRMED | IN_PROGRESS | FIXED | WONT_FIX
-
-File: [path/to/file.ext:line_number]
-
-Component: [affected module/feature]
-
-Suggested Commit: `[conventional commit message, e.g. "fix: prevent XSS in user input sanitizer"]`
-
-
-Problem: [What's wrong - current behavior]
-
-Expected: [What should happen]
-
-Root Cause: [Why it happens - if determinable]
-
-Impact: [User/system/business impact]
-
-Verification: [How you confirmed this finding - specific code path or logic trace]
+4. After all workers complete, re-sort and deduplicate `BUG-REPORT.md`.
 
 ---
-```
 
-Note: Suggested Commit goes BEFORE Problem. Each field separated by a blank line. Suggested Commit value wrapped in backticks. Entry ends with `---` separator.
-
-### Step 5: ID Management
-
-Bug IDs must never reset. Always increment from the highest existing ID.
-Check `BUG-REPORT.md`, `bugs.md`, `bug.md` for existing IDs.
-If no existing bugs, start from BUG-001.
-
-### Step 6: Generate Report
+## Report Format
 
 Save to `BUG-REPORT.md` in repository root:
 
@@ -144,87 +202,25 @@ Last Bug ID: BUG-[XXX]
 
 ## System Architecture
 
-[sec-recon output is here — only if sec-recon was run]
+[sec-recon output — only if sec-recon was run]
 
 ## Findings
 
 [All findings sorted by severity: CRITICAL first, LOW last]
 ```
 
----
-
 ## Report Rules
 
-- Zero false positives is more important than completeness -- only report verified findings
-- ALL findings go under a single `## Findings` section -- no custom grouping headers
-- Findings sorted by severity: CRITICAL first, then HIGH, MEDIUM, LOW
-- Each finding uses `### BUG-[ID]` heading with `---` separator between entries
-- If `bugs.md` or `bug.md` exists, merge into new report and delete old file
-- Allowed commit types: fix, feat, refactor, chore, test, docs, perf, ci, build, security, cleanup
+- Zero false positives > completeness — only report verified findings
+- ALL findings under single `## Findings` section — no custom grouping headers
+- Sorted by severity: CRITICAL, HIGH, MEDIUM, LOW
+- Each finding: `### BUG-[ID]` heading, `---` separator between entries
+- Suggested Commit BEFORE Problem, wrapped in backticks
+- Blank line between each field
+- Bug IDs never reset — increment from highest existing ID
+- If `bugs.md` or `bug.md` exists, merge and delete old file
 - Suggested Commit messages NEVER include bug IDs
-- Always write the report in English only, regardless of conversation language
-
----
-
-## Security Sweep Orchestration
-
-Use when the user says `/bug-report security-sweep`, "guvenlik taramasi baslat", "run all security scans", or "security sweep".
-
-Launch all security scan subcommands **in parallel** using workers. Each worker is fully autonomous -- it reads its subcommand file, executes the three-phase scan (recon, batched verify, merge), and writes confirmed findings directly to `BUG-REPORT.md`.
-
-**Resume support:** Before launching each worker, read `BUG-REPORT.md` and check for its completion marker (`<!-- scan:SUBCOMMAND completed -->`). Skip that worker if the marker exists.
-
-**Execution order:**
-
-1. Run `sec-recon` first (inline, not as a worker) to establish the codebase context. This writes the reconnaissance entry to `BUG-REPORT.md`.
-
-2. Then launch all remaining scans **in parallel** as workers. Skip any worker whose completion marker already exists in `BUG-REPORT.md`:
-
-   | Worker    | Subcommand file                     | Completion marker                          |
-   |-----------|--------------------------------------|--------------------------------------------|
-   | Worker 1  | `subcommands/sqli.md`               | `<!-- scan:sqli completed -->`             |
-   | Worker 2  | `subcommands/xss.md`                | `<!-- scan:xss completed -->`              |
-   | Worker 3  | `subcommands/rce.md`                | `<!-- scan:rce completed -->`              |
-   | Worker 4  | `subcommands/ssrf.md`               | `<!-- scan:ssrf completed -->`             |
-   | Worker 5  | `subcommands/access-control.md`     | `<!-- scan:access-control completed -->`   |
-   | Worker 6  | `subcommands/path-traversal.md`     | `<!-- scan:path-traversal completed -->`   |
-   | Worker 7  | `subcommands/ssti.md`               | `<!-- scan:ssti completed -->`             |
-   | Worker 8  | `subcommands/graphql.md`            | `<!-- scan:graphql completed -->`          |
-   | Worker 9  | `subcommands/business-logic.md`     | `<!-- scan:business-logic completed -->`   |
-   | Worker 10 | `subcommands/hardcoded-secrets.md`  | `<!-- scan:hardcoded-secrets completed -->` |
-
-3. Each worker prompt must include:
-   - The full content of its subcommand file as instructions
-   - The repository path to scan
-   - Instruction to write all confirmed findings to `BUG-REPORT.md` using the shared format, continuing the existing ID sequence
-
-4. After all workers complete, read `BUG-REPORT.md` and re-sort all findings by severity (CRITICAL -> HIGH -> MEDIUM -> LOW), deduplicating any overlapping findings across workers.
-
-**Worker prompt template:**
-
-> You are a security scanner. Execute the following security scan on the repository at `[repo_path]`.
-> Write all confirmed [VULNERABLE] and [LIKELY VULNERABLE] findings to `BUG-REPORT.md` in the repository root using this format:
->
-> ```
-> ### BUG-[ID]: [title]
-> Severity: CRITICAL | HIGH | MEDIUM | LOW
-> Status: NEW
-> File: path/to/file:line
-> Component: [module]
->
-> Problem: [what's wrong]
-> Expected: [what should happen]
-> Root Cause: [why]
-> Impact: [impact]
-> Verification: [taint trace + test command]
-> Suggested Commit: [fix: ...]
-> ---
-> ```
->
-> Read existing `BUG-REPORT.md` to continue the ID sequence. Do not write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries.
->
-> Scan instructions:
-> [full content of subcommand file]
+- Always write report in English only
 
 ---
 
