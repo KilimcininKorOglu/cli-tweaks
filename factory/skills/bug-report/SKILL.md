@@ -1,9 +1,12 @@
 ---
 name: bug-report
 description: >
-  Systematic bug analysis and security auditing. Use `/bug-report` for general
-  scans, `/bug-report <subcommand>` for focused audits, `/bug-report security-sweep`
-  for parallel security scans. All modes write verified findings to BUG-REPORT.md.
+  This skill MUST be invoked for bug analysis, security auditing, or any focused
+  audit such as "api audit", "error review", "cache audit", "tech debt", or any
+  security scan such as "sql injection", "xss", "rce", "ssrf", "access control",
+  "hardcoded secrets", "güvenlik taraması", "security scan", or "security sweep".
+  Use `/bug-report` for general scans, `/bug-report <subcommand>` for focused
+  audits, `/bug-report security-sweep` for parallel security scans.
 argument-hint: "[--severity critical|high|medium|low|all | <subcommand>]"
 ---
 
