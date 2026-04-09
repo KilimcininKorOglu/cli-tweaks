@@ -109,6 +109,7 @@ that worker if the marker exists.
    | Worker 36 | `subcommands/docker.md`                 | `<!-- scan:docker completed -->`             |
    | Worker 37 | `subcommands/clickjacking.md`           | `<!-- scan:clickjacking completed -->`       |
    | Worker 38 | `subcommands/dependency-audit.md`       | `<!-- scan:dependency-audit completed -->`   |
+   | Worker 39 | `subcommands/ldap.md`                   | `<!-- scan:ldap completed -->`               |
 
 3. Each worker prompt must include:
    - The full content of its subcommand file as instructions
@@ -202,6 +203,7 @@ This runs ONLY the security scan subcommands (not general audits).
    | Worker 21 | `subcommands/docker.md`             | `<!-- scan:docker completed -->`           |
    | Worker 22 | `subcommands/clickjacking.md`       | `<!-- scan:clickjacking completed -->`     |
    | Worker 23 | `subcommands/dependency-audit.md`   | `<!-- scan:dependency-audit completed -->`  |
+   | Worker 24 | `subcommands/ldap.md`               | `<!-- scan:ldap completed -->`              |
 
 3. Use the same worker prompt template from Full Audit above.
 
@@ -297,3 +299,4 @@ Last Bug ID: BUG-[XXX]
 | `header-injection`     | HTTP header injection and CRLF detection                                 |
 | `clickjacking`         | Clickjacking protection (X-Frame-Options, CSP frame-ancestors)           |
 | `mass-assignment`      | Mass assignment and parameter pollution detection                        |
+| `ldap`                 | LDAP injection in search filters and DN construction                     |
