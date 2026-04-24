@@ -295,4 +295,5 @@ Last Bug ID: BUG-[XXX]
 | `header-injection`     | HTTP header injection and CRLF detection                                 |
 | `clickjacking`         | Clickjacking protection (X-Frame-Options, CSP frame-ancestors)           |
 | `mass-assignment`      | Mass assignment and parameter pollution detection                        |
+| `fix`                  | Disciplined single-bug fix workflow with commit and report update        |
 | `ldap`                 | LDAP injection in search filters and DN construction                     |
