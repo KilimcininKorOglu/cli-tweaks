@@ -35,9 +35,15 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `ai-seo`                       | `/ai-seo`                       | GEO optimization for AI search engines with 8 analysis subcommands               |
 | `draft-to-article`             | `/draft-to-article`             | Format drafts for X Articles, LinkedIn, or Medium/Substack                       |
 | `ios-uikit`                    | `/ios-uikit`                    | Programmatic UIKit development with 20 reference documents                       |
-| `ios-simulator`                | `/ios-simulator`                | iOS simulator automation with 33 Node.js scripts for semantic navigation         |
+| `ios-simulator`                | `/ios-simulator`                | iOS simulator automation with 22 Node.js scripts for semantic navigation         |
 
 #### `bug-report` audit subcommands
+
+**Workflow**
+
+| Subcommand | Command           | Description                                                       |
+|------------|-------------------|-------------------------------------------------------------------|
+| `fix`      | `/bug-report fix` | Disciplined single-bug fix workflow with commit and report update |
 
 **General audits**
 

@@ -35,9 +35,15 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `ai-seo`                       | `/ai-seo`                       | AI arama motorları için GEO optimizasyonu, 8 analiz alt komutu                  |
 | `draft-to-article`             | `/draft-to-article`             | Taslakları X Articles, LinkedIn veya Medium/Substack formatına dönüştürme       |
 | `ios-uikit`                    | `/ios-uikit`                    | 20 referans belgeyle programatik UIKit geliştirme                               |
-| `ios-simulator`                | `/ios-simulator`                | 33 Node.js script ile iOS simülatör otomasyonu                                  |
+| `ios-simulator`                | `/ios-simulator`                | 22 Node.js script ile iOS simülatör otomasyonu                                  |
 
 #### `bug-report` audit subcommand'leri
+
+**İş akışı**
+
+| Alt komut | Komut             | Açıklama                                                              |
+|-----------|-------------------|-----------------------------------------------------------------------|
+| `fix`     | `/bug-report fix` | Disiplinli tekil hata düzeltme iş akışı, commit ve rapor güncellemesi |
 
 **Genel denetimler**
 
@@ -67,33 +73,33 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 
 **Güvenlik taramaları (üç fazlı: keşif, toplu doğrulama, birleştirme)**
 
-| Alt komut           | Komut                           | Açıklama                                                  |
-|---------------------|---------------------------------|-----------------------------------------------------------|
-| `security-sweep`    | `/bug-report security-sweep`    | 24 güvenlik taramasını worker'larla paralel çalıştırır    |
-| `sec-recon`         | `/bug-report sec-recon`         | Kod tabanı mimarisi ve güvenlik duruşu keşfi              |
-| `access-control`    | `/bug-report access-control`    | IDOR ve eksik kimlik doğrulama/yetkilendirme tespiti      |
-| `sqli`              | `/bug-report sqli`              | SQL injection tespiti                                     |
-| `xss`               | `/bug-report xss`               | Cross-site scripting tespiti                              |
-| `rce`               | `/bug-report rce`               | Uzaktan kod yürütme ve komut enjeksiyonu tespiti          |
-| `ssrf`              | `/bug-report ssrf`              | Sunucu taraflı istek sahteciliği tespiti                  |
-| `ssti`              | `/bug-report ssti`              | Sunucu taraflı şablon enjeksiyonu tespiti                 |
-| `path-traversal`    | `/bug-report path-traversal`    | Path traversal ve dizin geçişi tespiti                    |
-| `graphql`           | `/bug-report graphql`           | GraphQL enjeksiyon ve kötüye kullanım tespiti             |
-| `hardcoded-secrets` | `/bug-report hardcoded-secrets` | Sabit kodlanmış API anahtarı, token ve şifre tespiti      |
-| `cors`              | `/bug-report cors`              | CORS yanlış yapılandırma ve cross-origin saldırı tespiti  |
-| `open-redirect`     | `/bug-report open-redirect`     | Açık yönlendirme ve URL manipülasyonu tespiti             |
-| `nosqli`            | `/bug-report nosqli`            | NoSQL injection (MongoDB, Redis, Elasticsearch) tespiti   |
-| `dependency-audit`  | `/bug-report dependency-audit`  | Tedarik zinciri güvenliği, CVE ve typosquatting denetimi  |
-| `data-exposure`     | `/bug-report data-exposure`     | Log, hata ve API yanıtlarında hassas veri sızıntısı       |
-| `crypto`            | `/bug-report crypto`            | Zayıf şifreleme algoritması ve sabit anahtar tespiti      |
-| `ci-cd`             | `/bug-report ci-cd`             | CI/CD pipeline güvenliği (GitHub Actions, GitLab CI)      |
-| `docker`            | `/bug-report docker`            | Konteyner güvenliği (Dockerfile, docker-compose)          |
-| `rate-limiting`     | `/bug-report rate-limiting`     | Hız sınırlama ve brute force koruması denetimi            |
-| `websocket`         | `/bug-report websocket`         | WebSocket güvenliği (origin, auth, mesaj enjeksiyonu)     |
-| `header-injection`  | `/bug-report header-injection`  | HTTP başlık enjeksiyonu ve CRLF tespiti                   |
-| `clickjacking`      | `/bug-report clickjacking`      | Clickjacking koruması (X-Frame-Options, CSP)              |
-| `mass-assignment`   | `/bug-report mass-assignment`   | Toplu atama ve parametre kirlenmesi tespiti               |
-| `ldap`              | `/bug-report ldap`              | LDAP enjeksiyonu tespiti                                  |
+| Alt komut           | Komut                           | Açıklama                                                 |
+|---------------------|---------------------------------|----------------------------------------------------------|
+| `security-sweep`    | `/bug-report security-sweep`    | 24 güvenlik taramasını worker'larla paralel çalıştırır   |
+| `sec-recon`         | `/bug-report sec-recon`         | Kod tabanı mimarisi ve güvenlik duruşu keşfi             |
+| `access-control`    | `/bug-report access-control`    | IDOR ve eksik kimlik doğrulama/yetkilendirme tespiti     |
+| `sqli`              | `/bug-report sqli`              | SQL injection tespiti                                    |
+| `xss`               | `/bug-report xss`               | Cross-site scripting tespiti                             |
+| `rce`               | `/bug-report rce`               | Uzaktan kod yürütme ve komut enjeksiyonu tespiti         |
+| `ssrf`              | `/bug-report ssrf`              | Sunucu taraflı istek sahteciliği tespiti                 |
+| `ssti`              | `/bug-report ssti`              | Sunucu taraflı şablon enjeksiyonu tespiti                |
+| `path-traversal`    | `/bug-report path-traversal`    | Path traversal ve dizin geçişi tespiti                   |
+| `graphql`           | `/bug-report graphql`           | GraphQL enjeksiyon ve kötüye kullanım tespiti            |
+| `hardcoded-secrets` | `/bug-report hardcoded-secrets` | Sabit kodlanmış API anahtarı, token ve şifre tespiti     |
+| `cors`              | `/bug-report cors`              | CORS yanlış yapılandırma ve cross-origin saldırı tespiti |
+| `open-redirect`     | `/bug-report open-redirect`     | Açık yönlendirme ve URL manipülasyonu tespiti            |
+| `nosqli`            | `/bug-report nosqli`            | NoSQL injection (MongoDB, Redis, Elasticsearch) tespiti  |
+| `dependency-audit`  | `/bug-report dependency-audit`  | Tedarik zinciri güvenliği, CVE ve typosquatting denetimi |
+| `data-exposure`     | `/bug-report data-exposure`     | Log, hata ve API yanıtlarında hassas veri sızıntısı      |
+| `crypto`            | `/bug-report crypto`            | Zayıf şifreleme algoritması ve sabit anahtar tespiti     |
+| `ci-cd`             | `/bug-report ci-cd`             | CI/CD pipeline güvenliği (GitHub Actions, GitLab CI)     |
+| `docker`            | `/bug-report docker`            | Konteyner güvenliği (Dockerfile, docker-compose)         |
+| `rate-limiting`     | `/bug-report rate-limiting`     | Hız sınırlama ve brute force koruması denetimi           |
+| `websocket`         | `/bug-report websocket`         | WebSocket güvenliği (origin, auth, mesaj enjeksiyonu)    |
+| `header-injection`  | `/bug-report header-injection`  | HTTP başlık enjeksiyonu ve CRLF tespiti                  |
+| `clickjacking`      | `/bug-report clickjacking`      | Clickjacking koruması (X-Frame-Options, CSP)             |
+| `mass-assignment`   | `/bug-report mass-assignment`   | Toplu atama ve parametre kirlenmesi tespiti              |
+| `ldap`              | `/bug-report ldap`              | LDAP enjeksiyonu tespiti                                 |
 
 ## Dizin Yapısı
 
