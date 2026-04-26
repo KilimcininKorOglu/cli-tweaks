@@ -14,8 +14,8 @@ Parse the user's command and follow exactly ONE of these paths:
 
 ### No BUG-ID provided
 
-1. Read `BUG-REPORT.md`. Find every finding where `Status: OPEN`.
-2. If zero OPEN findings exist, tell the user and STOP.
+1. Read `BUG-REPORT.md`. Find every finding where `Status: NEW` or `Status: OPEN`.
+2. If zero NEW/OPEN findings exist, tell the user and STOP.
 3. Present a numbered list: `BUG-ID | Severity | First line of Problem`.
 4. Ask the user which one to fix. Wait for answer.
 5. Once the user picks one, continue to **Phase 1** below with that BUG-ID.
@@ -92,11 +92,7 @@ One bug = one commit. No exceptions.
 
 ## Phase 6: Update Report
 
-Open `BUG-REPORT.md`. Change the bug's status line from:
-```
-Status: OPEN
-```
-to:
+Open `BUG-REPORT.md`. Change the bug's status line from `Status: NEW` or `Status: OPEN` to:
 ```
 Status: FIXED
 ```
