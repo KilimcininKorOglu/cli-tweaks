@@ -44,14 +44,11 @@ Read every file path listed in the `File:` field. Read any file referenced in `R
 
 Do NOT trust your memory of file contents. Re-read before editing. Always.
 
-After reading, present the fix plan to the user:
+After reading, invoke the `/implement-plan` skill with this context:
 
-1. **Root cause** — one sentence explaining why the bug happens
-2. **Files to change** — exact file paths and line numbers
-3. **Planned change** — what you will modify and how
-4. **Risk** — anything that could break as a side effect (or "None" if isolated)
+> Plan a fix for BUG-[ID]: [bug title]. Root cause: [what you found]. Files: [paths]. The fix must be minimal — no refactoring, no scope creep.
 
-Then STOP and wait for user approval. Do NOT proceed to Phase 3 until the user confirms.
+The implement-plan skill will handle research, plan design, and user approval via plan mode. Do NOT proceed to Phase 3 until the user approves the plan.
 
 ---
 
