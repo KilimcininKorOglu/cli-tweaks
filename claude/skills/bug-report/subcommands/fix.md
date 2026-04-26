@@ -3,93 +3,117 @@
 ## Command
 
 ```bash
-/bug-report fix [<BUG-ID>] [--dry-run]
+/bug-report fix [BUG-ID] [--dry-run]
 ```
 
-You are a disciplined bug fixer. You fix ONE bug at a time with surgical precision — no side-effect refactors, no scope creep, no shortcuts.
+---
 
-## No BUG-ID Provided
+## What To Do Right Now
 
-If the user did not specify a BUG-ID:
+Parse the user's command and follow exactly ONE of these paths:
 
-1. Read `BUG-REPORT.md` and list all findings with `Status: OPEN`.
-2. Present them as a numbered list showing BUG-ID, severity, and one-line summary.
-3. Ask the user which bug to fix.
-4. Continue with the selected bug from Step 1 below.
+### No BUG-ID provided
 
-If there are no OPEN bugs, report that and STOP.
+1. Read `BUG-REPORT.md`. Find every finding where `Status: OPEN`.
+2. If zero OPEN findings exist, tell the user and STOP.
+3. Present a numbered list: `BUG-ID | Severity | First line of Problem`.
+4. Ask the user which one to fix. Wait for answer.
+5. Once the user picks one, continue to **Phase 1** below with that BUG-ID.
 
-## Rules
+### BUG-ID provided
 
-These rules are non-negotiable. Violating any of them invalidates the entire fix.
+Continue to **Phase 1** below with the given BUG-ID.
 
-1. **One bug per commit.** NEVER group multiple bug fixes into a single commit. Each bug fix MUST be its own separate commit.
+### --dry-run flag
 
-2. **No bug ID in commit messages.** Commit messages describe WHAT was fixed and WHY — never reference `BUG-001` or any bug identifier.
+Run Phase 1 and Phase 2 only. Report what you would change. Do NOT edit any file. STOP after Phase 2.
 
-3. **No silent refactoring.** If fixing the bug requires restructuring surrounding code, STOP and ask the user before proceeding. A bug fix is not an excuse to refactor.
+---
 
-4. **Root cause, not symptoms.** Read the full code path before editing. Identify and fix the root cause. Do not patch surface symptoms.
+## Phase 1: Read the Bug
 
-5. **Update BUG-REPORT.md after commit.** Once the fix is committed, update the bug's `Status:` from `OPEN` to `FIXED` in `BUG-REPORT.md`. This is a separate action — do not combine it with the fix commit.
+Read `BUG-REPORT.md`. Find the `### BUG-[ID]` entry. Read every field: Severity, Status, File, Component, Suggested Commit, Problem, Expected, Root Cause, Impact, Verification.
 
-6. **Verify before declaring done.** Run the project's type-checker and linter. The fix is not complete until all checks pass.
+If Status is already FIXED, tell the user and STOP.
 
-## Workflow
+---
 
-### Step 1: Read the bug
+## Phase 2: Trace the Code
 
-Open `BUG-REPORT.md` and locate the finding matching `<BUG-ID>`. Read the entire entry: Problem, Root Cause, Impact, Verification.
+Read every file path listed in the `File:` field. Read any file referenced in `Root Cause:` or `Problem:`. Follow the call chain from the entry point to the bug location.
 
-If `--dry-run` was provided, analyze and report what you would change without making any edits. STOP here.
+Do NOT trust your memory of file contents. Re-read before editing. Always.
 
-### Step 2: Trace the code path
+After reading, present the fix plan to the user:
 
-Read every file and function mentioned in the finding. Follow the call chain from entry point to the bug location. Understand the full context before touching anything.
+1. **Root cause** — one sentence explaining why the bug happens
+2. **Files to change** — exact file paths and line numbers
+3. **Planned change** — what you will modify and how
+4. **Risk** — anything that could break as a side effect (or "None" if isolated)
 
-Do NOT trust your memory of file contents — always re-read before editing.
+Then STOP and wait for user approval. Do NOT proceed to Phase 3 until the user confirms.
 
-### Step 3: Fix the root cause
+---
 
-Make the minimal change that resolves the root cause described in the finding. Keep the diff as small as possible:
+## Phase 3: Fix
 
-- No formatting changes outside the fix
-- No import reordering
-- No variable renames
-- No "while I'm here" improvements
+Make the minimal change that resolves the root cause. One change, one purpose.
 
-### Step 4: Verify the fix
+**Hard constraints:**
+- Do NOT touch any line that is not directly related to the bug
+- Do NOT reformat surrounding code
+- Do NOT reorder imports
+- Do NOT rename variables
+- Do NOT add "while I'm here" improvements
+- If the fix requires restructuring other code, STOP and ask the user first
 
-Run verification steps from the finding's `Verification:` field. Additionally:
+---
 
-- Run the project's type-checker (`npx tsc --noEmit` or equivalent)
-- Run the linter if configured (`npx eslint . --quiet` or equivalent)
-- If the project has tests, run the relevant test suite
+## Phase 4: Verify
 
-If any check fails, fix the issue before proceeding.
+Run the verification steps described in the finding's `Verification:` field.
 
-### Step 5: Commit
+Then run the project's build/lint/test commands. Examples:
+- Type check: `npx tsc --noEmit` or equivalent
+- Lint: `npx eslint . --quiet` or equivalent
+- Tests: the project's test runner for affected files
 
-Use the `/commit` skill. The commit message must:
+If any check fails, fix the issue before proceeding. Do NOT skip verification.
 
-- Follow conventional commit format (e.g., `fix: validate redirect target in login flow`)
-- Describe what was fixed and why
-- NOT include any bug ID
+---
 
-### Step 6: Update the report
+## Phase 5: Commit
 
-In `BUG-REPORT.md`, change the bug's status:
+Create a single commit for this one bug fix. The commit message:
+- Uses conventional commit format: `fix: <what was fixed>`
+- Describes WHAT was fixed and WHY
+- NEVER includes any bug ID (no BUG-001, no BUG-xxx)
 
+One bug = one commit. No exceptions.
+
+---
+
+## Phase 6: Update Report
+
+Open `BUG-REPORT.md`. Change the bug's status line from:
+```
+Status: OPEN
+```
+to:
 ```
 Status: FIXED
 ```
 
-Do NOT commit this change together with the fix. It can be part of a later housekeeping commit or left as an unstaged update.
+Do NOT commit this change together with the fix. Leave it as an unstaged change.
 
-### Step 7: Confirm
+---
 
-Report to the user:
-- Which bug was fixed
-- What the root cause was
-- What changed (files and lines)
-- Verification results
+## Phase 7: Report
+
+Tell the user exactly:
+- Which bug was fixed (ID + title)
+- What the root cause was (1 sentence)
+- What changed (file paths and line numbers)
+- Verification result (pass/fail)
+
+STOP. Do not proceed to the next bug unless the user explicitly asks.
