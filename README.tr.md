@@ -30,7 +30,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `init-claude`                  | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                                      |
 | `implement-plan`               | `/implement-plan`               | Araştırma, netleştirme ve fazlı tasarım ile yapılandırılmış uygulama planlaması |
 | `redate-commits`               | `/redate-commits`               | Commit tarihlerini seçilen aralığa yayar, güvenli iş akışı uyarıları verir      |
-| `frontend-design`              | `/frontend-design`              | 27 siteli tasarım kataloğu ile frontend kod üretimi                             |
+| `frontend-design`              | `/frontend-design`              | 28 siteli tasarım kataloğu ile frontend kod üretimi                             |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur                         |
 | `ai-seo`                       | `/ai-seo`                       | AI arama motorları için GEO optimizasyonu, 8 analiz alt komutu                  |
 | `draft-to-article`             | `/draft-to-article`             | Taslakları X Articles, LinkedIn veya Medium/Substack formatına dönüştürme       |

@@ -80,7 +80,7 @@ Match complexity to the vision. Maximalist designs need elaborate code with exte
 
 ---
 
-## Design System Catalog (27 Sites)
+## Design System Catalog (28 Sites)
 
 Use `/frontend-design use <name>` to load any of these into context:
 
@@ -135,6 +135,7 @@ Use `/frontend-design use <name>` to load any of these into context:
 | Supabase   | `catalog/supabase/` | Emerald #3ECF8E, code-first                    |
 | OpenAI     | `catalog/openai/`   | Clean white/dark, ChatGPT green                |
 | Anthropic  | `catalog/anthropic/`| Warm terracotta #DA7756, editorial             |
+| Hacker     | `catalog/hacker/`   | Matrix green #00ff41, terminal-native dark     |
 
 ---
 
