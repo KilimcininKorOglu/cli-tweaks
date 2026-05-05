@@ -255,7 +255,6 @@ Last Bug ID: BUG-[XXX]
 
 | Subcommand             | Description                                                              |
 |------------------------|--------------------------------------------------------------------------|
-| `auditcodex`           | Codex CLI diff audit with validated findings                             |
 | `api-audit`            | API performance, resilience, contract, and lifecycle audit               |
 | `cache-audit`          | Caching strategy, consistency, and Redis/security audit                  |
 | `disaster-recovery`    | Disaster recovery and business continuity readiness audit                |

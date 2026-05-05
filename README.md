@@ -36,6 +36,8 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `draft-to-article`             | `/draft-to-article`             | Format drafts for X Articles, LinkedIn, or Medium/Substack                       |
 | `ios-uikit`                    | `/ios-uikit`                    | Programmatic UIKit development with 20 reference documents                       |
 | `ios-simulator`                | `/ios-simulator`                | iOS simulator automation with 22 Node.js scripts for semantic navigation         |
+| `audit-replay`                 | `/audit-replay`                 | User action tracking, audit event logging, and rrweb session replay              |
+| `http-cache`                   | `/http-cache`                   | HTTP caching with ETag and Cache-Control header implementation                   |
 
 #### `bug-report` audit subcommands
 
@@ -75,7 +77,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 
 | Subcommand          | Command                         | Description                                               |
 |---------------------|---------------------------------|-----------------------------------------------------------|
-| `security-sweep`    | `/bug-report security-sweep`    | Run all 24 security scans in parallel via workers         |
+| `security-sweep`    | `/bug-report security-sweep`    | Run all 23 security scans in parallel via workers         |
 | `sec-recon`         | `/bug-report sec-recon`         | Codebase architecture and security posture reconnaissance |
 | `access-control`    | `/bug-report access-control`    | IDOR and missing authentication/authorization detection   |
 | `sqli`              | `/bug-report sqli`              | SQL injection detection                                   |

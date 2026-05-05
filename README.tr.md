@@ -36,6 +36,8 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `draft-to-article`             | `/draft-to-article`             | Taslakları X Articles, LinkedIn veya Medium/Substack formatına dönüştürme       |
 | `ios-uikit`                    | `/ios-uikit`                    | 20 referans belgeyle programatik UIKit geliştirme                               |
 | `ios-simulator`                | `/ios-simulator`                | 22 Node.js script ile iOS simülatör otomasyonu                                  |
+| `audit-replay`                 | `/audit-replay`                 | Kullanıcı eylem takibi, audit event logging ve rrweb session replay             |
+| `http-cache`                   | `/http-cache`                   | ETag ve Cache-Control header'ları ile HTTP caching uygulaması                   |
 
 #### `bug-report` audit subcommand'leri
 
@@ -75,7 +77,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 
 | Alt komut           | Komut                           | Açıklama                                                 |
 |---------------------|---------------------------------|----------------------------------------------------------|
-| `security-sweep`    | `/bug-report security-sweep`    | 24 güvenlik taramasını worker'larla paralel çalıştırır   |
+| `security-sweep`    | `/bug-report security-sweep`    | 23 güvenlik taramasını worker'larla paralel çalıştırır   |
 | `sec-recon`         | `/bug-report sec-recon`         | Kod tabanı mimarisi ve güvenlik duruşu keşfi             |
 | `access-control`    | `/bug-report access-control`    | IDOR ve eksik kimlik doğrulama/yetkilendirme tespiti     |
 | `sqli`              | `/bug-report sqli`              | SQL injection tespiti                                    |
