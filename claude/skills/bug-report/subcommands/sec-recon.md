@@ -43,20 +43,61 @@ You are performing the first phase of a security assessment. Your goal is to und
 
 ## Output
 
-Write a single entry to `BUG-REPORT.md` using the shared report format from `../SKILL.md`:
+Write the reconnaissance findings to `BUG-REPORT.md` under a dedicated section — **NOT as a numbered BUG entry**. Reconnaissance is architectural documentation, not a vulnerability finding.
 
-- **Severity**: LOW
-- **Status**: NEW
-- **Component**: Architecture / Security Posture
-- **Problem**: Document the security-relevant architecture findings. Include: tech stack, auth mechanism, sensitive data inventory, trust boundaries, high-risk patterns observed (e.g., no auth middleware on admin routes, credentials in source, unsafe deserialization libraries present).
-- **Expected**: Comprehensive security posture documented.
-- **Root Cause**: N/A — reconnaissance phase.
-- **Impact**: Informs all subsequent vulnerability scans.
-- **Verification**: Findings based on direct codebase exploration.
-- **Suggested Commit**: `chore: document security architecture reconnaissance`
+### Format
 
-Use title: `BUG-XXX: Security Architecture Reconnaissance` (continue existing ID sequence).
+If `BUG-REPORT.md` does not exist, create it with this header structure. If it exists, insert/replace a `## System Architecture` section between `## Summary` and `## Findings`:
+
+```markdown
+# Bug Report
+
+## Summary
+
+(existing summary, or empty)
+
+## System Architecture
+
+_Last updated: YYYY-MM-DD via /bug-report sec-recon_
+
+### Technology Stack
+- Languages, frameworks, ORMs, template engines
+- Package manifests scanned
+- Infrastructure (Docker, Kubernetes, CI/CD)
+
+### Authentication & Authorization
+- Auth libraries and middleware
+- Session/JWT/OAuth configuration
+- Role and permission system
+
+### Data Storage
+- Databases, caches, message brokers
+- Sensitive data locations (PII, credentials, tokens, financial)
+
+### Entry Points
+- HTTP/GraphQL/gRPC routes
+- CLI, WebSocket, scheduled jobs, consumers
+
+### Trust Boundaries
+- Where untrusted input enters
+- Where trust transitions occur
+
+### High-Risk Patterns Observed
+- Notable observations relevant to subsequent scans (e.g., no auth middleware on admin routes, dynamic query construction, deserialization libraries in use)
+
+## Findings
+
+(existing BUG entries — sec-recon does NOT add a numbered entry here)
+```
+
+### Rules
+
+- **Do not assign a BUG-XXX ID to reconnaissance.**
+- **Do not use the standard finding format (Severity/Status/File/Component/Suggested Commit/Problem/Expected/Root Cause/Impact/Verification).**
+- **Do not increment the BUG ID counter.**
+- If a `## System Architecture` section already exists, replace it in place (do not duplicate).
+- If subsequent scan subcommands need to reference architectural context, they read this section directly.
 
 ## Shared Audit Rules
 
-Use the shared verification, ID management, output format, and report-writing rules from `../SKILL.md`.
+For BUG entries written by other subcommands, use the shared verification, ID management, output format, and report-writing rules from `../SKILL.md`. The architectural section produced by this subcommand is exempt from those rules.

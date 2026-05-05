@@ -57,7 +57,8 @@ that worker if the marker exists.
 **Execution order:**
 
 1. Run `sec-recon` first (inline, not as a worker) to establish codebase context.
-   This writes the reconnaissance entry to `BUG-REPORT.md`.
+   This writes the architecture summary to the `## System Architecture` section
+   of `BUG-REPORT.md` (not a numbered BUG entry).
 
 2. Launch ALL remaining subcommands **in parallel** as workers. Skip any worker
    whose completion marker already exists in `BUG-REPORT.md`:
