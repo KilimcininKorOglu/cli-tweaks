@@ -202,13 +202,15 @@ Ardından ilgili hook kayıtlarını `settings.json` dosyanıza ekleyin.
 
 ### Planlama Modu
 
-"plan this feature" veya "planla" gibi bir şey yazdığınızda ya da karmaşık bir istek gönderdiğinizde (puanlama ile tespit edilir), hook 5 fazlı bir iş akışı enjekte eder:
+"plan this feature" veya "planla" gibi bir şey yazdığınızda ya da karmaşık bir istek gönderdiğinizde (puanlama ile tespit edilir), hook `implement-plan` skill'ine yönlendirir ve şu yapılandırılmış iş akışını izler:
 
-1. **Keşfet** -- Kod tabanı bağlamını topla
-2. **Soru Sor** -- Kullanıcıdan gereksinimleri netleştir (zorunlu)
+1. **Keşfet** -- Paralel subagent'larla kod tabanı bağlamını topla
+2. **Soru Sor** -- Kullanıcıdan gereksinimleri netleştir
 3. **Tasarla** -- Uygulama planını hazırla
-4. **Sun** -- Planı onaya sun
+4. **Sun** -- ExitPlanMode/ExitSpecMode ile planı onaya sun
 5. **Bekle** -- Onaylanana kadar kod yazma
+
+Açık tetikleyiciler için (örneğin "planla"), skill önce soru sormadan planı doğrudan sunar.
 
 Tamamlanan planlar masaüstü bildirimleriyle birlikte `~/.factory/plans/<proje>/` (veya `~/.claude/plans/<proje>/`) dizinine kaydedilir.
 
