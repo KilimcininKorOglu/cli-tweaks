@@ -8,7 +8,7 @@ description: >
   frontend code generation, design system reference loading, or UI building.
   Builds distinctive production-grade interfaces and provides a 27-site design
   system catalog with URL-based generator.
-argument-hint: "[use <site> | generate <url> | list]"
+argument-hint: "[use <site> | generate <url> | extract [path] | list]"
 ---
 
 # Frontend Design
@@ -17,12 +17,13 @@ Create distinctive, production-grade frontend interfaces. Load real-world design
 
 ## What To Do Right Now
 
-### Path A: Design reference (`use`, `generate`, `list`)
+### Path A: Design system operations (`use`, `generate`, `extract`, `list`)
 
-If the user's command includes `use`, `generate`, or `list`:
+If the user's command includes `use`, `generate`, `extract`, or `list`:
 
 - `/frontend-design use github` → Read `subcommands/use.md` and follow it. STOP.
 - `/frontend-design generate <url>` → Read `subcommands/generate.md` and follow it. STOP.
+- `/frontend-design extract [path]` → Read `subcommands/extract.md` and follow it. STOP.
 - `/frontend-design list` → Print the catalog table from the bottom of this file.
 
 For subcommand routing:
@@ -143,3 +144,4 @@ Use `/frontend-design use <name>` to load any of these into context:
 
 - For `/frontend-design use`: see [subcommands/use.md](subcommands/use.md)
 - For `/frontend-design generate`: see [subcommands/generate.md](subcommands/generate.md)
+- For `/frontend-design extract`: see [subcommands/extract.md](subcommands/extract.md)
