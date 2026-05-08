@@ -33,10 +33,10 @@ normal planning flow:
 
 1. Call `EnterPlanMode` to enter plan mode.
 2. Research the codebase with `Explore` subagents, Grep, Glob, Read tools.
-3. Write the complete plan to the plan file.
-4. Call `ExitPlanMode` (no parameters -- it reads from the plan file).
-5. Do NOT call `AskUserQuestion` before `ExitPlanMode`.
-6. If scope is unclear, include assumptions and open questions inside the plan body.
+3. If there are open questions or scope ambiguities, use `AskUserQuestion` to resolve them NOW — do not defer to the plan body.
+4. If there are scope exclusion candidates ("What We're NOT Doing"), confirm them with `AskUserQuestion` before finalizing.
+5. Write the complete plan (with ALL questions resolved) to the plan file.
+6. Call `ExitPlanMode` (no parameters -- it reads from the plan file).
 7. Stay read-only while preparing the plan.
 
 ## When to Plan (Use This Skill)
@@ -79,7 +79,7 @@ Only skip planning for simple tasks:
 
 1. **Interactive**: Never dump a complete plan. Gather context -> verify understanding -> align on approach -> detail phases.
 2. **Grounded**: Every claim verified against actual code. Include `file:line` references.
-3. **Bounded**: Every plan MUST include "What We're NOT Doing" section.
+3. **Bounded**: Every plan MUST include "What We're NOT Doing" section. Scope exclusions must be confirmed with the user via `AskUserQuestion` during planning — do not decide unilaterally what to exclude.
 4. **TDD-First**: Plans describe what to build, not how to test. Automated testing is implicit. Never include explicit "testing phases" or "write tests" steps.
 5. **Manual Verification**: Each phase ends with manual verification to ensure we're on track. This is separate from TDD.
 
@@ -138,8 +138,8 @@ Rules (normal path):
 - If user corrections conflict with what you found in code, present the discrepancy as a question
 
 Explicit override rules:
-- DO NOT call `AskUserQuestion` before the initial `ExitPlanMode` call.
-- Put unresolved questions into assumptions/open questions inside the plan body.
+- Use `AskUserQuestion` to resolve open questions and confirm scope exclusions BEFORE writing the plan.
+- The final plan must have ZERO open questions — everything resolved during planning.
 
 ### Step 3: Design the Plan
 
@@ -148,6 +148,7 @@ After getting user answers:
 1. If user corrects you, spawn new research tasks to verify. Don't just accept.
 2. Track progress with TodoWrite.
 3. Design a concrete plan based on user's chosen direction.
+4. **Interactive decision points**: At every fork where multiple valid approaches exist (architecture choices, technology alternatives, scope trade-offs), use `AskUserQuestion` to let the user decide. Do NOT pick an approach and present it as final — give the user structured options with trade-offs explained. This applies throughout the entire planning process, not just Step 2.
 
 ### Step 4: Present the Plan
 
@@ -206,17 +207,17 @@ Manual verification:
 - Get buy-in at each step
 - Assume TDD for automated tests -- don't add explicit "write tests" steps
 - Include manual verification checkpoints at phase boundaries
-- In explicit planning override, call EnterPlanMode first and defer AskUserQuestion
+- In explicit planning override, call EnterPlanMode first, then use AskUserQuestion to resolve all questions before writing the plan
 - Use ExitPlanMode with optionNames when presenting multiple approaches
 
 ### Don't
 - Write complete plans before alignment
 - Accept corrections without verification
-- Leave open questions in final plan
+- Leave open questions in final plan — resolve ALL questions with AskUserQuestion before finalizing
 - Assume -- verify with code
 - Write any code or edit any files during planning
 - Skip the "What We're NOT Doing" section
-- Call AskUserQuestion before ExitPlanMode when explicit planning override is active
+- Present a plan with unresolved open questions or unconfirmed scope exclusions
 
 ### No Open Questions Rule
 
@@ -261,7 +262,7 @@ If you encounter open questions during planning:
 | Mistake                              | Why It's Wrong                        | Do This Instead                                    |
 |--------------------------------------|---------------------------------------|----------------------------------------------------|
 | Dumping a complete plan immediately  | User can't course-correct early       | Present understanding first, get buy-in at each step |
-| Skipping clarifying questions in normal path | You'll plan the wrong thing | Use AskUserQuestion in normal path; in explicit override, submit ExitPlanMode first |
+| Skipping clarifying questions | You'll plan the wrong thing | Use AskUserQuestion in ALL paths to resolve questions before finalizing |
 | Passing params to ExitPlanMode       | Claude Code ExitPlanMode reads from plan file | Write plan to file first, call ExitPlanMode without params |
 | Asking questions in plain text       | User gets unstructured wall of text   | Use AskUserQuestion tool for structured multiple-choice    |
 | Accepting user corrections blindly   | User may be wrong or outdated         | Verify corrections against code before proceeding  |
