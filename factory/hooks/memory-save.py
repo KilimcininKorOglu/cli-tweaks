@@ -7,8 +7,27 @@ On second stop (stop_hook_active=true): allows Droid to stop normally.
 """
 import json
 import os
+import subprocess
 import sys
 from pathlib import Path
+
+
+def _resolveProjectName(cwd):
+    """Return git root basename if available, otherwise cwd basename."""
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--show-toplevel"],
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+            timeout=3,
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            return os.path.basename(result.stdout.strip())
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        pass
+    return os.path.basename(cwd)
+
 
 try:
     inputData = json.load(sys.stdin)
@@ -21,7 +40,14 @@ if stopHookActive:
     sys.exit(0)
 
 cwd = inputData.get("cwd", os.getcwd())
-projectName = os.path.basename(cwd)
+
+# Read locked project name from session start, fallback to resolving fresh
+lockFile = Path.home() / ".cli-tweaks" / ".session-locks" / str(os.getppid())
+try:
+    projectName = lockFile.read_text(encoding="utf-8").strip()
+except (FileNotFoundError, OSError):
+    projectName = _resolveProjectName(cwd)
+
 memoryDir = Path.home() / ".cli-tweaks" / "memory" / projectName
 
 # Ensure memory directory exists
