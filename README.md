@@ -77,7 +77,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 
 | Subcommand          | Command                         | Description                                               |
 |---------------------|---------------------------------|-----------------------------------------------------------|
-| `security-sweep`    | `/bug-report security-sweep`    | Run all 23 security scans in parallel via workers         |
+| `security-sweep`    | `/bug-report security-sweep`    | Run all 24 security scans in parallel via workers         |
 | `sec-recon`         | `/bug-report sec-recon`         | Codebase architecture and security posture reconnaissance |
 | `access-control`    | `/bug-report access-control`    | IDOR and missing authentication/authorization detection   |
 | `sqli`              | `/bug-report sqli`              | SQL injection detection                                   |
@@ -205,12 +205,12 @@ Then add the corresponding hook entries to your `settings.json`.
 When you type something like "plan this feature" or submit a complex request (detected via scoring), the hook delegates to the `implement-plan` skill which follows a structured workflow:
 
 1. **Explore** -- Gather codebase context with parallel subagents
-2. **Ask Questions** -- Clarify requirements with the user
-3. **Design** -- Draft the implementation plan
+2. **Ask Questions** -- Clarify requirements, scope exclusions, and design choices interactively
+3. **Design** -- Draft the implementation plan with all decisions resolved
 4. **Present** -- Show the plan for approval via ExitPlanMode/ExitSpecMode
 5. **Wait** -- Do not start coding until approved
 
-For explicit triggers (e.g., "planla"), the skill presents the plan immediately without asking questions first.
+All open questions and scope decisions are resolved during planning via structured user questions -- the final plan contains no unresolved items.
 
 Completed plans are saved to `~/.factory/plans/<project>/` (or `~/.claude/plans/<project>/`) with desktop notifications.
 

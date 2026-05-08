@@ -77,7 +77,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 
 | Alt komut           | Komut                           | Açıklama                                                 |
 |---------------------|---------------------------------|----------------------------------------------------------|
-| `security-sweep`    | `/bug-report security-sweep`    | 23 güvenlik taramasını worker'larla paralel çalıştırır   |
+| `security-sweep`    | `/bug-report security-sweep`    | 24 güvenlik taramasını worker'larla paralel çalıştırır   |
 | `sec-recon`         | `/bug-report sec-recon`         | Kod tabanı mimarisi ve güvenlik duruşu keşfi             |
 | `access-control`    | `/bug-report access-control`    | IDOR ve eksik kimlik doğrulama/yetkilendirme tespiti     |
 | `sqli`              | `/bug-report sqli`              | SQL injection tespiti                                    |
@@ -205,12 +205,12 @@ Ardından ilgili hook kayıtlarını `settings.json` dosyanıza ekleyin.
 "plan this feature" veya "planla" gibi bir şey yazdığınızda ya da karmaşık bir istek gönderdiğinizde (puanlama ile tespit edilir), hook `implement-plan` skill'ine yönlendirir ve şu yapılandırılmış iş akışını izler:
 
 1. **Keşfet** -- Paralel subagent'larla kod tabanı bağlamını topla
-2. **Soru Sor** -- Kullanıcıdan gereksinimleri netleştir
-3. **Tasarla** -- Uygulama planını hazırla
+2. **Soru Sor** -- Gereksinimleri, kapsam kararlarını ve tasarım seçeneklerini interaktif olarak netleştir
+3. **Tasarla** -- Tüm kararlar çözülmüş şekilde uygulama planını hazırla
 4. **Sun** -- ExitPlanMode/ExitSpecMode ile planı onaya sun
 5. **Bekle** -- Onaylanana kadar kod yazma
 
-Açık tetikleyiciler için (örneğin "planla"), skill önce soru sormadan planı doğrudan sunar.
+Tüm açık sorular ve kapsam kararları planlama sırasında yapılandırılmış kullanıcı soruları ile çözülür -- nihai planda çözülmemiş madde kalmaz.
 
 Tamamlanan planlar masaüstü bildirimleriyle birlikte `~/.factory/plans/<proje>/` (veya `~/.claude/plans/<proje>/`) dizinine kaydedilir.
 
