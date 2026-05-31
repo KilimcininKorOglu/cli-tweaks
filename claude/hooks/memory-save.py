@@ -57,6 +57,14 @@ memoryDir.mkdir(parents=True, exist_ok=True)
 memoryFile = memoryDir / "MEMORY.md"
 hasMemory = memoryFile.exists()
 
+TEMPLATE = (
+    "Use this MEMORY.md structure (sections in this order):\n"
+    "  ## CRITICAL RULES        - non-negotiable active rules, imperative mood\n"
+    "  ## Architecture & Config Facts - stable technical context (not rules)\n"
+    "  ## Active Warnings       - pitfalls and recurring mistakes\n"
+    "  ## Topic Files           - pointers to detail files (e.g. history.md)\n"
+)
+
 if hasMemory:
     reason = (
         "Before stopping: if you learned an ACTIVE RULE that changes future behavior "
@@ -65,17 +73,21 @@ if hasMemory:
         "Put durable behavior rules under the '## CRITICAL RULES' section. "
         "Do NOT save commit hashes, dated fix histories, or archival narrative — "
         "put any historical detail in history.md, not MEMORY.md. "
-        "If nothing new was learned, just stop without changes. "
-        "Keep MEMORY.md under 200 lines. IMPORTANT: Always write memory in English only."
+        "MIGRATION: if MEMORY.md has no '## CRITICAL RULES' section, restructure the "
+        "whole file into the template below this session (preserve all real content, "
+        "just reorganize and convert rules to imperative mood). "
+        "If nothing new was learned and the format is already correct, just stop. "
+        "Keep MEMORY.md under 200 lines. IMPORTANT: Always write memory in English only.\n"
+        + TEMPLATE
     ).format(dir=memoryDir)
 else:
     reason = (
         "Before stopping: this is a new project with no memory yet. "
-        "Create {dir}/MEMORY.md with a '## CRITICAL RULES' section at the top "
-        "(active rules in imperative mood: build/test commands, architecture facts, "
-        "user preferences, workflow rules). Do NOT save commit hashes or dated history. "
+        "Create {dir}/MEMORY.md following the template below. "
+        "Write rules in imperative mood. Do NOT save commit hashes or dated history. "
         "Keep it concise (under 200 lines). IMPORTANT: Always write memory in English only. "
-        "If this was a trivial session with nothing worth remembering, just stop."
+        "If this was a trivial session with nothing worth remembering, just stop.\n"
+        + TEMPLATE
     ).format(dir=memoryDir)
 
 output = {
