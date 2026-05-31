@@ -33,12 +33,21 @@ def _resolveProjectName(cwd):
     return os.path.basename(cwd)
 
 
-def _extractCriticalRules(memoryFile):
-    """Extract the '## CRITICAL RULES' section body from MEMORY.md."""
+FALLBACK_LINES = 40
+
+
+def _extractRules(memoryFile):
+    """Return (content, isCriticalSection).
+
+    Prefer the '## CRITICAL RULES' section. If absent (older project memory),
+    fall back to the top of MEMORY.md so the reminder still works everywhere.
+    """
     try:
         lines = memoryFile.read_text(encoding="utf-8").splitlines()
     except (FileNotFoundError, OSError):
-        return ""
+        return ("", False)
+
+    # Preferred: the dedicated CRITICAL RULES section
     out = []
     inSection = False
     for line in lines:
@@ -49,7 +58,19 @@ def _extractCriticalRules(memoryFile):
             if line.startswith("## "):
                 break
             out.append(line)
-    return "\n".join(out).strip()
+    section = "\n".join(out).strip()
+    if section:
+        return (section, True)
+
+    # Fallback: top of the file, skipping the H1 title
+    fallback = []
+    for line in lines:
+        if not fallback and line.startswith("# "):
+            continue
+        fallback.append(line)
+        if len(fallback) >= FALLBACK_LINES:
+            break
+    return ("\n".join(fallback).strip(), False)
 
 
 try:
@@ -81,16 +102,23 @@ except (FileNotFoundError, OSError):
     projectName = _resolveProjectName(cwd)
 
 memoryFile = Path.home() / ".cli-tweaks" / "memory" / projectName / "MEMORY.md"
-rules = _extractCriticalRules(memoryFile)
+rules, isCritical = _extractRules(memoryFile)
 
 if not rules:
     sys.exit(0)
 
-context = (
-    "[CRITICAL RULES REMINDER]\n"
-    "These project rules are non-negotiable. Follow them exactly:\n\n"
-    + rules
-)
+if isCritical:
+    header = (
+        "[CRITICAL RULES REMINDER]\n"
+        "These project rules are non-negotiable. Follow them exactly:\n\n"
+    )
+else:
+    header = (
+        "[PROJECT MEMORY REMINDER]\n"
+        "Key context from project memory. Keep these in mind:\n\n"
+    )
+
+context = header + rules
 
 output = {
     "hookSpecificOutput": {
