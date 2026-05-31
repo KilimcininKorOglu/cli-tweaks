@@ -59,19 +59,22 @@ hasMemory = memoryFile.exists()
 
 if hasMemory:
     reason = (
-        "Before stopping: if you learned anything new or useful in this session "
-        "(build commands, architecture insights, debugging solutions, user preferences, "
-        "workflow patterns), update your memory at {dir}/MEMORY.md or create/update "
-        "topic files there. If nothing new was learned, just stop without changes. "
+        "Before stopping: if you learned an ACTIVE RULE that changes future behavior "
+        "(build/test commands, an architecture fact, a user preference, a workflow rule), "
+        "update {dir}/MEMORY.md or a topic file. Write rules in imperative mood. "
+        "Put durable behavior rules under the '## CRITICAL RULES' section. "
+        "Do NOT save commit hashes, dated fix histories, or archival narrative — "
+        "put any historical detail in history.md, not MEMORY.md. "
+        "If nothing new was learned, just stop without changes. "
         "Keep MEMORY.md under 200 lines. IMPORTANT: Always write memory in English only."
     ).format(dir=memoryDir)
 else:
     reason = (
         "Before stopping: this is a new project with no memory yet. "
-        "Create {dir}/MEMORY.md with key learnings from this session: "
-        "project overview, build/test commands, architecture notes, "
-        "user preferences you observed. Keep it concise (under 200 lines). "
-        "IMPORTANT: Always write memory in English only. "
+        "Create {dir}/MEMORY.md with a '## CRITICAL RULES' section at the top "
+        "(active rules in imperative mood: build/test commands, architecture facts, "
+        "user preferences, workflow rules). Do NOT save commit hashes or dated history. "
+        "Keep it concise (under 200 lines). IMPORTANT: Always write memory in English only. "
         "If this was a trivial session with nothing worth remembering, just stop."
     ).format(dir=memoryDir)
 
