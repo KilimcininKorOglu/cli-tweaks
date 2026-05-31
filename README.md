@@ -14,6 +14,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `plan-mode.py`        | UserPromptSubmit     | Detects planning needs via keywords or complexity scoring, delegates to implement-plan skill   |
 | `save-plan.py`        | PostToolUse          | Saves plans to disk (Factory) or sends notification only (Claude Code)                         |
 | `memory-save.py`      | Stop                 | Reminds the agent to save learnings before the session ends                                    |
+| `memory-reinject.py`  | UserPromptSubmit     | Re-injects MEMORY.md critical rules every 5th message to counter recency bias in long sessions |
 | `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
 | `auto-allow.py`       | PermissionRequest    | Auto-approves tools matching settings.json allow list, notifies on mismatch (Claude Code only) |
 | `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |
@@ -220,6 +221,7 @@ The memory system gives your agent persistent, project-scoped memory across sess
 
 - On session start, `session-start.py` reads `~/.cli-tweaks/memory/<project>/MEMORY.md` and injects it
 - On context compaction, memory is automatically re-injected alongside instruction files
+- Every 5th message, `memory-reinject.py` re-injects the critical rules from MEMORY.md to counter recency bias in long sessions
 - On session end, `memory-save.py` reminds the agent to save anything new it learned
 - Memory files are organized per project with a main index and topic files
 

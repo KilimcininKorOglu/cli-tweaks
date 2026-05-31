@@ -14,6 +14,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `plan-mode.py`        | UserPromptSubmit     | Anahtar kelime veya karmaşıklık puanlamasıyla planlama ihtiyacını tespit eder, implement-plan skill'ine yönlendirir |
 | `save-plan.py`        | PostToolUse          | Planları diske kaydeder (Factory) veya yalnızca bildirim gönderir (Claude Code)                                     |
 | `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                                  |
+| `memory-reinject.py`  | UserPromptSubmit     | Uzun oturumlarda bağlam kaybını önlemek için her 5. mesajda MEMORY.md kritik kurallarını yeniden enjekte eder       |
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                   |
 | `auto-allow.py`       | PermissionRequest    | settings.json izin listesiyle eşleşen tool'ları otomatik onaylar, eşleşmeyenleri bildirir (yalnızca Claude Code)    |
 | `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                                     |
@@ -220,6 +221,7 @@ Bellek sistemi, ajana oturumlar arası kalıcı ve projeye özel bir bellek sağ
 
 - Oturum başında `session-start.py`, `~/.cli-tweaks/memory/<proje>/MEMORY.md` dosyasını okur ve bağlama enjekte eder
 - Bağlam sıkıştırmasında bellek, talimat dosyalarıyla birlikte otomatik olarak yeniden enjekte edilir
+- Her 5. mesajda `memory-reinject.py`, uzun oturumlarda bağlam kaybını önlemek için MEMORY.md'deki kritik kuralları yeniden enjekte eder
 - Oturum sonunda `memory-save.py`, ajanın yeni öğrendiklerini kaydetmesini hatırlatır
 - Bellek dosyaları proje bazında ana indeks ve konu dosyalarıyla düzenlenir
 
