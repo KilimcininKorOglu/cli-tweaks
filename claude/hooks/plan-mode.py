@@ -196,8 +196,9 @@ You have an 'implement-plan' skill available. Use the Skill tool to invoke it
 with skill name 'implement-plan'.
 
 The skill's "Explicit Planning Override" applies: call EnterPlanMode immediately,
-research the codebase, write the plan to the plan file, then call ExitPlanMode.
-Do NOT call AskUserQuestion before ExitPlanMode for explicit planning triggers."""
+research the codebase, then resolve every open question and scope decision with
+AskUserQuestion DURING planning. Write the fully-resolved plan to the plan file,
+then call ExitPlanMode. The final plan must contain no unresolved questions."""
     else:
         context = """[IMPLICIT PLANNING DETECTED]
 The user's request was detected as complex enough to benefit from planning

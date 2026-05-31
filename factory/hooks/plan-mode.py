@@ -206,20 +206,15 @@ if matched:
         context = """Spec mode is active. The user requested explicit planning.
 
 Hard requirement for this turn:
-- Your NEXT assistant response MUST be a single ExitSpecMode tool call.
-- Do NOT send a normal text reply.
-- Do NOT call AskUser before ExitSpecMode.
-- Stay read-only and do not run any modifying tools.
-
-If scope/details are unclear, include concise assumptions and open questions
-inside the plan body that you pass to ExitSpecMode, instead of asking first.
+- Research with read-only tools first; do not run any modifying tools.
+- Resolve every open question and scope decision with AskUser DURING planning.
+- Once all questions are resolved, present the plan via ExitSpecMode.
+- The final plan must contain no unresolved questions.
 
 Planning trigger details:
 - The user's request was explicitly detected as planning (mode: {mode}).
-- Explore with read-only tools first when needed.
 - Include file:line references for codebase claims when available.
-- Include a "What We're NOT Doing" section.
-- The final planning response must be an ExitSpecMode tool call.
+- Include a "What We're NOT Doing" section, confirmed with the user via AskUser.
 """.format(mode=mode)
     else:
         context = """[PLANNING MODE DETECTED]
