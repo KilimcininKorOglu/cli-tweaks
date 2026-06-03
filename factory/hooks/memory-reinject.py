@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """
-UserPromptSubmit hook: periodically re-injects the CRITICAL RULES section
-from project memory to counter recency bias in long conversations.
+UserPromptSubmit hook: periodically re-injects rules to counter recency bias
+in long conversations.
 
-session-start.py injects full memory once at startup. Over a long session the
-model's attention drifts from that early block, so rules get ignored. This hook
-re-surfaces only the '## CRITICAL RULES' section every Nth user message.
+session-start.py injects full memory and global instructions once at startup.
+Over a long session the model's attention drifts from that early block, so
+rules get ignored. This hook re-surfaces the project memory '## CRITICAL RULES'
+section every REINJECT_EVERY messages, and the full global instruction file
+every GLOBAL_REINJECT_EVERY messages.
 """
 import json
 import os
@@ -14,6 +16,8 @@ import sys
 from pathlib import Path
 
 REINJECT_EVERY = 5
+GLOBAL_REINJECT_EVERY = 15
+GLOBAL_FILE = Path.home() / ".factory" / "AGENTS.md"
 
 
 def _resolveProjectName(cwd):
@@ -73,6 +77,14 @@ def _extractRules(memoryFile):
     return ("\n".join(fallback).strip(), False)
 
 
+def _readGlobalInstructions():
+    """Return the full global instruction file content, or empty string."""
+    try:
+        return GLOBAL_FILE.read_text(encoding="utf-8").strip()
+    except (FileNotFoundError, OSError):
+        return ""
+
+
 try:
     inputData = json.load(sys.stdin)
 except json.JSONDecodeError:
@@ -102,23 +114,38 @@ except (FileNotFoundError, OSError):
     projectName = _resolveProjectName(cwd)
 
 memoryFile = Path.home() / ".cli-tweaks" / "memory" / projectName / "MEMORY.md"
-rules, isCritical = _extractRules(memoryFile)
 
-if not rules:
+parts = []
+
+# Project memory CRITICAL RULES (every REINJECT_EVERY messages)
+rules, isCritical = _extractRules(memoryFile)
+if rules:
+    if isCritical:
+        header = (
+            "[CRITICAL RULES REMINDER]\n"
+            "These project rules are non-negotiable. Follow them exactly:\n\n"
+        )
+    else:
+        header = (
+            "[PROJECT MEMORY REMINDER]\n"
+            "Key context from project memory. Keep these in mind:\n\n"
+        )
+    parts.append(header + rules)
+
+# Global instruction file (every GLOBAL_REINJECT_EVERY messages)
+if count % GLOBAL_REINJECT_EVERY == 0:
+    globalContent = _readGlobalInstructions()
+    if globalContent:
+        globalHeader = (
+            "[GLOBAL RULES REMINDER]\n"
+            "Your global user instructions are non-negotiable. Follow them exactly:\n\n"
+        )
+        parts.append(globalHeader + globalContent)
+
+if not parts:
     sys.exit(0)
 
-if isCritical:
-    header = (
-        "[CRITICAL RULES REMINDER]\n"
-        "These project rules are non-negotiable. Follow them exactly:\n\n"
-    )
-else:
-    header = (
-        "[PROJECT MEMORY REMINDER]\n"
-        "Key context from project memory. Keep these in mind:\n\n"
-    )
-
-context = header + rules
+context = "\n\n".join(parts)
 
 output = {
     "hookSpecificOutput": {
