@@ -63,6 +63,8 @@ TEMPLATE = (
     "  ## Architecture & Config Facts - stable technical context (not rules)\n"
     "  ## Active Warnings       - pitfalls and recurring mistakes\n"
     "  ## Topic Files           - pointers to detail files (e.g. history.md)\n"
+    "Write each bullet on a single line; do NOT hard-wrap text mid-bullet. "
+    "Hard-wrapping inflates the line count and weakens the 40-line fallback reminder.\n"
 )
 
 if hasMemory:

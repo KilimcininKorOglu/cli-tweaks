@@ -1,5 +1,7 @@
 # <Project Name> Memory
 
+> Format: write each bullet on a single line; do not hard-wrap. Let the editor soft-wrap.
+
 ## CRITICAL RULES
 
 Follow these exactly. They are non-negotiable. Write every rule in imperative
