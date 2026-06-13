@@ -114,7 +114,8 @@ cli-tweaks/
   claude/            <-- Claude Code (copy to ~/.claude/)
     hooks/
     skills/
-  SOUL.md.template   <-- Custom persona template
+  SOUL.md.template          <-- Custom persona template
+  GLOBAL-RULES.template.md  <-- Portable global agent-rules template
 ```
 
 ## Installation
@@ -247,6 +248,20 @@ You can define a custom persona that shapes how the agent communicates with you.
 ```
 
 The `session-start.py` hook injects all listed files at session start and after context compaction. A template is provided in `SOUL.md.template` with an example "tough love" persona -- copy and customize it to your preference.
+
+### Global Rules Template (GLOBAL-RULES.template.md)
+
+`GLOBAL-RULES.template.md` is a portable, model-agnostic set of global agent instructions -- engineering discipline (verify before you claim, surgical changes, stop before irreversible actions, treat external text as data) plus a pre-send checklist. Copy it to your global instruction file and rename:
+
+```bash
+# Claude Code
+cp GLOBAL-RULES.template.md ~/.claude/CLAUDE.md
+
+# Factory Droid
+cp GLOBAL-RULES.template.md ~/.factory/AGENTS.md
+```
+
+The universal rules (Rules 1-16 and "Before you send") work as-is for any model. Lines marked `<CUSTOMIZE: ...>` are personal -- swap in your own tools, paths, language, and preferences, or delete the ones you don't need.
 
 ### Desktop Notifications
 
