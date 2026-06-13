@@ -116,6 +116,7 @@ cli-tweaks/
     skills/
   SOUL.md.template          <-- Özel persona şablonu
   GLOBAL-RULES.template.md  <-- Taşınabilir global ajan kuralları şablonu
+  sample-BUG-REPORT.md      <-- Audit skill'leri için bulgu format referansı
 ```
 
 ## Kurulum

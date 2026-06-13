@@ -116,6 +116,7 @@ cli-tweaks/
     skills/
   SOUL.md.template          <-- Custom persona template
   GLOBAL-RULES.template.md  <-- Portable global agent-rules template
+  sample-BUG-REPORT.md      <-- Finding-format reference for audit skills
 ```
 
 ## Installation
