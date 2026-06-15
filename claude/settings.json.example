@@ -2,20 +2,8 @@
   "globalInjectFiles": [
     "~/.claude/CLAUDE.md"
   ],
-  "hookNotifyAutoAllow": true,
   "hookNotifyPlanSave": false,
   "hooks": {
-    "PermissionRequest": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ~/.claude/hooks/auto-allow.py",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
     "UserPromptSubmit": [
       {
         "hooks": [

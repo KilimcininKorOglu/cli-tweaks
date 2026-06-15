@@ -15,7 +15,6 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                                  |
 | `memory-reinject.py`  | UserPromptSubmit     | Her 5. mesajda MEMORY.md kritik kurallarını, her 15. mesajda tüm global talimat dosyasını yeniden enjekte ederek bağlam kaybını önler |
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                   |
-| `auto-allow.py`       | PermissionRequest    | settings.json izin listesiyle eşleşen tool'ları otomatik onaylar, eşleşmeyenleri bildirir (yalnızca Claude Code)    |
 | `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                                     |
 
 ### Skill'ler
@@ -260,12 +259,10 @@ Masaüstü bildirimleri `settings.json` dosyanızda özellik bazında yapıland�
 
 ```json
 {
-  "hookNotifyAutoAllow": true,
   "hookNotifyPlanSave": true
 }
 ```
 
-- `hookNotifyAutoAllow`: İzin listesinde olmayan tool'lar için bildirimler (yalnızca Claude Code, varsayılan: `true`)
 - `hookNotifyPlanSave`: Plan kaydedildiğinde bildirimler (varsayılan: `false`)
 
 ## Gereksinimler
@@ -309,7 +306,6 @@ cp opencode/plugins/*.ts ~/.config/opencode/plugins/
 | Skill çağırma ön eki       | `/`              | `/`               |
 | `/init-claude` skill'i     | Evet (CLAUDE.md) | Hayır (yerleşik)  |
 | `/initialize` skill'i      | Hayır            | Evet (AGENTS.md)  |
-| `auto-allow.py` hook'u     | Hayır            | Evet (v2.0.45+)   |
 
 ## Lisans
 

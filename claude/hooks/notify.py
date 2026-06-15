@@ -3,7 +3,6 @@ Cross-platform desktop notification helper for hooks.
 Supports macOS, Linux, and Windows.
 
 Enable notifications per-feature in ~/.claude/settings.json:
-  "hookNotifyAutoAllow": true,
   "hookNotifyPlanSave": true
 """
 import json
@@ -17,7 +16,7 @@ def isEnabledFor(feature: str) -> bool:
     """Check if notifications are enabled for a specific feature.
 
     Checks hookNotify{Feature} setting.
-    Example: isEnabledFor("AutoAllow") checks hookNotifyAutoAllow.
+    Example: isEnabledFor("PlanSave") checks hookNotifyPlanSave.
     """
     settingsFile = Path.home() / ".claude" / "settings.json"
     if settingsFile.exists():

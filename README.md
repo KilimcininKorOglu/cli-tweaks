@@ -15,7 +15,6 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `memory-save.py`      | Stop                 | Reminds the agent to save learnings before the session ends                                    |
 | `memory-reinject.py`  | UserPromptSubmit     | Re-injects MEMORY.md critical rules (every 5th msg) and the full global instruction file (every 15th) to counter recency bias |
 | `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
-| `auto-allow.py`       | PermissionRequest    | Auto-approves tools matching settings.json allow list, notifies on mismatch (Claude Code only) |
 | `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |
 
 ### Skills
@@ -260,12 +259,10 @@ Desktop notifications are configured per-feature in your `settings.json`:
 
 ```json
 {
-  "hookNotifyAutoAllow": true,
   "hookNotifyPlanSave": true
 }
 ```
 
-- `hookNotifyAutoAllow`: Notifications for tools not in the allow list (Claude Code only, default: `true`)
 - `hookNotifyPlanSave`: Notifications when plans are saved (default: `false`)
 
 ## Requirements
@@ -309,7 +306,6 @@ cp opencode/plugins/*.ts ~/.config/opencode/plugins/
 | Skill invocation prefix | `/`              | `/`               |
 | `/init-claude` skill    | Yes (CLAUDE.md)  | No (built-in)     |
 | `/initialize` skill     | No               | Yes (AGENTS.md)   |
-| `auto-allow.py` hook    | No               | Yes (v2.0.45+)    |
 
 ## License
 
