@@ -44,11 +44,9 @@ Read every file path listed in the `File:` field. Read any file referenced in `R
 
 Do NOT trust your memory of file contents. Re-read before editing. Always.
 
-Once you understand the root cause, present a short fix plan to the user and wait for approval:
+Once you understand the root cause, use the agent's built-in plan mode (`ExitPlanMode` on Claude Code, `ExitSpecMode` on Factory Droid) to present a minimal fix plan: root cause in one sentence, the exact file(s) and line(s) to change, and why it is minimal (no refactoring, no scope creep).
 
-> Root cause: [one sentence]. Proposed change: [file(s) and line(s), what edit]. Minimal because: [no refactoring, no scope creep].
-
-Do NOT proceed to Phase 3 until the user approves the plan. If the fix would require restructuring other code or touching unrelated files, STOP and ask the user first.
+Do NOT proceed to Phase 3 until the user approves the plan. If the fix would require restructuring other code or touching unrelated files, say so in the plan and ask first.
 
 ---
 
