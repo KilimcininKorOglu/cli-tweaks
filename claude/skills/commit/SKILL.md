@@ -116,7 +116,7 @@ EOF
    - Staged files exist -> commit only staged
    - No staged but changes exist -> analyze and stage appropriately
    - Untracked files -> ask if they should be included
-   - Working tree clean -> report no changes
+   - Working tree clean -> if a push was requested, skip to step 8; otherwise report no changes
 4. **Review Changes**: `git diff --cached --stat` + `git diff --cached`
 5. **Match Repo Style**: Analyze last 10 commits, adopt their message format
 6. **Analyze for Logical Grouping**: Check if changes belong together, suggest splitting if multiple concerns
