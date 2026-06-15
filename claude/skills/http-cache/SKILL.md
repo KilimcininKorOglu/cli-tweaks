@@ -44,6 +44,7 @@ Identify:
 2. **Dynamic endpoints** — API routes returning computed data (JSON APIs, SSE, WebSocket)
 3. **Template-rendered pages** — HTML generated from templates with dynamic data
 4. **Sensitive endpoints** — auth, admin panels, payment, banking, user PII, internal dashboards
+5. **Non-deterministic endpoints** — responses intentionally different on every request. Scan handler code for randomness signals: `Math.random`, `shuffle`, `rand(`, `random.sample`, `random.choice`, `ORDER BY RAND()`, MongoDB `$sample`, lottery/rotation logic. Caching these breaks their semantics: the browser replays the same "random" payload until max-age expires, and users only escape via hard refresh.
 
 ### Phase 2: Classify Endpoints
 
@@ -55,6 +56,7 @@ Assign each endpoint a caching strategy:
 | Static files (HTML, robots.txt, sitemap, etc.)  | `public, max-age=3600`                 | yes    | yes         |
 | Landing page / index HTML                       | `public, max-age=300`                  | yes    | yes         |
 | Public API responses (non-sensitive, cacheable) | `public, max-age=60` (or as suitable)  | yes    | yes         |
+| Non-deterministic responses (random selection, shuffle, sampling, rotation) | `no-store`        | no     | no          |
 | Real-time API responses (live data)             | `no-store`                             | no     | no          |
 | Template-rendered pages with non-sensitive user data | `private, no-cache`               | yes    | yes         |
 | Sensitive pages (auth, admin, payment, banking) | `no-store`                             | no     | no          |
@@ -64,6 +66,8 @@ Assign each endpoint a caching strategy:
 - `no-cache` ≠ "don't cache" — it means "cache but revalidate every use." For truly sensitive data use `no-store`.
 - `private` allows browser to cache but blocks shared caches (CDN, proxy). On shared devices this is still risky for sensitive content — prefer `no-store`.
 - For `immutable` assets, ETag is unnecessary and counterproductive; some browsers will still send conditional requests, wasting round-trips.
+- "Public and non-sensitive" does NOT imply "cacheable." A random server sample or shuffled list is public and non-sensitive, yet caching it freezes the randomness — classify by determinism first, sensitivity second.
+- **One route can span multiple classes.** When the same endpoint is deterministic for some query parameters and random for others (e.g. `?country=X` returns a filtered list but the bare route returns a random sample), set Cache-Control per branch inside the handler — a blanket route-level header will be wrong for at least one variant.
 
 ### Phase 3: Implementation
 
@@ -404,6 +408,16 @@ curl -sI <auth-url> | grep -i cache-control
 curl -sI <api-url> | grep -i cache-control
 # Expected: Cache-Control: no-store
 
+# 7b. Non-deterministic endpoints have no-store AND differ between requests
+curl -sI <random-endpoint-url> | grep -i cache-control
+# Expected: Cache-Control: no-store
+diff <(curl -s <random-endpoint-url>) <(curl -s <random-endpoint-url>) > /dev/null && echo "SAME (BUG?)" || echo "DIFFERENT (OK)"
+# Expected: DIFFERENT (OK)
+
+# 7c. Mixed routes: each query-parameter variant gets its own correct header
+curl -sI '<url>?<deterministic-variant>' | grep -i cache-control   # Expected: max-age
+curl -sI '<url>'                          | grep -i cache-control   # Expected: no-store if random
+
 # 8. Compression + ETag consistency
 curl -sI -H 'Accept-Encoding: gzip' <url> | grep -iE 'etag|vary|content-encoding'
 curl -sI -H 'Accept-Encoding: identity' <url> | grep -iE 'etag|vary|content-encoding'
@@ -416,6 +430,8 @@ curl -sI -H 'Accept-Encoding: identity' <url> | grep -iE 'etag|vary|content-enco
 - NEVER cache authenticated HTML unless route is explicitly classified as safe.
 - NEVER cache SSE or WebSocket endpoints.
 - Use `no-store` (not `no-cache`, not "no header") for: auth, admin, payment, banking, medical, user PII, real-time API responses.
+- NEVER give a cacheable max-age to endpoints whose response is intentionally random/per-request (random selection, shuffle, sampling, rotation) — the browser will replay the same "random" payload until max-age expires. Use `no-store`. ETag does not help here either: with `no-cache` + ETag the revalidation always misses (the tag differs every time), wasting a round-trip for nothing.
+- When one route mixes deterministic and random variants by query parameter, set Cache-Control inside each handler branch, never as a blanket route-level or pre-middleware header.
 - Use `private, no-cache` only for non-sensitive personalized HTML (e.g., user dashboard with public-ish data).
 - ALWAYS wrap ETag values in double quotes (RFC 7232).
 - ALWAYS parse `If-None-Match` as a comma-separated list and support `*` and weak validators (`W/`).
@@ -432,7 +448,7 @@ curl -sI -H 'Accept-Encoding: identity' <url> | grep -iE 'etag|vary|content-enco
 - Keep max-age reasonable: HTML 5min, static 1hr, immutable assets 1yr.
 - If the project uses a CDN (Cloudflare, Fastly), use `s-maxage` for edge cache TTL distinct from browser `max-age`.
 - ALWAYS add URL-based cache-busting (hashed filename or `?v=hash`) to local asset includes — server header changes alone cannot invalidate existing browser caches.
-- Never include volatile fields (timestamps, random tokens, request IDs) in responses that use ETag — they make every ETag unique and defeat caching.
+- Never include volatile fields (timestamps, random tokens, request IDs) in responses that use ETag — they make every ETag unique and defeat caching. (Note the inverse failure mode too: content that MUST differ per request must not be cached at all — see the non-deterministic rule above. Volatile fields break caching where you want it; max-age breaks randomness where you don't.)
 - Consider `Last-Modified` alongside `ETag` for static files — improves compatibility with older proxies and clients using `If-Modified-Since`.
 - For embedded assets, consider memory cost: loading multi-MB files into RAM at startup may not be appropriate for large media; stream from disk with `http.ServeContent` or equivalent instead.
 - Handle `HEAD` requests correctly: same headers as `GET`, no body. Most frameworks do this automatically; verify in manual handlers.
