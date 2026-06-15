@@ -18,19 +18,34 @@ Both systems share a `visitor_id` cookie for correlation.
 /audit-replay replay-only    # Add only session replay (assumes events exist)
 ```
 
+## References
+
+This skill carries detailed references. **Consult the relevant file before implementing that part** — they hold the full per-stack detail kept out of the flow below, so the runtime only loads what the target project needs.
+
+| Reference | Consult for |
+|-----------|-------------|
+| `references/databases.md` | Full schema + event-store queries for all 4 databases (PostgreSQL, MySQL, SQLite, MongoDB) and a per-DB delta table |
+| `references/languages.md` | Per-language building blocks for all 8 languages (id-gen, cookie, fire-and-forget, error hook, middleware) |
+| `references/admin-ui.md` | Complete admin-panel spec (filters, search, pagination, security) + end-user consent/opt-out UI |
+
 ## How It Works
 
 ### Phase 1: Project Detection
 
 Detect the project's language, framework, database, and admin panel:
 
-| Language | Frameworks                    | Database            |
-|----------|-------------------------------|---------------------|
-| Go       | Echo, Gin, Chi, Fiber, net/http | PostgreSQL, MySQL, SQLite |
-| Node.js  | Express, Fastify, Koa, Next.js | PostgreSQL, MongoDB, SQLite |
-| Python   | Flask, Django, FastAPI         | PostgreSQL, SQLite  |
-| PHP      | Laravel, Symfony, plain        | MySQL, PostgreSQL   |
-| Ruby     | Rails, Sinatra                 | PostgreSQL, SQLite  |
+| Language | Frameworks                      | Database (all 4 supported)      |
+|----------|---------------------------------|---------------------------------|
+| Go       | Echo, Gin, Chi, Fiber, net/http | PostgreSQL, MySQL, SQLite, MongoDB |
+| Node.js  | Express, Fastify, Koa, Next.js  | PostgreSQL, MySQL, SQLite, MongoDB |
+| Python   | Flask, Django, FastAPI          | PostgreSQL, MySQL, SQLite, MongoDB |
+| PHP      | Laravel, Symfony, plain         | MySQL, PostgreSQL, SQLite, MongoDB |
+| Ruby     | Rails, Sinatra                  | PostgreSQL, MySQL, SQLite, MongoDB |
+| Java     | Spring Boot, Quarkus, Micronaut | PostgreSQL, MySQL, SQLite, MongoDB |
+| C#       | ASP.NET Core                    | PostgreSQL, MySQL, SQLite, MongoDB |
+| Rust     | Axum, Actix, Rocket             | PostgreSQL, MySQL, SQLite, MongoDB |
+
+All eight languages and all four databases are fully supported — pull the matching block from `references/languages.md` and `references/databases.md`. The pattern is the same regardless of stack; only the API names and SQL dialect change.
 
 Identify:
 1. **Session/cookie mechanism** — existing session middleware, cookie library, auth system
@@ -55,21 +70,13 @@ Every visitor gets a persistent anonymous ID via cookie. Implementation depends 
 | SameSite   | Lax                                   |
 | Secure     | true (production) / false (localhost) |
 
-**ID generation** — use the language's crypto-secure random, not UUIDs (avoids external dependency):
+**ID generation** — use the language's crypto-secure random, not UUIDs. Examples: Node.js `crypto.randomBytes(16).toString('hex')`, Python `secrets.token_hex(16)`, Go `hex.EncodeToString` of 16 `crypto/rand` bytes. The generator and cookie-set call for **all 8 languages** are in `references/languages.md`.
 
-| Language | Generator                                                |
-|----------|----------------------------------------------------------|
-| Go       | `crypto/rand` → `hex.EncodeToString(16 bytes)`           |
-| Node.js  | `crypto.randomBytes(16).toString('hex')`                 |
-| Python   | `secrets.token_hex(16)`                                  |
-| PHP      | `bin2hex(random_bytes(16))`                              |
-| Ruby     | `SecureRandom.hex(16)`                                   |
-
-**Injection point** — add to existing session/preference/auth middleware. If none exists, create a minimal middleware that reads/writes the cookie on every request.
+**Injection point** — add to the existing session/preference/auth middleware. If none exists, create a minimal middleware that reads/writes the cookie on every request. See `references/languages.md` for the per-framework middleware injection point.
 
 ### Phase 3: Database Schema
 
-Create two tables. Use the project's migration system if one exists; otherwise create a standalone SQL file.
+Create three tables (`audit_events`, `replay_sessions`, `replay_events`). The schema below is **PostgreSQL (canonical)**; full DDL for MySQL, SQLite, and MongoDB plus a per-database delta table is in `references/databases.md`. Use the project's migration system if one exists; otherwise create a standalone SQL file.
 
 ```sql
 -- Audit events: one row per user action
@@ -107,14 +114,11 @@ CREATE INDEX IF NOT EXISTS idx_replay_visitor ON replay_sessions(visitor_id, sta
 CREATE INDEX IF NOT EXISTS idx_replay_events_session ON replay_events(session_id, seq);
 ```
 
-**Database adapter notes:**
-- MySQL: Use `JSON` instead of `JSONB`, `BIGINT AUTO_INCREMENT` instead of `BIGSERIAL`, `DATETIME` instead of `TIMESTAMPTZ`
-- SQLite: Use `TEXT` for JSON columns, `INTEGER PRIMARY KEY AUTOINCREMENT`. The append-only `replay_events` table sidesteps SQLite's lack of a JSON-array append operator (`||` is string concatenation in SQLite, not JSON merge)
-- MongoDB: Use three collections (`audit_events`, `replay_sessions`, `replay_events`) with the same field names
+**Other databases (quick deltas):** MySQL `JSON` / `BIGINT AUTO_INCREMENT` / `DATETIME`; SQLite `TEXT` (JSON as text) / `INTEGER PRIMARY KEY AUTOINCREMENT`; MongoDB three collections with the same fields. The append-only `replay_events` design makes the replay path identical across all SQL databases (no JSON-array-append operator needed). **Full DDL + the per-DB delta table (placeholder, JSON type, autoincrement, timestamp, interval, JSON-read syntax) is in `references/databases.md`.**
 
 ### Phase 4: Event Store Layer
 
-Create a data access layer with these operations:
+Create a data access layer with these operations (SQL shown canonical PostgreSQL — per-database syntax in `references/databases.md`, per-language fire-and-forget in `references/languages.md`):
 
 | Operation | SQL | Description |
 |-----------|-----|-------------|
@@ -149,6 +153,8 @@ task = asyncio.create_task(db.execute("INSERT INTO ...", args))
 _bg_tasks.add(task); task.add_done_callback(_bg_tasks.discard)
 ```
 
+The fire-and-forget pattern for **all 8 languages** (incl. Java `CompletableFuture`, C# `Task.Run`, Rust `tokio::spawn`) is in `references/languages.md`.
+
 ### Phase 5: Event Recording Points
 
 Identify user-facing handlers and add `LogEvent` calls. Common event types:
@@ -176,6 +182,8 @@ Identify user-facing handlers and add `LogEvent` calls. Common event types:
 | FastAPI | `@app.exception_handler(Exception)` |
 | Laravel | `App\Exceptions\Handler::report()` |
 
+Error hooks and middleware injection points for **all 8 languages** (incl. Rails, Spring, ASP.NET Core, Axum) are in `references/languages.md`.
+
 **Rules:**
 - Never log sensitive data (passwords, tokens, PII)
 - Keep event_data small (< 1KB per event)
@@ -200,6 +208,9 @@ Download rrweb and create a recorder script:
 ```javascript
 (function () {
     if (typeof rrweb === 'undefined') return;
+    // Consent gate (Phase 10): recording is personal-data processing — do NOT record
+    // without consent. Consent banner + opt-out + getCookie helper: see references/admin-ui.md.
+    if (!/(^|; )replay_consent=accepted(;|$)/.test(document.cookie)) return;
 
     var events = [];
     var sessionId = null;
@@ -245,7 +256,7 @@ Download rrweb and create a recorder script:
 })();
 ```
 
-**Injection:** Add `<script>` tags at the end of `<body>` in the main layout template. Do NOT inject in admin pages.
+**Injection:** Add `<script>` tags at the end of `<body>` in the main layout template. Do NOT inject in admin pages. **Gate the recorder on user consent** (see Phase 10) — `recorder.js` must return early unless consent is given.
 
 **Replay ingest endpoint:** POST route that receives batches and calls `SaveReplayEvents`. Returns `{sessionId}` for subsequent batches.
 
@@ -277,7 +288,7 @@ Download rrweb and create a recorder script:
 
 ### Phase 7: Admin Panel — Audit Log
 
-Create admin pages for viewing audit data. Two views:
+Create admin pages for viewing audit data. The full spec — session-list filters/search/pagination/sort, visitor-timeline event detail with JSON view, and admin security hardening — is in **`references/admin-ui.md`**. Two core views:
 
 **1. Session List** (`/admin/audit`):
 
@@ -302,7 +313,7 @@ Plus a **Replay** section showing available replay sessions with `[play]` button
 
 ### Phase 8: Admin Panel — Replay Player
 
-Download rrweb-player and add playback UI:
+Download rrweb-player and add playback UI. The player loading/empty/error states and the replay-list layout are in **`references/admin-ui.md`**.
 
 **Files to add:**
 
@@ -335,11 +346,21 @@ function playReplay(sessionId) {
 Add automatic cleanup to an existing background job or cron. Default: **30 days**.
 
 ```sql
-DELETE FROM audit_events WHERE created_at < now() - interval '30 days';
+DELETE FROM audit_events    WHERE created_at < now() - interval '30 days';
+DELETE FROM replay_events   WHERE created_at < now() - interval '30 days';
 DELETE FROM replay_sessions WHERE started_at < now() - interval '30 days';
 ```
 
 If no background job exists, create a simple scheduled task or suggest adding one.
+
+### Phase 10: Consent & Opt-out UI (end-user)
+
+Recording is personal-data processing, so the recorder must be **consent-gated**. Build the end-user surface:
+- **Consent banner** on first visit (no `replay_consent` cookie yet) — explains what is recorded, links to the privacy policy, Accept/Decline.
+- **Opt-out** control (settings/footer) to withdraw consent later; optionally offer data erasure (delete this visitor's rows).
+- **Recorder bootstrap gate** — `recorder.js` returns early unless `replay_consent === 'accepted'`.
+
+Full spec + a framework-agnostic reference implementation (consent banner HTML/JS, opt-out, recorder gate) is in **`references/admin-ui.md`** (Part 2).
 
 ## Privacy & Security
 
@@ -389,6 +410,7 @@ When running in scan mode, report without making changes:
 - internal/handler/replay.go
 - templates/admin/audit.html + audit-detail.html
 - static/rrweb.min.js + recorder.js + rrweb-player.min.js + rrweb-player.min.css
+- templates/consent-banner.html (end-user consent UI)
 
 ### Files to Modify
 - internal/prefs/prefs.go — add VisitorID
@@ -413,6 +435,7 @@ After implementation, provide:
 - ALWAYS mask inputs AND block/mask PII-bearing visible text in rrweb (`maskAllInputs: true` plus `.rr-block` / `maskTextSelector` on PII elements) — inputs alone do not cover rendered personal data
 - ALWAYS add retention cleanup (default 30 days)
 - ALWAYS protect admin audit/replay endpoints with authentication
+- ALWAYS consent-gate the recorder where consent is legally required — recording captures visible PII text, so it is personal-data processing
 - ALWAYS use `no-store` cache control on replay data endpoints
 - PREFER appending to existing middleware over creating new ones
 - PREFER the project's existing migration system over standalone SQL
