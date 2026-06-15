@@ -85,23 +85,32 @@ CREATE TABLE IF NOT EXISTS audit_events (
 CREATE INDEX IF NOT EXISTS idx_audit_visitor ON audit_events(visitor_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_audit_created ON audit_events(created_at DESC);
 
--- Replay sessions: rrweb event batches per visitor
+-- Replay sessions: one row per recording session (metadata only)
 CREATE TABLE IF NOT EXISTS replay_sessions (
     id          BIGSERIAL PRIMARY KEY,
     visitor_id  TEXT NOT NULL,
-    events      JSONB NOT NULL DEFAULT '[]',
     page_url    TEXT NOT NULL DEFAULT '',
     started_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+-- Replay events: append-only batches (never rewrite one growing JSONB array)
+CREATE TABLE IF NOT EXISTS replay_events (
+    id          BIGSERIAL PRIMARY KEY,
+    session_id  BIGINT NOT NULL REFERENCES replay_sessions(id),
+    seq         INTEGER NOT NULL,
+    batch       JSONB NOT NULL,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
 CREATE INDEX IF NOT EXISTS idx_replay_visitor ON replay_sessions(visitor_id, started_at DESC);
+CREATE INDEX IF NOT EXISTS idx_replay_events_session ON replay_events(session_id, seq);
 ```
 
 **Database adapter notes:**
 - MySQL: Use `JSON` instead of `JSONB`, `BIGINT AUTO_INCREMENT` instead of `BIGSERIAL`, `DATETIME` instead of `TIMESTAMPTZ`
-- SQLite: Use `TEXT` for JSON columns, `INTEGER PRIMARY KEY AUTOINCREMENT`
-- MongoDB: Use two collections with the same field names
+- SQLite: Use `TEXT` for JSON columns, `INTEGER PRIMARY KEY AUTOINCREMENT`. The append-only `replay_events` table sidesteps SQLite's lack of a JSON-array append operator (`||` is string concatenation in SQLite, not JSON merge)
+- MongoDB: Use three collections (`audit_events`, `replay_sessions`, `replay_events`) with the same field names
 
 ### Phase 4: Event Store Layer
 
@@ -112,27 +121,32 @@ Create a data access layer with these operations:
 | `LogEvent(visitorID, eventType, path, data)` | `INSERT INTO audit_events ...` | Fire-and-forget, errors discarded |
 | `GetRecentSessions(limit)` | `SELECT visitor_id, COUNT(*), MIN(created_at), MAX(created_at) FROM audit_events GROUP BY visitor_id ORDER BY MAX(created_at) DESC LIMIT $1` | Session list for admin |
 | `GetVisitorTimeline(visitorID)` | `SELECT * FROM audit_events WHERE visitor_id=$1 ORDER BY created_at ASC` | Full event timeline |
-| `SaveReplayEvents(visitorID, sessionID, events, url)` | `INSERT` or `UPDATE` replay_sessions | Append rrweb event batches (see note below) |
-| `GetReplaySession(id)` | `SELECT * FROM replay_sessions WHERE id=$1` | Single replay for playback |
+| `SaveReplayEvents(visitorID, sessionID, seq, events, url)` | `INSERT INTO replay_events` (create the `replay_sessions` row on the first batch) | Append one batch — see note below |
+| `GetReplaySession(id)` | `SELECT batch FROM replay_events WHERE session_id=$1 ORDER BY seq` | Fetch and concatenate batches in order for playback |
 | `GetReplaySessions(visitorID)` | `SELECT id, page_url, started_at FROM replay_sessions WHERE visitor_id=$1` | List replays for a visitor |
 | `CleanupOldEvents(retentionDays)` | `DELETE FROM audit_events WHERE created_at < now() - interval ...` | Retention cleanup |
 
-**SaveReplayEvents — JSONB array append:**
-PostgreSQL `||` on two JSONB arrays concatenates them (`[1,2] || [3,4]` = `[1,2,3,4]`). This is the correct operator for appending rrweb event batches. For MySQL, use `JSON_MERGE_PRESERVE()`. For MongoDB, use `$push` with `$each`.
+**SaveReplayEvents — append-only batches:**
+Each batch is a NEW row in `replay_events` (`INSERT (session_id, seq, batch)`), never an append into one growing array. A single appended JSONB array forces every write to rewrite the whole TOAST-ed value (≈O(n²) writes, rows ballooning to MBs); separate rows keep each write O(1) and behave identically on PostgreSQL, MySQL, and SQLite — no DB-specific JSON-merge operator required. For MongoDB, insert each batch as its own document. On playback, read batches ordered by `seq` and concatenate them.
 
 **Orphan session handling:** If `sendBeacon` fires before the first batch response (sessionId is null), a new session is created. This may produce duplicate sessions for the same page visit. Acceptable trade-off — replay player can show both.
 
-**LogEvent pattern** — fire-and-forget. Never block the request. Discard errors:
+**LogEvent pattern** — fire-and-forget. Never block the request. Discard errors. Do NOT reuse the request context in the detached task — it is cancelled when the handler returns and can kill the insert mid-flight (silent event loss):
 
 ```go
-// Go
-go func() { s.pool.Exec(ctx, "INSERT INTO ...", args...) }()
+// Go — fresh context, NOT the request ctx (which is cancelled on handler return)
+go func() {
+    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+    s.pool.Exec(ctx, "INSERT INTO ...", args...)
+}()
 
-// Node.js
+// Node.js — rejection intentionally swallowed
 db.query("INSERT INTO ...", args).catch(() => {});
 
-// Python
-asyncio.create_task(db.execute("INSERT INTO ...", args))
+// Python — keep a reference so the task isn't garbage-collected; needs a running loop
+task = asyncio.create_task(db.execute("INSERT INTO ...", args))
+_bg_tasks.add(task); task.add_done_callback(_bg_tasks.discard)
 ```
 
 ### Phase 5: Event Recording Points
@@ -149,6 +163,8 @@ Identify user-facing handlers and add `LogEvent` calls. Common event types:
 | `error`         | Error page shown              | `{error_code, error_message}`          |
 | `login`         | User logs in                  | `{method}`                             |
 | `click_action`  | Significant button clicks     | `{action, target}`                     |
+
+**SPA note:** In single-page apps, server-side handlers only see the initial document load — all in-app navigation happens client-side. Emit `page_view` from the client on each route change (reuse the History API hook from Phase 6) and POST it to a lightweight `/api/event` endpoint, or the audit log misses every in-app navigation.
 
 **Error event capture:** Hook into the framework's error handler to log `error` events automatically:
 
@@ -174,10 +190,10 @@ Download rrweb and create a recorder script:
 
 | File | Source | Size |
 |------|--------|------|
-| `rrweb.min.js` | `https://cdn.jsdelivr.net/npm/rrweb@2.0.0-alpha.13/dist/rrweb-all.min.js` | ~170KB |
-
-**rrweb version note:** 2.0.0-alpha.13 is the most widely used version with good stability despite the alpha tag. The 1.x stable branch lacks TypeScript support and modern features. If alpha is a concern, pin to this exact version — do not use `@latest`.
+| `rrweb.min.js` | bundled UMD build of the current stable `rrweb` 2.0.x — exposes the global `rrweb` | ~170KB |
 | `recorder.js` | Custom (see below) | ~1KB |
+
+**rrweb version note:** Pin the **current stable** `rrweb` 2.0.x — the main `rrweb` package still ships a bundled build that exposes the global `rrweb`. Do NOT use `@latest`, and do NOT switch to the scoped `@rrweb/all` / `@rrweb/record` packages here — those are still on `2.0.0-alpha` releases. Vendor the bundled/UMD file locally; the ES-module (`.js`) builds do not expose a global via a plain `<script>` tag.
 
 **recorder.js template:**
 
@@ -187,33 +203,44 @@ Download rrweb and create a recorder script:
 
     var events = [];
     var sessionId = null;
+    var seq = 0;
 
     rrweb.record({
         emit: function (event) { events.push(event); },
-        maskAllInputs: true  // GDPR: mask form inputs
+        maskAllInputs: true,             // masks <input> values only
+        maskTextSelector: '.pii',        // masks VISIBLE text inside PII-bearing elements
+        blockSelector: '.rr-block',      // elements not recorded at all (rendered as placeholders)
+        checkoutEveryNms: 5 * 60 * 1000  // periodic full snapshot so a replay can start mid-session
     });
 
-    // Batch send every 10 seconds
-    setInterval(function () {
-        if (events.length === 0) return;
-        var batch = events.splice(0);
+    function send(payload, useBeacon) {
+        var body = JSON.stringify(payload);
+        if (useBeacon) {
+            // Blob preserves Content-Type application/json (a raw string would send text/plain)
+            navigator.sendBeacon('/api/replay', new Blob([body], { type: 'application/json' }));
+            return;
+        }
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/api/replay');  // ADJUST endpoint path
         xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({ sessionId: sessionId, events: batch, url: location.href }));
         xhr.onload = function () {
             if (xhr.status === 200) {
                 try { sessionId = JSON.parse(xhr.responseText).sessionId; } catch (e) {}
             }
         };
+        xhr.send(body);
+    }
+
+    // Batch send every 10 seconds
+    setInterval(function () {
+        if (events.length === 0) return;
+        send({ sessionId: sessionId, seq: seq++, events: events.splice(0), url: location.href }, false);
     }, 10000);
 
-    // Send remaining events on page close
+    // Send remaining events on page close (Blob keeps the JSON content type)
     window.addEventListener('beforeunload', function () {
         if (events.length === 0) return;
-        navigator.sendBeacon('/api/replay', JSON.stringify({
-            sessionId: sessionId, events: events, url: location.href
-        }));
+        send({ sessionId: sessionId, seq: seq++, events: events, url: location.href }, true);
     });
 })();
 ```
@@ -223,22 +250,29 @@ Download rrweb and create a recorder script:
 **Replay ingest endpoint:** POST route that receives batches and calls `SaveReplayEvents`. Returns `{sessionId}` for subsequent batches.
 
 **Server-side safeguards:**
-- Limit request body size to 1MB (framework-level or handler-level)
+- Limit request body size, but leave headroom for the initial full-DOM snapshot, which can exceed 1MB on complex pages — use ~4-8MB (or accept the first snapshot batch separately). A hard 1MB cap silently rejects the first batch and leaves the replay unplayable.
 - Reject requests without a valid `visitor_id` cookie
 - Rate limit: max 10 requests per minute per visitor_id
 
-**SPA support:** For single-page apps (Next.js, Nuxt, React Router), wrap the recorder in a route-change listener to send the current `location.href` on each navigation, not just initial page load:
+**SPA support:** rrweb's single `record()` call already captures SPA route changes as DOM mutations — you do NOT need to restart recording per route. Only add the hook below if you want per-route segmentation (a separate replay per view). Detect real navigation by patching the History API — NOT a `MutationObserver`, which fires on every DOM change, not just navigation:
 
 ```javascript
-// For SPA: detect route changes
-var lastUrl = location.href;
-new MutationObserver(function () {
-    if (location.href !== lastUrl) {
-        lastUrl = location.href;
-        // flush current batch with old URL, start new session
-        // ... (send events, reset sessionId to null)
+// For SPA: detect real route changes via the History API
+(function () {
+    function onRouteChange() {
+        // flush the current batch with the old URL, then start a new session
+        // (reuse recorder's send(); reset sessionId = null and seq = 0)
     }
-}).observe(document.body, { childList: true, subtree: true });
+    ['pushState', 'replaceState'].forEach(function (m) {
+        var orig = history[m];
+        history[m] = function () {
+            var r = orig.apply(this, arguments);
+            onRouteChange();
+            return r;
+        };
+    });
+    window.addEventListener('popstate', onRouteChange);
+})();
 ```
 
 ### Phase 7: Admin Panel — Audit Log
@@ -274,8 +308,10 @@ Download rrweb-player and add playback UI:
 
 | File | Source | Size |
 |------|--------|------|
-| `rrweb-player.min.js` | `https://cdn.jsdelivr.net/npm/rrweb-player@2.0.0-alpha.13/dist/index.js` | ~115KB |
-| `rrweb-player.min.css` | `https://cdn.jsdelivr.net/npm/rrweb-player@2.0.0-alpha.13/dist/style.css` | ~5KB |
+| `rrweb-player.min.js` | UMD build of `rrweb-player` (`umd/rrweb-player.min.js` or `dist/index.umd.cjs`) — exposes the global `rrwebPlayer` | ~115KB |
+| `rrweb-player.min.css` | `rrweb-player`'s `dist/style.css` | ~5KB |
+
+**Critical — load the UMD build, not the ES module.** The player's `.js` build (`dist/index.js`) is an ES module and will NOT define the global `rrwebPlayer` when loaded via a plain `<script>` tag — `new rrwebPlayer(...)` below would throw `ReferenceError`. Use the UMD build (`umd/rrweb-player.min.js` or `dist/index.umd.cjs`).
 
 **Player initialization:**
 
@@ -308,11 +344,11 @@ If no background job exists, create a simple scheduled task or suggest adding on
 ## Privacy & Security
 
 - `visitor_id` is anonymous — no PII, no IP address stored
-- `maskAllInputs: true` in rrweb — form values are replaced with `*`
+- **rrweb records ALL visible page text, not just inputs.** `maskAllInputs: true` masks only `<input>` values; names, emails, addresses, and order details rendered as page text are captured verbatim unless excluded. Mark every PII-bearing element with `.rr-block` (not recorded) or `.pii` (`maskTextSelector`, text masked). Do NOT treat `maskAllInputs` alone as GDPR compliance.
 - Event data should never contain passwords, tokens, or personal data
 - Replay recordings should only be accessible to authenticated admins
 - Add `Cache-Control: no-store` to replay data endpoints
-- Consider GDPR cookie consent if operating in EU jurisdictions
+- GDPR: obtain cookie/recording consent before recording in EU jurisdictions — session replay of PII-bearing pages is personal-data processing
 
 ## Adapting to Framework
 
@@ -374,7 +410,7 @@ After implementation, provide:
 - NEVER inject rrweb in admin/authenticated pages
 - ALWAYS use crypto-secure random for visitor_id generation
 - ALWAYS use fire-and-forget for event logging (never block requests)
-- ALWAYS mask form inputs in rrweb (`maskAllInputs: true`)
+- ALWAYS mask inputs AND block/mask PII-bearing visible text in rrweb (`maskAllInputs: true` plus `.rr-block` / `maskTextSelector` on PII elements) — inputs alone do not cover rendered personal data
 - ALWAYS add retention cleanup (default 30 days)
 - ALWAYS protect admin audit/replay endpoints with authentication
 - ALWAYS use `no-store` cache control on replay data endpoints
