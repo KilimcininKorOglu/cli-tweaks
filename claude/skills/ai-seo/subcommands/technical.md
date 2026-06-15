@@ -12,26 +12,26 @@ Audit technical SEO foundations that directly impact AI crawler accessibility an
 
 **Server-Side Rendering is CRITICAL for GEO.** AI crawlers (GPTBot, ClaudeBot, PerplexityBot) have limited or no JavaScript rendering capability. If your content is rendered client-side only (React SPA, Vue SPA without SSR), AI crawlers see an empty page.
 
-| Crawler | JS Rendering | Implication |
-|---------|-------------|-------------|
-| GPTBot | Limited | May miss client-rendered content |
-| ClaudeBot | None | Sees only server-rendered HTML |
-| PerplexityBot | Limited | Relies primarily on HTML response |
+| Crawler         | JS Rendering        | Implication                        |
+|-----------------|---------------------|------------------------------------|
+| GPTBot          | Limited             | May miss client-rendered content   |
+| ClaudeBot       | None                | Sees only server-rendered HTML     |
+| PerplexityBot   | Limited             | Relies primarily on HTML response  |
 | Google-Extended | Yes (via Googlebot) | Can render JS, but slower indexing |
 
 ## Local Mode
 
 When the argument is a local path (see SKILL.md Input Modes), this audit shifts from HTTP inspection to source inspection. Per-category mapping:
 
-| Category | Local source | Note |
-|----------|-------------|------|
-| AI Crawler Access | `robots.txt` in root / `public/` / `static/` | Full check (see crawlers.md) |
+| Category              | Local source                                                                                               | Note                                                                    |
+|-----------------------|------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| AI Crawler Access     | `robots.txt` in root / `public/` / `static/`                                                               | Full check (see crawlers.md)                                            |
 | Server-Side Rendering | `package.json` deps + framework config (`next.config.*`, `nuxt.config.*`, `astro.config.*`) + build output | Infer SSR/SSG/SPA from the framework and config, not from response HTML |
-| Page Speed Signals | image/bundle config, asset sizes on disk | Lower bound — real Core Web Vitals need the live site |
-| Crawlability | local `sitemap.xml`, `<link rel="canonical">` in templates | Mostly assessable |
-| Security Headers | host/CDN config if committed (`vercel.json`, `netlify.toml`, `_headers`, nginx conf) | Otherwise **live-only** — exclude and renormalize |
-| Mobile & Responsive | viewport meta in templates | Assessable |
-| IndexNow | key file in root / `public/` | Assessable |
+| Page Speed Signals    | image/bundle config, asset sizes on disk                                                                   | Lower bound — real Core Web Vitals need the live site                   |
+| Crawlability          | local `sitemap.xml`, `<link rel="canonical">` in templates                                                 | Mostly assessable                                                       |
+| Security Headers      | host/CDN config if committed (`vercel.json`, `netlify.toml`, `_headers`, nginx conf)                       | Otherwise **live-only** — exclude and renormalize                       |
+| Mobile & Responsive   | viewport meta in templates                                                                                 | Assessable                                                              |
+| IndexNow              | key file in root / `public/`                                                                               | Assessable                                                              |
 
 For any check that depends on the HTTP response and has no committed config (chiefly Security Headers), mark it "Not assessable locally — run against the live URL" and renormalize the technical score over the remaining categories rather than scoring them 0. Treat SSR and Page Speed results as a lower bound.
 
@@ -105,15 +105,15 @@ IndexNow pushes content updates to Bing (which powers ChatGPT's web search).
 
 ## Category Breakdown
 
-| Category | Score | Max | Key Finding |
-|----------|-------|-----|-------------|
-| AI Crawler Access | XX | 25 | [one-line] |
-| Server-Side Rendering | XX | 20 | [one-line] |
-| Page Speed Signals | XX | 15 | [one-line] |
-| Crawlability | XX | 15 | [one-line] |
-| Security Headers | XX | 10 | [one-line] |
-| Mobile & Responsive | XX | 10 | [one-line] |
-| IndexNow | XX | 5 | [one-line] |
+| Category              | Score | Max | Key Finding |
+|-----------------------|-------|-----|-------------|
+| AI Crawler Access     | XX    | 25  | [one-line]  |
+| Server-Side Rendering | XX    | 20  | [one-line]  |
+| Page Speed Signals    | XX    | 15  | [one-line]  |
+| Crawlability          | XX    | 15  | [one-line]  |
+| Security Headers      | XX    | 10  | [one-line]  |
+| Mobile & Responsive   | XX    | 10  | [one-line]  |
+| IndexNow              | XX    | 5   | [one-line]  |
 
 ## Critical Issues
 [Issues that directly block AI visibility — SSR failures, crawler blocks]
@@ -136,10 +136,10 @@ IndexNow pushes content updates to Bing (which powers ChatGPT's web search).
 [Header analysis]
 
 ## Recommendations
-| # | Priority | Action | Impact |
-|---|----------|--------|--------|
+| # | Priority | Action   | Impact   |
+|---|----------|----------|----------|
 | 1 | Critical | [action] | [impact] |
-| 2 | High | ... | ... |
+| 2 | High     | ...      | ...      |
 ```
 
 ## Important Notes

@@ -33,15 +33,15 @@ Run a comprehensive AI search optimization audit on a website. Produces a compos
 
 Launch all 7 analysis subagents **in parallel**, each analyzing one dimension. Each subagent receives the Phase 1 discovery data as context.
 
-| Agent | Analysis | Subcommand Reference |
-|-------|----------|---------------------|
-| Agent 1 | AI Citability — passage-level scoring on top 5-10 pages | `citability.md` |
-| Agent 2 | Brand Mentions — platform presence scan | `brand-mentions.md` |
-| Agent 3 | Technical SEO — SSR, CWV, security headers | `technical.md` |
-| Agent 4 | Crawler Access — robots.txt AI crawler rules | `crawlers.md` |
-| Agent 5 | llms.txt — presence and quality | `llmstxt.md` |
-| Agent 6 | Content Quality — E-E-A-T, freshness, topical authority | `content.md` |
-| Agent 7 | Structured Data — schema detection, entity recognition, sameAs | `schema.md` |
+| Agent   | Analysis                                                       | Subcommand Reference |
+|---------|----------------------------------------------------------------|----------------------|
+| Agent 1 | AI Citability — passage-level scoring on top 5-10 pages        | `citability.md`      |
+| Agent 2 | Brand Mentions — platform presence scan                        | `brand-mentions.md`  |
+| Agent 3 | Technical SEO — SSR, CWV, security headers                     | `technical.md`       |
+| Agent 4 | Crawler Access — robots.txt AI crawler rules                   | `crawlers.md`        |
+| Agent 5 | llms.txt — presence and quality                                | `llmstxt.md`         |
+| Agent 6 | Content Quality — E-E-A-T, freshness, topical authority        | `content.md`         |
+| Agent 7 | Structured Data — schema detection, entity recognition, sameAs | `schema.md`          |
 
 Each agent returns a category score (0-100) and top findings. The 7 agents map onto **6 composite categories**: crawlers (Agent 4) and llms.txt (Agent 5) both feed the single Platform category in Phase 3 — the agent count never changes the composite formula. In Local mode, each agent reads local files per its subcommand's Local Mode section instead of fetching, and returns "Not assessable locally" for any category whose source is not in the repo.
 
@@ -77,14 +77,14 @@ Each agent returns a category score (0-100) and top findings. The 7 agents map o
 ## Composite Score: [XX]/100 (Grade [A-F])
 *(Local mode: append "— partial; [excluded categories] not assessable locally" when any category was dropped, and flag static-derived scores as a lower bound.)*
 
-| Category | Score | Grade | Key Issue |
-|----------|-------|-------|-----------|
-| AI Citability | XX/100 | X | [one-line summary] |
-| Brand Authority | XX/100 | X | [one-line summary] |
-| Content & E-E-A-T | XX/100 | X | [one-line summary] |
-| Technical SEO | XX/100 | X | [one-line summary] |
-| Structured Data | XX/100 | X | [one-line summary] |
-| Platform Access | XX/100 | X | [one-line summary] |
+| Category          | Score  | Grade | Key Issue          |
+|-------------------|--------|-------|--------------------|
+| AI Citability     | XX/100 | X     | [one-line summary] |
+| Brand Authority   | XX/100 | X     | [one-line summary] |
+| Content & E-E-A-T | XX/100 | X     | [one-line summary] |
+| Technical SEO     | XX/100 | X     | [one-line summary] |
+| Structured Data   | XX/100 | X     | [one-line summary] |
+| Platform Access   | XX/100 | X     | [one-line summary] |
 
 ## Business Type: [Detected Type]
 
@@ -115,10 +115,10 @@ Each agent returns a category score (0-100) and top findings. The 7 agents map o
 
 ## Recommendations (Prioritized)
 
-| # | Priority | Action | Category | Impact |
-|---|----------|--------|----------|--------|
+| # | Priority | Action   | Category   | Impact                 |
+|---|----------|----------|------------|------------------------|
 | 1 | Critical | [action] | [category] | [expected improvement] |
-| 2 | High | ... | ... | ... |
+| 2 | High     | ...      | ...        | ...                    |
 ```
 
 ## Quality Gates

@@ -26,13 +26,13 @@ Each category is scored 0-100, then combined using the weights shown. Categories
 
 Does the passage directly answer a question a user would ask?
 
-| Score | Criteria |
-|-------|----------|
+| Score  | Criteria                                                                                                                                   |
+|--------|--------------------------------------------------------------------------------------------------------------------------------------------|
 | 90-100 | Opens with a clear definition or direct answer. Uses "X is...", "X refers to...", or leads with the key fact. No filler before the answer. |
-| 70-89 | Answer present but buried after 1-2 setup sentences. Good substance once reached. |
-| 50-69 | Answer partially present. Mixed with tangential information. Requires reader effort. |
-| 30-49 | Vague or indirect. Talks around the topic without committing to a clear answer. |
-| 0-29 | No discernible answer. Pure narrative or opinion without extractable facts. |
+| 70-89  | Answer present but buried after 1-2 setup sentences. Good substance once reached.                                                          |
+| 50-69  | Answer partially present. Mixed with tangential information. Requires reader effort.                                                       |
+| 30-49  | Vague or indirect. Talks around the topic without committing to a clear answer.                                                            |
+| 0-29   | No discernible answer. Pure narrative or opinion without extractable facts.                                                                |
 
 **Definition patterns to look for:**
 - "X is [definition]" — strongest
@@ -44,13 +44,13 @@ Does the passage directly answer a question a user would ask?
 
 Can the passage be understood without reading anything before or after it?
 
-| Score | Criteria |
-|-------|----------|
+| Score  | Criteria                                                                                                                          |
+|--------|-----------------------------------------------------------------------------------------------------------------------------------|
 | 90-100 | Fully self-contained. Uses explicit subject names (not pronouns). No "as mentioned above" or "this approach". Word count 100-200. |
-| 70-89 | Mostly self-contained. One minor reference to context. Key terms defined inline. |
-| 50-69 | Partially dependent. Uses "it", "they", "this" without clear antecedent. |
-| 30-49 | Heavily context-dependent. Multiple pronoun references. Assumes reader knowledge. |
-| 0-29 | Incomprehensible without surrounding text. |
+| 70-89  | Mostly self-contained. One minor reference to context. Key terms defined inline.                                                  |
+| 50-69  | Partially dependent. Uses "it", "they", "this" without clear antecedent.                                                          |
+| 30-49  | Heavily context-dependent. Multiple pronoun references. Assumes reader knowledge.                                                 |
+| 0-29   | Incomprehensible without surrounding text.                                                                                        |
 
 **Red flags:** "As we discussed", "this approach", "the above method", bare pronouns at start of passages.
 
@@ -114,10 +114,10 @@ Does the content offer something AI can only get here?
 
 ## Passage Breakdown
 
-| # | Heading | Words | Answer | Self-Contain | Structure | Stats | Unique | Total | Grade |
-|---|---------|-------|--------|--------------|-----------|-------|--------|-------|-------|
-| 1 | [heading] | [N] | XX | XX | XX | XX | XX | XX | X |
-| 2 | ... | ... | ... | ... | ... | ... | ... | ... | ... |
+| # | Heading   | Words | Answer | Self-Contain | Structure | Stats | Unique | Total | Grade |
+|---|-----------|-------|--------|--------------|-----------|-------|--------|-------|-------|
+| 1 | [heading] | [N]   | XX     | XX           | XX        | XX    | XX     | XX    | X     |
+| 2 | ...       | ...   | ...    | ...          | ...       | ...   | ...    | ...   | ...   |
 
 ## Top 3 Most Citable Passages
 1. **[Heading]** (Score: XX) — [why it works]

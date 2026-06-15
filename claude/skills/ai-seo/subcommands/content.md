@@ -125,12 +125,12 @@ AI-generated content is acceptable IF it has genuine E-E-A-T signals and human o
 
 Does the site consistently cover this topic?
 
-| Signal | Modifier |
-|--------|----------|
-| 10+ published pieces on the same topic | +10 |
-| Regular publication schedule on this topic | +5 |
-| 3-9 related pieces | 0 |
-| Only 1-2 pieces, or off-topic site | -5 |
+| Signal                                     | Modifier |
+|--------------------------------------------|----------|
+| 10+ published pieces on the same topic     | +10      |
+| Regular publication schedule on this topic | +5       |
+| 3-9 related pieces                         | 0        |
+| Only 1-2 pieces, or off-topic site         | -5       |
 
 ## Analysis Procedure
 
@@ -158,12 +158,12 @@ Does the site consistently cover this topic?
 
 ## E-E-A-T Breakdown
 
-| Dimension | Score | Grade | Key Evidence |
-|-----------|-------|-------|-------------|
-| Experience | XX/100 | X | [what was found] |
-| Expertise | XX/100 | X | [what was found] |
-| Authoritativeness | XX/100 | X | [what was found] |
-| Trustworthiness | XX/100 | X | [what was found] |
+| Dimension         | Score  | Grade | Key Evidence     |
+|-------------------|--------|-------|------------------|
+| Experience        | XX/100 | X     | [what was found] |
+| Expertise         | XX/100 | X     | [what was found] |
+| Authoritativeness | XX/100 | X     | [what was found] |
+| Trustworthiness   | XX/100 | X     | [what was found] |
 
 ## Topical Authority: [+10/+5/0/-5] ([reason])
 
