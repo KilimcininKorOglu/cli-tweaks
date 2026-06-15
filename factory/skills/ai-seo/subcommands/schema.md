@@ -26,31 +26,31 @@ The `sameAs` property is the single most impactful schema element for GEO. It cr
 
 2. **Detect existing schemas** and categorize:
 
-   | Schema Type | GEO Points | Purpose |
-   |-------------|------------|---------|
-   | Organization + sameAs | 20 | Entity recognition (CRITICAL) |
-   | Person (author) + sameAs | 20 | E-E-A-T author authority |
-   | Article + author link | 15 | Content attribution for citation |
-   | Business-type specific | 15 | SaaS/Local/E-commerce/Publisher |
-   | WebSite + SearchAction | 10 | Site-level signals |
-   | speakable | 10 | Voice/AI assistant citation target |
-   | BreadcrumbList | 5 | Navigation context |
-   | knowsAbout | 5 | Expertise signals |
+   | Schema Type              | GEO Points | Purpose                            |
+   |--------------------------|------------|------------------------------------|
+   | Organization + sameAs    | 20         | Entity recognition (CRITICAL)      |
+   | Person (author) + sameAs | 20         | E-E-A-T author authority           |
+   | Article + author link    | 15         | Content attribution for citation   |
+   | Business-type specific   | 15         | SaaS/Local/E-commerce/Publisher    |
+   | WebSite + SearchAction   | 10         | Site-level signals                 |
+   | speakable                | 10         | Voice/AI assistant citation target |
+   | BreadcrumbList           | 5          | Navigation context                 |
+   | knowsAbout               | 5          | Expertise signals                  |
 
 3. **Audit sameAs links** (most important for GEO):
 
    Priority order for sameAs URLs:
-   | Priority | Platform | Why |
-   |----------|----------|-----|
-   | 1 | Wikipedia | Strongest entity signal for AI |
-   | 2 | Wikidata | Structured knowledge graph |
-   | 3 | LinkedIn (company/person) | Professional authority |
-   | 4 | YouTube (channel) | High AI training weight |
-   | 5 | Twitter/X | Social proof |
-   | 6 | GitHub | Technical authority (for tech) |
-   | 7 | Crunchbase | Business authority (for startups) |
-   | 8 | Facebook | Social presence |
-   | 9-14 | Instagram, TikTok, Apple Podcasts, industry directories | Secondary signals |
+   | Priority | Platform                                                | Why                               |
+   |----------|---------------------------------------------------------|-----------------------------------|
+   | 1        | Wikipedia                                               | Strongest entity signal for AI    |
+   | 2        | Wikidata                                                | Structured knowledge graph        |
+   | 3        | LinkedIn (company/person)                               | Professional authority            |
+   | 4        | YouTube (channel)                                       | High AI training weight           |
+   | 5        | Twitter/X                                               | Social proof                      |
+   | 6        | GitHub                                                  | Technical authority (for tech)    |
+   | 7        | Crunchbase                                              | Business authority (for startups) |
+   | 8        | Facebook                                                | Social presence                   |
+   | 9-14     | Instagram, TikTok, Apple Podcasts, industry directories | Secondary signals                 |
 
    Check: Do sameAs URLs actually resolve? Do they point to the correct entity?
 
@@ -79,21 +79,21 @@ The `sameAs` property is the single most impactful schema element for GEO. It cr
 
 ## Detected Schemas
 
-| Schema Type | Format | Valid | GEO Points | Issues |
-|-------------|--------|-------|------------|--------|
-| [type] | JSON-LD/Microdata/RDFa | YES/NO | [N] | [issue or "None"] |
+| Schema Type | Format                 | Valid  | GEO Points | Issues            |
+|-------------|------------------------|--------|------------|-------------------|
+| [type]      | JSON-LD/Microdata/RDFa | YES/NO | [N]        | [issue or "None"] |
 
 ## sameAs Audit
 
-| Platform | URL | Resolves | Correct Entity |
-|----------|-----|----------|----------------|
-| [platform] | [url] | YES/NO | YES/NO/MISSING |
+| Platform   | URL   | Resolves | Correct Entity |
+|------------|-------|----------|----------------|
+| [platform] | [url] | YES/NO   | YES/NO/MISSING |
 
 ## Missing (Recommended)
 
-| Schema | GEO Points | Priority |
-|--------|------------|----------|
-| [type] | [N] | Critical/High/Medium |
+| Schema | GEO Points | Priority             |
+|--------|------------|----------------------|
+| [type] | [N]        | Critical/High/Medium |
 
 ## Generated JSON-LD
 

@@ -20,13 +20,13 @@ These are correlations, not proven causation. The consistent takeaway: being men
 
 ## Platform Weights
 
-| Platform | Weight | Why |
-|----------|--------|-----|
-| YouTube | 25% | Among the strongest correlating signals for AI citation. Overrepresented in training data. |
-| Reddit | 25% | Conversational mentions carry high trust signal for AI models. |
-| Wikipedia | 20% | Strongest entity recognition signal. If you exist on Wikipedia, AI knows you exist. |
-| LinkedIn | 15% | Professional authority signal. Company pages, thought leadership articles. |
-| Other (GitHub, StackOverflow, industry forums) | 15% | Domain-specific authority platforms. |
+| Platform                                       | Weight | Why                                                                                        |
+|------------------------------------------------|--------|--------------------------------------------------------------------------------------------|
+| YouTube                                        | 25%    | Among the strongest correlating signals for AI citation. Overrepresented in training data. |
+| Reddit                                         | 25%    | Conversational mentions carry high trust signal for AI models.                             |
+| Wikipedia                                      | 20%    | Strongest entity recognition signal. If you exist on Wikipedia, AI knows you exist.        |
+| LinkedIn                                       | 15%    | Professional authority signal. Company pages, thought leadership articles.                 |
+| Other (GitHub, StackOverflow, industry forums) | 15%    | Domain-specific authority platforms.                                                       |
 
 ## Analysis Procedure
 
@@ -69,13 +69,13 @@ These are correlations, not proven causation. The consistent takeaway: being men
 
 ## Platform Breakdown
 
-| Platform | Score | Presence | Sentiment | Key Finding |
-|----------|-------|----------|-----------|-------------|
-| YouTube | XX/100 | [Y/N + details] | [+/-/~] | [one-line] |
-| Reddit | XX/100 | [Y/N + details] | [+/-/~] | [one-line] |
-| Wikipedia | XX/100 | [Y/N + details] | [N/A] | [one-line] |
-| LinkedIn | XX/100 | [Y/N + details] | [+/-/~] | [one-line] |
-| Other | XX/100 | [Y/N + details] | [+/-/~] | [one-line] |
+| Platform  | Score  | Presence        | Sentiment | Key Finding |
+|-----------|--------|-----------------|-----------|-------------|
+| YouTube   | XX/100 | [Y/N + details] | [+/-/~]   | [one-line]  |
+| Reddit    | XX/100 | [Y/N + details] | [+/-/~]   | [one-line]  |
+| Wikipedia | XX/100 | [Y/N + details] | [N/A]     | [one-line]  |
+| LinkedIn  | XX/100 | [Y/N + details] | [+/-/~]   | [one-line]  |
+| Other     | XX/100 | [Y/N + details] | [+/-/~]   | [one-line]  |
 
 ## Strongest Signal
 [Which platform and why]

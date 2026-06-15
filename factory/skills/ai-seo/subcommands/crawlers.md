@@ -14,40 +14,40 @@ Analyze whether AI search engine crawlers can access a website's content. AI vis
 
 These crawlers power live AI search. Blocking them removes your site from AI-generated answers.
 
-| Crawler | User-Agent | Platform | Role |
-|---------|-----------|----------|------|
-| GPTBot | `GPTBot` | ChatGPT, OpenAI | OpenAI's main crawler (index + training) |
-| OAI-SearchBot | `OAI-SearchBot` | OpenAI real-time search | Powers ChatGPT web results |
-| ChatGPT-User | `ChatGPT-User` | ChatGPT browse mode | User-initiated browsing |
-| ClaudeBot | `ClaudeBot` | Claude (crawl/index) | Anthropic's main crawler |
-| Claude-User | `Claude-User` | Claude browse mode | User-initiated browsing |
-| Claude-SearchBot | `Claude-SearchBot` | Claude search | Anthropic search features |
-| PerplexityBot | `PerplexityBot` | Perplexity AI | Strong AI referral traffic |
+| Crawler          | User-Agent         | Platform                | Role                                     |
+|------------------|--------------------|-------------------------|------------------------------------------|
+| GPTBot           | `GPTBot`           | ChatGPT, OpenAI         | OpenAI's main crawler (index + training) |
+| OAI-SearchBot    | `OAI-SearchBot`    | OpenAI real-time search | Powers ChatGPT web results               |
+| ChatGPT-User     | `ChatGPT-User`     | ChatGPT browse mode     | User-initiated browsing                  |
+| ClaudeBot        | `ClaudeBot`        | Claude (crawl/index)    | Anthropic's main crawler                 |
+| Claude-User      | `Claude-User`      | Claude browse mode      | User-initiated browsing                  |
+| Claude-SearchBot | `Claude-SearchBot` | Claude search           | Anthropic search features                |
+| PerplexityBot    | `PerplexityBot`    | Perplexity AI           | Strong AI referral traffic               |
 
 ### Tier 2 — Recommended (Broader Ecosystem)
 
 These support AI features within larger platforms. Blocking reduces indirect AI visibility.
 
-| Crawler | User-Agent | Platform | Note |
-|---------|-----------|----------|------|
-| Google-Extended | `Google-Extended` | Gemini, AI Overviews | robots.txt control token (AI opt-out), not a live crawling UA; does NOT affect Google Search ranking |
-| Applebot-Extended | `Applebot-Extended` | Apple Intelligence | robots.txt control token (AI-training opt-out), not a live crawling UA |
-| Meta-ExternalAgent | `Meta-ExternalAgent` | Meta AI | Meta's AI crawler (replaces the older FacebookBot for AI use) |
-| Amazonbot | `Amazonbot` | Alexa, Amazon AI | Voice search + product discovery |
-| Bytespider | `Bytespider` | TikTok / ByteDance AI | Emerging AI search |
-| MistralAI-User | `MistralAI-User` | Mistral Le Chat | User-initiated browsing |
-| DuckAssistBot | `DuckAssistBot` | DuckDuckGo AI assist | DuckAssist answers |
+| Crawler            | User-Agent           | Platform              | Note                                                                                                 |
+|--------------------|----------------------|-----------------------|------------------------------------------------------------------------------------------------------|
+| Google-Extended    | `Google-Extended`    | Gemini, AI Overviews  | robots.txt control token (AI opt-out), not a live crawling UA; does NOT affect Google Search ranking |
+| Applebot-Extended  | `Applebot-Extended`  | Apple Intelligence    | robots.txt control token (AI-training opt-out), not a live crawling UA                               |
+| Meta-ExternalAgent | `Meta-ExternalAgent` | Meta AI               | Meta's AI crawler (replaces the older FacebookBot for AI use)                                        |
+| Amazonbot          | `Amazonbot`          | Alexa, Amazon AI      | Voice search + product discovery                                                                     |
+| Bytespider         | `Bytespider`         | TikTok / ByteDance AI | Emerging AI search                                                                                   |
+| MistralAI-User     | `MistralAI-User`     | Mistral Le Chat       | User-initiated browsing                                                                              |
+| DuckAssistBot      | `DuckAssistBot`      | DuckDuckGo AI assist  | DuckAssist answers                                                                                   |
 
 ### Tier 3 — Optional (Training Only)
 
 These crawl for model training, not live search. Blocking has no immediate search impact.
 
-| Crawler | User-Agent | Purpose |
-|---------|-----------|---------|
-| CCBot | `CCBot` | Common Crawl (training data) |
+| Crawler      | User-Agent     | Purpose                                                                                      |
+|--------------|----------------|----------------------------------------------------------------------------------------------|
+| CCBot        | `CCBot`        | Common Crawl (training data)                                                                 |
 | anthropic-ai | `anthropic-ai` | Legacy Anthropic training UA — superseded by ClaudeBot; may still appear in older robots.txt |
-| GoogleOther | `GoogleOther` | Google AI training |
-| Cohere-ai | `Cohere-ai` | Cohere training (undocumented; current status uncertain) |
+| GoogleOther  | `GoogleOther`  | Google AI training                                                                           |
+| Cohere-ai    | `Cohere-ai`    | Cohere training (undocumented; current status uncertain)                                     |
 
 ## Analysis Procedure
 
@@ -83,25 +83,25 @@ These crawl for model training, not live search. Blocking has no immediate searc
 
 ## Crawler Status
 
-| Tier | Crawler | Status | Impact |
-|------|---------|--------|--------|
-| 1 | GPTBot | ALLOWED/BLOCKED/... | [impact if blocked] |
-| 1 | OAI-SearchBot | ... | ... |
-| 1 | ChatGPT-User | ... | ... |
-| 1 | ClaudeBot | ... | ... |
-| 1 | PerplexityBot | ... | ... |
-| 2 | Google-Extended | ... | ... |
-| 2 | Amazonbot | ... | ... |
-| 2 | Applebot-Extended | ... | ... |
-| 3 | CCBot | ... | ... |
-| 3 | anthropic-ai | ... | ... |
+| Tier | Crawler           | Status              | Impact              |
+|------|-------------------|---------------------|---------------------|
+| 1    | GPTBot            | ALLOWED/BLOCKED/... | [impact if blocked] |
+| 1    | OAI-SearchBot     | ...                 | ...                 |
+| 1    | ChatGPT-User      | ...                 | ...                 |
+| 1    | ClaudeBot         | ...                 | ...                 |
+| 1    | PerplexityBot     | ...                 | ...                 |
+| 2    | Google-Extended   | ...                 | ...                 |
+| 2    | Amazonbot         | ...                 | ...                 |
+| 2    | Applebot-Extended | ...                 | ...                 |
+| 3    | CCBot             | ...                 | ...                 |
+| 3    | anthropic-ai      | ...                 | ...                 |
 
 ## AI Files
 
-| File | Status | Notes |
-|------|--------|-------|
-| robots.txt | EXISTS/MISSING | [summary of AI rules] |
-| llms.txt | EXISTS/MISSING | [quality note if exists] |
+| File       | Status         | Notes                    |
+|------------|----------------|--------------------------|
+| robots.txt | EXISTS/MISSING | [summary of AI rules]    |
+| llms.txt   | EXISTS/MISSING | [quality note if exists] |
 
 ## Issues Found
 [List any blocking issues with severity]
