@@ -28,14 +28,6 @@ Creates well-formatted commits with conventional commit messages.
 /commit --push           # Commit, then push (confirms before pushing to a default branch)
 ```
 
-## Repo Style Mimicry
-
-Look at the recent commits from `git log` and MATCH the repository's existing commit message style:
-- If the repo uses conventional commits (`feat:`, `fix:`), follow that
-- If the repo uses plain messages ("Add login page"), follow that
-- If the repo uses ticket prefixes (`JIRA-123: ...`), follow that
-- If no clear pattern exists, default to conventional commit format below
-
 ## Git Safety Protocol
 
 - NEVER update the git config
@@ -118,7 +110,11 @@ EOF
    - Untracked files -> ask if they should be included
    - Working tree clean -> if a push was requested, skip to step 8; otherwise report no changes
 4. **Review Changes**: `git diff --cached --stat` + `git diff --cached`
-5. **Match Repo Style**: Analyze last 10 commits, adopt their message format
+5. **Match Repo Style**: Look at the recent `git log` and adopt the repo's existing style:
+   - Conventional commits (`feat:`, `fix:`) -> follow that
+   - Plain messages ("Add login page") -> follow that
+   - Ticket prefixes (`JIRA-123: ...`) -> follow that
+   - No clear pattern -> default to the conventional `<type>(<scope>): <subject>` format (see Commit Message Format)
 6. **Analyze for Logical Grouping**: Check if changes belong together, suggest splitting if multiple concerns
 7. **Create Commit**: Use HEREDOC syntax for multi-line, simple -m for single-line
 8. **Push (only if requested)**: Push only when the user explicitly asked (`--push`, or said "push" / "commit and push"). If the tree was already clean (nothing to commit), push the existing commits instead. Before pushing to the default branch (`main`/`master`), confirm first or offer to create a feature branch. A plain commit request never reaches this step.
