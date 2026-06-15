@@ -9,10 +9,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.factory/hooks/plan-mode.py"
-          },
-          {
-            "type": "command",
             "command": "python3 ~/.factory/hooks/memory-reinject.py"
           }
         ]

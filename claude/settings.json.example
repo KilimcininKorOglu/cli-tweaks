@@ -21,10 +21,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/hooks/plan-mode.py"
-          },
-          {
-            "type": "command",
             "command": "python3 ~/.claude/hooks/memory-reinject.py"
           }
         ]

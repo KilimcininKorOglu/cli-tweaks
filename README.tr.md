@@ -11,7 +11,6 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | Hook                  | Olay                 | Açıklama                                                                                                            |
 |-----------------------|----------------------|---------------------------------------------------------------------------------------------------------------------|
 | `session-start.py`    | SessionStart/compact | Global kullanıcı dosyalarını ve proje belleğini bağlama enjekte eder                                                |
-| `plan-mode.py`        | UserPromptSubmit     | Anahtar kelime veya karmaşıklık puanlamasıyla planlama ihtiyacını tespit eder, implement-plan skill'ine yönlendirir |
 | `save-plan.py`        | PostToolUse          | Planları diske kaydeder (Factory) veya yalnızca bildirim gönderir (Claude Code)                                     |
 | `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                                  |
 | `memory-reinject.py`  | UserPromptSubmit     | Her 5. mesajda MEMORY.md kritik kurallarını, her 15. mesajda tüm global talimat dosyasını yeniden enjekte ederek bağlam kaybını önler |
@@ -29,7 +28,6 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `git-flow`                     | `/git-flow`                     | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi                     |
 | `initialize`                   | `/initialize`                   | Kod tabanını tarayarak AGENTS.md oluşturur                                      |
 | `init-claude`                  | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                                      |
-| `implement-plan`               | `/implement-plan`               | Araştırma, netleştirme ve fazlı tasarım ile yapılandırılmış uygulama planlaması |
 | `redate-commits`               | `/redate-commits`               | Commit tarihlerini seçilen aralığa yayar, güvenli iş akışı uyarıları verir      |
 | `frontend-design`              | `/frontend-design`              | 28 siteli tasarım kataloğu ile frontend kod üretimi                             |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur                         |
@@ -184,8 +182,7 @@ Dosyaları kopyaladıktan sonra, hook tanımlarını `settings.json` dosyanıza 
 Yalnızca ihtiyacınız olanları seçin. Aşağıdaki örnekler `factory/` kullanır; Claude Code için `claude/` ile değiştirin.
 
 ```bash
-# Yalnızca planlama hook'ları (notify.py, save-plan.py için gereklidir)
-cp factory/hooks/plan-mode.py ~/.factory/hooks/
+# Yalnızca plan kaydetme hook'u (notify.py, save-plan.py için gereklidir)
 cp factory/hooks/save-plan.py ~/.factory/hooks/
 cp factory/hooks/notify.py ~/.factory/hooks/
 
@@ -203,19 +200,9 @@ Ardından ilgili hook kayıtlarını `settings.json` dosyanıza ekleyin.
 
 ## Nasıl Çalışır
 
-### Planlama Modu
+### Plan Kaydetme
 
-"plan this feature" veya "planla" gibi bir şey yazdığınızda ya da karmaşık bir istek gönderdiğinizde (puanlama ile tespit edilir), hook `implement-plan` skill'ine yönlendirir ve şu yapılandırılmış iş akışını izler:
-
-1. **Keşfet** -- Paralel subagent'larla kod tabanı bağlamını topla
-2. **Soru Sor** -- Gereksinimleri, kapsam kararlarını ve tasarım seçeneklerini interaktif olarak netleştir
-3. **Tasarla** -- Tüm kararlar çözülmüş şekilde uygulama planını hazırla
-4. **Sun** -- ExitPlanMode/ExitSpecMode ile planı onaya sun
-5. **Bekle** -- Onaylanana kadar kod yazma
-
-Tüm açık sorular ve kapsam kararları planlama sırasında yapılandırılmış kullanıcı soruları ile çözülür -- nihai planda çözülmemiş madde kalmaz.
-
-Tamamlanan planlar masaüstü bildirimleriyle birlikte `~/.factory/plans/<proje>/` (veya `~/.claude/plans/<proje>/`) dizinine kaydedilir.
+Ajanın yerleşik plan modunu kullanıp çıktığınızda (`ExitPlanMode` Claude Code'da, `ExitSpecMode` Factory Droid'de), `save-plan.py` hook'u bu olayı yakalar. Factory Droid'de plan içeriği `~/.factory/plans/<proje>/` dizinine yazılır; Claude Code'da masaüstü bildirimi gönderilir (tool, hook'a plan içeriği vermez).
 
 ### Otomatik Bellek
 

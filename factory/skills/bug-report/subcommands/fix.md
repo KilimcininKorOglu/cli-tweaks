@@ -38,17 +38,17 @@ If Status is already FIXED, tell the user and STOP.
 
 ---
 
-## Phase 2: Trace the Code
+## Phase 2: Trace the Code and Plan the Fix
 
 Read every file path listed in the `File:` field. Read any file referenced in `Root Cause:` or `Problem:`. Follow the call chain from the entry point to the bug location.
 
 Do NOT trust your memory of file contents. Re-read before editing. Always.
 
-After reading, invoke the `/implement-plan` skill with this context:
+Once you understand the root cause, present a short fix plan to the user and wait for approval:
 
-> Plan a fix for BUG-[ID]: [bug title]. Root cause: [what you found]. Files: [paths]. The fix must be minimal — no refactoring, no scope creep.
+> Root cause: [one sentence]. Proposed change: [file(s) and line(s), what edit]. Minimal because: [no refactoring, no scope creep].
 
-The implement-plan skill will handle research, plan design, and user approval via plan mode. Do NOT proceed to Phase 3 until the user approves the plan.
+Do NOT proceed to Phase 3 until the user approves the plan. If the fix would require restructuring other code or touching unrelated files, STOP and ask the user first.
 
 ---
 

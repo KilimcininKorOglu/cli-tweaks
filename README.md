@@ -11,7 +11,6 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | Hook                  | Event                | Description                                                                                    |
 |-----------------------|----------------------|------------------------------------------------------------------------------------------------|
 | `session-start.py`    | SessionStart/compact | Injects global user files and project memory into context                                      |
-| `plan-mode.py`        | UserPromptSubmit     | Detects planning needs via keywords or complexity scoring, delegates to implement-plan skill   |
 | `save-plan.py`        | PostToolUse          | Saves plans to disk (Factory) or sends notification only (Claude Code)                         |
 | `memory-save.py`      | Stop                 | Reminds the agent to save learnings before the session ends                                    |
 | `memory-reinject.py`  | UserPromptSubmit     | Re-injects MEMORY.md critical rules (every 5th msg) and the full global instruction file (every 15th) to counter recency bias |
@@ -29,7 +28,6 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `git-flow`                     | `/git-flow`                     | Structured branch management with strict validation rules                        |
 | `initialize`                   | `/initialize`                   | Creates AGENTS.md by scanning the codebase                                       |
 | `init-claude`                  | `/init-claude`                  | Creates CLAUDE.md by scanning the codebase                                       |
-| `implement-plan`               | `/implement-plan`               | Structured implementation planning with research, questions, and phased design   |
 | `redate-commits`               | `/redate-commits`               | Rewrites commit dates across a selected range with safe workflow warnings        |
 | `frontend-design`              | `/frontend-design`              | Frontend code generation with 28-site design system catalog                      |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill                        |
@@ -184,8 +182,7 @@ Copy the `hooks` section from the example file into your existing settings, or u
 Pick only what you need. Examples below use `factory/`; replace with `claude/` for Claude Code.
 
 ```bash
-# Just the planning hooks (notify.py is required by save-plan.py)
-cp factory/hooks/plan-mode.py ~/.factory/hooks/
+# Just the plan-saving hook (notify.py is required by save-plan.py)
 cp factory/hooks/save-plan.py ~/.factory/hooks/
 cp factory/hooks/notify.py ~/.factory/hooks/
 
@@ -203,19 +200,9 @@ Then add the corresponding hook entries to your `settings.json`.
 
 ## How It Works
 
-### Planning Mode
+### Plan Saving
 
-When you type something like "plan this feature" or submit a complex request (detected via scoring), the hook delegates to the `implement-plan` skill which follows a structured workflow:
-
-1. **Explore** -- Gather codebase context with parallel subagents
-2. **Ask Questions** -- Clarify requirements, scope exclusions, and design choices interactively
-3. **Design** -- Draft the implementation plan with all decisions resolved
-4. **Present** -- Show the plan for approval via ExitPlanMode/ExitSpecMode
-5. **Wait** -- Do not start coding until approved
-
-All open questions and scope decisions are resolved during planning via structured user questions -- the final plan contains no unresolved items.
-
-Completed plans are saved to `~/.factory/plans/<project>/` (or `~/.claude/plans/<project>/`) with desktop notifications.
+When you use the agent's built-in plan mode and exit it (`ExitPlanMode` on Claude Code, `ExitSpecMode` on Factory Droid), the `save-plan.py` hook captures the event. On Factory Droid the plan content is written to `~/.factory/plans/<project>/`; on Claude Code a desktop notification is sent (the tool provides no plan content to the hook).
 
 ### Auto Memory
 
