@@ -42,6 +42,7 @@ they are re-authored here.
 | `memory-save.ts` | `stop` | `memory-save.py` | Full — blocks the first stop and injects a continuation prompt |
 | `compact-reinject.ts` | `experimental.session.compacting` | `compact-reinject.py` | Full — preserves AGENTS.md/CLAUDE.md through compaction |
 | `memory-inject.ts` | `experimental.chat.system.transform` | `memory-reinject.py` | Experimental — blocked by issue #17100 (see below) |
+| `git-protect.ts` | `tool.execute.before` | `git-protect.py` | Full — throws to block `git add -f`/`--force` on a global-gitignore file (API verified against docs, not runtime-tested) |
 
 `session-start.py`'s static file injection has no plugin: it is covered by
 native `AGENTS.md` + the `instructions` field.
