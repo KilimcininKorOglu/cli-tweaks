@@ -156,6 +156,10 @@ If `--severity` flag provided, filter final report to only that severity level.
 >
 > Subcommand instructions:
 > [full content of subcommand file]
+>
+> As your FINAL action, append this exact line on its own at the end of
+> `BUG-REPORT.md` so a resumed run can skip this completed scan:
+> `[this worker's completion marker from the table above, e.g. <!-- scan:sqli completed -->]`
 
 ---
 

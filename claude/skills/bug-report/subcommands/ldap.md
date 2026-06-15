@@ -213,8 +213,7 @@ After all Phase 2 subagents complete:
    - Read existing `BUG-REPORT.md` to continue the ID sequence
    - For **Suggested Commit**: place BEFORE Problem field, wrap value in backticks, conventional commit message without BUG-IDs
    - Separate each field with a blank line; end each entry with a `---` separator
-4. Append the completion marker: `<!-- scan:ldap completed -->`
-5. Do NOT write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries.
+4. Do NOT write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries.
 
 **Severity mapping**:
 - Authentication bypass via filter injection → CRITICAL

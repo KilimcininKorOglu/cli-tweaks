@@ -195,8 +195,7 @@ After the audit subagent completes:
    - For **Suggested Commit**: place BEFORE Problem field, wrap value in backticks, conventional commit message without BUG-IDs
    - For **Verification**: include the exact package, version, CVE, and upgrade command
    - Separate each field with a blank line; end each entry with a `---` separator
-4. Append the completion marker: `<!-- scan:dependency-audit completed -->`
-5. Do NOT write [INFORMATIONAL] entries to `BUG-REPORT.md`.
+4. Do NOT write [INFORMATIONAL] entries to `BUG-REPORT.md`.
 
 ---
 

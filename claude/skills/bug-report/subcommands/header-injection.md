@@ -306,8 +306,7 @@ After all Phase 2 subagents complete:
    - For **Suggested Commit**: place BEFORE Problem field, wrap value in backticks, conventional commit message without BUG-IDs
    - For **Verification**: include the full injection details and a proof of concept
    - Separate each field with a blank line; end each entry with a `---` separator
-4. Append the completion marker: `<!-- scan:header-injection completed -->`
-5. Do NOT write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
+4. Do NOT write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
 
 ---
 

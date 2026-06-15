@@ -252,8 +252,7 @@ After the audit subagent completes:
    - For **Suggested Commit**: place BEFORE Problem field, wrap value in backticks, conventional commit message without BUG-IDs
    - For **Verification**: include the specific missing headers and affected pages
    - Separate each field with a blank line; end each entry with a `---` separator
-4. Append the completion marker: `<!-- scan:clickjacking completed -->`
-5. Do NOT write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
+4. Do NOT write [NOT VULNERABLE] or [NEEDS MANUAL REVIEW] entries to `BUG-REPORT.md`.
 
 ---
 
