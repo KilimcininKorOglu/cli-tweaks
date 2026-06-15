@@ -39,7 +39,8 @@ If the user said `/bug-report security-sweep` OR used natural language like
 ### Path C: Full audit (`/bug-report` with no subcommand)
 
 Run ALL audit subcommands in parallel using workers. This is the comprehensive
-mode — every general audit and every security scan runs simultaneously.
+mode — every general audit and every security scan runs simultaneously. `fix` is
+NOT an audit (it remediates already-reported bugs), so it is never part of this run.
 
 Jump to the **Full Audit Orchestration** section below.
 
@@ -295,5 +296,5 @@ Last Bug ID: BUG-[XXX]
 | `header-injection`     | HTTP header injection and CRLF detection                                 |
 | `clickjacking`         | Clickjacking protection (X-Frame-Options, CSP frame-ancestors)           |
 | `mass-assignment`      | Mass assignment and parameter pollution detection                        |
-| `fix`                  | Disciplined single-bug fix workflow with commit and report update        |
+| `fix`                  | Iterative fix across all open bugs: plan, approve, verify, commit each   |
 | `ldap`                 | LDAP injection in search filters and DN construction                     |
