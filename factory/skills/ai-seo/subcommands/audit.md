@@ -31,17 +31,19 @@ Run a comprehensive AI search optimization audit on a website. Produces a compos
 
 ### Phase 2: Parallel Analysis
 
-Launch up to 5 subagents **in parallel**, each analyzing a different dimension. Each subagent receives the Phase 1 discovery data as context.
+Launch all 7 analysis subagents **in parallel**, each analyzing one dimension. Each subagent receives the Phase 1 discovery data as context.
 
 | Agent | Analysis | Subcommand Reference |
 |-------|----------|---------------------|
 | Agent 1 | AI Citability — passage-level scoring on top 5-10 pages | `citability.md` |
 | Agent 2 | Brand Mentions — platform presence scan | `brand-mentions.md` |
-| Agent 3 | Technical + Platform — SSR, CWV, crawler access, llms.txt | `technical.md` + `crawlers.md` + `llmstxt.md` |
-| Agent 4 | Content Quality — E-E-A-T, freshness, topical authority | `content.md` |
-| Agent 5 | Structured Data — schema detection, entity recognition, sameAs | `schema.md` |
+| Agent 3 | Technical SEO — SSR, CWV, security headers | `technical.md` |
+| Agent 4 | Crawler Access — robots.txt AI crawler rules | `crawlers.md` |
+| Agent 5 | llms.txt — presence and quality | `llmstxt.md` |
+| Agent 6 | Content Quality — E-E-A-T, freshness, topical authority | `content.md` |
+| Agent 7 | Structured Data — schema detection, entity recognition, sameAs | `schema.md` |
 
-Each agent returns a category score (0-100) and top findings. In Local mode, each agent reads local files per its subcommand's Local Mode section instead of fetching, and returns "Not assessable locally" for any category whose source is not in the repo.
+Each agent returns a category score (0-100) and top findings. The 7 agents map onto **6 composite categories**: crawlers (Agent 4) and llms.txt (Agent 5) both feed the single Platform category in Phase 3 — the agent count never changes the composite formula. In Local mode, each agent reads local files per its subcommand's Local Mode section instead of fetching, and returns "Not assessable locally" for any category whose source is not in the repo.
 
 ### Phase 3: Synthesis (Sequential)
 
@@ -51,7 +53,7 @@ Each agent returns a category score (0-100) and top findings. In Local mode, eac
    GEO = (Citability * 0.25) + (Brand * 0.20) + (Content * 0.20) +
          (Technical * 0.15) + (Schema * 0.10) + (Platform * 0.10)
    ```
-   Platform score = average of the crawler-access score (crawlers.md) and the llms.txt score (llmstxt.md), both produced by Agent 3.
+   Platform score = average of the crawler-access score (crawlers.md, Agent 4) and the llms.txt score (llmstxt.md, Agent 5). The composite always has exactly these 6 categories, regardless of how many agents ran.
 
 3. Apply business-type weight adjustments BEFORE the weighted sum — shift the category weights from step 2 by these percentage points (each row nets to zero, so the weights still total 100), then recompute the GEO score with the adjusted weights:
    - SaaS: citability +5, brand -5

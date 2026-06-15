@@ -34,6 +34,15 @@ AI search is eating traditional search. This skill optimizes for where traffic i
 
 The argument is either a live URL (`https://example.com`) or a local project path (`.`, `./src`, `/path/to/project`). See **Input Modes: Web vs Local** below for how each subcommand reads from disk instead of fetching.
 
+## Routing
+
+The first token after `/ai-seo` selects the mode:
+
+- If it matches a known subcommand keyword — `audit`, `citability`, `crawlers`, `llmstxt`, `brands`, `schema`, `technical`, `content` — run that subcommand.
+- Otherwise treat the whole argument as the target (URL or path) and run the **full audit**, which launches all 7 analyses in parallel.
+
+Keyword match always wins: `/ai-seo content` runs the content subcommand, not an audit of a directory named `content`. To audit a path that collides with a keyword, name it explicitly: `/ai-seo audit ./content`.
+
 ## Why GEO Matters
 
 Figures below are directional and dated — verify current numbers before quoting them to a client.
