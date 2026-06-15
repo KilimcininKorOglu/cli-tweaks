@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın.
+Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın. OpenCode de destekleniyor; native skill/rules ile birlikte bir TypeScript plugin seti aracılığıyla (bkz. [OpenCode Desteği](#opencode-desteği)).
 
 ## İçerik
 
@@ -112,6 +112,9 @@ cli-tweaks/
   claude/            <-- Claude Code (copy to ~/.claude/)
     hooks/
     skills/
+  opencode/          <-- OpenCode (TS plugin + config, bkz. opencode/README.md)
+    plugins/
+    opencode.json.example
   SOUL.md.template          <-- Özel persona şablonu
   GLOBAL-RULES.template.md  <-- Taşınabilir global ajan kuralları şablonu
   sample-BUG-REPORT.md      <-- Audit skill'leri için bulgu format referansı
@@ -268,6 +271,29 @@ Masaüstü bildirimleri `settings.json` dosyanızda özellik bazında yapıland�
 ## Gereksinimler
 
 - Python 3.8+ (Factory Droid, Claude Code)
+
+## OpenCode Desteği
+
+[OpenCode](https://opencode.ai), native özellikler ile TypeScript plugin'lerinin bir karması aracılığıyla destekleniyor. Tüm ayrıntılar, kurulum adımları ve eksiksiz kısıtlama listesi [`opencode/README.md`](opencode/README.md) dosyasındadır.
+
+- **Skill'ler native çalışır.** OpenCode, `SKILL.md` dosyalarını `~/.claude/skills/` konumundan okur; yani Claude Code için zaten dağıtılmış skill'ler görünür durumdadır -- `/` komutu yerine `skills_<name>` aracı olarak çağrılır.
+- **Kurallar native çalışır.** OpenCode, `AGENTS.md` dosyasını ve `opencode.json` `instructions` alanını okur.
+- **Hook'lar plugin'e dönüşür.** Python hook'ları `opencode/plugins/` altında TypeScript plugin'leri olarak yeniden yazıldı:
+
+| Plugin                | OpenCode hook'u                     | Python kaynağı        |
+|-----------------------|-------------------------------------|-----------------------|
+| `memory-save.ts`      | `stop`                              | `memory-save.py`      |
+| `compact-reinject.ts` | `experimental.session.compacting`   | `compact-reinject.py` |
+| `memory-inject.ts`    | `experimental.chat.system.transform`| `memory-reinject.py`  |
+
+Kurulum için plugin'leri OpenCode'un otomatik yüklenen plugin dizinine kopyalayın ve örnek yapılandırmayı birleştirin:
+
+```bash
+cp opencode/plugins/*.ts ~/.config/opencode/plugins/
+# ardından opencode/opencode.json.example dosyasını ~/.config/opencode/opencode.json içine birleştirin
+```
+
+> Plugin'ler OpenCode'un belgelenmiş hook API'sine göre yazıldı ve `bun` transpile'ından geçiyor, ancak runtime'da test edilmedi -- yazım sırasında OpenCode kurulu değildi. `memory-inject.ts`, upstream #17100 sorunu nedeniyle engellenen `experimental.chat.system.transform` hook'una dayanır; güvenilir bellek için statik `instructions` yolunu kullanın. `save-plan.py` port edilmedi (OpenCode'un plan modeli doğrulanmadı).
 
 ## Platform Farklılıkları
 
