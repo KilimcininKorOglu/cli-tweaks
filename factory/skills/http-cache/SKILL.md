@@ -38,6 +38,9 @@ Detect the project's language and HTTP framework:
 | Python     | flask, django, fastapi, starlette                             |
 | Rust       | actix-web, axum, warp, rocket                                 |
 | PHP        | laravel, symfony, plain (no framework)                        |
+| Java       | Spring MVC / Spring Boot, JAX-RS (Jersey), plain Servlets     |
+| C# / .NET  | ASP.NET Core (MVC, Razor Pages, Minimal API)                  |
+| Ruby       | Rails, Sinatra                                                |
 
 Identify:
 1. **Static endpoints** — serve files from disk, embed, or public directory (HTML, CSS, JS, JSON, XML, TXT, images, fonts)
@@ -68,12 +71,13 @@ Assign each endpoint a caching strategy:
 - For `immutable` assets, ETag is unnecessary and counterproductive; some browsers will still send conditional requests, wasting round-trips.
 - "Public and non-sensitive" does NOT imply "cacheable." A random server sample or shuffled list is public and non-sensitive, yet caching it freezes the randomness — classify by determinism first, sensitivity second.
 - **One route can span multiple classes.** When the same endpoint is deterministic for some query parameters and random for others (e.g. `?country=X` returns a filtered list but the bare route returns a random sample), set Cache-Control per branch inside the handler — a blanket route-level header will be wrong for at least one variant.
+- **`stale-while-revalidate` and `must-revalidate` are opposite refinements of `max-age`.** `stale-while-revalidate=<seconds>` lets a shared cache serve slightly-stale content while it revalidates in the background — add it to a `public, max-age` asset to hide revalidation latency. `must-revalidate` forbids serving stale once `max-age` expires, forcing a fresh revalidation — use it for content that must never be served stale (pricing, inventory, balances).
 
 ### Phase 3: Implementation
 
 #### ETag Generation
 
-Compute a content hash at **startup time** (not per-request) for embedded/static files. Use the fastest available hash:
+Compute a content hash at **startup time** (not per-request) for embedded/static files. SHA-256 is the safe default — the cost is paid once at startup, so hash speed rarely matters; reach for a faster non-cryptographic hash (xxHash, FNV) only if startup time is measurably affected:
 
 | Language | Hash function                 | Format                              |
 |----------|-------------------------------|-------------------------------------|
@@ -133,6 +137,8 @@ Set these headers on ALL cacheable responses (both 200 and 304):
 - `Vary: <relevant axes>` (see Vary section below)
 - `Last-Modified: <RFC 1123 date>` (optional but recommended for static files — improves proxy/CDN compatibility)
 
+**Last-Modified is advertised, not honored, by the manual handlers here.** The handlers in this skill validate on `ETag` / `If-None-Match` only. A client sending *only* `If-Modified-Since` (some proxies, older clients) will get a full `200`, not a `304`, from these handlers. This is acceptable whenever an ETag is present — modern clients send `If-None-Match` and revalidate correctly. Add an explicit `If-Modified-Since` check only if you must serve date-only revalidators. `http.ServeContent` honors both `If-None-Match` and `If-Modified-Since` only when given a NON-zero modtime — the Go example above passes the zero value (stable ETag across restarts), so it is ETag-only too; pass a real file mtime there if you need date-based revalidation. The native framework mechanisms below handle both.
+
 #### Vary Header
 
 Set `Vary` whenever the response varies along an axis the cache should distinguish:
@@ -166,7 +172,12 @@ func cachedFileHandler(content fs.FS, filename, cacheControl string) http.Handle
         }
     }
     etag := fmt.Sprintf(`"%x"`, sha256.Sum256(data))
-    modTime := time.Now() // or actual file mtime if available
+    // Use a STABLE modTime, never time.Now(): time.Now() changes on every process
+    // restart, so Last-Modified would claim the content changed when it did not.
+    // The zero Time makes ServeContent omit Last-Modified and rely on the ETag alone
+    // (verified: ServeContent skips Last-Modified when modTime.IsZero()).
+    // For files read from disk, pass the real file mtime instead.
+    var modTime time.Time // zero value
 
     return func(w http.ResponseWriter, r *http.Request) {
         w.Header().Set("Cache-Control", cacheControl)
@@ -250,13 +261,14 @@ function cachedStatic(filePath, contentType, maxAge) {
 
 ```python
 import hashlib
+from typing import Optional
 from fastapi import Request
 from fastapi.responses import Response
 
 def content_etag(data: bytes) -> str:
     return f'"{hashlib.sha256(data).hexdigest()}"'
 
-def match_etag(header: str | None, tag: str) -> bool:
+def match_etag(header: Optional[str], tag: str) -> bool:
     if not header:
         return False
     if header.strip() == "*":
@@ -312,6 +324,14 @@ if (matchETag($_SERVER['HTTP_IF_NONE_MATCH'] ?? '', $etag)) {
 ```
 
 For strong content-based ETag in PHP, use `hash_file('sha256', $filePath)` and cache the result via APCu to avoid hashing on every request. Always check `If-None-Match` BEFORE loading/processing data to skip expensive work on cache hits.
+
+**Frameworks with native conditional-request support:**
+
+Prefer a framework's built-in conditional-request handling over a hand-written handler:
+
+- **Spring (Java):** `ShallowEtagHeaderFilter` auto-generates a content ETag and returns `304` on an `If-None-Match` match. Caveat: it still renders the response (saves bandwidth, not server CPU). For server-side savings plus `If-Match` / `If-Unmodified-Since` support, call `ServletWebRequest.checkNotModified(etag, lastModified)` in the handler and short-circuit before building the body.
+- **ASP.NET Core (C#):** Output Caching (`AddOutputCache()` + `app.UseOutputCache()` + `[OutputCache]`) revalidates `If-None-Match` against the response ETag automatically; set a custom validator via `context.Response.Headers.ETag`. The older `[ResponseCache]` attribute only emits client/proxy cache headers — it does NOT perform server-side `304` revalidation.
+- **Rails (Ruby):** `fresh_when(etag:, last_modified:)` (default render) or `stale?(etag:, last_modified:)` (custom block) in the controller send `304 Not Modified` automatically. Set `config.action_dispatch.strict_freshness = true` for RFC-compliant "ETag takes precedence over Last-Modified" behavior.
 
 ### Phase 3.5: Asset Cache-Busting
 
