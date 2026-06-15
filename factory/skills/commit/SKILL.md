@@ -25,7 +25,7 @@ Creates well-formatted commits with conventional commit messages.
 /commit --no-verify      # Skip pre-commit hooks
 /commit --amend          # Amend the last commit
 /commit --wip            # Quick WIP commit
-/commit --push           # Auto-push after commit
+/commit --push           # Commit, then push (confirms before pushing to a default branch)
 ```
 
 ## Repo Style Mimicry
@@ -45,6 +45,8 @@ Look at the recent commits from `git log` and MATCH the repository's existing co
 - NEVER create empty commits if there are no changes
 - NEVER use git commands with -i flag (git rebase -i, git add -i) -- interactive mode is not supported
 - NEVER add signatures like "Created by Claude", "Co-authored-by: AI" or similar
+- NEVER push unless the user explicitly asked (the `--push` flag, or said "push" / "commit and push") -- a plain commit NEVER pushes
+- NEVER push to the default branch (`main`/`master`) without explicit confirmation -- if on the default branch, offer to create a feature branch first
 
 ## Commit Message Format (Default)
 
@@ -119,15 +121,16 @@ EOF
 5. **Match Repo Style**: Analyze last 10 commits, adopt their message format
 6. **Analyze for Logical Grouping**: Check if changes belong together, suggest splitting if multiple concerns
 7. **Create Commit**: Use HEREDOC syntax for multi-line, simple -m for single-line
+8. **Push (only if requested)**: Push only when the user explicitly asked (`--push`, or said "push" / "commit and push"). If the tree was already clean (nothing to commit), push the existing commits instead. Before pushing to the default branch (`main`/`master`), confirm first or offer to create a feature branch. A plain commit request never reaches this step.
 
 ## Smart Staging Strategy
 
 | Situation            | Action                    |
 |----------------------|---------------------------|
 | Only staged files    | Commit staged files       |
-| Only modified files  | Auto-stage and commit     |
+| Only modified files  | Stage only the files for this logical change (explicit paths), then commit |
 | Only untracked files | Prompt for inclusion      |
-| Mixed changes        | Interactive staging       |
+| Mixed changes        | Stage by logical group; ask which files belong together (never `git add -i`) |
 | No changes           | Report clean state        |
 
 ## Commit Rules
@@ -138,6 +141,7 @@ EOF
 - No period at end of subject line
 - Capitalize first letter of subject
 - Focus on "why" not "what" -- the diff shows what changed
+- Stage only the files this change touches (explicit paths); NEVER a blanket `git add .` / `git add -A` / `git add <dir>` -- it can sweep in unrelated changes or another session's work
 
 ### When to Split Commits
 - Different features or fixes
@@ -150,10 +154,10 @@ EOF
 
 | Option          | Description                | Behavior                  |
 |-----------------|----------------------------|---------------------------|
-| `--all`         | Stage all changes          | Includes untracked files  |
+| `--all`         | Stage all changes          | Everything incl. untracked -- use only when all changes belong in one commit |
 | `--staged`      | Commit only staged         | Ignores unstaged changes  |
 | `--modified`    | Stage modified only        | Excludes untracked files  |
 | `--no-verify`   | Skip pre-commit hooks      | Bypass Husky checks       |
 | `--amend`       | Modify last commit         | Edit previous commit      |
-| `--push`        | Auto-push after commit     | Push to remote branch     |
+| `--push`        | Commit, then push          | Confirms before pushing to a default branch |
 | `--wip`         | Work in progress           | Quick WIP commit          |
