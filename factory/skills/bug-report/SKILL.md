@@ -116,6 +116,8 @@ that worker if the marker exists.
 3. Each worker prompt must include:
    - The full content of its subcommand file as instructions
    - The repository path to scan
+   - The sec-recon architecture summary (from the `## System Architecture`
+     section) so the worker has codebase context instead of re-scanning blind
    - Instruction to write all confirmed findings to `BUG-REPORT.md` using the
      shared format below, continuing the existing ID sequence
 
@@ -128,6 +130,12 @@ If `--severity` flag provided, filter final report to only that severity level.
 
 > You are an auditor. Execute the following audit on the repository at `[repo_path]`.
 > Read the full content of the subcommand file below and follow its instructions.
+>
+> Codebase architecture context from the sec-recon pass (already written to the
+> `## System Architecture` section of `BUG-REPORT.md`) -- use it to focus the
+> audit instead of re-deriving the stack blind:
+> [paste the sec-recon architecture summary here]
+>
 > Write all confirmed findings to `BUG-REPORT.md` in the repository root.
 >
 > Finding format:
