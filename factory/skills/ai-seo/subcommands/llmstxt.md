@@ -1,6 +1,6 @@
 # llms.txt Analysis & Generation
 
-Analyze existing llms.txt files or generate one from scratch. llms.txt is an emerging standard (launched September 2024) that guides AI systems on how to understand and cite a website. Early adoption advantage: fewer than 5% of sites have one.
+Analyze existing llms.txt files or generate one from scratch. llms.txt is an emerging proposal (introduced September 2024 by Jeremy Howard / Answer.AI) that guides AI systems on how to understand and cite a website. Adoption among top sites is still in the single digits — an early-mover advantage — though major AI crawlers do not yet officially honor it.
 
 ## Command
 

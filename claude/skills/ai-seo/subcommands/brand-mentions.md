@@ -10,17 +10,19 @@ Analyze brand presence and authority across platforms that AI systems use as tra
 
 ## Core Insight
 
-Ahrefs Dec 2025 study (75K brands) found:
-- **YouTube mentions** correlate 0.737 with AI citation (strongest signal)
-- **Reddit mentions** outperform high-DR backlinks for AI visibility
-- **Unlinked mentions > backlinks** in the GEO context (3x stronger correlation)
-- Wikipedia entity presence is the strongest single signal for AI entity recognition
+Ahrefs research (2025-26, ~75K brands) on AI search visibility found:
+- **Brand mentions correlate more strongly than backlinks** — domain authority and link-building matter less than in traditional search
+- **YouTube mentions** are among the strongest correlating signals (YouTube is heavily represented in training data)
+- **Wikipedia entity presence** is a strong signal for AI entity recognition
+- Conversational platforms like **Reddit** are frequently cited in AI answers (noted in separate Semrush research)
+
+These are correlations, not proven causation. The consistent takeaway: being mentioned across trusted platforms matters more than accumulating links.
 
 ## Platform Weights
 
 | Platform | Weight | Why |
 |----------|--------|-----|
-| YouTube | 25% | Highest correlation with AI citation (0.737). Overrepresented in training data. |
+| YouTube | 25% | Among the strongest correlating signals for AI citation. Overrepresented in training data. |
 | Reddit | 25% | Conversational mentions carry high trust signal for AI models. |
 | Wikipedia | 20% | Strongest entity recognition signal. If you exist on Wikipedia, AI knows you exist. |
 | LinkedIn | 15% | Professional authority signal. Company pages, thought leadership articles. |

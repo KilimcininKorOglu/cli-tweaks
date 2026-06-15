@@ -10,7 +10,7 @@ Evaluate content quality through the lens of AI citation potential. Focuses on E
 
 ## E-E-A-T Framework
 
-Since December 2025, Google applies E-E-A-T to ALL competitive queries — not just YMYL (Your Money, Your Life). AI systems follow similar quality signals when selecting sources to cite.
+Google applies E-E-A-T signals broadly across content quality assessment, weighted most heavily for YMYL (Your Money, Your Life) topics. AI systems follow similar quality signals when selecting sources to cite.
 
 ### Experience (25%)
 
@@ -144,9 +144,10 @@ Does the site consistently cover this topic?
 
 5. **Calculate composite score**:
    ```
-   Content Score = (Experience * 0.25) + (Expertise * 0.25) +
-                   (Authority * 0.25) + (Trust * 0.25) + Topical Modifier
+   Content Score = clamp 0-100 of [ (Experience * 0.25) + (Expertise * 0.25) +
+                   (Authority * 0.25) + (Trust * 0.25) + Topical Modifier ]
    ```
+   The Topical Modifier (+10 to -5) can push the weighted average above 100 or below 0 — clamp the final result to the 0-100 range.
 
 ## Output Format
 

@@ -33,13 +33,15 @@ AI search is eating traditional search. This skill optimizes for where traffic i
 
 ## Why GEO Matters
 
-| Signal | Impact |
-|--------|--------|
-| AI-referred traffic growth | +527% YoY |
-| AI traffic conversion vs organic | 4.4x higher |
-| Brand mentions vs backlinks for AI | 3x stronger correlation |
-| Gartner: search traffic drop by 2028 | -50% |
-| Sites with llms.txt | < 5% (early mover advantage) |
+Figures below are directional and dated — verify current numbers before quoting them to a client.
+
+| Signal | Trend (named source) |
+|--------|----------------------|
+| AI-referred traffic | Rising fast — one 2025 report tracked a 527% jump over five months (Previsible), though AI is still a small share of total traffic |
+| AI traffic intent vs organic | Reported as higher-converting (Semrush 2025 modeled ~4.4x; other studies report very different multipliers) |
+| Brand mentions vs backlinks for AI | Mentions correlate more strongly than backlinks (Ahrefs 2025-26) |
+| Gartner: search engine volume | -25% by 2026 |
+| llms.txt adoption | Still low among top sites — early-mover advantage |
 
 ## Subcommands
 

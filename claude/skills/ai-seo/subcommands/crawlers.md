@@ -14,13 +14,15 @@ Analyze whether AI search engine crawlers can access a website's content. AI vis
 
 These crawlers power live AI search. Blocking them removes your site from AI-generated answers.
 
-| Crawler | User-Agent | Platform | Reach |
-|---------|-----------|----------|-------|
-| GPTBot | `GPTBot` | ChatGPT, OpenAI search | 300M+ weekly users |
+| Crawler | User-Agent | Platform | Role |
+|---------|-----------|----------|------|
+| GPTBot | `GPTBot` | ChatGPT, OpenAI | OpenAI's main crawler (index + training) |
 | OAI-SearchBot | `OAI-SearchBot` | OpenAI real-time search | Powers ChatGPT web results |
-| ChatGPT-User | `ChatGPT-User` | ChatGPT browse mode | Direct user-initiated browsing |
-| ClaudeBot | `ClaudeBot` | Claude search | Anthropic search features |
-| PerplexityBot | `PerplexityBot` | Perplexity AI | Best AI referral traffic |
+| ChatGPT-User | `ChatGPT-User` | ChatGPT browse mode | User-initiated browsing |
+| ClaudeBot | `ClaudeBot` | Claude (crawl/index) | Anthropic's main crawler |
+| Claude-User | `Claude-User` | Claude browse mode | User-initiated browsing |
+| Claude-SearchBot | `Claude-SearchBot` | Claude search | Anthropic search features |
+| PerplexityBot | `PerplexityBot` | Perplexity AI | Strong AI referral traffic |
 
 ### Tier 2 — Recommended (Broader Ecosystem)
 
@@ -28,11 +30,13 @@ These support AI features within larger platforms. Blocking reduces indirect AI 
 
 | Crawler | User-Agent | Platform | Note |
 |---------|-----------|----------|------|
-| Google-Extended | `Google-Extended` | Gemini, AI Overviews | Does NOT affect Google Search ranking |
+| Google-Extended | `Google-Extended` | Gemini, AI Overviews | robots.txt control token (AI opt-out), not a live crawling UA; does NOT affect Google Search ranking |
+| Applebot-Extended | `Applebot-Extended` | Apple Intelligence | robots.txt control token (AI-training opt-out), not a live crawling UA |
+| Meta-ExternalAgent | `Meta-ExternalAgent` | Meta AI | Meta's AI crawler (replaces the older FacebookBot for AI use) |
 | Amazonbot | `Amazonbot` | Alexa, Amazon AI | Voice search + product discovery |
-| Applebot-Extended | `Applebot-Extended` | Apple Intelligence | Siri + Apple AI features |
-| Bytespider | `Bytespider` | TikTok AI features | Emerging AI search |
-| FacebookBot | `FacebookBot` | Meta AI | Emerging AI search |
+| Bytespider | `Bytespider` | TikTok / ByteDance AI | Emerging AI search |
+| MistralAI-User | `MistralAI-User` | Mistral Le Chat | User-initiated browsing |
+| DuckAssistBot | `DuckAssistBot` | DuckDuckGo AI assist | DuckAssist answers |
 
 ### Tier 3 — Optional (Training Only)
 
@@ -41,9 +45,9 @@ These crawl for model training, not live search. Blocking has no immediate searc
 | Crawler | User-Agent | Purpose |
 |---------|-----------|---------|
 | CCBot | `CCBot` | Common Crawl (training data) |
-| anthropic-ai | `anthropic-ai` | Anthropic model training |
+| anthropic-ai | `anthropic-ai` | Legacy Anthropic training UA — superseded by ClaudeBot; may still appear in older robots.txt |
 | GoogleOther | `GoogleOther` | Google AI training |
-| Cohere-ai | `Cohere-ai` | Cohere model training |
+| Cohere-ai | `Cohere-ai` | Cohere training (undocumented; current status uncertain) |
 
 ## Analysis Procedure
 
@@ -58,7 +62,6 @@ These crawl for model training, not live search. Blocking has no immediate searc
 
 3. **Check for AI-specific files**:
    - `Bash(curl -s -o /dev/null -w "%{http_code}" <domain>/llms.txt)` — existence check
-   - `Bash(curl -s -o /dev/null -w "%{http_code}" <domain>/.well-known/ai-plugin.json)` — AI plugin manifest
 
 4. **Score calculation**:
    ```
@@ -98,7 +101,6 @@ These crawl for model training, not live search. Blocking has no immediate searc
 |------|--------|-------|
 | robots.txt | EXISTS/MISSING | [summary of AI rules] |
 | llms.txt | EXISTS/MISSING | [quality note if exists] |
-| ai-plugin.json | EXISTS/MISSING | |
 
 ## Issues Found
 [List any blocking issues with severity]

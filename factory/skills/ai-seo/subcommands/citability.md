@@ -10,15 +10,17 @@ Score how likely AI systems are to cite and quote content from a page. Analyzes 
 
 ## Core Insight
 
-Research (Georgia Tech, Princeton, IIT Delhi 2024) shows AI systems preferentially cite passages that are:
-- **134-167 words** in length (optimal extraction window)
+The "GEO: Generative Engine Optimization" research (Aggarwal et al., Princeton + IIT Delhi, KDD 2024) shows AI systems preferentially cite passages that are:
+- **Fact-rich** (statistics, named entities, cited sources — the paper's strongest levers)
 - **Self-contained** (readable without surrounding context)
-- **Fact-rich** (statistics, named entities, specific claims)
 - **Answer-shaped** (directly answers an implicit question)
+- **Concise** (tight, single-idea passages extract more cleanly than long ones)
 
-Applying these patterns yields 30-115% visibility lifts in AI search results.
+In the paper's experiments, rewriting content along these lines produced measurable visibility gains (up to ~40%). Treat passage length as a guideline, not a fixed target — there is no proven "optimal word count."
 
 ## Scoring Categories
+
+Each category is scored 0-100, then combined using the weights shown. Categories 1-2 use the explicit rubrics below. For the signal-based categories (3 Structural Readability, 4 Statistical Density, 5 Uniqueness), the listed +/- values indicate relative signal strength — tally the signals present, then map that onto 0-100 (most signals present → 80-100; some → 40-70; none → 0-30). Do NOT use the raw point sums as the category score: a passage with strong original data should reach ~100 on Uniqueness, not stop at the +30 tally.
 
 ### 1. Answer Block Quality (30%)
 
@@ -148,5 +150,5 @@ Does the content offer something AI can only get here?
 ## Important Notes
 
 - Score based on actual content analysis, not regex patterns. The LLM's understanding of passage quality is more accurate than keyword matching.
-- Optimal passage length (134-167 words) is a guideline, not a hard rule. A 200-word passage with perfect self-containment scores higher than a 150-word passage with pronoun dependencies.
+- Passage length is a guideline, not a hard rule: shorter self-contained passages extract more cleanly, but a 200-word passage with perfect self-containment scores higher than a 150-word passage with pronoun dependencies.
 - Rewrite suggestions must preserve the author's voice and facts — only restructure, don't rewrite content.

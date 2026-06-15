@@ -35,7 +35,7 @@ Launch up to 5 subagents **in parallel**, each analyzing a different dimension. 
 |-------|----------|---------------------|
 | Agent 1 | AI Citability — passage-level scoring on top 5-10 pages | `citability.md` |
 | Agent 2 | Brand Mentions — platform presence scan | `brand-mentions.md` |
-| Agent 3 | Technical SEO — SSR, CWV, crawler access, security | `technical.md` + `crawlers.md` |
+| Agent 3 | Technical + Platform — SSR, CWV, crawler access, llms.txt | `technical.md` + `crawlers.md` + `llmstxt.md` |
 | Agent 4 | Content Quality — E-E-A-T, freshness, topical authority | `content.md` |
 | Agent 5 | Structured Data — schema detection, entity recognition, sameAs | `schema.md` |
 
@@ -49,13 +49,13 @@ Each agent returns a category score (0-100) and top findings.
    GEO = (Citability * 0.25) + (Brand * 0.20) + (Content * 0.20) +
          (Technical * 0.15) + (Schema * 0.10) + (Platform * 0.10)
    ```
-   Platform score = average of crawler access and llms.txt scores from Agent 3.
+   Platform score = average of the crawler-access score (crawlers.md) and the llms.txt score (llmstxt.md), both produced by Agent 3.
 
-3. Apply business-type adjustments:
-   - SaaS: +5 weight on citability, -5 on brand
-   - Local: +5 weight on schema, -5 on citability
-   - E-commerce: +5 weight on schema, -5 on content
-   - Publisher: +5 weight on citability, +5 on content, -10 on schema
+3. Apply business-type weight adjustments BEFORE the weighted sum — shift the category weights from step 2 by these percentage points (each row nets to zero, so the weights still total 100), then recompute the GEO score with the adjusted weights:
+   - SaaS: citability +5, brand -5
+   - Local: schema +5, citability -5
+   - E-commerce: schema +5, content -5
+   - Publisher: citability +5, content +5, schema -10
 
 4. Classify all findings by severity:
    - **Critical**: Blocks AI visibility entirely (all Tier 1 crawlers blocked, no SSR, no structured data)
@@ -118,5 +118,5 @@ Each agent returns a category score (0-100) and top findings.
 
 - Respect robots.txt — do not fetch disallowed paths
 - Max 50 pages analyzed per audit
-- WebFetch timeout: 30 seconds per page
+- Skip any page that does not return promptly rather than blocking the whole audit
 - If a category analysis fails, report "Unable to assess" with reason — do not guess

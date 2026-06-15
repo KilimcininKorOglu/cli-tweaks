@@ -26,13 +26,13 @@ The `sameAs` property is the single most impactful schema element for GEO. It cr
 
    | Schema Type | GEO Points | Purpose |
    |-------------|------------|---------|
-   | Organization + sameAs | 15 | Entity recognition (CRITICAL) |
-   | Person (author) + sameAs | 15 | E-E-A-T author authority |
-   | Article + author link | 10 | Content attribution for citation |
-   | Business-type specific | 10 | SaaS/Local/E-commerce/Publisher |
-   | WebSite + SearchAction | 5 | Site-level signals |
+   | Organization + sameAs | 20 | Entity recognition (CRITICAL) |
+   | Person (author) + sameAs | 20 | E-E-A-T author authority |
+   | Article + author link | 15 | Content attribution for citation |
+   | Business-type specific | 15 | SaaS/Local/E-commerce/Publisher |
+   | WebSite + SearchAction | 10 | Site-level signals |
+   | speakable | 10 | Voice/AI assistant citation target |
    | BreadcrumbList | 5 | Navigation context |
-   | speakable | 5 | Voice/AI assistant citation target |
    | knowsAbout | 5 | Expertise signals |
 
 3. **Audit sameAs links** (most important for GEO):
@@ -58,7 +58,7 @@ The `sameAs` property is the single most impactful schema element for GEO. It cr
    - Is JSON-LD well-formed?
    - Are there deprecated schemas? (HowTo, FAQPage lost rich results support in 2023-2024)
 
-5. **Score calculation** (0-100): Sum GEO points from detected schemas, cap at 100.
+5. **Score calculation** (0-100): Sum GEO points from detected schemas (full coverage totals 100; cap at 100).
 
 6. **Generate missing schemas** as copy-paste JSON-LD based on business type:
 
