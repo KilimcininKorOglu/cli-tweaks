@@ -37,6 +37,8 @@ Scan the project root for version files. For each file found, note the exact ver
 | `*.gemspec`             | `.version =`                                            | `spec.version = "1.2.0"`      |
 | `mix.exs`               | `version:`                                              | `version: "1.2.0"`            |
 | `Chart.yaml`            | `version:` and `appVersion:`                            | `version: 1.2.0`              |
+| `*.csproj`              | `<Version>` (or `<VersionPrefix>`)                      | `<Version>1.2.0</Version>`    |
+| `__init__.py` / `_version.py` | `__version__`                                     | `__version__ = "1.2.0"`       |
 
 Also detect:
 - **Build command**: Check `package.json` scripts (build), `Makefile` (build target), `Cargo.toml` (cargo build), `pyproject.toml` (build system), `go.mod` (go build)
@@ -94,20 +96,26 @@ Runs fully automatically with no user interaction.
 ## Steps (execute ALL automatically, no questions)
 
 ### Step 1: Determine New Version
+- FIRST resume any unpushed release: if HEAD is already on a version tag (`git describe --exact-match --tags HEAD 2>/dev/null` returns a tag) that is not yet on the remote (`git ls-remote --tags origin <tag>` is empty, or no remote exists), SKIP the bump and jump straight to Step 7 to push that existing commit and tag -- a prior run committed and tagged but failed to push, and re-bumping would silently skip that version
+- Verify the current branch is the intended release branch (typically `main`/`master`); if on a feature/topic branch, STOP -- a release must not be tagged from a feature branch
 - Read current version from [PRIMARY VERSION FILE]
+- If multiple version files exist, read them all and verify they currently agree; if they disagree, STOP and report the mismatch instead of silently overwriting them to the primary's value
 - Apply semver bump (default: patch if no argument given)
 - Validate: new version must be greater than current
 
 ### Step 2: Update Version Files
 [FOR EACH FOUND FILE, list the exact edit instruction]
 - Update `[FILE]`: change `[FIELD]` from `[CURRENT]` to new version
+- For `Chart.yaml`, bump `version` (the chart version); leave `appVersion` unless it tracks the same app release -- the two are semantically distinct
 
 ### Step 3: Build
 - Run: `[DETECTED BUILD COMMAND]`
-- If build fails, STOP immediately. Do not proceed. Revert version changes.
+- If build fails, STOP immediately. Revert the version-file edits with `git restore [VERSION FILES]` (they are not committed yet) and do not proceed.
 
 ### Step 4: Update CHANGELOG.md
-- Run `git log [LATEST_TAG]..HEAD --oneline --no-decorate` to get commits since last tag
+- Find the last release tag at runtime: `git describe --tags --abbrev=0 2>/dev/null`
+- Get commits since then: if a tag was found, `git log <tag>..HEAD --oneline --no-decorate`; otherwise `git log HEAD --oneline --no-decorate` (first release -- use full history)
+- Get today's real date from `date +%Y-%m-%d` (never guess the date)
 - If CHANGELOG.md does not exist, create it
 - Prepend a new section at the top (below the header) in Keep a Changelog format:
 
@@ -129,14 +137,17 @@ Categorize commits by their conventional commit prefix:
 - Skip: chore(deps), merge commits, version bump commits
 
 ### Step 5: Git Commit
-- Stage all modified files: version files + CHANGELOG.md
+- Stage ONLY the bumped files by explicit path: the version files listed above + CHANGELOG.md. NEVER `git add -A` / `git add .` -- the Step 3 build may have produced artifacts that must not enter the release commit
 - Commit with message: `chore: bump version to X.Y.Z`
 
 ### Step 6: Git Tag
+- If `vX.Y.Z` already exists (`git rev-parse vX.Y.Z 2>/dev/null`), STOP -- this version was already tagged
 - Create annotated tag: `git tag -a vX.Y.Z -m "vX.Y.Z"`
 
 ### Step 7: Push
-- Run: `git push && git push --tags`
+- Verify an upstream exists: `git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null`. If none, STOP after the local tag and tell the user to push manually -- a missing upstream must not abort mid-release
+- Push the branch and ONLY the new tag: `git push && git push origin vX.Y.Z` (or `git push --follow-tags`). NEVER `git push --tags` -- it pushes every local tag, not just this release
+- If the push fails after the tag was created, report the exact state (commit + tag exist locally, nothing pushed yet); re-running the skill resumes at the push because Step 1 detects the unpushed tag and skips the bump
 
 ## Rules
 
@@ -154,7 +165,7 @@ When generating the skill:
 - **Only include version files that actually exist** in the project
 - **Fill in the actual build command** detected from the project
 - **Fill in the current version** read from files
-- **Fill in the latest git tag** if one exists
+- Do NOT hardcode the latest tag into Step 4 -- the generated skill finds it at runtime with `git describe`, so it works for the first release (no tag) and never goes stale across later releases
 - If the project has NO build command, omit Step 3 entirely
 - If the project uses a non-standard tag prefix (e.g., no `v` prefix), match the existing convention
 - If CHANGELOG.md already exists, preserve its existing content and prepend the new section
