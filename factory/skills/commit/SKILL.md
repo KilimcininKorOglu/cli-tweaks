@@ -28,20 +28,9 @@ Creates well-formatted commits with conventional commit messages.
 /commit --push           # Auto-push after commit
 ```
 
-## Context Gathering (MANDATORY FIRST STEP)
-
-Before doing anything else, gather full repository context by running these commands IN PARALLEL:
-
-```bash
-git status                    # Current state of working tree
-git diff HEAD                 # All staged and unstaged changes
-git branch --show-current     # Current branch name
-git log --oneline -10         # Recent commits for style matching
-```
-
 ## Repo Style Mimicry
 
-Look at the recent commits gathered above and MATCH the repository's existing commit message style:
+Look at the recent commits from `git log` and MATCH the repository's existing commit message style:
 - If the repo uses conventional commits (`feat:`, `fix:`), follow that
 - If the repo uses plain messages ("Add login page"), follow that
 - If the repo uses ticket prefixes (`JIRA-123: ...`), follow that
@@ -56,15 +45,6 @@ Look at the recent commits gathered above and MATCH the repository's existing co
 - NEVER create empty commits if there are no changes
 - NEVER use git commands with -i flag (git rebase -i, git add -i) -- interactive mode is not supported
 - NEVER add signatures like "Created by Claude", "Co-authored-by: AI" or similar
-
-## Default Behavior
-
-1. Gather context (git status, diff, log, branch) -- all in parallel
-2. Scan for secrets in staged/changed files
-3. Auto-detect git state and take appropriate action
-4. Analyze changes for logical grouping
-5. Match repo's commit style from recent commits
-6. Create atomic commits with appropriate type
 
 ## Commit Message Format (Default)
 
@@ -122,7 +102,13 @@ EOF
 
 ## Process Flow
 
-1. **Gather Context**: Run git status, diff HEAD, branch, log --oneline -10 (ALL IN PARALLEL)
+1. **Gather Context (MANDATORY FIRST STEP)**: Before anything else, run these in parallel:
+   ```bash
+   git status                    # Current state of working tree
+   git diff HEAD                 # All staged and unstaged changes
+   git branch --show-current     # Current branch name
+   git log --oneline -10         # Recent commits for style matching
+   ```
 2. **Security Scan**: Check changed files for secrets (.env, keys, credentials)
 3. **Smart Staging Decision**:
    - Staged files exist -> commit only staged
