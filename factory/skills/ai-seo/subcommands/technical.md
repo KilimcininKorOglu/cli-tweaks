@@ -5,7 +5,7 @@ Audit technical SEO foundations that directly impact AI crawler accessibility an
 ## Command
 
 ```bash
-/ai-seo technical <url>
+/ai-seo technical <url|path>
 ```
 
 ## Critical Insight: SSR and AI Crawlers
@@ -18,6 +18,22 @@ Audit technical SEO foundations that directly impact AI crawler accessibility an
 | ClaudeBot | None | Sees only server-rendered HTML |
 | PerplexityBot | Limited | Relies primarily on HTML response |
 | Google-Extended | Yes (via Googlebot) | Can render JS, but slower indexing |
+
+## Local Mode
+
+When the argument is a local path (see SKILL.md Input Modes), this audit shifts from HTTP inspection to source inspection. Per-category mapping:
+
+| Category | Local source | Note |
+|----------|-------------|------|
+| AI Crawler Access | `robots.txt` in root / `public/` / `static/` | Full check (see crawlers.md) |
+| Server-Side Rendering | `package.json` deps + framework config (`next.config.*`, `nuxt.config.*`, `astro.config.*`) + build output | Infer SSR/SSG/SPA from the framework and config, not from response HTML |
+| Page Speed Signals | image/bundle config, asset sizes on disk | Lower bound — real Core Web Vitals need the live site |
+| Crawlability | local `sitemap.xml`, `<link rel="canonical">` in templates | Mostly assessable |
+| Security Headers | host/CDN config if committed (`vercel.json`, `netlify.toml`, `_headers`, nginx conf) | Otherwise **live-only** — exclude and renormalize |
+| Mobile & Responsive | viewport meta in templates | Assessable |
+| IndexNow | key file in root / `public/` | Assessable |
+
+For any check that depends on the HTTP response and has no committed config (chiefly Security Headers), mark it "Not assessable locally — run against the live URL" and renormalize the technical score over the remaining categories rather than scoring them 0. Treat SSR and Page Speed results as a lower bound.
 
 ## Analysis Categories
 

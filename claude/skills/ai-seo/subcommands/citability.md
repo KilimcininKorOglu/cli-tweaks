@@ -5,7 +5,7 @@ Score how likely AI systems are to cite and quote content from a page. Analyzes 
 ## Command
 
 ```bash
-/ai-seo citability <url>
+/ai-seo citability <url|path>
 ```
 
 ## Core Insight
@@ -89,7 +89,7 @@ Does the content offer something AI can only get here?
 
 ## Analysis Procedure
 
-1. **Fetch the page** using WebFetch. Extract the main content body (ignore nav, footer, sidebar).
+1. **Get the content.** Web mode: WebFetch the page and extract the main content body (ignore nav, footer, sidebar). Local mode (see SKILL.md Input Modes): Read the content/template file (`*.md`, `*.mdx`, `*.html`) for the page and extract the main body. If the page's content is not in the repo — it loads from a CMS or API at runtime — report "Content not in repo — run against the live URL" and stop (standalone there is no composite); within a full audit, exclude citability rather than scoring it 0.
 
 2. **Segment into passages** at heading boundaries. Each section under a heading is one passage.
 
@@ -152,3 +152,4 @@ Does the content offer something AI can only get here?
 - Score based on actual content analysis, not regex patterns. The LLM's understanding of passage quality is more accurate than keyword matching.
 - Passage length is a guideline, not a hard rule: shorter self-contained passages extract more cleanly, but a 200-word passage with perfect self-containment scores higher than a 150-word passage with pronoun dependencies.
 - Rewrite suggestions must preserve the author's voice and facts — only restructure, don't rewrite content.
+- **Local mode:** passage scoring works only on content that lives in the repo (Markdown, MDX, static HTML). If content is CMS- or API-driven it is not present locally — exclude citability and run against the live URL rather than reporting a low score. Static analysis also misses runtime-assembled passages, so treat the local score as a lower bound.

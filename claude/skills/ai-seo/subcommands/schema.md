@@ -5,7 +5,7 @@ Audit structured data (JSON-LD, Microdata, RDFa) with a focus on AI entity recog
 ## Command
 
 ```bash
-/ai-seo schema <url>
+/ai-seo schema <url|path>
 ```
 
 ## Why Schema Matters for AI (Beyond Rich Snippets)
@@ -17,7 +17,9 @@ The `sameAs` property is the single most impactful schema element for GEO. It cr
 
 ## Analysis Procedure
 
-1. **Fetch the page** using WebFetch. Extract all structured data:
+1. **Get the page markup** and extract all structured data:
+   - Web mode: WebFetch the URL
+   - Local mode (see SKILL.md Input Modes): `Grep "application/ld+json"` across source/template files and Read the matches; also grep for Microdata (`itemscope`, `itemprop`) and RDFa (`typeof`, `property`) attributes
    - JSON-LD blocks (`<script type="application/ld+json">`)
    - Microdata attributes (`itemscope`, `itemprop`)
    - RDFa attributes (`typeof`, `property`)
@@ -127,3 +129,4 @@ The `sameAs` property is the single most impactful schema element for GEO. It cr
 - `speakable` marks content sections AI assistants should quote — add it to your most citable passages (pairs with citability analysis).
 - `knowsAbout` on Person schemas strengthens E-E-A-T signals for author entities.
 - HowTo and FAQPage schemas lost Google rich results but still provide structured signals to AI systems — keep them if they exist, but don't add new ones.
+- **Local mode is a lower bound:** a static file scan sees only JSON-LD written literally in source. Schema injected at runtime (Next.js `<Head>` / Metadata API, CMS plugins, `react-helmet`) is invisible locally — report the local score as a floor and recommend confirming against the live URL.

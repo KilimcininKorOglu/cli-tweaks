@@ -5,8 +5,8 @@ Analyze existing llms.txt files or generate one from scratch. llms.txt is an eme
 ## Command
 
 ```bash
-/ai-seo llmstxt <url>          # Analyze existing llms.txt
-/ai-seo llmstxt <url> generate  # Generate llms.txt from site content
+/ai-seo llmstxt <url|path>          # Analyze existing llms.txt
+/ai-seo llmstxt <url|path> generate  # Generate llms.txt from site content
 ```
 
 ## What is llms.txt
@@ -45,7 +45,7 @@ Optional extended version with more pages and deeper descriptions. Same format b
 
 When analyzing an existing llms.txt:
 
-1. **Fetch the file** using `Bash(curl -s <domain>/llms.txt)`.
+1. **Fetch the file**. Web mode: `Bash(curl -s <domain>/llms.txt)`. Local mode (see SKILL.md Input Modes): Read `llms.txt` from the project root or `public/`/`static/` (Glob to locate it).
 
 2. **Validate format**:
    - Has H1 title?
@@ -59,15 +59,15 @@ When analyzing an existing llms.txt:
    - **Accuracy (35%)**: Are descriptions accurate? Do URLs resolve? Do descriptions match actual page content?
    - **Usefulness (25%)**: Would an AI system understand the site better after reading this? Are descriptions specific enough to guide citation?
 
-4. **Check for llms-full.txt** at `<domain>/llms-full.txt`.
+4. **Check for llms-full.txt** at `<domain>/llms-full.txt` (Web mode) or in the project root / `public/` / `static/` (Local mode).
 
 ## Generation Mode
 
 When generating a new llms.txt:
 
 1. **Discover site structure**:
-   - Fetch homepage with WebFetch — extract navigation, key sections
-   - Try sitemap: `Bash(curl -s <domain>/sitemap.xml)`
+   - Web mode: fetch homepage with WebFetch — extract navigation, key sections; try sitemap via `Bash(curl -s <domain>/sitemap.xml)`
+   - Local mode (see SKILL.md Input Modes): Glob content/template files (`content/`, `src/`, `pages/`, `app/`) and Read the local `sitemap.xml` if present; derive sections from the directory structure and page front-matter
    - Identify top content categories and key pages
 
 2. **Classify pages by importance**:

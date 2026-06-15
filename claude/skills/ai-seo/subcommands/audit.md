@@ -5,12 +5,14 @@ Run a comprehensive AI search optimization audit on a website. Produces a compos
 ## Command
 
 ```bash
-/ai-seo audit <url>
+/ai-seo audit <url|path>
 ```
 
 ## Process
 
 ### Phase 1: Discovery (Sequential)
+
+**Local mode** (argument is a local path — see SKILL.md Input Modes): replace every fetch below with its local equivalent — homepage → the main index/template file via Read + Glob; robots.txt / llms.txt / sitemap.xml → Read from repo root or `public/`/`static/`; page discovery → Glob content/template files instead of crawling the sitemap. Brand mention search still uses WebSearch.
 
 1. **Fetch homepage** using WebFetch. Extract:
    - Title, meta description, H1-H6 structure
@@ -39,7 +41,7 @@ Launch up to 5 subagents **in parallel**, each analyzing a different dimension. 
 | Agent 4 | Content Quality — E-E-A-T, freshness, topical authority | `content.md` |
 | Agent 5 | Structured Data — schema detection, entity recognition, sameAs | `schema.md` |
 
-Each agent returns a category score (0-100) and top findings.
+Each agent returns a category score (0-100) and top findings. In Local mode, each agent reads local files per its subcommand's Local Mode section instead of fetching, and returns "Not assessable locally" for any category whose source is not in the repo.
 
 ### Phase 3: Synthesis (Sequential)
 
@@ -57,6 +59,8 @@ Each agent returns a category score (0-100) and top findings.
    - E-commerce: schema +5, content -5
    - Publisher: citability +5, content +5, schema -10
 
+   **Local mode ordering:** apply the business-type shift to the full six-category weight set FIRST (the invariant above holds — total stays 100). THEN drop any category flagged "Not assessable locally", renormalize the remaining adjusted weights to total 100 (divide each by their sum), and take the weighted sum over kept categories only — never substitute 0. List each excluded category with its reason and label the composite "partial". This ordering matters: excluding a category before the shift would leave an adjustment (e.g. E-commerce's `content -5`) with nothing to subtract, pushing the total off 100.
+
 4. Classify all findings by severity:
    - **Critical**: Blocks AI visibility entirely (all Tier 1 crawlers blocked, no SSR, no structured data)
    - **High**: Significantly reduces AI citation potential (poor citability, missing sameAs, broken schema)
@@ -66,9 +70,10 @@ Each agent returns a category score (0-100) and top findings.
 ## Output Format
 
 ```markdown
-# GEO Audit Report: [Domain]
+# GEO Audit Report: [Domain or local project path]
 
 ## Composite Score: [XX]/100 (Grade [A-F])
+*(Local mode: append "— partial; [excluded categories] not assessable locally" when any category was dropped, and flag static-derived scores as a lower bound.)*
 
 | Category | Score | Grade | Key Issue |
 |----------|-------|-------|-----------|
@@ -120,3 +125,4 @@ Each agent returns a category score (0-100) and top findings.
 - Max 50 pages analyzed per audit
 - Skip any page that does not return promptly rather than blocking the whole audit
 - If a category analysis fails, report "Unable to assess" with reason — do not guess
+- In Local mode: read files from disk (no fetching), exclude categories whose source is not in the repo and renormalize instead of scoring 0, and treat static scores as a lower bound (see SKILL.md Input Modes)

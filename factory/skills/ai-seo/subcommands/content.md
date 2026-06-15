@@ -5,7 +5,7 @@ Evaluate content quality through the lens of AI citation potential. Focuses on E
 ## Command
 
 ```bash
-/ai-seo content <url>
+/ai-seo content <url|path>
 ```
 
 ## E-E-A-T Framework
@@ -134,7 +134,7 @@ Does the site consistently cover this topic?
 
 ## Analysis Procedure
 
-1. **Fetch the page** with WebFetch. Extract main content, author info, dates, and structured data.
+1. **Get the content.** Web mode: WebFetch the page and extract main content, author info, dates, and structured data. Local mode (see SKILL.md Input Modes): Read the content/template files (`*.md`, `*.mdx`, `*.html`, component templates) plus author/date front-matter. If the page's content is not in the repo — it loads from a CMS or API at runtime — there is nothing to assess locally: report "Content not in repo — run against the live URL" and stop (standalone there is no composite); within a full audit, exclude this category rather than scoring it 0.
 
 2. **Score each E-E-A-T dimension** (0-100) based on the criteria above.
 
@@ -191,3 +191,4 @@ Does the site consistently cover this topic?
 - First-person experience is the strongest differentiator. A page with genuine "I did X and found Y" beats a perfectly written summary.
 - Topical authority requires looking beyond the single page — check if the site has related content.
 - Do not penalize AI-assisted content that demonstrates real E-E-A-T. Penalize content that lacks substance regardless of how it was produced.
+- **Local mode:** assess only content that lives in the repo (Markdown, MDX, static HTML, templated copy). CMS- or API-driven content is not present locally — exclude it and run against the live URL instead of scoring 0. Authority signals that need external verification (sameAs targets resolving, third-party citations) are a lower bound locally.

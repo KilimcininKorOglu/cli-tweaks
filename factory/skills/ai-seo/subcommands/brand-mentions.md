@@ -5,7 +5,7 @@ Analyze brand presence and authority across platforms that AI systems use as tra
 ## Command
 
 ```bash
-/ai-seo brands <url>
+/ai-seo brands <url|path>
 ```
 
 ## Core Insight
@@ -30,10 +30,10 @@ These are correlations, not proven causation. The consistent takeaway: being men
 
 ## Analysis Procedure
 
-1. **Extract brand identity** from the target URL:
-   - Company/brand name (from title, meta, structured data)
-   - Key products or service names
-   - Founder/CEO name (if relevant for personal brand)
+1. **Extract brand identity** from the target:
+   - Web mode: from the URL's title, meta, and structured data
+   - Local mode (see SKILL.md Input Modes): from `package.json` (name, description, author, homepage), README, config, and content files; brand/product names from headings and copy
+   - In both modes capture: company/brand name, key products or service names, founder/CEO name (if relevant for personal brand)
 
 2. **Search each platform** using WebSearch with platform-specific queries:
    - YouTube: `site:youtube.com "[brand name]"`
@@ -95,3 +95,4 @@ These are correlations, not proven causation. The consistent takeaway: being men
 - Wikipedia articles cannot be created for promotional purposes — only note the gap and suggest building genuine notability.
 - Reddit mentions must be organic. Astroturfing is detectable and harmful.
 - Focus on authority and context of mentions, not raw count. One Wikipedia article > 100 Reddit comments.
+- **Local mode** changes only where brand identity is read (from `package.json`/config/content instead of the live page). The mention search still uses WebSearch — brand reputation lives on the open web, not in the repo — so this category stays fully scored in Local mode.

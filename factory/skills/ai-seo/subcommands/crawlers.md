@@ -5,7 +5,7 @@ Analyze whether AI search engine crawlers can access a website's content. AI vis
 ## Command
 
 ```bash
-/ai-seo crawlers <url>
+/ai-seo crawlers <url|path>
 ```
 
 ## AI Crawler Tiers
@@ -51,7 +51,7 @@ These crawl for model training, not live search. Blocking has no immediate searc
 
 ## Analysis Procedure
 
-1. **Fetch robots.txt** using `Bash(curl -s <domain>/robots.txt)`.
+1. **Fetch robots.txt**. Web mode: `Bash(curl -s <domain>/robots.txt)`. Local mode (see SKILL.md Input Modes): Read `robots.txt` from the project root, then `public/`, `static/`, `dist/`, `build/` (Glob to locate it). If no robots.txt exists locally, report MISSING — all crawlers default to allowed, which is itself a finding worth flagging before launch.
 
 2. **Parse rules for each crawler**: For every AI crawler listed above, determine status:
    - **ALLOWED** — No blocking rules, or explicit `Allow: /`
@@ -61,7 +61,8 @@ These crawl for model training, not live search. Blocking has no immediate searc
    - **NOT MENTIONED** — No rules for this crawler (inherits wildcard or defaults to allowed)
 
 3. **Check for AI-specific files**:
-   - `Bash(curl -s -o /dev/null -w "%{http_code}" <domain>/llms.txt)` — existence check
+   - Web mode: `Bash(curl -s -o /dev/null -w "%{http_code}" <domain>/llms.txt)` — existence check
+   - Local mode: check whether `llms.txt` exists in the project root or `public/`/`static/`
 
 4. **Score calculation**:
    ```

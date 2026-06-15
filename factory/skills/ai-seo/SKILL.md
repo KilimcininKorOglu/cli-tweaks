@@ -9,7 +9,8 @@ description: >
   requesting website optimization for AI-powered search engines. Analyzes
   websites for AI search readiness across citability, crawler access,
   brand authority, structured data, technical foundations, and content quality.
-argument-hint: "[audit | citability | crawlers | llmstxt | brands | schema | technical | content] <url>"
+  Accepts a live URL or a local project path (scan source files before deploy).
+argument-hint: "[audit | citability | crawlers | llmstxt | brands | schema | technical | content] <url | path>"
 ---
 
 # AI SEO — Generative Engine Optimization
@@ -21,15 +22,17 @@ AI search is eating traditional search. This skill optimizes for where traffic i
 ## Usage
 
 ```bash
-/ai-seo audit <url>            # Full GEO + SEO audit with parallel analysis
-/ai-seo citability <url>       # AI citation readiness scoring
-/ai-seo crawlers <url>         # AI crawler access check (robots.txt)
-/ai-seo llmstxt <url>          # llms.txt analysis or generation
-/ai-seo brands <url>           # Brand mentions across AI-cited platforms
-/ai-seo schema <url>           # Structured data + entity recognition audit
-/ai-seo technical <url>        # Technical SEO foundations for AI
-/ai-seo content <url>          # Content quality + E-E-A-T assessment
+/ai-seo audit <url|path>       # Full GEO + SEO audit with parallel analysis
+/ai-seo citability <url|path>  # AI citation readiness scoring
+/ai-seo crawlers <url|path>    # AI crawler access check (robots.txt)
+/ai-seo llmstxt <url|path>     # llms.txt analysis or generation
+/ai-seo brands <url|path>      # Brand mentions across AI-cited platforms
+/ai-seo schema <url|path>      # Structured data + entity recognition audit
+/ai-seo technical <url|path>   # Technical SEO foundations for AI
+/ai-seo content <url|path>     # Content quality + E-E-A-T assessment
 ```
+
+The argument is either a live URL (`https://example.com`) or a local project path (`.`, `./src`, `/path/to/project`). See **Input Modes: Web vs Local** below for how each subcommand reads from disk instead of fetching.
 
 ## Why GEO Matters
 
@@ -45,16 +48,16 @@ Figures below are directional and dated — verify current numbers before quotin
 
 ## Subcommands
 
-| Subcommand   | Command                      | Description                                     |
-|--------------|------------------------------|-------------------------------------------------|
-| `audit`      | `/ai-seo audit <url>`        | Full GEO audit with composite scoring           |
-| `citability` | `/ai-seo citability <url>`   | Passage-level AI citation readiness              |
-| `crawlers`   | `/ai-seo crawlers <url>`     | AI crawler access analysis (robots.txt)          |
-| `llmstxt`    | `/ai-seo llmstxt <url>`      | llms.txt standard analysis or generation         |
-| `brands`     | `/ai-seo brands <url>`       | Brand authority on AI training platforms          |
-| `schema`     | `/ai-seo schema <url>`       | Structured data + entity recognition             |
-| `technical`  | `/ai-seo technical <url>`    | Technical SEO for AI crawlers                    |
-| `content`    | `/ai-seo content <url>`      | Content quality + E-E-A-T scoring                |
+| Subcommand   | Command                          | Description                                     |
+|--------------|----------------------------------|-------------------------------------------------|
+| `audit`      | `/ai-seo audit <url\|path>`      | Full GEO audit with composite scoring           |
+| `citability` | `/ai-seo citability <url\|path>` | Passage-level AI citation readiness              |
+| `crawlers`   | `/ai-seo crawlers <url\|path>`   | AI crawler access analysis (robots.txt)          |
+| `llmstxt`    | `/ai-seo llmstxt <url\|path>`    | llms.txt standard analysis or generation         |
+| `brands`     | `/ai-seo brands <url\|path>`     | Brand authority on AI training platforms          |
+| `schema`     | `/ai-seo schema <url\|path>`     | Structured data + entity recognition             |
+| `technical`  | `/ai-seo technical <url\|path>`  | Technical SEO for AI crawlers                    |
+| `content`    | `/ai-seo content <url\|path>`    | Content quality + E-E-A-T scoring                |
 
 - For `/ai-seo audit`: see [subcommands/audit.md](subcommands/audit.md)
 - For `/ai-seo citability`: see [subcommands/citability.md](subcommands/citability.md)
@@ -78,6 +81,8 @@ The full audit produces a weighted composite score (0-100):
 | Schema & Structured Data    | 10%    | schema       |
 | Platform Optimization       | 10%    | crawlers + llmstxt |
 
+In **Local mode**, any category whose source is not in the repo (e.g. CMS-driven content, web-only brand reputation) is excluded from the composite and the remaining weights are renormalized to total 100 — never scored 0. See **Input Modes: Web vs Local** below.
+
 **Score interpretation:**
 
 | Range | Grade | Meaning |
@@ -100,15 +105,43 @@ When running a full audit, detect the site type to adjust analysis focus:
 | Publisher | /blog, /articles, bylines, dates | Article schema, E-E-A-T, citability |
 | Agency | /services, /portfolio, /case-studies | Organization schema, brand authority |
 
-## How to Fetch Pages
+## Input Modes: Web vs Local
 
-All subcommands that need page content should use available tools:
+Every subcommand accepts either a live URL or a local project path. Detect the mode from the argument before doing anything else:
 
-1. **WebFetch** for HTML content extraction and analysis
-2. **Bash(curl -s)** for raw file fetching (robots.txt, llms.txt, sitemaps)
-3. **WebSearch** for brand mention discovery across platforms
+| Argument looks like | Mode | How the site is read |
+|---------------------|------|----------------------|
+| `http://…` or `https://…` | **Web** | Fetch the live site |
+| A bare domain (`example.com`) with no matching local path | **Web** | Treat as `https://…` and fetch |
+| `.`, `./src`, `../site`, `/abs/path`, `~/proj`, or any existing file/dir | **Local** | Read project files from disk |
 
-Do NOT use Python scripts or external dependencies. The LLM's analysis capabilities replace regex-based scoring with context-aware, more accurate assessment.
+If the argument is ambiguous, check whether it exists as a local path (Glob/Read). If it does, use Local mode; otherwise treat it as a URL.
+
+### Tool mapping
+
+| Need | Web mode | Local mode |
+|------|----------|------------|
+| Page / HTML content | WebFetch | Read + Glob + Grep on source files |
+| Raw files (robots.txt, llms.txt, sitemap.xml) | `Bash(curl -s <domain>/<file>)` | Read from project root, then `public/`, `static/`, `dist/`, `build/` |
+| Brand mention discovery | WebSearch | WebSearch — Local mode changes WHERE the site is read, not WHETHER the web is allowed |
+
+Do NOT use Python scripts or external dependencies. The LLM's context-aware analysis replaces regex-based scoring.
+
+### Local project layout
+
+Where to look in Local mode (framework-dependent — Glob to find the real location):
+
+- **Control files**: `robots.txt`, `llms.txt`, `llms-full.txt`, `sitemap.xml` → repo root or `public/`, `static/`, `dist/`, `build/`
+- **Content & templates**: `*.html`, `*.md`, `*.mdx`, `*.vue`, `*.svelte`, `*.astro`, `*.jsx`, `*.tsx` → `content/`, `src/`, `pages/`, `app/`, `templates/`
+- **Structured data**: `Grep "application/ld+json"` across source files
+- **Framework signals**: `package.json` dependencies, `next.config.*`, `nuxt.config.*`, `astro.config.*`, `gatsby-config.*`, `svelte.config.*`, `vite.config.*`
+
+### Local mode honesty rules
+
+Local source is what you wrote, not what an AI crawler renders. Two rules keep local scores honest:
+
+1. **Not in the repo → exclude, never zero.** If a category's source is not present locally (content is CMS- or API-driven, only empty templates exist, brand reputation needs the web), mark it "Not assessable locally — run against the live URL" and DROP it from the composite, then renormalize the remaining weights to total 100. Never score it 0 — that fabricates a low grade.
+2. **Static analysis is a lower bound.** Runtime-injected markup (Next.js `<Head>` JSON-LD, CMS-injected schema, client-rendered content) is invisible to a static file scan. Local Schema / Citability / Content / SSR scores are a FLOOR, not authoritative. Say so in the report and recommend verifying against the live URL.
 
 ## Output Format
 
