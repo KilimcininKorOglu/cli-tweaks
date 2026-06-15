@@ -66,6 +66,14 @@ Detect production and development branches automatically:
 
 ## Commands
 
+### Create Command Preconditions
+
+These apply to every create command (feature/bugfix/hotfix/release) below:
+
+- **Clean working tree required.** If there are uncommitted changes, STOP and ask the user to commit or stash first -- `git checkout <base>` would otherwise fail or carry the changes onto the new branch.
+- **Remote is optional.** If the base branch has no configured remote (`git remote -v` is empty), skip `git pull origin <base>` and create from the local base -- a missing remote must never abort branch creation (local-only repositories are valid).
+- **`--no-checkout`.** Do not switch branches at all: skip both the `git checkout <base>` and its on-branch `git pull`. Instead update the base ref without moving HEAD, then create from it: `git fetch origin <base>` followed by `git branch <new-branch> origin/<base>` when a remote exists, or just `git branch <new-branch> <base>` for a local-only base.
+
 ### feature <name>
 
 Create a new feature branch from development branch.
@@ -155,20 +163,26 @@ Merge current branch to appropriate target(s) based on branch type.
 
 | Current Branch | Actions |
 |----------------|---------|
-| feature/* | Checkout development → Merge feature → Delete feature branch |
-| bugfix/* | Checkout development → Merge bugfix → Delete bugfix branch |
-| hotfix/* | Checkout master → Merge hotfix → Checkout development → Merge hotfix → Delete hotfix branch |
-| release/* | Checkout master → Merge release → Tag version → Checkout development → Merge release → Delete release branch |
+| feature/* | Checkout development → Merge feature (`--no-ff`) → Delete feature branch |
+| bugfix/* | Checkout development → Merge bugfix (`--no-ff`) → Delete bugfix branch |
+| hotfix/* | Checkout master → Merge hotfix (`--no-ff`) → Checkout development → Merge hotfix (`--no-ff`) → Delete hotfix branch |
+| release/* | Checkout master → Merge release (`--no-ff`) → Tag version → Checkout development → Merge release (`--no-ff`) → Delete release branch |
 
 Before merge:
 - Ensure working tree is clean
-- Pull latest from target branch
+- Pull latest from target branch (skip if the target has no remote)
 - Check for potential conflicts
 
+On conflict or a failed merge:
+- STOP -- do NOT delete the source branch (its commits are not yet safely in the target)
+- For hotfix/release (two targets): if the SECOND merge (to development) conflicts, the change is now in master but not yet in development -- resolve the conflict and complete the development merge before deleting
+- Resolve conflicts manually, then re-run finish
+
 After merge:
-- Verify merge was successful
+- Verify every merge was successful
 - Report what was merged where
-- For hotfix/release: remind to push both branches
+- Remind the user to push the updated target branch(es): development for feature/bugfix; both master and development for hotfix/release
+- For release: also remind to push the tag (`git push origin <tag>`, or `git push --tags`)
 
 ### status
 
@@ -189,10 +203,9 @@ Output includes:
 ## Validation Rules
 
 NEVER proceed if:
-- Attempting to create feature/bugfix from master/main (must be from development)
-- Attempting to create hotfix from development (must be from master/main)
+- The base branch does not match the Branch Rules table above (e.g. creating a hotfix from development, or a feature/bugfix from master/main)
 - Branch with same name already exists
-- Working tree has uncommitted changes (for finish command)
+- Working tree has uncommitted changes (any create or finish command)
 
 ## Options
 
@@ -205,7 +218,8 @@ NEVER proceed if:
 - NEVER force push
 - NEVER delete remote branches automatically
 - NEVER skip conflict resolution
-- Always pull before creating new branch
+- Always merge with `--no-ff` -- the merge commit preserves the branch's history, which is what makes deleting the source branch safe
+- Always pull before creating a new branch when the base branch has a remote (skip the pull on local-only repositories)
 - Always verify merge success before deleting source branch
 
 ## Notes
