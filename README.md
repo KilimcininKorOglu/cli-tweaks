@@ -115,9 +115,9 @@ cli-tweaks/
   opencode/          <-- OpenCode (TS plugins + config, see opencode/README.md)
     plugins/
     opencode.json.example
-  wrongstack/        <-- WrongStack (Python shell hooks, see wrongstack/README.md)
+  wrongstack/        <-- WrongStack (Python shell hooks + skills, see wrongstack/README.md)
     hooks/
-    config.example.json
+    skills/
   SOUL.md.template          <-- Custom persona template
   GLOBAL-RULES.template.md  <-- Portable global agent-rules template
   sample-BUG-REPORT.md      <-- Finding-format reference for audit skills
@@ -137,6 +137,9 @@ npx degit KilimcininKorOglu/cli-tweaks/factory ~/.factory
 
 # Claude Code
 npx degit KilimcininKorOglu/cli-tweaks/claude ~/.claude
+
+# WrongStack
+npx degit KilimcininKorOglu/cli-tweaks/wrongstack ~/.wrongstack
 ```
 
 **Merge with existing setup**:
@@ -155,6 +158,13 @@ npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
 cp -r /tmp/cli-tweaks-hooks/* ~/.claude/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.claude/skills/
 rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
+
+# WrongStack
+npx degit KilimcininKorOglu/cli-tweaks/wrongstack/hooks /tmp/cli-tweaks-hooks
+npx degit KilimcininKorOglu/cli-tweaks/wrongstack/skills /tmp/cli-tweaks-skills
+cp -r /tmp/cli-tweaks-hooks/* ~/.wrongstack/hooks/
+cp -r /tmp/cli-tweaks-skills/* ~/.wrongstack/skills/
+rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
 ```
 
 ### Alternative: git clone
@@ -170,16 +180,21 @@ cp -r factory/skills/* ~/.factory/skills/
 # Claude Code
 cp -r claude/hooks/* ~/.claude/hooks/
 cp -r claude/skills/* ~/.claude/skills/
+
+# WrongStack
+cp -r wrongstack/hooks/* ~/.wrongstack/hooks/
+cp -r wrongstack/skills/* ~/.wrongstack/skills/
 ```
 
 ### Hook Registration
 
 After copying the files, register hooks by merging the hook definitions into your `settings.json`:
 
-| Platform      | Source                          | Target                     |
-|---------------|---------------------------------|----------------------------|
-| Factory Droid | `factory/settings.json.example` | `~/.factory/settings.json` |
-| Claude Code   | `claude/settings.json.example`  | `~/.claude/settings.json`  |
+| Platform      | Source                          | Target                       |
+|---------------|---------------------------------|------------------------------|
+| Factory Droid | `factory/settings.json.example` | `~/.factory/settings.json`   |
+| Claude Code   | `claude/settings.json.example`  | `~/.claude/settings.json`    |
+| WrongStack    | `wrongstack/config.example.json`| `~/.wrongstack/config.json`  |
 
 Copy the `hooks` section from the example file into your existing settings, or use the example as a starting point.
 
@@ -271,7 +286,7 @@ Desktop notifications are configured per-feature in your `settings.json`:
 
 ## Requirements
 
-- Python 3.8+ (Factory Droid, Claude Code)
+- Python 3.8+ (Factory Droid, Claude Code, WrongStack)
 
 ## OpenCode Support
 
@@ -298,9 +313,8 @@ cp opencode/plugins/*.ts ~/.config/opencode/plugins/
 
 ## WrongStack Support
 
-[WrongStack](https://github.com/WrongStack/WrongStack) is supported through Python shell hooks. WrongStack's shell-hook transport is Claude-compatible (stdin JSON → stdout JSON, exit code 2 = block) but field names and the outcome shape differ — a `_compat.py` shim absorbs those differences so hook logic stays identical to the Claude/Factory ports. Full details are in [`wrongstack/README.md`](wrongstack/README.md).
+[WrongStack](https://github.com/WrongStack/WrongStack) is supported through Python shell hooks and platform-tailored skills. WrongStack's shell-hook transport is Claude-compatible (stdin JSON → stdout JSON, exit code 2 = block) but field names and the outcome shape differ — a `_compat.py` shim absorbs those differences so hook logic stays identical to the Claude/Factory ports. Full details are in [`wrongstack/README.md`](wrongstack/README.md).
 
-- **Skills work natively.** WrongStack reads `SKILL.md` from the same paths Claude Code uses (`~/.claude/skills/`).
 - **Hooks are Python shell hooks.** Written under `wrongstack/hooks/`, the same Python source logic is wired through the `_compat.py` shim:
 
 | Hook                  | WrongStack event   | Matcher | Status |
@@ -313,29 +327,62 @@ cp opencode/plugins/*.ts ~/.config/opencode/plugins/
 | `compact-reinject.py` | —                  | —       | Not ported (no compaction event on WrongStack) |
 | `notify.py`           | —                  | —       | Helper module |
 
-Install by registering hooks in `~/.wrongstack/config.json`:
+- **Skills are available under `wrongstack/skills/`.** All 14 claude skills are ported with platform-specific adjustments where needed:
+
+| Skill                          | Command                         | Description                                                                      |
+|--------------------------------|---------------------------------|----------------------------------------------------------------------------------|
+| `commit`                       | `/commit`                       | Conventional commits with repo style mimicry, smart staging, git safety protocol |
+| `git-flow`                     | `/git-flow`                     | Overrides WrongStack's bundled git-flow with extended triggers                   |
+| `bug-report`                   | `/bug-report`                   | General bug analysis plus focused audit subcommands                              |
+| `task-plan`                    | `/task-plan`                    | PRD breakdown into features with autonomous execution                            |
+| `initialize`                   | `/initialize`                   | Creates `AGENTS.md` by scanning the codebase                                     |
+| `redate-commits`               | `/redate-commits`               | Rewrites commit dates across a selected range                                    |
+| `frontend-design`              | `/frontend-design`              | Frontend code generation with 28-site design catalog                             |
+| `version-update-skill-creator` | *(meta-skill)*                  | Creates a `/version-update` skill tailored to the current project                |
+| `ai-seo`                       | `/ai-seo`                       | GEO optimization for AI search engines                                           |
+| `draft-to-article`             | `/draft-to-article`             | Format drafts for X Articles, LinkedIn, or Medium/Substack                       |
+| `http-cache`                   | `/http-cache`                   | HTTP caching with ETag and Cache-Control headers                                 |
+| `audit-replay`                 | `/audit-replay`                 | User action tracking, audit event logging, and rrweb session replay              |
+| `ios-uikit`                    | `/ios-uikit`                    | Programmatic UIKit development with 20 reference documents                       |
+| `ios-simulator`                | `/ios-simulator`                | iOS simulator automation with 22 Node.js scripts                                 |
+
+Platform-specific adjustments in the WrongStack copies:
+- `draft-to-article`: generic ask-user phrasing (not `AskUserQuestion`)
+- `bug-report/fix.md`: generic plan-mode reference (not `ExitPlanMode`)
+- `initialize`: includes WrongStack in the agent list
+- `version-update-skill-creator`: outputs to `.wrongstack/skills/`
+- `git-flow`: override note in description
+
+Skills can alternatively be deployed from `claude/skills/` — WrongStack also reads `~/.claude/skills/` natively — but the `wrongstack/skills/` versions include the platform-specific fixes above.
+
+Install by registering hooks in `~/.wrongstack/config.json` and copying files:
 
 ```bash
+# Hooks
 cp wrongstack/hooks/* ~/.wrongstack/hooks/
 # then merge the hooks block from wrongstack/config.example.json into ~/.wrongstack/config.json
+
+# Skills (optional — WrongStack also reads skills from ~/.claude/skills/)
+cp -r wrongstack/skills/* ~/.wrongstack/skills/
 ```
 
-> The hooks are authored against WrongStack's documented hook API (`docs/hooks.md`, `packages/core/src/types/hooks.ts`, `packages/core/src/hooks/shell-executor.ts`) and pass `python3 -m py_compile`, but they were not runtime-tested — WrongStack was not installed during authoring. `memory-save.py`'s Claude pattern (block first stop, let second through) is impossible on WrongStack because Stop is side-effects-only. `save-plan.py` uses a heuristic tool-name matcher; the actual plan-exit tool name should be confirmed against your installed version. `compact-reinject.py` has no WrongStack equivalent (no compaction event).
+> The hooks are authored against WrongStack's documented hook API (`docs/hooks.md`, `packages/core/src/types/hooks.ts`, `packages/core/src/hooks/shell-executor.ts`) and pass `python3 -m py_compile`, but they were not runtime-tested — WrongStack was not installed during authoring. `memory-save.py`'s Claude pattern (block first stop, let second through) is impossible on WrongStack because Stop is side-effects-only. `save-plan.py` uses a heuristic tool-name matcher; the actual plan-exit tool name should be confirmed against your installed version. `compact-reinject.py` has no WrongStack equivalent (no compaction event). Skills are platform-agnostic and tested through their Claude/Factory equivalents.
 
 ## Platform Differences
 
-| Feature                 | Factory Droid    | Claude Code       |
-|-------------------------|------------------|-------------------|
-| Global config dir       | `~/.factory/`    | `~/.claude/`      |
-| Shared data dir         | `~/.cli-tweaks/` | `~/.cli-tweaks/`  |
-| Hook config file        | `settings.json`  | `settings.json`   |
-| Plan mode exit event    | `ExitSpecMode`   | `ExitPlanMode`    |
-| User question tool      | `AskUser`        | `AskUserQuestion` |
-| Re-injection target     | `AGENTS.md`      | `CLAUDE.md`       |
-| Subagent terminology    | "worker"         | "Explore"         |
-| Skill invocation prefix | `/`              | `/`               |
-| `/init-claude` skill    | Yes (CLAUDE.md)  | No (built-in)     |
-| `/initialize` skill     | No               | Yes (AGENTS.md)   |
+| Feature                 | Factory Droid    | Claude Code       | WrongStack          |
+|-------------------------|------------------|-------------------|---------------------|
+| Global config dir       | `~/.factory/`    | `~/.claude/`      | `~/.wrongstack/`    |
+| Shared data dir         | `~/.cli-tweaks/` | `~/.cli-tweaks/`  | `~/.cli-tweaks/`    |
+| Hook config file        | `settings.json`  | `settings.json`   | `config.json`       |
+| Hook runtime            | Python shell     | Python shell      | Python shell        |
+| Plan mode exit event    | `ExitSpecMode`   | `ExitPlanMode`    | Heuristic match     |
+| User question tool      | `AskUser`        | `AskUserQuestion` | (generic)           |
+| Re-injection target     | `AGENTS.md`      | `CLAUDE.md`       | config-driven       |
+| Skill invocation prefix | `/`              | `/`               | `/`                 |
+| Stop block support      | ✅               | ✅                | ❌ Side-effects only|
+| Compaction event        | ✅               | ✅                | ❌ None             |
+| Hook output cap         | None             | None              | 64 KiB              |
 
 ## License
 
