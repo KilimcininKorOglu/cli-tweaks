@@ -2,7 +2,7 @@
 
 [Türkçe](README.tr.md)
 
-A collection of hooks and skills for Factory Droid and Claude Code that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box. OpenCode is supported too, through native skills/rules plus a set of TypeScript plugins (see [OpenCode Support](#opencode-support)).
+A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, and WrongStack that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box. OpenCode is supported through native skills/rules plus TypeScript plugins; WrongStack is supported through Python shell hooks (see [OpenCode Support](#opencode-support) and [WrongStack Support](#wrongstack-support)).
 
 ## What's Included
 
@@ -115,6 +115,9 @@ cli-tweaks/
   opencode/          <-- OpenCode (TS plugins + config, see opencode/README.md)
     plugins/
     opencode.json.example
+  wrongstack/        <-- WrongStack (Python shell hooks, see wrongstack/README.md)
+    hooks/
+    config.example.json
   SOUL.md.template          <-- Custom persona template
   GLOBAL-RULES.template.md  <-- Portable global agent-rules template
   sample-BUG-REPORT.md      <-- Finding-format reference for audit skills
@@ -292,6 +295,32 @@ cp opencode/plugins/*.ts ~/.config/opencode/plugins/
 ```
 
 > The plugins are authored against OpenCode's documented hook API and pass `bun` transpilation, but they were not runtime-tested -- OpenCode was not installed during authoring. `memory-inject.ts` relies on `experimental.chat.system.transform`, which is blocked by upstream issue #17100; use the static `instructions` path for reliable memory. `save-plan.py` is not ported (OpenCode's plan model was not verified).
+
+## WrongStack Support
+
+[WrongStack](https://github.com/WrongStack/WrongStack) is supported through Python shell hooks. WrongStack's shell-hook transport is Claude-compatible (stdin JSON → stdout JSON, exit code 2 = block) but field names and the outcome shape differ — a `_compat.py` shim absorbs those differences so hook logic stays identical to the Claude/Factory ports. Full details are in [`wrongstack/README.md`](wrongstack/README.md).
+
+- **Skills work natively.** WrongStack reads `SKILL.md` from the same paths Claude Code uses (`~/.claude/skills/`).
+- **Hooks are Python shell hooks.** Written under `wrongstack/hooks/`, the same Python source logic is wired through the `_compat.py` shim:
+
+| Hook                  | WrongStack event   | Matcher | Status |
+|-----------------------|--------------------|---------|--------|
+| `session-start.py`    | `SessionStart`     | —       | Ported (150-line memory cap for 64 KiB output safety) |
+| `git-protect.py`      | `PreToolUse`       | `Bash`  | Direct port |
+| `memory-reinject.py`  | `UserPromptSubmit` | —       | Ported (counter keyed by `sessionId`) |
+| `memory-save.py`      | `Stop`             | —       | Redesigned (Stop is side-effects-only; uses marker + SessionStart reminder) |
+| `save-plan.py`        | `PostToolUse`      | `*`     | Heuristic matcher v1 (plan-exit tool name unconfirmed) |
+| `compact-reinject.py` | —                  | —       | Not ported (no compaction event on WrongStack) |
+| `notify.py`           | —                  | —       | Helper module |
+
+Install by registering hooks in `~/.wrongstack/config.json`:
+
+```bash
+cp wrongstack/hooks/* ~/.wrongstack/hooks/
+# then merge the hooks block from wrongstack/config.example.json into ~/.wrongstack/config.json
+```
+
+> The hooks are authored against WrongStack's documented hook API (`docs/hooks.md`, `packages/core/src/types/hooks.ts`, `packages/core/src/hooks/shell-executor.ts`) and pass `python3 -m py_compile`, but they were not runtime-tested — WrongStack was not installed during authoring. `memory-save.py`'s Claude pattern (block first stop, let second through) is impossible on WrongStack because Stop is side-effects-only. `save-plan.py` uses a heuristic tool-name matcher; the actual plan-exit tool name should be confirmed against your installed version. `compact-reinject.py` has no WrongStack equivalent (no compaction event).
 
 ## Platform Differences
 

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://wrongstack.ai/config.schema.json",
+  "_comment": "WrongStack shell hooks for cli-tweaks. Merge the 'hooks' block into your ~/.wrongstack/config.json. Replace /path/to/cli-tweaks with the actual clone path.",
+
+  "hooks": {
+    "SessionStart": [
+      {
+        "command": "python3 /path/to/cli-tweaks/wrongstack/hooks/session-start.py"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "command": "python3 /path/to/cli-tweaks/wrongstack/hooks/git-protect.py"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "command": "python3 /path/to/cli-tweaks/wrongstack/hooks/save-plan.py"
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "command": "python3 /path/to/cli-tweaks/wrongstack/hooks/memory-reinject.py"
+      }
+    ],
+    "Stop": [
+      {
+        "command": "python3 /path/to/cli-tweaks/wrongstack/hooks/memory-save.py"
+      }
+    ]
+  }
+}
