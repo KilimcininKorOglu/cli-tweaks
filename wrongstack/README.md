@@ -16,6 +16,33 @@ This directory ports cli-tweaks hooks to [WrongStack](https://github.com/WrongSt
 | `compact-reinject.py` | — | — | **Not ported.** WrongStack has no compaction event (5 documented events, no `SessionStart:compact` equivalent). Stub kept for layout parity. |
 | `notify.py` | — | — | Helper module. Cross-platform desktop notifications (macOS, Linux, Windows). |
 
+## Skills
+
+| Skill | Command | Description | Notes |
+|-------|---------|-------------|-------|
+| `commit` | `/commit` | Conventional commits with repo style mimicry, smart staging, git safety protocol | — |
+| `git-flow` | `/git-flow` | Structured branch management with strict validation | Overrides WrongStack's bundled git-flow with extended Turkish triggers |
+| `bug-report` | `/bug-report` | Bug analysis, security auditing, and focused security scans with 40 subcommands | Largest skill. Uses `plan` tool instead of `ExitPlanMode` |
+| `task-plan` | `/task-plan` | PRD breakdown into features with autonomous execution and checkpointing | — |
+| `initialize` | `/initialize` | Creates AGENTS.md by scanning the codebase | — |
+| `redate-commits` | `/redate-commits` | Rewrites commit dates across a selected range | — |
+| `frontend-design` | `/frontend-design` | Frontend code generation with 28-site design system catalog | — |
+| `version-update-skill-creator` | *(meta-skill)* | Creates a `/version-update` skill for the current project | Outputs to `.wrongstack/skills/` |
+| `ai-seo` | `/ai-seo` | GEO optimization for AI search engines | — |
+| `draft-to-article` | `/draft-to-article` | Format drafts for X Articles, LinkedIn, or Medium/Substack | — |
+| `http-cache` | `/http-cache` | HTTP caching with ETag and Cache-Control headers | — |
+| `audit-replay` | `/audit-replay` | User action tracking, audit event logging, and rrweb session replay | — |
+| `ios-uikit` | `/ios-uikit` | Programmatic UIKit development with 20 reference documents | — |
+| `ios-simulator` | `/ios-simulator` | iOS simulator automation with 22 Node.js scripts | — |
+
+The `wrongstack/skills/` directory mirrors `claude/skills/` with platform-specific adjustments:
+- `draft-to-article`: generic ask-user phrasing (not `AskUserQuestion`)
+- `bug-report/fix.md`: generic plan-mode phrasing (not `ExitPlanMode`)
+- `initialize`: includes WrongStack in the agent list
+- `version-update-skill-creator`: outputs to `.wrongstack/skills/`
+- `git-flow`: override note in description
+- All other skills: identical content (platform-agnostic)
+
 ## Architecture: `_compat.py` shim
 
 WrongStack's HookInput uses camelCase (`toolName`, `toolInput`, `sessionId`); our hook logic uses snake_case. The outcome JSON is top-level (`{"decision": "block", "reason": "..."}`) — not Claude's nested `hookSpecificOutput` wrapper.
@@ -84,7 +111,16 @@ If the file is missing, hooks work silently with defaults (no global inject, no 
 
 4. Create `~/.cli-tweaks/wrongstack-config.json` with your `globalInjectFiles` and `globalInstructionFile` entries (optional — hooks work without it).
 
-5. Skills need no additional deploy step — WrongStack reads skill files natively from the same paths Claude Code uses.
+5. Deploy skills:
+   ```bash
+   cp -r cli-tweaks/wrongstack/skills/* ~/.wrongstack/skills/
+   ```
+
+   Alternatively, skills need no additional deploy step if you already deploy
+   `claude/skills/` — WrongStack reads skill files natively from the same paths
+   Claude Code uses (`~/.claude/skills/`). The `wrongstack/skills/` versions
+   include platform-specific adjustments (WrongStack-compatible tool names,
+   `.wrongstack/skills/` paths, extended trigger keywords).
 
 ## Known limitations
 
