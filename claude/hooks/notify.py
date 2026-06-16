@@ -6,9 +6,8 @@ Enable notifications per-feature in ~/.claude/settings.json:
   "hookNotifyPlanSave": true
 """
 import json
-import os
 import platform
-import shlex
+import subprocess
 from pathlib import Path
 
 
@@ -41,22 +40,31 @@ def notify(title: str, message: str, subtitle: str = ""):
         safeTitle = escapeApplescript(title)
         safeMessage = escapeApplescript(message)
         safeSubtitle = escapeApplescript(subtitle)
-        parts = [f'display notification "{safeMessage}" with title "{safeTitle}"']
+        script = f'display notification "{safeMessage}" with title "{safeTitle}"'
         if subtitle:
-            parts[0] += f' subtitle "{safeSubtitle}"'
-        os.system(f"osascript -e '{parts[0]}'")
+            script += f' subtitle "{safeSubtitle}"'
+        try:
+            subprocess.run(["osascript", "-e", script])
+        except FileNotFoundError:
+            pass
 
     elif system == "Linux":
-        safe_title = shlex.quote(title)
-        safe_msg = shlex.quote(message)
-        os.system(f"notify-send {safe_title} {safe_msg}")
+        try:
+            subprocess.run(["notify-send", title, message])
+        except FileNotFoundError:
+            pass
 
     elif system == "Windows":
         safe_title = title.replace("'", "''")
         safe_msg = message.replace("'", "''")
-        os.system(
-            f'powershell.exe -Command "'
-            f"[System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms') | Out-Null; "
-            f"[System.Windows.Forms.MessageBox]::Show('{safe_msg}', '{safe_title}')"
-            f'"'
-        )
+        try:
+            subprocess.run(
+                [
+                    "powershell.exe",
+                    "-Command",
+                    "[System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms') | Out-Null; "
+                    f"[System.Windows.Forms.MessageBox]::Show('{safe_msg}', '{safe_title}')",
+                ]
+            )
+        except FileNotFoundError:
+            pass
