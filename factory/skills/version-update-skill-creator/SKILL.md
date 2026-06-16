@@ -7,7 +7,7 @@ description: >
   version update skill. SHOULD also invoke when user mentions "versiyon güncelleme
   skill'i kur", "setup version bumping", or asks to automate version management
   for the current project. Scans the project for version files, build commands,
-  and changelog, then generates a tailored version-update skill in .factory/skills/.
+  and changelog, then generates a tailored version-update skill in .claude/skills/.
 ---
 
 # Version Update Skill Creator
@@ -50,7 +50,7 @@ If NO version files are found, inform the user and stop. Do not create the skill
 
 ## Phase 2: Generate the Skill
 
-Create `.factory/skills/version-update/SKILL.md` with the following structure. Replace all placeholders with actual values from the scan.
+Create `.claude/skills/version-update/SKILL.md` with the following structure. Replace all placeholders with actual values from the scan.
 
 The generated skill MUST include:
 
@@ -175,7 +175,7 @@ When generating the skill:
 After creating the skill file, output a summary:
 
 ```
-Version Update skill created at .factory/skills/version-update/SKILL.md
+Version Update skill created at .claude/skills/version-update/SKILL.md
 
 Detected:
 - Version files: [list]
@@ -189,7 +189,7 @@ The skill is ready. Run /version-update [major|minor|patch] to use it.
 
 ## Safety Rules
 
-- Only create `.factory/skills/version-update/SKILL.md` -- never modify other files
+- Only create `.claude/skills/version-update/SKILL.md` -- never modify other files
 - If the skill already exists, read it first and ask before overwriting
 - Do not run any version update operations -- only create the skill definition
 - Do not modify CLAUDE.md, AGENTS.md, or any other configuration files
