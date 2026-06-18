@@ -51,6 +51,12 @@ if matched:
         f"These files are in the global gitignore for a reason. "
         f"Analyze the root cause of the error instead of force-adding."
     )
-    print(json.dumps({"decision": {"behavior": "block", "message": reason}}))
+    # Exit code 2 forces a PreToolUse block: Claude Code ignores stdout, feeds
+    # stderr back to the model as the reason, and aborts the tool call. The
+    # previous {"decision": {"behavior": "block", ...}} JSON is not a recognized
+    # PreToolUse outcome (that shape belongs to PermissionRequest / the Agent
+    # SDK) and was silently ignored, so the force-add proceeded.
+    print(reason, file=sys.stderr)
+    sys.exit(2)
 
 sys.exit(0)
