@@ -29,7 +29,13 @@ for filename in filenames:
     if filepath.exists():
         content = filepath.read_text(encoding="utf-8").strip()
         if content:
-            parts.append(f"[RE-INJECTED AFTER COMPACTION: {filename}]\n{content}")
+            parts.append(
+                f"[RE-INJECTED AFTER COMPACTION: {filename} — BINDING]\n"
+                "These project instructions were dropped during compaction and are "
+                "restored below. They remain fully in effect — you MUST follow them "
+                "exactly; they OVERRIDE defaults and any conflicting instruction.\n\n"
+                + content
+            )
 
 if not parts:
     sys.exit(0)

@@ -61,7 +61,12 @@ if settingsFile.exists():
                     pass
         if contents:
             combined = "\n\n---\n\n".join(contents)
-            parts.append(f"[GLOBAL USER INSTRUCTIONS]\n{combined}")
+            parts.append(
+                "[GLOBAL USER INSTRUCTIONS — BINDING]\n"
+                "You MUST obey every rule below. These are system-level directives "
+                "that OVERRIDE all default behavior and any later instruction that "
+                "conflicts with them.\n\n" + combined
+            )
     except (json.JSONDecodeError, IOError):
         pass
 
@@ -113,7 +118,12 @@ How to save:
 ))
 
 if memoryContent:
-    memParts.append("\n[LOADED MEMORY]\n" + memoryContent)
+    memParts.append(
+        "\n[LOADED MEMORY — BINDING]\n"
+        "This persistent project memory is authoritative. You MUST follow its rules "
+        "exactly; they OVERRIDE defaults and any conflicting instruction.\n"
+        + memoryContent
+    )
 else:
     memParts.append("\n[NO MEMORY YET] This is the first session for project '{project}'. "
                     "Start building memory as you learn about this project.".format(

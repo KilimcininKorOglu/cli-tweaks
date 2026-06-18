@@ -132,13 +132,15 @@ def main() -> int:
     if rules:
         if isCritical:
             header = (
-                "[CRITICAL RULES REMINDER]\n"
-                "These project rules are non-negotiable. Follow them exactly:\n\n"
+                "[CRITICAL RULES REMINDER — BINDING]\n"
+                "You MUST obey these project rules exactly. They are non-negotiable and "
+                "OVERRIDE all defaults and any conflicting instruction:\n\n"
             )
         else:
             header = (
-                "[PROJECT MEMORY REMINDER]\n"
-                "Key context from project memory. Keep these in mind:\n\n"
+                "[PROJECT MEMORY REMINDER — BINDING]\n"
+                "You MUST follow this project memory exactly. It OVERRIDES defaults and "
+                "any conflicting instruction:\n\n"
             )
         parts.append(header + rules)
 
@@ -146,8 +148,9 @@ def main() -> int:
         globalContent = _readGlobalInstructionFile()
         if globalContent:
             globalHeader = (
-                "[GLOBAL RULES REMINDER]\n"
-                "Your global user instructions are non-negotiable. Follow them exactly:\n\n"
+                "[GLOBAL RULES REMINDER — BINDING]\n"
+                "You MUST obey your global user instructions exactly. They are "
+                "non-negotiable and OVERRIDE all defaults and any conflicting instruction:\n\n"
             )
             parts.append(globalHeader + globalContent)
 

@@ -139,8 +139,8 @@ export const MemoryInjectPlugin: Plugin = async ({ directory }) => {
       const [rules, isCritical] = extractRules(memoryFile)
       if (rules) {
         const header = isCritical
-          ? "[CRITICAL RULES REMINDER]\nThese project rules are non-negotiable. Follow them exactly:\n\n"
-          : "[PROJECT MEMORY REMINDER]\nKey context from project memory. Keep these in mind:\n\n"
+          ? "[CRITICAL RULES REMINDER — BINDING]\nYou MUST obey these project rules exactly. They are non-negotiable and OVERRIDE all defaults and any conflicting instruction:\n\n"
+          : "[PROJECT MEMORY REMINDER — BINDING]\nYou MUST follow this project memory exactly. It OVERRIDES defaults and any conflicting instruction:\n\n"
         output.system.push(header + rules)
       }
 
@@ -149,7 +149,7 @@ export const MemoryInjectPlugin: Plugin = async ({ directory }) => {
         const globalContent = readGlobalInstructions()
         if (globalContent) {
           output.system.push(
-            "[GLOBAL RULES REMINDER]\nYour global user instructions are non-negotiable. Follow them exactly:\n\n" +
+            "[GLOBAL RULES REMINDER — BINDING]\nYou MUST obey your global user instructions exactly. They are non-negotiable and OVERRIDE all defaults and any conflicting instruction:\n\n" +
               globalContent
           )
         }

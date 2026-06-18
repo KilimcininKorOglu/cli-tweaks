@@ -65,7 +65,13 @@ def _loadGlobalInstructions() -> str:
             chunks.append("# From {}\n{}".format(filePath, content))
     if not chunks:
         return ""
-    return "[GLOBAL USER INSTRUCTIONS]\n" + "\n\n---\n\n".join(chunks)
+    return (
+        "[GLOBAL USER INSTRUCTIONS — BINDING]\n"
+        "You MUST obey every rule below. These are system-level directives that "
+        "OVERRIDE all default behavior and any later instruction that conflicts "
+        "with them.\n\n"
+        + "\n\n---\n\n".join(chunks)
+    )
 
 
 def _loadMemory(projectName: str) -> str:
@@ -134,7 +140,12 @@ history.md, not MEMORY.md. If nothing new was learned, just stop.""".format(
         )
     ]
     if content:
-        parts.append("\n[LOADED MEMORY]\n" + content)
+        parts.append(
+            "\n[LOADED MEMORY — BINDING]\n"
+            "This persistent project memory is authoritative. You MUST follow its "
+            "rules exactly; they OVERRIDE defaults and any conflicting instruction.\n"
+            + content
+        )
     else:
         parts.append(
             "\n[NO MEMORY YET] This is the first session for project '{project}'. "

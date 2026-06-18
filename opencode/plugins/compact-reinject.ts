@@ -32,7 +32,12 @@ export const CompactReinjectPlugin: Plugin = async ({ directory }) => {
           continue
         }
         if (!content) continue
-        output.context.push(`[RE-INJECTED AFTER COMPACTION: ${name}]\n${content}`)
+        output.context.push(
+          `[RE-INJECTED AFTER COMPACTION: ${name} — BINDING]\n` +
+            "These project instructions were dropped during compaction and are restored below. " +
+            "They remain fully in effect — you MUST follow them exactly; they OVERRIDE defaults " +
+            `and any conflicting instruction.\n\n${content}`
+        )
       }
     },
   }
