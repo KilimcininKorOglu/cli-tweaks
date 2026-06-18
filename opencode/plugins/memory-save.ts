@@ -68,14 +68,20 @@ export const MemorySavePlugin: Plugin = async ({ directory, client }) => {
       mkdirSync(memoryDir, { recursive: true })
       const hasMemory = existsSync(join(memoryDir, "MEMORY.md"))
 
-      // Count lines to decide whether to prompt offloading old entries to topic
-      // files. Threshold is below the 200-line cap so the agent trims BEFORE
-      // overflowing.
+      // Read the memory file once to drive two checks: line count (offload
+      // prompt) and presence of the required '## CRITICAL RULES' section
+      // (format/migration). Threshold is below the 200-line cap so the agent
+      // trims BEFORE overflowing.
       const MEMORY_SOFT_LIMIT = 180
       let lineCount = 0
+      let hasCriticalSection = false
       if (hasMemory) {
         try {
-          lineCount = readFileSync(join(memoryDir, "MEMORY.md"), "utf8").split("\n").length
+          const memoryLines = readFileSync(join(memoryDir, "MEMORY.md"), "utf8").split("\n")
+          lineCount = memoryLines.length
+          hasCriticalSection = memoryLines.some(
+            (line) => line.trim().toLowerCase() === "## critical rules"
+          )
         } catch {
           lineCount = 0
         }
@@ -88,9 +94,6 @@ export const MemorySavePlugin: Plugin = async ({ directory, client }) => {
           "Put durable behavior rules under the '## CRITICAL RULES' section. " +
           "Do NOT save commit hashes, dated fix histories, or archival narrative — " +
           "put any historical detail in history.md, not MEMORY.md. " +
-          "MIGRATION: if MEMORY.md has no '## CRITICAL RULES' section, restructure the " +
-          "whole file into the template below this session (preserve all real content, " +
-          "just reorganize and convert rules to imperative mood). " +
           "If nothing new was learned and the format is already correct, just stop. " +
           "Keep MEMORY.md under 200 lines. IMPORTANT: Always write memory in English only.\n" +
           TEMPLATE
@@ -100,6 +103,19 @@ export const MemorySavePlugin: Plugin = async ({ directory, client }) => {
           "Keep it concise (under 200 lines). IMPORTANT: Always write memory in English only. " +
           "If this was a trivial session with nothing worth remembering, just stop.\n" +
           TEMPLATE
+
+      const migrationNote =
+        hasMemory && !hasCriticalSection
+          ? "\nMANDATORY MIGRATION: MEMORY.md is MISSING the '## CRITICAL RULES' section, " +
+            "so it is NOT in the required format. You MUST restructure the whole file this " +
+            "session into the four-section template, in this exact order:\n" +
+            "  ## CRITICAL RULES        - non-negotiable active rules, imperative mood\n" +
+            "  ## Architecture & Config Facts - stable technical context (not rules)\n" +
+            "  ## Active Warnings       - pitfalls and recurring mistakes\n" +
+            "  ## Topic Files           - pointers to detail files (e.g. history.md)\n" +
+            "Preserve all real content, reorganize it under those sections, and convert " +
+            "rules to imperative mood. Do this before stopping."
+          : ""
 
       const offloadNote =
         hasMemory && lineCount >= MEMORY_SOFT_LIMIT
@@ -113,7 +129,7 @@ export const MemorySavePlugin: Plugin = async ({ directory, client }) => {
       writeFileSync(guardFile, "1")
       await client.session.prompt({
         path: { id: sessionId },
-        body: { parts: [{ type: "text", text: reason + offloadNote }] },
+        body: { parts: [{ type: "text", text: reason + migrationNote + offloadNote }] },
       })
     },
   }

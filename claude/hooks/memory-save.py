@@ -57,13 +57,19 @@ memoryDir.mkdir(parents=True, exist_ok=True)
 memoryFile = memoryDir / "MEMORY.md"
 hasMemory = memoryFile.exists()
 
-# Count lines to decide whether to prompt offloading old entries to topic files.
+# Read the memory file once to drive two checks: line count (offload prompt)
+# and presence of the required '## CRITICAL RULES' section (format/migration).
 # Threshold is below the 200-line cap so the agent trims BEFORE overflowing.
 MEMORY_SOFT_LIMIT = 180
 lineCount = 0
+hasCriticalSection = False
 if hasMemory:
     try:
-        lineCount = len(memoryFile.read_text(encoding="utf-8").splitlines())
+        memoryLines = memoryFile.read_text(encoding="utf-8").splitlines()
+        lineCount = len(memoryLines)
+        hasCriticalSection = any(
+            line.strip().lower() == "## critical rules" for line in memoryLines
+        )
     except (OSError, IOError):
         lineCount = 0
 
@@ -85,9 +91,6 @@ if hasMemory:
         "Put durable behavior rules under the '## CRITICAL RULES' section. "
         "Do NOT save commit hashes, dated fix histories, or archival narrative — "
         "put any historical detail in history.md, not MEMORY.md. "
-        "MIGRATION: if MEMORY.md has no '## CRITICAL RULES' section, restructure the "
-        "whole file into the template below this session (preserve all real content, "
-        "just reorganize and convert rules to imperative mood). "
         "If nothing new was learned and the format is already correct, just stop. "
         "Keep MEMORY.md under 200 lines. IMPORTANT: Always write memory in English only.\n"
         + TEMPLATE
@@ -101,6 +104,19 @@ else:
         "If this was a trivial session with nothing worth remembering, just stop.\n"
         + TEMPLATE
     ).format(dir=memoryDir)
+
+if hasMemory and not hasCriticalSection:
+    reason += (
+        "\nMANDATORY MIGRATION: MEMORY.md is MISSING the '## CRITICAL RULES' section, "
+        "so it is NOT in the required format. You MUST restructure the whole file this "
+        "session into the four-section template, in this exact order:\n"
+        "  ## CRITICAL RULES        - non-negotiable active rules, imperative mood\n"
+        "  ## Architecture & Config Facts - stable technical context (not rules)\n"
+        "  ## Active Warnings       - pitfalls and recurring mistakes\n"
+        "  ## Topic Files           - pointers to detail files (e.g. history.md)\n"
+        "Preserve all real content, reorganize it under those sections, and convert "
+        "rules to imperative mood. Do this before stopping."
+    )
 
 if hasMemory and lineCount >= MEMORY_SOFT_LIMIT:
     reason += (
