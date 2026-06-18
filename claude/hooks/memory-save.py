@@ -57,6 +57,16 @@ memoryDir.mkdir(parents=True, exist_ok=True)
 memoryFile = memoryDir / "MEMORY.md"
 hasMemory = memoryFile.exists()
 
+# Count lines to decide whether to prompt offloading old entries to topic files.
+# Threshold is below the 200-line cap so the agent trims BEFORE overflowing.
+MEMORY_SOFT_LIMIT = 180
+lineCount = 0
+if hasMemory:
+    try:
+        lineCount = len(memoryFile.read_text(encoding="utf-8").splitlines())
+    except (OSError, IOError):
+        lineCount = 0
+
 TEMPLATE = (
     "Use this MEMORY.md structure (sections in this order):\n"
     "  ## CRITICAL RULES        - non-negotiable active rules, imperative mood\n"
@@ -91,6 +101,14 @@ else:
         "If this was a trivial session with nothing worth remembering, just stop.\n"
         + TEMPLATE
     ).format(dir=memoryDir)
+
+if hasMemory and lineCount >= MEMORY_SOFT_LIMIT:
+    reason += (
+        "\nOFFLOAD: MEMORY.md is now {n} lines, near the 200-line cap. "
+        "Move the OLDEST or least-critical entries (resolved warnings, superseded "
+        "facts, dated notes) into a topic file (e.g. history.md), keeping MEMORY.md "
+        "a lean index of ACTIVE rules and current architecture facts."
+    ).format(n=lineCount)
 
 output = {
     "decision": "block",

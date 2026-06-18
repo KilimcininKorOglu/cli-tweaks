@@ -1,7 +1,7 @@
 import type { Plugin } from "@opencode-ai/plugin"
 import { homedir } from "node:os"
 import { join, basename } from "node:path"
-import { existsSync, mkdirSync, writeFileSync, rmSync } from "node:fs"
+import { existsSync, mkdirSync, writeFileSync, rmSync, readFileSync } from "node:fs"
 import { execSync } from "node:child_process"
 
 /**
@@ -68,6 +68,19 @@ export const MemorySavePlugin: Plugin = async ({ directory, client }) => {
       mkdirSync(memoryDir, { recursive: true })
       const hasMemory = existsSync(join(memoryDir, "MEMORY.md"))
 
+      // Count lines to decide whether to prompt offloading old entries to topic
+      // files. Threshold is below the 200-line cap so the agent trims BEFORE
+      // overflowing.
+      const MEMORY_SOFT_LIMIT = 180
+      let lineCount = 0
+      if (hasMemory) {
+        try {
+          lineCount = readFileSync(join(memoryDir, "MEMORY.md"), "utf8").split("\n").length
+        } catch {
+          lineCount = 0
+        }
+      }
+
       const reason = hasMemory
         ? "Before stopping: if you learned an ACTIVE RULE that changes future behavior " +
           "(build/test commands, an architecture fact, a user preference, a workflow rule), " +
@@ -88,11 +101,19 @@ export const MemorySavePlugin: Plugin = async ({ directory, client }) => {
           "If this was a trivial session with nothing worth remembering, just stop.\n" +
           TEMPLATE
 
+      const offloadNote =
+        hasMemory && lineCount >= MEMORY_SOFT_LIMIT
+          ? `\nOFFLOAD: MEMORY.md is now ${lineCount} lines, near the 200-line cap. ` +
+            "Move the OLDEST or least-critical entries (resolved warnings, superseded " +
+            "facts, dated notes) into a topic file (e.g. history.md), keeping MEMORY.md " +
+            "a lean index of ACTIVE rules and current architecture facts."
+          : ""
+
       // Write the toggle BEFORE prompting so the follow-up stop is recognized.
       writeFileSync(guardFile, "1")
       await client.session.prompt({
         path: { id: sessionId },
-        body: { parts: [{ type: "text", text: reason }] },
+        body: { parts: [{ type: "text", text: reason + offloadNote }] },
       })
     },
   }
