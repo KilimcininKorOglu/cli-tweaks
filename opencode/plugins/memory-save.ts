@@ -95,8 +95,7 @@ export const MemorySavePlugin: Plugin = async ({ directory, client }) => {
           "Do NOT save commit hashes, dated fix histories, or archival narrative — " +
           "put any historical detail in history.md, not MEMORY.md. " +
           "If nothing new was learned and the format is already correct, just stop. " +
-          "Keep MEMORY.md under 200 lines. IMPORTANT: Always write memory in English only.\n" +
-          TEMPLATE
+          "Keep MEMORY.md under 200 lines. IMPORTANT: Always write memory in English only."
         : "Before stopping: this is a new project with no memory yet. " +
           `Create ${memoryDir}/MEMORY.md following the template below. ` +
           "Write rules in imperative mood. Do NOT save commit hashes or dated history. " +
