@@ -12,7 +12,7 @@ A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, and W
 |-----------------------|----------------------|------------------------------------------------------------------------------------------------|
 | `session-start.py`    | SessionStart/compact | Injects global user files and project memory into context                                      |
 | `save-plan.py`        | PostToolUse          | Saves plans to disk (Factory) or sends notification only (Claude Code)                         |
-| `memory-save.py`      | Stop                 | Reminds the agent to save learnings before the session ends                                    |
+| `memory-save.py`      | Stop                 | Reminds the agent to update MEMORY.md; offloads old entries to topic files near the line cap and migrates a malformed file to the standard structure |
 | `memory-reinject.py`  | UserPromptSubmit     | Re-injects MEMORY.md critical rules (every 5th msg) and the full global instruction file (every 15th) to counter recency bias |
 | `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
 | `git-protect.py`      | PreToolUse (Bash)    | Blocks `git add -f/--force` on files listed in the global gitignore                             |
@@ -232,7 +232,7 @@ The memory system gives your agent persistent, project-scoped memory across sess
 - On session start, `session-start.py` reads `~/.cli-tweaks/memory/<project>/MEMORY.md` and injects it
 - On context compaction, memory is automatically re-injected alongside instruction files
 - Every 5th message, `memory-reinject.py` re-injects the critical rules from MEMORY.md; every 15th message it also re-injects your full global instruction file (`~/.claude/CLAUDE.md` or `~/.factory/AGENTS.md`) to counter recency bias in long sessions
-- On session end, `memory-save.py` reminds the agent to save anything new it learned
+- On session end, `memory-save.py` reminds the agent to save anything new it learned, prompts moving old entries to topic files when MEMORY.md nears its 200-line cap, and enforces the standard four-section structure if the file is malformed
 - Memory files are organized per project with a main index and topic files
 
 ### Compaction Re-injection
@@ -322,7 +322,7 @@ cp opencode/plugins/*.ts ~/.config/opencode/plugins/
 | `session-start.py`    | `SessionStart`     | —       | Ported (150-line memory cap for 64 KiB output safety) |
 | `git-protect.py`      | `PreToolUse`       | `Bash`  | Direct port |
 | `memory-reinject.py`  | `UserPromptSubmit` | —       | Ported (counter keyed by `sessionId`) |
-| `memory-save.py`      | `Stop`             | —       | Redesigned (Stop is side-effects-only; uses marker + SessionStart reminder) |
+| `memory-save.py`      | `Stop`             | —       | Redesigned — Stop is side-effects-only (no block), so it auto-generates/updates MEMORY.md directly from the session logs |
 | `save-plan.py`        | `PostToolUse`      | `*`     | Heuristic matcher v1 (plan-exit tool name unconfirmed) |
 | `compact-reinject.py` | —                  | —       | Not ported (no compaction event on WrongStack) |
 | `notify.py`           | —                  | —       | Helper module |
@@ -366,7 +366,7 @@ cp wrongstack/hooks/* ~/.wrongstack/hooks/
 cp -r wrongstack/skills/* ~/.wrongstack/skills/
 ```
 
-> The hooks are authored against WrongStack's documented hook API (`docs/hooks.md`, `packages/core/src/types/hooks.ts`, `packages/core/src/hooks/shell-executor.ts`) and pass `python3 -m py_compile`, but they were not runtime-tested — WrongStack was not installed during authoring. `memory-save.py`'s Claude pattern (block first stop, let second through) is impossible on WrongStack because Stop is side-effects-only. `save-plan.py` uses a heuristic tool-name matcher; the actual plan-exit tool name should be confirmed against your installed version. `compact-reinject.py` has no WrongStack equivalent (no compaction event). Skills are platform-agnostic and tested through their Claude/Factory equivalents.
+> The hooks are authored against WrongStack's documented hook API (`docs/hooks.md`, `packages/core/src/types/hooks.ts`, `packages/core/src/hooks/shell-executor.ts`) and pass `python3 -m py_compile`, but they were not runtime-tested — WrongStack was not installed during authoring. `memory-save.py`'s Claude pattern (block first stop, let second through) is impossible on WrongStack because Stop is side-effects-only, so it auto-generates MEMORY.md from the session logs instead. `save-plan.py` uses a heuristic tool-name matcher; the actual plan-exit tool name should be confirmed against your installed version. `compact-reinject.py` has no WrongStack equivalent (no compaction event). Skills are platform-agnostic and tested through their Claude/Factory equivalents.
 
 ## Platform Differences
 

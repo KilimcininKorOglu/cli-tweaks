@@ -11,7 +11,7 @@ This directory ports cli-tweaks hooks to [WrongStack](https://github.com/WrongSt
 | `session-start.py` | `SessionStart` | — | Ported. Global inject + memory load + stop-marker soft reminder. Memory capped at 150 lines for 64 KiB output safety. |
 | `git-protect.py` | `PreToolUse` | `Bash` | Direct port. Blocks `git add -f`/`--force` on global-gitignore files. |
 | `memory-reinject.py` | `UserPromptSubmit` | — | Ported. Critical rules every 5th message, global file every 15th. Counter keyed by `sessionId`. |
-| `memory-save.py` | `Stop` | — | **Redesigned.** WrongStack Stop is side-effects-only — `decision: "block"` is ignored. Writes a stop-marker + log line instead; `session-start.py` picks it up as a soft reminder on the next session. |
+| `memory-save.py` | `Stop` | — | **Redesigned.** WrongStack Stop is side-effects-only — `decision: "block"` is ignored. Auto-generates/updates MEMORY.md directly from the session logs (JSONL discovery, parse, merge) instead. |
 | `save-plan.py` | `PostToolUse` | `*` | **Heuristic matcher v1.** WrongStack's plan-exit tool name is unconfirmed; accepts any PostToolUse whose `toolName` contains `plan`/`spec`/`exitplan`/`exitspec`/`exitspecmode`. Misses are visible (no notification), false positives are harmless (a ping). Plans dir: `~/.wrongstack/plans/`. |
 | `compact-reinject.py` | — | — | **Not ported.** WrongStack has no compaction event (5 documented events, no `SessionStart:compact` equivalent). Stub kept for layout parity. |
 | `notify.py` | — | — | Helper module. Cross-platform desktop notifications (macOS, Linux, Windows). |
@@ -126,7 +126,7 @@ If the file is missing, hooks work silently with defaults (no global inject, no 
 
 - **Not runtime-tested.** All hooks pass `python3 -m py_compile` but none were executed inside a real WrongStack session.
 - **Shell-hook output cap.** WrongStack's shell-executor caps hook output at 64 KiB. `session-start.py` truncates MEMORY.md at 150 lines and limits global files to 2-3 entries. A very large global instruction file + memory could still clip silently.
-- **Stop cannot block.** `memory-save.py`'s Claude pattern (block first stop, let second through) is impossible. The redesign uses a soft marker + SessionStart reminder. The agent is reminded at session start, not at every turn end.
+- **Stop cannot block.** `memory-save.py`'s Claude pattern (block first stop, let second through) is impossible. The redesign reads the session logs and writes/merges MEMORY.md directly, since a Stop hook can only run side effects.
 - **Compaction re-injection.** WrongStack has no `SessionStart:compact` event. If a long session compacts mid-flight, CLAUDE.md/AGENTS.md and memory are not re-injected until the next session start.
 - **Save-plan tool name unconfirmed.** The heuristic string match (`plan`/`spec`/`exitplan`/`exitspec`) is based on WrongStack's README mentioning SpecParser. The actual PostToolUse tool name may differ. Confirm against your install and tighten the `PLAN_TOOL_HINTS` list if needed.
 - **Permission ordering.** WrongStack runs `PreToolUse` *before* the permission (trust) policy, so `git-protect.py` can veto tools that would otherwise auto-allow — this is correct behavior for a block hook.

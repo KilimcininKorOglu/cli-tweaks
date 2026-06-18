@@ -39,7 +39,7 @@ they are re-authored here.
 
 | Plugin | OpenCode hook | Python origin | Match |
 |--------|---------------|---------------|-------|
-| `memory-save.ts` | `stop` | `memory-save.py` | Full — blocks the first stop and injects a continuation prompt |
+| `memory-save.ts` | `stop` | `memory-save.py` | Full — blocks the first stop and injects a memory-update prompt (offloads to topic files near the line cap, forces migration if MEMORY.md is malformed) |
 | `compact-reinject.ts` | `experimental.session.compacting` | `compact-reinject.py` | Full — preserves AGENTS.md/CLAUDE.md through compaction |
 | `memory-inject.ts` | `experimental.chat.system.transform` | `memory-reinject.py` | Experimental — blocked by issue #17100 (see below) |
 | `git-protect.ts` | `tool.execute.before` | `git-protect.py` | Full — throws to block `git add -f`/`--force` on a global-gitignore file (API verified against docs, not runtime-tested) |

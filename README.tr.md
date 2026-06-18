@@ -12,7 +12,7 @@ Factory Droid, Claude Code, OpenCode ve WrongStack için planlama otomasyonu, ka
 |-----------------------|----------------------|---------------------------------------------------------------------------------------------------------------------|
 | `session-start.py`    | SessionStart/compact | Global kullanıcı dosyalarını ve proje belleğini bağlama enjekte eder                                                |
 | `save-plan.py`        | PostToolUse          | Planları diske kaydeder (Factory) veya yalnızca bildirim gönderir (Claude Code)                                     |
-| `memory-save.py`      | Stop                 | Oturum bitmeden önce ajanın öğrendiklerini kaydetmesini hatırlatır                                                  |
+| `memory-save.py`      | Stop                 | MEMORY.md'yi güncellemesini hatırlatır; satır sınırına yaklaşınca eski girdileri topic dosyalarına taşır ve bozuk dosyayı standart yapıya migration yapar |
 | `memory-reinject.py`  | UserPromptSubmit     | Her 5. mesajda MEMORY.md kritik kurallarını, her 15. mesajda tüm global talimat dosyasını yeniden enjekte ederek bağlam kaybını önler |
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                   |
 | `git-protect.py`      | PreToolUse (Bash)    | Global gitignore'daki dosyalara `git add -f/--force` uygulanmasını engeller                                         |
@@ -232,7 +232,7 @@ Bellek sistemi, ajana oturumlar arası kalıcı ve projeye özel bir bellek sağ
 - Oturum başında `session-start.py`, `~/.cli-tweaks/memory/<proje>/MEMORY.md` dosyasını okur ve bağlama enjekte eder
 - Bağlam sıkıştırmasında bellek, talimat dosyalarıyla birlikte otomatik olarak yeniden enjekte edilir
 - Her 5. mesajda `memory-reinject.py`, MEMORY.md'deki kritik kuralları yeniden enjekte eder; her 15. mesajda ayrıca tüm global talimat dosyanızı (`~/.claude/CLAUDE.md` veya `~/.factory/AGENTS.md`) yeniden enjekte ederek uzun oturumlarda bağlam kaybını önler
-- Oturum sonunda `memory-save.py`, ajanın yeni öğrendiklerini kaydetmesini hatırlatır
+- Oturum sonunda `memory-save.py`, ajanın yeni öğrendiklerini kaydetmesini hatırlatır, MEMORY.md 200 satır sınırına yaklaşınca eski girdileri topic dosyalarına taşımayı önerir ve dosya bozuksa standart dört bölümlü yapıya migration yapar
 - Bellek dosyaları proje bazında ana indeks ve konu dosyalarıyla düzenlenir
 
 ### Sıkıştırma Sonrası Yeniden Enjeksiyon
@@ -322,7 +322,7 @@ cp opencode/plugins/*.ts ~/.config/opencode/plugins/
 | `session-start.py`    | `SessionStart`     | —       | Port edildi (64 KiB çıktı güvenliği için bellek 150 satırla sınırlı) |
 | `git-protect.py`      | `PreToolUse`       | `Bash`  | Doğrudan port |
 | `memory-reinject.py`  | `UserPromptSubmit` | —       | Port edildi (sayaç `sessionId` ile anahtarlı) |
-| `memory-save.py`      | `Stop`             | —       | Yeniden tasarlandı (Stop side-effects-only; marker + SessionStart hatırlatma) |
+| `memory-save.py`      | `Stop`             | —       | Yeniden tasarlandı — Stop side-effects-only (blok yok), bu yüzden MEMORY.md'yi doğrudan session log'larından otomatik üretir/günceller |
 | `save-plan.py`        | `PostToolUse`      | `*`     | Heuristic matcher v1 (plan-exit tool adı doğrulanmadı) |
 | `compact-reinject.py` | —                  | —       | Port edilmedi (WrongStack'te compaction olayı yok) |
 | `notify.py`           | —                  | —       | Yardımcı modül |
@@ -366,7 +366,7 @@ cp wrongstack/hooks/* ~/.wrongstack/hooks/
 cp -r wrongstack/skills/* ~/.wrongstack/skills/
 ```
 
-> Hook'lar WrongStack'in belgelenmiş hook API'sine (`docs/hooks.md`, `packages/core/src/types/hooks.ts`, `packages/core/src/hooks/shell-executor.ts`) göre yazıldı ve `python3 -m py_compile` denetiminden geçti, ancak runtime'da test edilmedi — yazım sırasında WrongStack kurulu değildi. `memory-save.py`'nin Claude pattern'i (ilk stop'u bloke et, ikinciyi geçir) WrongStack'te imkansızdır çünkü Stop side-effects-only'dir. `save-plan.py` heuristic bir tool-adı eşleştirici kullanır; gerçek plan-exit tool adı kurulumunuzda doğrulanmalıdır. `compact-reinject.py`'nin WrongStack karşılığı yoktur (compaction olayı yok). Skill'ler platform-agnostiktir ve Claude/Factory eşdeğerleri aracılığıyla test edilmiştir.
+> Hook'lar WrongStack'in belgelenmiş hook API'sine (`docs/hooks.md`, `packages/core/src/types/hooks.ts`, `packages/core/src/hooks/shell-executor.ts`) göre yazıldı ve `python3 -m py_compile` denetiminden geçti, ancak runtime'da test edilmedi — yazım sırasında WrongStack kurulu değildi. `memory-save.py`'nin Claude pattern'i (ilk stop'u bloke et, ikinciyi geçir) WrongStack'te imkansızdır çünkü Stop side-effects-only'dir, bu yüzden bunun yerine MEMORY.md'yi session log'larından otomatik üretir. `save-plan.py` heuristic bir tool-adı eşleştirici kullanır; gerçek plan-exit tool adı kurulumunuzda doğrulanmalıdır. `compact-reinject.py`'nin WrongStack karşılığı yoktur (compaction olayı yok). Skill'ler platform-agnostiktir ve Claude/Factory eşdeğerleri aracılığıyla test edilmiştir.
 
 ## Platform Farklılıkları
 
