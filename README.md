@@ -36,6 +36,7 @@ A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, and W
 | `ios-uikit`                    | `/ios-uikit`                    | Programmatic UIKit development with 20 reference documents                       |
 | `ios-simulator`                | `/ios-simulator`                | iOS simulator automation with 22 Node.js scripts for semantic navigation         |
 | `goal-prep`                    | `/goal-prep`                    | Converts free-form work into a verifiable `/goal` completion condition           |
+| `no-ai`                        | `/no-ai`                        | Rewrites text to remove common AI-generated writing patterns                     |
 | `audit-replay`                 | `/audit-replay`                 | User action tracking, audit event logging, and rrweb session replay              |
 | `http-cache`                   | `/http-cache`                   | HTTP caching with ETag and Cache-Control header implementation                   |
 

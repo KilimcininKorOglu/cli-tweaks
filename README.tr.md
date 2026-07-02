@@ -36,6 +36,7 @@ Factory Droid, Claude Code, OpenCode ve WrongStack için planlama otomasyonu, ka
 | `ios-uikit`                    | `/ios-uikit`                    | 20 referans belgeyle programatik UIKit geliştirme                               |
 | `ios-simulator`                | `/ios-simulator`                | 22 Node.js script ile iOS simülatör otomasyonu                                  |
 | `goal-prep`                    | `/goal-prep`                    | Serbest metni doğrulanabilir `/goal` tamamlanma koşuluna dönüştürür             |
+| `no-ai`                        | `/no-ai`                        | Metinden yaygın AI üretimi yazı kalıplarını kaldırır                            |
 | `audit-replay`                 | `/audit-replay`                 | Kullanıcı eylem takibi, audit event logging ve rrweb session replay             |
 | `http-cache`                   | `/http-cache`                   | ETag ve Cache-Control header'ları ile HTTP caching uygulaması                   |
 
