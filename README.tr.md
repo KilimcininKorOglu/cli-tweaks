@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-Factory Droid, Claude Code, OpenCode, WrongStack ve Codex için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın. OpenCode, native skill/rules ile birlikte bir TypeScript plugin seti aracılığıyla; WrongStack, Python shell hook'ları aracılığıyla; Codex ise native user-level skill'ler aracılığıyla destekleniyor (bkz. [OpenCode Desteği](#opencode-desteği), [WrongStack Desteği](#wrongstack-desteği) ve [Codex Skill Desteği](#codex-skill-desteği)).
+Factory Droid, Claude Code, OpenCode, WrongStack ve Codex için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın. OpenCode, native skill/rules ile birlikte bir TypeScript plugin seti aracılığıyla; WrongStack, Python shell hook'ları aracılığıyla; Codex ise native user-level skill'ler ve Python command hook'ları aracılığıyla destekleniyor (bkz. [OpenCode Desteği](#opencode-desteği), [WrongStack Desteği](#wrongstack-desteği) ve [Codex Desteği](#codex-desteği)).
 
 ## İçerik
 
@@ -121,6 +121,9 @@ cli-tweaks/
   wrongstack/        <-- WrongStack (Python shell hook + skills, bkz. wrongstack/README.md)
     hooks/
     skills/
+  codex/             <-- Codex (Python command hook + config, bkz. codex/README.md)
+    hooks/
+    hooks.json.example
   SOUL.md.template          <-- Özel persona şablonu
   GLOBAL-RULES.template.md  <-- Taşınabilir global ajan kuralları şablonu
   sample-BUG-REPORT.md      <-- Audit skill'leri için bulgu format referansı
@@ -148,6 +151,9 @@ npx degit KilimcininKorOglu/cli-tweaks/wrongstack ~/.wrongstack
 npx degit KilimcininKorOglu/cli-tweaks/claude/skills ~/.agents/skills
 # Eski Codex fallback yolu:
 # npx degit KilimcininKorOglu/cli-tweaks/claude/skills ~/.codex/skills
+
+# Codex hook'ları
+npx degit KilimcininKorOglu/cli-tweaks/codex ~/.codex
 ```
 
 **Mevcut kurulumla birleştirme**:
@@ -181,6 +187,13 @@ cp -r /tmp/cli-tweaks-skills/* ~/.agents/skills/
 # Eski Codex fallback yolu:
 # mkdir -p ~/.codex/skills && cp -r /tmp/cli-tweaks-skills/* ~/.codex/skills/
 rm -rf /tmp/cli-tweaks-skills
+
+# Codex hook'ları
+npx degit KilimcininKorOglu/cli-tweaks/codex/hooks /tmp/cli-tweaks-hooks
+mkdir -p ~/.codex/hooks
+cp -r /tmp/cli-tweaks-hooks/* ~/.codex/hooks/
+# Zaten varsa codex/hooks.json.example dosyasını ~/.codex/hooks.json içine birleştirin.
+rm -rf /tmp/cli-tweaks-hooks
 ```
 
 ### Alternatif: git clone
@@ -206,6 +219,12 @@ mkdir -p ~/.agents/skills
 cp -r claude/skills/* ~/.agents/skills/
 # Eski Codex fallback yolu:
 # mkdir -p ~/.codex/skills && cp -r claude/skills/* ~/.codex/skills/
+
+# Codex hook'ları
+mkdir -p ~/.codex/hooks
+cp codex/hooks/*.py ~/.codex/hooks/
+# Zaten varsa codex/hooks.json.example dosyasını ~/.codex/hooks.json içine birleştirin.
+cp codex/hooks.json.example ~/.codex/hooks.json
 ```
 
 ### Hook Kaydı
@@ -217,8 +236,9 @@ Dosyaları kopyaladıktan sonra, hook tanımlarını `settings.json` dosyanıza 
 | Factory Droid | `factory/settings.json.example` | `~/.factory/settings.json`   |
 | Claude Code   | `claude/settings.json.example`  | `~/.claude/settings.json`    |
 | WrongStack    | `wrongstack/config.example.json`| `~/.wrongstack/config.json`  |
+| Codex         | `codex/hooks.json.example`      | `~/.codex/hooks.json`        |
 
-Örnek dosyadaki `hooks` bölümünü mevcut ayarlarınıza kopyalayın veya örneği başlangıç noktası olarak kullanın.
+Örnek dosyadaki `hooks` bölümünü mevcut ayarlarınıza kopyalayın veya örneği başlangıç noktası olarak kullanın. Codex ayrıca kurulumdan sonra non-managed command hook'ları inceleyip güvenmek için `/hooks` açmanızı gerektirir.
 
 ### Seçmeli Kurulum
 
@@ -308,15 +328,37 @@ Masaüstü bildirimleri `settings.json` dosyanızda özellik bazında yapıland�
 
 ## Gereksinimler
 
-- Python 3.8+ (Factory Droid, Claude Code, WrongStack)
+- Python 3.8+ (Factory Droid, Claude Code, WrongStack, Codex hook'ları)
 
-## Codex Skill Desteği
+## Codex Desteği
 
-[Codex CLI](https://github.com/openai/codex), ayrı bir repository ağacı olmadan mevcut `SKILL.md` dizinlerini kullanabilir. Codex, user-installed skill'leri `~/.agents/skills/` yolundan yükler; eski Codex kurulumları `~/.codex/skills/` yolunu kullanabilir.
+[Codex CLI](https://github.com/openai/codex), mevcut `SKILL.md` dizinlerini ve Codex'e özel Python command hook'larını kullanabilir. Codex, user-installed skill'leri `~/.agents/skills/` yolundan yükler; eski Codex kurulumları `~/.codex/skills/` yolunu kullanabilir.
 
 Bu repository ayrı bir Codex skill ağacı takip etmez, çünkü canonical Claude skill dizinleri zaten Codex'in `SKILL.md` formatıyla uyumludur. Codex ileride farklı ifade, metadata veya bundled resource gerektirirse platforma özel Codex skill ağacı ekleyin.
 
-Buradaki Codex desteği yalnızca skill desteğidir. Python hook'ları ve TypeScript plugin'leri Codex tarafından yüklenmez.
+Codex hook'ları `codex/hooks/` altında bulunur ve örnek kayıt dosyası `codex/hooks.json.example` yolundadır:
+
+| Hook | Codex olayı | Matcher | Durum |
+|------|-------------|---------|-------|
+| `session-start.py` | `SessionStart` | `startup|resume|clear` | Port edildi |
+| `compact-reinject.py` | `SessionStart` | `compact` | Port edildi |
+| `memory-reinject.py` | `UserPromptSubmit` | kullanılmaz | Port edildi |
+| `memory-save.py` | `Stop` | kullanılmaz | Codex continuation semantiğiyle port edildi |
+| `git-protect.py` | `PreToolUse` | `Bash` | Port edildi |
+| `notify.py` | yardımcı modül | uygulanmaz | Gelecekteki notification hook'ları için hazır |
+
+`save-plan.py` port edilmedi, çünkü Codex plan-exit tool adları ve transcript semantiği doğrulanmadı. Codex, non-managed command hook'ların çalışmadan önce `/hooks` ile incelenip güvenilmesini gerektirir; `--dangerously-bypass-hook-trust` normal kurulum yolu olarak kullanılmamalıdır.
+
+Opsiyonel Codex global talimat dosyaları `~/.codex/cli-tweaks.json` içinde yapılandırılır:
+
+```json
+{
+  "globalInjectFiles": [
+    "~/.codex/AGENTS.md"
+  ],
+  "hookNotifyPlanSave": false
+}
+```
 
 ## OpenCode Desteği
 
@@ -415,8 +457,8 @@ cp -r wrongstack/skills/* ~/.wrongstack/skills/
 | Kullanıcı soru aracı       | `AskUser`        | `AskUserQuestion` | (jenerik)           |
 | Yeniden enjeksiyon hedefi  | `AGENTS.md`      | `CLAUDE.md`       | config-ayarlı       |
 | Skill çağırma ön eki       | `/`              | `/`               | `/`                 |
-| Stop bloklama desteği      | ✅               | ✅                | ❌ Side-effects only|
-| Sıkıştırma olayı           | ✅               | ✅                | ❌ Yok              |
+| Stop bloklama desteği      | Var              | Var               | Yok, side-effects only |
+| Sıkıştırma olayı           | Var              | Var               | Yok                  |
 | Hook çıktı sınırı          | Yok              | Yok               | 64 KiB              |
 
 ## Lisans

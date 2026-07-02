@@ -2,7 +2,7 @@
 
 [Türkçe](README.tr.md)
 
-A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, WrongStack, and Codex that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box. OpenCode is supported through native skills/rules plus TypeScript plugins; WrongStack is supported through Python shell hooks; Codex is supported through native user-level skills (see [OpenCode Support](#opencode-support), [WrongStack Support](#wrongstack-support), and [Codex Skill Support](#codex-skill-support)).
+A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, WrongStack, and Codex that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box. OpenCode is supported through native skills/rules plus TypeScript plugins; WrongStack is supported through Python shell hooks; Codex is supported through native user-level skills and Python command hooks (see [OpenCode Support](#opencode-support), [WrongStack Support](#wrongstack-support), and [Codex Support](#codex-support)).
 
 ## What's Included
 
@@ -121,6 +121,9 @@ cli-tweaks/
   wrongstack/        <-- WrongStack (Python shell hooks + skills, see wrongstack/README.md)
     hooks/
     skills/
+  codex/             <-- Codex (Python command hooks + config, see codex/README.md)
+    hooks/
+    hooks.json.example
   SOUL.md.template          <-- Custom persona template
   GLOBAL-RULES.template.md  <-- Portable global agent-rules template
   sample-BUG-REPORT.md      <-- Finding-format reference for audit skills
@@ -148,6 +151,9 @@ npx degit KilimcininKorOglu/cli-tweaks/wrongstack ~/.wrongstack
 npx degit KilimcininKorOglu/cli-tweaks/claude/skills ~/.agents/skills
 # Older Codex fallback path:
 # npx degit KilimcininKorOglu/cli-tweaks/claude/skills ~/.codex/skills
+
+# Codex hooks
+npx degit KilimcininKorOglu/cli-tweaks/codex ~/.codex
 ```
 
 **Merge with existing setup**:
@@ -181,6 +187,13 @@ cp -r /tmp/cli-tweaks-skills/* ~/.agents/skills/
 # Older Codex fallback path:
 # mkdir -p ~/.codex/skills && cp -r /tmp/cli-tweaks-skills/* ~/.codex/skills/
 rm -rf /tmp/cli-tweaks-skills
+
+# Codex hooks
+npx degit KilimcininKorOglu/cli-tweaks/codex/hooks /tmp/cli-tweaks-hooks
+mkdir -p ~/.codex/hooks
+cp -r /tmp/cli-tweaks-hooks/* ~/.codex/hooks/
+# Merge codex/hooks.json.example into ~/.codex/hooks.json if it already exists.
+rm -rf /tmp/cli-tweaks-hooks
 ```
 
 ### Alternative: git clone
@@ -206,6 +219,12 @@ mkdir -p ~/.agents/skills
 cp -r claude/skills/* ~/.agents/skills/
 # Older Codex fallback path:
 # mkdir -p ~/.codex/skills && cp -r claude/skills/* ~/.codex/skills/
+
+# Codex hooks
+mkdir -p ~/.codex/hooks
+cp codex/hooks/*.py ~/.codex/hooks/
+# Merge codex/hooks.json.example into ~/.codex/hooks.json if it already exists.
+cp codex/hooks.json.example ~/.codex/hooks.json
 ```
 
 ### Hook Registration
@@ -217,8 +236,9 @@ After copying the files, register hooks by merging the hook definitions into you
 | Factory Droid | `factory/settings.json.example` | `~/.factory/settings.json`   |
 | Claude Code   | `claude/settings.json.example`  | `~/.claude/settings.json`    |
 | WrongStack    | `wrongstack/config.example.json`| `~/.wrongstack/config.json`  |
+| Codex         | `codex/hooks.json.example`      | `~/.codex/hooks.json`        |
 
-Copy the `hooks` section from the example file into your existing settings, or use the example as a starting point.
+Copy the `hooks` section from the example file into your existing settings, or use the example as a starting point. Codex also requires opening `/hooks` after installation to review and trust non-managed command hooks.
 
 ### Selective Install
 
@@ -308,15 +328,37 @@ Desktop notifications are configured per-feature in your `settings.json`:
 
 ## Requirements
 
-- Python 3.8+ (Factory Droid, Claude Code, WrongStack)
+- Python 3.8+ (Factory Droid, Claude Code, WrongStack, Codex hooks)
 
-## Codex Skill Support
+## Codex Support
 
-[Codex CLI](https://github.com/openai/codex) can use the existing `SKILL.md` directories without a separate repository tree. Codex loads user-installed skills from `~/.agents/skills/`; older Codex setups may use `~/.codex/skills/`.
+[Codex CLI](https://github.com/openai/codex) can use the existing `SKILL.md` directories and Codex-specific Python command hooks. Codex loads user-installed skills from `~/.agents/skills/`; older Codex setups may use `~/.codex/skills/`.
 
 This repository does not track a separate Codex skill tree because the canonical Claude skill directories already match Codex's `SKILL.md` format. Add a platform-specific Codex skill tree only if Codex later requires different wording, metadata, or bundled resources.
 
-Codex support here is skills-only. The Python hooks and TypeScript plugins are not loaded by Codex.
+Codex hooks are available under `codex/hooks/` with an example registration file at `codex/hooks.json.example`:
+
+| Hook | Codex event | Matcher | Status |
+|------|-------------|---------|--------|
+| `session-start.py` | `SessionStart` | `startup|resume|clear` | Ported |
+| `compact-reinject.py` | `SessionStart` | `compact` | Ported |
+| `memory-reinject.py` | `UserPromptSubmit` | not used | Ported |
+| `memory-save.py` | `Stop` | not used | Ported with Codex continuation semantics |
+| `git-protect.py` | `PreToolUse` | `Bash` | Ported |
+| `notify.py` | helper module | not applicable | Available for future notification hooks |
+
+`save-plan.py` is not ported because Codex plan-exit tool names and transcript semantics are not verified. Codex requires non-managed command hooks to be reviewed and trusted with `/hooks` before they run; do not use `--dangerously-bypass-hook-trust` as the normal install path.
+
+Optional Codex global instruction files are configured in `~/.codex/cli-tweaks.json`:
+
+```json
+{
+  "globalInjectFiles": [
+    "~/.codex/AGENTS.md"
+  ],
+  "hookNotifyPlanSave": false
+}
+```
 
 ## OpenCode Support
 
@@ -415,8 +457,8 @@ cp -r wrongstack/skills/* ~/.wrongstack/skills/
 | User question tool      | `AskUser`        | `AskUserQuestion` | (generic)           |
 | Re-injection target     | `AGENTS.md`      | `CLAUDE.md`       | config-driven       |
 | Skill invocation prefix | `/`              | `/`               | `/`                 |
-| Stop block support      | ✅               | ✅                | ❌ Side-effects only|
-| Compaction event        | ✅               | ✅                | ❌ None             |
+| Stop block support      | Yes              | Yes               | No, side-effects only |
+| Compaction event        | Yes              | Yes               | No                  |
 | Hook output cap         | None             | None              | 64 KiB              |
 
 ## License

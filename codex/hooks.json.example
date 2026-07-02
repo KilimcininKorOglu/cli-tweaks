@@ -1,0 +1,72 @@
+{
+  "description": "cli-tweaks Codex lifecycle hooks",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.codex/hooks/git-protect.py",
+            "timeout": 5,
+            "statusMessage": "checking git add policy"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.codex/hooks/session-start.py",
+            "timeout": 10,
+            "statusMessage": "loading cli-tweaks memory"
+          }
+        ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.codex/hooks/compact-reinject.py AGENTS.md CLAUDE.md",
+            "timeout": 10,
+            "statusMessage": "restoring project instructions"
+          },
+          {
+            "type": "command",
+            "command": "python3 ~/.codex/hooks/session-start.py",
+            "timeout": 10,
+            "statusMessage": "reloading cli-tweaks memory"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.codex/hooks/memory-reinject.py",
+            "timeout": 10,
+            "statusMessage": "checking memory reminders"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.codex/hooks/memory-save.py",
+            "timeout": 10,
+            "statusMessage": "checking memory hygiene"
+          }
+        ]
+      }
+    ]
+  }
+}
