@@ -9,7 +9,7 @@ description: >
   "websocket", "header injection", "clickjacking", "mass assignment",
   "güvenlik taraması", "security scan", or "security sweep".
   Use `/bug-report` for full audit, `/bug-report <subcommand>` for focused audits,
-  `/bug-report security-sweep` for security-only parallel scans.
+  `/bug-report security-sweep` for security-only scans with batched workers.
 argument-hint: "[--severity critical|high|medium|low|all | <subcommand>]"
 disable-model-invocation: true
 ---
@@ -39,8 +39,8 @@ If the user said `/bug-report security-sweep` OR used natural language like
 
 ### Path C: Full audit (`/bug-report` with no subcommand)
 
-Run ALL audit subcommands in parallel using workers. This is the comprehensive
-mode — every general audit and every security scan runs simultaneously. `fix` is
+Run ALL audit subcommands using workers in batches of at most 2 concurrent workers. This is the comprehensive
+mode: every general audit and every security scan runs, but no more than two workers run at the same time. `fix` is
 NOT an audit (it remediates already-reported bugs), so it is never part of this run.
 
 Jump to the **Full Audit Orchestration** section below.
@@ -50,7 +50,7 @@ Jump to the **Full Audit Orchestration** section below.
 ## Full Audit Orchestration
 
 This runs when `/bug-report` is called with no subcommand. Launches ALL
-subcommands as parallel workers for comprehensive repository analysis.
+subcommands as batched workers for comprehensive repository analysis.
 
 **Resume support:** Before launching each worker, read `BUG-REPORT.md` and
 check for its completion marker (`<!-- scan:SUBCOMMAND completed -->`). Skip
@@ -62,7 +62,7 @@ that worker if the marker exists.
    This writes the architecture summary to the `## System Architecture` section
    of `BUG-REPORT.md` (not a numbered BUG entry).
 
-2. Launch ALL remaining subcommands **in parallel** as workers. Skip any worker
+2. Launch ALL remaining subcommands as workers in batches of at most 2 concurrent workers. Start the next batch only after both workers in the current batch have completed. Preserve the original worker order. Skip any worker
    whose completion marker already exists in `BUG-REPORT.md`:
 
    **General audit workers:**
@@ -185,7 +185,7 @@ This runs ONLY the security scan subcommands (not general audits).
 
 1. Run `sec-recon` first (inline) to establish codebase context.
 
-2. Launch security scan workers **in parallel**:
+2. Launch security scan workers in batches of at most 2 concurrent workers. Start the next batch only after both workers in the current batch have completed. Preserve the original worker order:
 
    | Worker    | Subcommand file                     | Completion marker                          |
    |-----------|--------------------------------------|--------------------------------------------|
