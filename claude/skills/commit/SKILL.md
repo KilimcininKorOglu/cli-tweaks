@@ -9,6 +9,7 @@ description: >
   Auto-detects git state, stages changes intelligently, and creates
   atomic commits with proper type/scope/description format.
 argument-hint: "[--all | --staged | --modified | --amend | --no-verify | --wip | --push]"
+context: fork
 ---
 
 # Commit
@@ -25,7 +26,7 @@ Creates well-formatted commits with conventional commit messages.
 /commit --no-verify      # Skip pre-commit hooks
 /commit --amend          # Amend the last commit
 /commit --wip            # Quick WIP commit
-/commit --push           # Commit, then push (confirms before pushing to a default branch)
+/commit --push           # Commit, then push (confirms before pushing)
 ```
 
 ## Git Safety Protocol
@@ -38,7 +39,6 @@ Creates well-formatted commits with conventional commit messages.
 - NEVER use git commands with -i flag (git rebase -i, git add -i) -- interactive mode is not supported
 - NEVER add signatures like "Created by Claude", "Co-authored-by: AI" or similar
 - NEVER push unless the user explicitly asked (the `--push` flag, or said "push" / "commit and push") -- a plain commit NEVER pushes
-- NEVER push to the default branch (`main`/`master`) without explicit confirmation -- if on the default branch, offer to create a feature branch first
 
 ## Commit Message Format (Default)
 
@@ -100,7 +100,6 @@ EOF
    ```bash
    git status                    # Current state of working tree
    git diff HEAD                 # All staged and unstaged changes
-   git branch --show-current     # Current branch name
    git log --oneline -10         # Recent commits for style matching
    ```
 2. **Security Scan**: Check changed files for secrets (.env, keys, credentials)
@@ -117,7 +116,7 @@ EOF
    - No clear pattern -> default to the conventional `<type>(<scope>): <subject>` format (see Commit Message Format)
 6. **Analyze for Logical Grouping**: Check if changes belong together, suggest splitting if multiple concerns
 7. **Create Commit**: Use HEREDOC syntax for multi-line, simple -m for single-line
-8. **Push (only if requested)**: Push only when the user explicitly asked (`--push`, or said "push" / "commit and push"). If the tree was already clean (nothing to commit), push the existing commits instead. Before pushing to the default branch (`main`/`master`), confirm first or offer to create a feature branch. A plain commit request never reaches this step.
+8. **Push (only if requested)**: Push only when the user explicitly asked (`--push`, or said "push" / "commit and push"). If the tree was already clean (nothing to commit), push the existing commits instead.
 
 ## Smart Staging Strategy
 
@@ -155,5 +154,5 @@ EOF
 | `--modified`    | Stage modified only        | Excludes untracked files  |
 | `--no-verify`   | Skip pre-commit hooks      | Bypass Husky checks       |
 | `--amend`       | Modify last commit         | Edit previous commit      |
-| `--push`        | Commit, then push          | Confirms before pushing to a default branch |
+| `--push`        | Commit, then push          | Confirms before pushing|
 | `--wip`         | Work in progress           | Quick WIP commit          |

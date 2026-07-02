@@ -11,6 +11,7 @@ description: >
   Use `/bug-report` for full audit, `/bug-report <subcommand>` for focused audits,
   `/bug-report security-sweep` for security-only parallel scans.
 argument-hint: "[--severity critical|high|medium|low|all | <subcommand>]"
+disable-model-invocation: true
 ---
 
 # Bug Analysis & Audit
