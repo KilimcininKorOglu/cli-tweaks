@@ -205,7 +205,7 @@ After Phase 1 completes, count the numbered scenario sections (`### Scenario 1`,
 
 **If 3 or fewer scenarios**: Launch a single subagent with all scenarios (skip batching).
 
-**If more than 3 scenarios**: Split into batches of up to 3 each. Launch all batch subagents **in parallel**. Each subagent returns findings in its response (NOT to a file).
+**If more than 3 scenarios**: Split into batches of up to 3 each. Run batch subagents through a rolling worker pool with at most 2 concurrent subagents. Start up to 2 batch subagents initially, then launch the next pending batch immediately whenever one finishes. Each subagent returns findings in its response (NOT to a file).
 
 Give each batch subagent the following instructions (include assigned scenarios from Phase 1):
 
@@ -318,7 +318,7 @@ After all Phase 2 subagents complete:
 
 - Phase 1 returns findings in response — do not write to files.
 - Phase 2 batches run AFTER Phase 1 completes. Phase 3 runs AFTER all batches complete.
-- Batch size is **3 scenarios per subagent**. If 1-3 total, use a single subagent. Launch all batches **in parallel**.
+- Batch size is **3 scenarios per subagent**. If 1-3 total, use a single subagent. Run batch subagents through a rolling worker pool with at most 2 concurrent subagents. Start up to 2 batch subagents initially, then launch the next pending batch immediately whenever one finishes.
 - Each batch subagent receives only its assigned scenarios, not all Phase 1 findings.
 - For payment systems, include the payment-specific checklist below in your Phase 1 threat modeling.
 - Focus strictly on **business logic flaws** — do not flag injection bugs, auth bypass, or IDOR issues here.

@@ -248,7 +248,7 @@ After Phase 1 completes, count the numbered site sections (`### 1.`, `### 2.`, .
 
 **If 3 or fewer sites**: Launch a single subagent with all sites (skip batching).
 
-**If more than 3 sites**: Split into batches of up to 3 each. Launch all batch subagents **in parallel**. Each subagent returns findings in its response (NOT to a file).
+**If more than 3 sites**: Split into batches of up to 3 each. Run batch subagents through a rolling worker pool with at most 2 concurrent subagents. Start up to 2 batch subagents initially, then launch the next pending batch immediately whenever one finishes. Each subagent returns findings in its response (NOT to a file).
 
 Give each batch subagent the following instructions (include assigned sites from Phase 1):
 
@@ -342,7 +342,7 @@ After all Phase 2 subagents complete:
 
 - Phase 1 returns findings in response — do not write to files.
 - Phase 2 batches run AFTER Phase 1 completes. Phase 3 runs AFTER all batches complete.
-- Batch size is **3 sites per subagent**. If 1-3 total, use a single subagent. Launch all batches **in parallel**.
+- Batch size is **3 sites per subagent**. If 1-3 total, use a single subagent. Run batch subagents through a rolling worker pool with at most 2 concurrent subagents. Start up to 2 batch subagents initially, then launch the next pending batch immediately whenever one finishes.
 - Each batch subagent receives only its assigned sites, not all Phase 1 findings.
 - **Phase 1 is purely structural**: find all container configuration files regardless of whether they are secure. Do not evaluate safety in Phase 1 — that is Phase 2's job.
 - **Phase 2 is verification**: for each configuration file, determine whether it creates an exploitable misconfiguration.

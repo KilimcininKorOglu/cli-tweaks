@@ -525,7 +525,7 @@ After Phase 1 completes, count the numbered sink sections (`### 1.`, `### 2.`, .
 
 **If 3 or fewer sinks**: Launch a single subagent with all sinks (skip batching).
 
-**If more than 3 sinks**: Split into batches of up to 3 each. Launch all batch subagents **in parallel**. Each subagent returns findings in its response (NOT to a file).
+**If more than 3 sinks**: Split into batches of up to 3 each. Run batch subagents through a rolling worker pool with at most 2 concurrent subagents. Start up to 2 batch subagents initially, then launch the next pending batch immediately whenever one finishes. Each subagent returns findings in its response (NOT to a file).
 
 Give each batch subagent the following instructions (include assigned sinks from Phase 1):
 
@@ -609,7 +609,7 @@ After all Phase 2 subagents complete:
 
 - Phase 1 returns findings in response — do not write to files.
 - Phase 2 batches run AFTER Phase 1 completes. Phase 3 runs AFTER all batches complete.
-- Batch size is **3 sinks per subagent**. If 1-3 total, use a single subagent. Launch all batches **in parallel**.
+- Batch size is **3 sinks per subagent**. If 1-3 total, use a single subagent. Run batch subagents through a rolling worker pool with at most 2 concurrent subagents. Start up to 2 batch subagents initially, then launch the next pending batch immediately whenever one finishes.
 - Each batch subagent receives only its assigned sinks, not all Phase 1 findings.
 - **Phase 1 is purely structural**: flag any sink where a non-constant variable appears in a dangerous position, regardless of where that variable comes from. Do not trace user input in Phase 1.
 - **Phase 2 is purely taint analysis**: for each sink found in Phase 1, trace the dynamic argument back to its origin. If it comes from a user-controlled source, the site is a real vulnerability.

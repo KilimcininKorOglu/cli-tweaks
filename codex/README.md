@@ -26,15 +26,14 @@ The canonical Claude skill tree is reused for Codex skills because Codex reads t
 
 ## Install
 
-Copy the hooks and merge the example hook config into Codex:
+Copy the hooks into Codex. On a fresh install, copy the example hook config to `~/.codex/hooks.json`. If `~/.codex/hooks.json` already exists, merge only the `hooks` object instead of overwriting the file.
 
 ```bash
 mkdir -p ~/.codex/hooks
 cp codex/hooks/*.py ~/.codex/hooks/
+# Fresh install only:
 cp codex/hooks.json.example ~/.codex/hooks.json
 ```
-
-If `~/.codex/hooks.json` already exists, merge the `hooks` object instead of overwriting the file.
 
 Optional global instruction files are configured in `~/.codex/cli-tweaks.json`:
 
@@ -42,8 +41,7 @@ Optional global instruction files are configured in `~/.codex/cli-tweaks.json`:
 {
   "globalInjectFiles": [
     "~/.codex/AGENTS.md"
-  ],
-  "hookNotifyPlanSave": false
+  ]
 }
 ```
 

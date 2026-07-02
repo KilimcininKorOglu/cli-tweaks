@@ -79,7 +79,7 @@ Factory Droid, Claude Code, OpenCode, WrongStack ve Codex için planlama otomasy
 
 | Alt komut           | Komut                           | Açıklama                                                 |
 |---------------------|---------------------------------|----------------------------------------------------------|
-| `security-sweep`    | `/bug-report security-sweep`    | 24 güvenlik taramasını worker'larla paralel çalıştırır   |
+| `security-sweep`    | `/bug-report security-sweep`    | 24 güvenlik taramasını rolling 2-worker havuzuyla çalıştırır |
 | `sec-recon`         | `/bug-report sec-recon`         | Kod tabanı mimarisi ve güvenlik duruşu keşfi             |
 | `access-control`    | `/bug-report access-control`    | IDOR ve eksik kimlik doğrulama/yetkilendirme tespiti     |
 | `sqli`              | `/bug-report sqli`              | SQL injection tespiti                                    |

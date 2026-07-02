@@ -195,7 +195,7 @@ After Phase 1 completes (and only if both gates passed: GraphQL used and at leas
 
 **If 3 or fewer sites**: Launch a single subagent with all sites (skip batching).
 
-**If more than 3 sites**: Split into batches of up to 3 each. Launch all batch subagents **in parallel**. Each subagent returns findings in its response (NOT to a file).
+**If more than 3 sites**: Split into batches of up to 3 each. Run batch subagents through a rolling worker pool with at most 2 concurrent subagents. Start up to 2 batch subagents initially, then launch the next pending batch immediately whenever one finishes. Each subagent returns findings in its response (NOT to a file).
 
 Give each batch subagent the following instructions (include assigned sites from Phase 1):
 

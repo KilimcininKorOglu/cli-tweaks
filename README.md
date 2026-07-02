@@ -79,7 +79,7 @@ A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, Wrong
 
 | Subcommand          | Command                         | Description                                               |
 |---------------------|---------------------------------|-----------------------------------------------------------|
-| `security-sweep`    | `/bug-report security-sweep`    | Run all 24 security scans in parallel via workers         |
+| `security-sweep`    | `/bug-report security-sweep`    | Run all 24 security scans with a rolling 2-worker pool    |
 | `sec-recon`         | `/bug-report sec-recon`         | Codebase architecture and security posture reconnaissance |
 | `access-control`    | `/bug-report access-control`    | IDOR and missing authentication/authorization detection   |
 | `sqli`              | `/bug-report sqli`              | SQL injection detection                                   |

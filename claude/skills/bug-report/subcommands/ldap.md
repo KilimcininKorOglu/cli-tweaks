@@ -167,7 +167,7 @@ Launch a subagent with the following instructions:
 
 ### Phase 2: Batched Verify — Trace User Input to LDAP Sites
 
-After Phase 1 completes, count numbered sites. If 3 or fewer, single subagent. Otherwise batch 3/subagent, parallel.
+After Phase 1 completes, count numbered sites. If 3 or fewer, use a single subagent. Otherwise split the sites into batches of up to 3 and run them through a rolling worker pool with at most 2 concurrent subagents. Start up to 2 batch subagents initially, then launch the next pending batch immediately whenever one finishes.
 
 > **For each site, trace the interpolated variable backwards**:
 >
@@ -227,7 +227,7 @@ After all Phase 2 subagents complete:
 
 - Phase 1 returns findings in response — do not write to files.
 - Phase 2 batches run AFTER Phase 1. Phase 3 runs AFTER all batches.
-- Batch size: 3 sites per subagent. If 1-3 total, single subagent. All parallel.
+- Batch size: 3 sites per subagent. If 1-3 total, single subagent. Run the batch subagents through a rolling worker pool with at most 2 concurrent subagents. Start up to 2 batch subagents initially, then launch the next pending batch immediately whenever one finishes.
 - LDAP injection is most critical in authentication flows — prioritize login/bind operations.
 - Custom escaping (replacing only `*` or `(`) is insufficient — all 5 filter special characters must be escaped.
 - DN injection has different special characters than filter injection — check both.

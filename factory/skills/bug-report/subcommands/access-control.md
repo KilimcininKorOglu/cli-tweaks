@@ -126,7 +126,7 @@ After Phase 1 completes, count the total numbered items from both Part A (endpoi
 
 **If 3 or fewer items total**: Launch a single subagent with all items (skip batching).
 
-**If more than 3 items**: Split into batches of up to 3 each. Launch all batch subagents **in parallel**. Each subagent returns findings in its response (NOT to a file).
+**If more than 3 items**: Split into batches of up to 3 each. Run batch subagents through a rolling worker pool with at most 2 concurrent subagents. Start up to 2 batch subagents initially, then launch the next pending batch immediately whenever one finishes. Each subagent returns findings in its response (NOT to a file).
 
 Give each batch subagent the following instructions (include assigned items from Phase 1):
 
@@ -199,7 +199,7 @@ After all Phase 2 subagents complete:
 
 - Phase 1 returns findings in response — do not write to files.
 - Phase 2 batches run AFTER Phase 1 completes. Phase 3 runs AFTER all batches complete.
-- Batch size is **3 items per subagent**. If 1-3 total, use a single subagent. Launch all batches **in parallel**.
+- Batch size is **3 items per subagent**. If 1-3 total, use a single subagent. Run batch subagents through a rolling worker pool with at most 2 concurrent subagents. Start up to 2 batch subagents initially, then launch the next pending batch immediately whenever one finishes.
 - Trace the full code path: route → middleware → controller → service → data access.
 - Middleware order matters: middleware registered AFTER the route handler does not protect it.
 - A missing check on one HTTP method (e.g., DELETE) is a full vulnerability even if GET is protected.
