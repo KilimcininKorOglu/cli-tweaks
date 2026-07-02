@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-Factory Droid, Claude Code, OpenCode ve WrongStack için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın. OpenCode, native skill/rules ile birlikte bir TypeScript plugin seti aracılığıyla; WrongStack ise Python shell hook'ları aracılığıyla destekleniyor (bkz. [OpenCode Desteği](#opencode-desteği) ve [WrongStack Desteği](#wrongstack-desteği)).
+Factory Droid, Claude Code, OpenCode, WrongStack ve Codex için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın. OpenCode, native skill/rules ile birlikte bir TypeScript plugin seti aracılığıyla; WrongStack, Python shell hook'ları aracılığıyla; Codex ise native user-level skill'ler aracılığıyla destekleniyor (bkz. [OpenCode Desteği](#opencode-desteği), [WrongStack Desteği](#wrongstack-desteği) ve [Codex Skill Desteği](#codex-skill-desteği)).
 
 ## İçerik
 
@@ -143,6 +143,11 @@ npx degit KilimcininKorOglu/cli-tweaks/claude ~/.claude
 
 # WrongStack
 npx degit KilimcininKorOglu/cli-tweaks/wrongstack ~/.wrongstack
+
+# Codex skill'leri
+npx degit KilimcininKorOglu/cli-tweaks/claude/skills ~/.agents/skills
+# Eski Codex fallback yolu:
+# npx degit KilimcininKorOglu/cli-tweaks/claude/skills ~/.codex/skills
 ```
 
 **Mevcut kurulumla birleştirme**:
@@ -168,6 +173,14 @@ npx degit KilimcininKorOglu/cli-tweaks/wrongstack/skills /tmp/cli-tweaks-skills
 cp -r /tmp/cli-tweaks-hooks/* ~/.wrongstack/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.wrongstack/skills/
 rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
+
+# Codex skill'leri
+npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
+mkdir -p ~/.agents/skills
+cp -r /tmp/cli-tweaks-skills/* ~/.agents/skills/
+# Eski Codex fallback yolu:
+# mkdir -p ~/.codex/skills && cp -r /tmp/cli-tweaks-skills/* ~/.codex/skills/
+rm -rf /tmp/cli-tweaks-skills
 ```
 
 ### Alternatif: git clone
@@ -187,6 +200,12 @@ cp -r claude/skills/* ~/.claude/skills/
 # WrongStack
 cp -r wrongstack/hooks/* ~/.wrongstack/hooks/
 cp -r wrongstack/skills/* ~/.wrongstack/skills/
+
+# Codex skill'leri
+mkdir -p ~/.agents/skills
+cp -r claude/skills/* ~/.agents/skills/
+# Eski Codex fallback yolu:
+# mkdir -p ~/.codex/skills && cp -r claude/skills/* ~/.codex/skills/
 ```
 
 ### Hook Kaydı
@@ -290,6 +309,14 @@ Masaüstü bildirimleri `settings.json` dosyanızda özellik bazında yapıland�
 ## Gereksinimler
 
 - Python 3.8+ (Factory Droid, Claude Code, WrongStack)
+
+## Codex Skill Desteği
+
+[Codex CLI](https://github.com/openai/codex), ayrı bir repository ağacı olmadan mevcut `SKILL.md` dizinlerini kullanabilir. Codex, user-installed skill'leri `~/.agents/skills/` yolundan yükler; eski Codex kurulumları `~/.codex/skills/` yolunu kullanabilir.
+
+Bu repository ayrı bir Codex skill ağacı takip etmez, çünkü canonical Claude skill dizinleri zaten Codex'in `SKILL.md` formatıyla uyumludur. Codex ileride farklı ifade, metadata veya bundled resource gerektirirse platforma özel Codex skill ağacı ekleyin.
+
+Buradaki Codex desteği yalnızca skill desteğidir. Python hook'ları ve TypeScript plugin'leri Codex tarafından yüklenmez.
 
 ## OpenCode Desteği
 
