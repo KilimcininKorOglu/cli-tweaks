@@ -37,6 +37,7 @@ A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, and W
 | `ios-simulator`                | `/ios-simulator`                | iOS simulator automation with 22 Node.js scripts for semantic navigation         |
 | `audit-replay`                 | `/audit-replay`                 | User action tracking, audit event logging, and rrweb session replay              |
 | `http-cache`                   | `/http-cache`                   | HTTP caching with ETag and Cache-Control header implementation                   |
+| `add-log`                      | `/add-log`                      | Adds centralized request, audit, and application logging                         |
 | `goal-prep`                    | `/goal-prep`                    | Converts free-form work into a verifiable `/goal` completion condition           |
 | `no-ai`                        | `/no-ai`                        | Rewrites text to remove common AI-generated writing patterns                     |
 
@@ -315,21 +316,21 @@ cp opencode/plugins/*.ts ~/.config/opencode/plugins/
 
 ## WrongStack Support
 
-[WrongStack](https://github.com/WrongStack/WrongStack) is supported through Python shell hooks and platform-tailored skills. WrongStack's shell-hook transport is Claude-compatible (stdin JSON → stdout JSON, exit code 2 = block) but field names and the outcome shape differ — a `_compat.py` shim absorbs those differences so hook logic stays identical to the Claude/Factory ports. Full details are in [`wrongstack/README.md`](wrongstack/README.md).
+[WrongStack](https://github.com/WrongStack/WrongStack) is supported through Python shell hooks and platform-tailored skills. WrongStack's shell-hook transport is Claude-compatible (stdin JSON to stdout JSON, exit code 2 = block) but field names and the outcome shape differ -- a `_compat.py` shim absorbs those differences so hook logic stays identical to the Claude/Factory ports. Full details are in [`wrongstack/README.md`](wrongstack/README.md).
 
 - **Hooks are Python shell hooks.** Written under `wrongstack/hooks/`, the same Python source logic is wired through the `_compat.py` shim:
 
 | Hook                  | WrongStack event   | Matcher | Status |
 |-----------------------|--------------------|---------|--------|
-| `session-start.py`    | `SessionStart`     | —       | Ported (150-line memory cap for 64 KiB output safety) |
+| `session-start.py`    | `SessionStart`     | --       | Ported (150-line memory cap for 64 KiB output safety) |
 | `git-protect.py`      | `PreToolUse`       | `Bash`  | Direct port |
-| `memory-reinject.py`  | `UserPromptSubmit` | —       | Ported (counter keyed by `sessionId`) |
-| `memory-save.py`      | `Stop`             | —       | Redesigned — Stop is side-effects-only (no block), so it auto-generates/updates MEMORY.md directly from the session logs |
+| `memory-reinject.py`  | `UserPromptSubmit` | --       | Ported (counter keyed by `sessionId`) |
+| `memory-save.py`      | `Stop`             | --       | Redesigned -- Stop is side-effects-only (no block), so it auto-generates/updates MEMORY.md directly from the session logs |
 | `save-plan.py`        | `PostToolUse`      | `*`     | Heuristic matcher v1 (plan-exit tool name unconfirmed) |
-| `compact-reinject.py` | —                  | —       | Not ported (no compaction event on WrongStack) |
-| `notify.py`           | —                  | —       | Helper module |
+| `compact-reinject.py` | --                  | --       | Not ported (no compaction event on WrongStack) |
+| `notify.py`           | --                  | --       | Helper module |
 
-- **Skills are available under `wrongstack/skills/`.** All 14 claude skills are ported with platform-specific adjustments where needed:
+- **Skills are available under `wrongstack/skills/`.** All 17 Claude skills are ported with platform-specific adjustments where needed:
 
 | Skill                          | Command                         | Description                                                                      |
 |--------------------------------|---------------------------------|----------------------------------------------------------------------------------|
@@ -341,6 +342,9 @@ cp opencode/plugins/*.ts ~/.config/opencode/plugins/
 | `redate-commits`               | `/redate-commits`               | Rewrites commit dates across a selected range                                    |
 | `frontend-design`              | `/frontend-design`              | Frontend code generation with 28-site design catalog                             |
 | `version-update-skill-creator` | *(meta-skill)*                  | Creates a `/version-update` skill tailored to the current project                |
+| `add-log`                      | `/add-log`                      | Adds centralized request, audit, and application logging                         |
+| `goal-prep`                    | `/goal-prep`                    | Converts free-form work into a verifiable `/goal` completion condition           |
+| `no-ai`                        | `/no-ai`                        | Rewrites text to remove common AI-generated writing patterns                     |
 | `ai-seo`                       | `/ai-seo`                       | GEO optimization for AI search engines                                           |
 | `draft-to-article`             | `/draft-to-article`             | Format drafts for X Articles, LinkedIn, or Medium/Substack                       |
 | `http-cache`                   | `/http-cache`                   | HTTP caching with ETag and Cache-Control headers                                 |
@@ -354,8 +358,10 @@ Platform-specific adjustments in the WrongStack copies:
 - `initialize`: includes WrongStack in the agent list
 - `version-update-skill-creator`: outputs to `.wrongstack/skills/`
 - `git-flow`: override note in description
+- `goal-prep`: generic ask-user wording and non-interactive guidance
+- `no-ai`: WrongStack compatibility metadata and tool list
 
-Skills can alternatively be deployed from `claude/skills/` — WrongStack also reads `~/.claude/skills/` natively — but the `wrongstack/skills/` versions include the platform-specific fixes above.
+Skills can alternatively be deployed from `claude/skills/` -- WrongStack also reads `~/.claude/skills/` natively -- but the `wrongstack/skills/` versions include the platform-specific fixes above.
 
 Install by registering hooks in `~/.wrongstack/config.json` and copying files:
 
@@ -364,11 +370,11 @@ Install by registering hooks in `~/.wrongstack/config.json` and copying files:
 cp wrongstack/hooks/* ~/.wrongstack/hooks/
 # then merge the hooks block from wrongstack/config.example.json into ~/.wrongstack/config.json
 
-# Skills (optional — WrongStack also reads skills from ~/.claude/skills/)
+# Skills (optional -- WrongStack also reads skills from ~/.claude/skills/)
 cp -r wrongstack/skills/* ~/.wrongstack/skills/
 ```
 
-> The hooks are authored against WrongStack's documented hook API (`docs/hooks.md`, `packages/core/src/types/hooks.ts`, `packages/core/src/hooks/shell-executor.ts`) and pass `python3 -m py_compile`, but they were not runtime-tested — WrongStack was not installed during authoring. `memory-save.py`'s Claude pattern (block first stop, let second through) is impossible on WrongStack because Stop is side-effects-only, so it auto-generates MEMORY.md from the session logs instead. `save-plan.py` uses a heuristic tool-name matcher; the actual plan-exit tool name should be confirmed against your installed version. `compact-reinject.py` has no WrongStack equivalent (no compaction event). Skills are platform-agnostic and tested through their Claude/Factory equivalents.
+> The hooks are authored against WrongStack's documented hook API (`docs/hooks.md`, `packages/core/src/types/hooks.ts`, `packages/core/src/hooks/shell-executor.ts`) and pass `python3 -m py_compile`, but they were not runtime-tested -- WrongStack was not installed during authoring. `memory-save.py`'s Claude pattern (block first stop, let second through) is impossible on WrongStack because Stop is side-effects-only, so it auto-generates MEMORY.md from the session logs instead. `save-plan.py` uses a heuristic tool-name matcher; the actual plan-exit tool name should be confirmed against your installed version. `compact-reinject.py` has no WrongStack equivalent (no compaction event). Skills are platform-agnostic and tested through their Claude/Factory equivalents.
 
 ## Platform Differences
 

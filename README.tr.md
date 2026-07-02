@@ -37,6 +37,7 @@ Factory Droid, Claude Code, OpenCode ve WrongStack için planlama otomasyonu, ka
 | `ios-simulator`                | `/ios-simulator`                | 22 Node.js script ile iOS simülatör otomasyonu                                  |
 | `audit-replay`                 | `/audit-replay`                 | Kullanıcı eylem takibi, audit event logging ve rrweb session replay             |
 | `http-cache`                   | `/http-cache`                   | ETag ve Cache-Control header'ları ile HTTP caching uygulaması                   |
+| `add-log`                      | `/add-log`                      | Merkezi request, audit ve application logging ekler                             |
 | `goal-prep`                    | `/goal-prep`                    | Serbest metni doğrulanabilir `/goal` tamamlanma koşuluna dönüştürür             |
 | `no-ai`                        | `/no-ai`                        | Metinden yaygın AI üretimi yazı kalıplarını kaldırır                            |
 
@@ -315,21 +316,21 @@ cp opencode/plugins/*.ts ~/.config/opencode/plugins/
 
 ## WrongStack Desteği
 
-[WrongStack](https://github.com/WrongStack/WrongStack), Python shell hook'ları ve platforma özel skill'ler aracılığıyla desteklenmektedir. WrongStack'in shell-hook transport'u Claude-uyumludur (stdin JSON → stdout JSON, exit code 2 = block) ancak alan adları ve çıktı formatı farklıdır — `_compat.py` shim'i bu farkları emer, böylece hook mantığı Claude/Factory port'larıyla aynı kalır. Tüm ayrıntılar [`wrongstack/README.md`](wrongstack/README.md) dosyasındadır.
+[WrongStack](https://github.com/WrongStack/WrongStack), Python shell hook'ları ve platforma özel skill'ler aracılığıyla desteklenmektedir. WrongStack'in shell-hook transport'u Claude-uyumludur (stdin JSON to stdout JSON, exit code 2 = block) ancak alan adları ve çıktı formatı farklıdır -- `_compat.py` shim'i bu farkları emer, böylece hook mantığı Claude/Factory port'larıyla aynı kalır. Tüm ayrıntılar [`wrongstack/README.md`](wrongstack/README.md) dosyasındadır.
 
 - **Hook'lar Python shell hook'udur.** `wrongstack/hooks/` altında yazılır, aynı Python kaynak mantığı `_compat.py` shim'i üzerinden çalışır:
 
 | Hook                  | WrongStack olayı   | Matcher | Durum |
 |-----------------------|---------------------|---------|-------|
-| `session-start.py`    | `SessionStart`     | —       | Port edildi (64 KiB çıktı güvenliği için bellek 150 satırla sınırlı) |
+| `session-start.py`    | `SessionStart`     | --       | Port edildi (64 KiB çıktı güvenliği için bellek 150 satırla sınırlı) |
 | `git-protect.py`      | `PreToolUse`       | `Bash`  | Doğrudan port |
-| `memory-reinject.py`  | `UserPromptSubmit` | —       | Port edildi (sayaç `sessionId` ile anahtarlı) |
-| `memory-save.py`      | `Stop`             | —       | Yeniden tasarlandı — Stop side-effects-only (blok yok), bu yüzden MEMORY.md'yi doğrudan session log'larından otomatik üretir/günceller |
+| `memory-reinject.py`  | `UserPromptSubmit` | --       | Port edildi (sayaç `sessionId` ile anahtarlı) |
+| `memory-save.py`      | `Stop`             | --       | Yeniden tasarlandı -- Stop side-effects-only (blok yok), bu yüzden MEMORY.md'yi doğrudan session log'larından otomatik üretir/günceller |
 | `save-plan.py`        | `PostToolUse`      | `*`     | Heuristic matcher v1 (plan-exit tool adı doğrulanmadı) |
-| `compact-reinject.py` | —                  | —       | Port edilmedi (WrongStack'te compaction olayı yok) |
-| `notify.py`           | —                  | —       | Yardımcı modül |
+| `compact-reinject.py` | --                  | --       | Port edilmedi (WrongStack'te compaction olayı yok) |
+| `notify.py`           | --                  | --       | Yardımcı modül |
 
-- **Skill'ler `wrongstack/skills/` altında mevcut.** Claude'daki 14 skill'in tamamı platforma özel düzenlemelerle port edildi:
+- **Skill'ler `wrongstack/skills/` altında mevcut.** Claude'daki 17 skill'in tamamı platforma özel düzenlemelerle port edildi:
 
 | Skill                          | Komut                           | Açıklama                                                                     |
 |--------------------------------|---------------------------------|------------------------------------------------------------------------------|
@@ -341,6 +342,9 @@ cp opencode/plugins/*.ts ~/.config/opencode/plugins/
 | `redate-commits`               | `/redate-commits`               | Commit tarihlerini seçilen aralığa yayar                                    |
 | `frontend-design`              | `/frontend-design`              | 28 siteli tasarım kataloğu ile frontend kod üretimi                         |
 | `version-update-skill-creator` | *(meta-skill)*                  | Projeye özel `/version-update` skill'i oluşturur                            |
+| `add-log`                      | `/add-log`                      | Merkezi request, audit ve application logging ekler                         |
+| `goal-prep`                    | `/goal-prep`                    | Serbest metni doğrulanabilir `/goal` tamamlanma koşuluna dönüştürür         |
+| `no-ai`                        | `/no-ai`                        | Metinden yaygın AI üretimi yazı kalıplarını kaldırır                        |
 | `ai-seo`                       | `/ai-seo`                       | AI arama motorları için GEO optimizasyonu                                    |
 | `draft-to-article`             | `/draft-to-article`             | Taslakları X, LinkedIn veya Medium/Substack formatına dönüştürme            |
 | `http-cache`                   | `/http-cache`                   | ETag ve Cache-Control header'ları ile HTTP caching                          |
@@ -354,8 +358,10 @@ Platforma özel düzenlemeler:
 - `initialize`: WrongStack ajan listesine eklendi
 - `version-update-skill-creator`: çıktıyı `.wrongstack/skills/` yoluna yazar
 - `git-flow`: override notu eklendi
+- `goal-prep`: jenerik kullanıcıya sorma ifadesi ve non-interactive yönlendirme
+- `no-ai`: WrongStack compatibility metadata ve tool listesi
 
-Skill'ler alternatif olarak `claude/skills/` üzerinden dağıtılabilir — WrongStack ayrıca `~/.claude/skills/` yolunu da native okur — ancak `wrongstack/skills/` sürümleri yukarıdaki platform düzeltmelerini içerir.
+Skill'ler alternatif olarak `claude/skills/` üzerinden dağıtılabilir -- WrongStack ayrıca `~/.claude/skills/` yolunu da native okur -- ancak `wrongstack/skills/` sürümleri yukarıdaki platform düzeltmelerini içerir.
 
 Kurulum için hook'ları `~/.wrongstack/config.json` dosyasına kaydedin ve dosyaları kopyalayın:
 
@@ -364,11 +370,11 @@ Kurulum için hook'ları `~/.wrongstack/config.json` dosyasına kaydedin ve dosy
 cp wrongstack/hooks/* ~/.wrongstack/hooks/
 # ardından wrongstack/config.example.json içindeki hooks bloğunu ~/.wrongstack/config.json içine birleştirin
 
-# Skill'ler (isteğe bağlı — WrongStack ayrıca ~/.claude/skills/ yolunu da okur)
+# Skill'ler (isteğe bağlı -- WrongStack ayrıca ~/.claude/skills/ yolunu da okur)
 cp -r wrongstack/skills/* ~/.wrongstack/skills/
 ```
 
-> Hook'lar WrongStack'in belgelenmiş hook API'sine (`docs/hooks.md`, `packages/core/src/types/hooks.ts`, `packages/core/src/hooks/shell-executor.ts`) göre yazıldı ve `python3 -m py_compile` denetiminden geçti, ancak runtime'da test edilmedi — yazım sırasında WrongStack kurulu değildi. `memory-save.py`'nin Claude pattern'i (ilk stop'u bloke et, ikinciyi geçir) WrongStack'te imkansızdır çünkü Stop side-effects-only'dir, bu yüzden bunun yerine MEMORY.md'yi session log'larından otomatik üretir. `save-plan.py` heuristic bir tool-adı eşleştirici kullanır; gerçek plan-exit tool adı kurulumunuzda doğrulanmalıdır. `compact-reinject.py`'nin WrongStack karşılığı yoktur (compaction olayı yok). Skill'ler platform-agnostiktir ve Claude/Factory eşdeğerleri aracılığıyla test edilmiştir.
+> Hook'lar WrongStack'in belgelenmiş hook API'sine (`docs/hooks.md`, `packages/core/src/types/hooks.ts`, `packages/core/src/hooks/shell-executor.ts`) göre yazıldı ve `python3 -m py_compile` denetiminden geçti, ancak runtime'da test edilmedi -- yazım sırasında WrongStack kurulu değildi. `memory-save.py`'nin Claude pattern'i (ilk stop'u bloke et, ikinciyi geçir) WrongStack'te imkansızdır çünkü Stop side-effects-only'dir, bu yüzden bunun yerine MEMORY.md'yi session log'larından otomatik üretir. `save-plan.py` heuristic bir tool-adı eşleştirici kullanır; gerçek plan-exit tool adı kurulumunuzda doğrulanmalıdır. `compact-reinject.py`'nin WrongStack karşılığı yoktur (compaction olayı yok). Skill'ler platform-agnostiktir ve Claude/Factory eşdeğerleri aracılığıyla test edilmiştir.
 
 ## Platform Farklılıkları
 
