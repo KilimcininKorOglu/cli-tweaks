@@ -10,6 +10,7 @@ description: >
   a structured workflow with automatic base branch detection and strict
   validation rules.
 argument-hint: "<command> <name> [--no-checkout]"
+disable-model-invocation: true
 ---
 
 # Git Flow
