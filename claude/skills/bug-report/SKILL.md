@@ -1,13 +1,6 @@
 ---
 name: bug-report
 description: >
-  This skill MUST be invoked for bug analysis, security auditing, or any focused
-  audit such as "api audit", "error review", "cache audit", "tech debt", or any
-  security scan such as "sql injection", "xss", "rce", "ssrf", "access control",
-  "hardcoded secrets", "cors", "open redirect", "nosql injection", "dependency audit",
-  "data exposure", "crypto", "ci/cd security", "docker security", "rate limiting",
-  "websocket", "header injection", "clickjacking", "mass assignment",
-  "güvenlik taraması", "security scan", or "security sweep".
   Use `/bug-report` for full audit, `/bug-report <subcommand>` for focused audits,
   `/bug-report security-sweep` for security-only scans with a rolling 2-worker pool.
 argument-hint: "[--severity critical|high|medium|low|all | <subcommand>]"
@@ -125,6 +118,10 @@ that worker if the marker exists.
 4. After all workers complete, read `BUG-REPORT.md` and re-sort all findings by
    severity (CRITICAL -> HIGH -> MEDIUM -> LOW), deduplicating overlapping findings.
 
+5. After re-sorting and deduplication, remove ALL `<!-- scan:SUBCOMMAND completed -->`
+   markers from `BUG-REPORT.md` so the user can re-run the full audit at will without
+   manually deleting markers first.
+
 If `--severity` flag provided, filter final report to only that severity level.
 
 **Worker prompt template:**
@@ -218,6 +215,10 @@ This runs ONLY the security scan subcommands (not general audits).
 
 4. After all workers complete, re-sort and deduplicate `BUG-REPORT.md`.
 
+5. After re-sorting and deduplication, remove ALL `<!-- scan:SUBCOMMAND completed -->`
+   markers from `BUG-REPORT.md` so the user can re-run the security sweep at will
+   without manually deleting markers first.
+
 ---
 
 ## Report Format
@@ -309,5 +310,5 @@ Last Bug ID: BUG-[XXX]
 | `header-injection`     | HTTP header injection and CRLF detection                                 |
 | `clickjacking`         | Clickjacking protection (X-Frame-Options, CSP frame-ancestors)           |
 | `mass-assignment`      | Mass assignment and parameter pollution detection                        |
-| `fix`                  | Iterative fix across all open bugs: plan, approve, verify, commit each   |
+| `fix`                  | Iterative fix across all open bugs: verify, commit each                  |
 | `ldap`                 | LDAP injection in search filters and DN construction                     |

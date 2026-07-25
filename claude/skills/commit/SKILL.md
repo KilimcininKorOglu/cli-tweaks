@@ -9,7 +9,6 @@ description: >
   Auto-detects git state, stages changes intelligently, and creates
   atomic commits with proper type/scope/description format.
 argument-hint: "[--all | --staged | --modified | --amend | --no-verify | --wip | --push]"
-context: fork
 ---
 
 # Commit
@@ -39,6 +38,7 @@ Creates well-formatted commits with conventional commit messages.
 - NEVER use git commands with -i flag (git rebase -i, git add -i) -- interactive mode is not supported
 - NEVER add signatures like "Created by Claude", "Co-authored-by: AI" or similar
 - NEVER push unless the user explicitly asked (the `--push` flag, or said "push" / "commit and push") -- a plain commit NEVER pushes
+- NEVER create, switch, checkout, or rename branches unless the user explicitly asked for that exact branch operation -- a plain commit MUST stay on the current branch
 
 ## Commit Message Format (Default)
 
@@ -101,6 +101,7 @@ EOF
    git status                    # Current state of working tree
    git diff HEAD                 # All staged and unstaged changes
    git log --oneline -10         # Recent commits for style matching
+   git branch --show-current     # Confirm the current branch and stay on it
    ```
 2. **Security Scan**: Check changed files for secrets (.env, keys, credentials)
 3. **Smart Staging Decision**:

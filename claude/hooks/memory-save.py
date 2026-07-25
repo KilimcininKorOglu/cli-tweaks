@@ -7,13 +7,39 @@ On second stop (stop_hook_active=true): allows agent to stop normally.
 """
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
 
 
+def _project_name_from_git_common_dir(cwd):
+    """Return the primary repository basename from git metadata, including worktrees."""
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--path-format=absolute", "--git-common-dir"],
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+            timeout=3,
+        )
+        if result.returncode != 0 or not result.stdout.strip():
+            return ""
+        common_dir = Path(result.stdout.strip()).resolve()
+        if common_dir.name == ".git":
+            return common_dir.parent.name
+        if common_dir.parent.name == "worktrees" and common_dir.parent.parent.name == ".git":
+            return common_dir.parent.parent.parent.name
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        pass
+    return ""
+
+
 def _resolveProjectName(cwd):
     """Return git root basename if available, otherwise cwd basename."""
+    project_name = _project_name_from_git_common_dir(cwd)
+    if project_name:
+        return project_name
     try:
         result = subprocess.run(
             ["git", "rev-parse", "--show-toplevel"],
@@ -29,6 +55,15 @@ def _resolveProjectName(cwd):
     return os.path.basename(cwd)
 
 
+def _isValidProjectName(projectName):
+    """Return whether a session lock value is safe to use as a project memory key."""
+    if not re.fullmatch(r"[A-Za-z0-9._-]+", projectName):
+        return False
+    if projectName.startswith("agent-"):
+        return False
+    return True
+
+
 try:
     inputData = json.load(sys.stdin)
 except json.JSONDecodeError:
@@ -41,12 +76,20 @@ if stopHookActive:
 
 cwd = inputData.get("cwd", os.getcwd())
 
-# Read locked project name from session start, fallback to resolving fresh
+# Read locked project name from session start, fallback to resolving fresh.
+# Agent subprocesses can inherit a lock keyed by their agent id. Ignore those
+# values so memory remains attached to the real repository.
 lockFile = Path.home() / ".cli-tweaks" / ".session-locks" / str(os.getppid())
 try:
-    projectName = lockFile.read_text(encoding="utf-8").strip()
+    lockedProjectName = lockFile.read_text(encoding="utf-8").strip()
 except (FileNotFoundError, OSError):
-    projectName = _resolveProjectName(cwd)
+    lockedProjectName = ""
+
+resolvedProjectName = _resolveProjectName(cwd)
+if lockedProjectName and _isValidProjectName(lockedProjectName):
+    projectName = lockedProjectName
+else:
+    projectName = resolvedProjectName
 
 memoryDir = Path.home() / ".cli-tweaks" / "memory" / projectName
 
@@ -91,22 +134,32 @@ if hasMemory:
 
 TEMPLATE = (
     "MEMORY.md MUST use exactly these four sections, in this order:\n"
-    "  ## CRITICAL RULES        - non-negotiable active rules, imperative mood\n"
-    "  ## Architecture & Config Facts - stable technical context (not rules)\n"
-    "  ## Active Warnings       - pitfalls and recurring mistakes\n"
+    "  ## CRITICAL RULES        - non-negotiable project-scoped active rules, imperative mood\n"
+    "  ## Architecture & Config Facts - project-scoped stable technical context, not rules\n"
+    "  ## Active Warnings       - project-scoped pitfalls and recurring mistakes\n"
     "  ## Topic Files           - pointers to detail files (e.g. history.md)\n"
-    "Keep each bullet to ONE focused rule or fact; strip narrative, examples, and dated "
-    "context to a topic file (history.md, or a dedicated subject file for a large topic — "
-    "listed under '## Topic Files'). TWO caps BOTH apply (under 200 lines AND under 50000 characters), "
-    "so keep bullets concise and do NOT pad them into long single lines.\n"
+    "Only record project-scoped learnings in this project MEMORY.md. A learning is project-scoped "
+    "only when it changes future behavior for this repository's code, commands, architecture, "
+    "configuration, deployment, tests, or product preferences. Do not write global Claude Code "
+    "behavior, shared skill workflow rules, general agent preferences, or cross-project policies "
+    "to this project MEMORY.md. Put global rules in the appropriate global instruction or shared "
+    "skill file instead. If the scope is unclear, do not write it here. Keep each bullet to ONE "
+    "focused project rule or fact; strip narrative, examples, and dated context to a topic file "
+    "(history.md, or a dedicated subject file for a large topic, listed under '## Topic Files'). "
+    "TWO caps BOTH apply (under 200 lines AND under 50000 characters), so keep bullets concise "
+    "and do NOT pad them into long single lines.\n"
 )
 
 if hasMemory:
     reason = (
         "MANDATORY before stopping — these are HARD rules, not suggestions; apply each:\n"
-        "1. If you learned an ACTIVE RULE that changes future behavior (a build/test command, "
-        "an architecture fact, a user preference, a workflow rule), you MUST record it in "
-        "{dir}/MEMORY.md in imperative mood — under '## CRITICAL RULES' when it is a behavior rule.\n"
+        "1. If you learned an ACTIVE PROJECT-SCOPED RULE that changes future behavior for "
+        "this repository's code, commands, architecture, configuration, deployment, tests, "
+        "or product preferences, you MUST record it in {dir}/MEMORY.md in imperative mood — "
+        "under '## CRITICAL RULES' when it is a behavior rule. Do NOT write global Claude Code "
+        "behavior, shared skill workflow rules, general agent preferences, or cross-project "
+        "policies to this project MEMORY.md; put those in the appropriate global instruction "
+        "or shared skill file instead. If the scope is unclear, do not write it here.\n"
         "2. NEVER write commit hashes, dated fix histories, completed-slice/feature DONE-records, "
         "or any archival narrative to MEMORY.md — these are FORBIDDEN there. ALL historical detail "
         "goes to a topic file ONLY — history.md by default, or a dedicated subject file when a topic "
@@ -124,12 +177,18 @@ if hasMemory:
 else:
     reason = (
         "MANDATORY before stopping — this is a new project with no memory yet. "
-        "You MUST create {dir}/MEMORY.md following the template below, with rules in imperative "
-        "mood. NEVER write commit hashes or dated history to MEMORY.md — historical detail goes "
-        "to a topic file only (history.md by default, or a dedicated subject file for a large topic). "
-        "Keep it lean — bounded by BOTH a line cap (under 200) and a character "
-        "cap (under 50000) — and in English ONLY. Each bullet is ONE focused rule; no narrative or "
-        "padding. Skip this ONLY if the session was genuinely trivial with nothing worth remembering.\n"
+        "You MUST create {dir}/MEMORY.md following the template below, with project-scoped "
+        "rules in imperative mood. Record only learnings that change future behavior for this "
+        "repository's code, commands, architecture, configuration, deployment, tests, or product "
+        "preferences. Do NOT write global Claude Code behavior, shared skill workflow rules, "
+        "general agent preferences, or cross-project policies to this project MEMORY.md; put those "
+        "in the appropriate global instruction or shared skill file instead. If the scope is "
+        "unclear, do not write it here. NEVER write commit hashes or dated history to MEMORY.md — "
+        "historical detail goes to a topic file only (history.md by default, or a dedicated subject "
+        "file for a large topic). Keep it lean — bounded by BOTH a line cap (under 200) and a "
+        "character cap (under 50000) — and in English ONLY. Each bullet is ONE focused project "
+        "rule or fact; no narrative or padding. Skip this ONLY if the session was genuinely trivial "
+        "with nothing project-scoped worth remembering.\n"
         + TEMPLATE
     ).format(dir=memoryDir)
 
@@ -138,9 +197,9 @@ if hasMemory and not hasCriticalSection:
         "\nMANDATORY MIGRATION: MEMORY.md is MISSING the '## CRITICAL RULES' section, "
         "so it is NOT in the required format. You MUST restructure the whole file this "
         "session into the four-section template, in this exact order:\n"
-        "  ## CRITICAL RULES        - non-negotiable active rules, imperative mood\n"
-        "  ## Architecture & Config Facts - stable technical context (not rules)\n"
-        "  ## Active Warnings       - pitfalls and recurring mistakes\n"
+        "  ## CRITICAL RULES        - non-negotiable project-scoped active rules, imperative mood\n"
+        "  ## Architecture & Config Facts - project-scoped stable technical context, not rules\n"
+        "  ## Active Warnings       - project-scoped pitfalls and recurring mistakes\n"
         "  ## Topic Files           - pointers to detail files (e.g. history.md)\n"
         "Preserve all real content, reorganize it under those sections, and convert "
         "rules to imperative mood. Do this before stopping."
