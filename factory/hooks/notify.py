@@ -38,11 +38,11 @@ def notify(title: str, message: str, subtitle: str = ""):
 
     if system == "Darwin":
         safeTitle = escapeApplescript(title)
-        safeMsg = escapeApplescript(message)
-        safeSub = escapeApplescript(subtitle)
-        script = f'display notification "{safeMsg}" with title "{safeTitle}"'
+        safeMessage = escapeApplescript(message)
+        safeSubtitle = escapeApplescript(subtitle)
+        script = f'display notification "{safeMessage}" with title "{safeTitle}"'
         if subtitle:
-            script += f' subtitle "{safeSub}"'
+            script += f' subtitle "{safeSubtitle}"'
         try:
             subprocess.run(["osascript", "-e", script])
         except FileNotFoundError:

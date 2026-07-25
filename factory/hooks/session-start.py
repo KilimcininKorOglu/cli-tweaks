@@ -42,7 +42,7 @@ lockFile.parent.mkdir(parents=True, exist_ok=True)
 lockFile.write_text(projectName, encoding="utf-8")
 parts = []
 
-# --- Global inject (from globalInjectFiles in settings.json) ---
+# --- Global inject (from globalInjectFiles in ~/.factory/settings.json) ---
 settingsFile = Path.home() / ".factory" / "settings.json"
 if settingsFile.exists():
     try:

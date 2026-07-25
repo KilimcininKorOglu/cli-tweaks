@@ -51,7 +51,7 @@ if matched:
         f"These files are in the global gitignore for a reason. "
         f"Analyze the root cause of the error instead of force-adding."
     )
-    # Exit code 2 forces a PreToolUse block: the agent ignores stdout, feeds
+    # Exit code 2 forces a PreToolUse block: Droid ignores stdout, feeds
     # stderr back to the model as the reason, and aborts the tool call. The
     # previous {"decision": {"behavior": "block", ...}} JSON is not a recognized
     # PreToolUse outcome (that shape belongs to PermissionRequest / the Agent
