@@ -2,7 +2,7 @@
 
 [Türkçe](README.tr.md)
 
-A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, WrongStack, and Codex that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box. OpenCode is supported through native skills/rules plus TypeScript plugins; WrongStack is supported through Python shell hooks; Codex is supported through native user-level skills and Python command hooks (see [OpenCode Support](#opencode-support), [WrongStack Support](#wrongstack-support), and [Codex Support](#codex-support)).
+A collection of hooks and skills for Factory Droid and Claude Code that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box. The two platforms share the same behavior, mirrored under `factory/` and `claude/`, diverging only where a platform contract requires it.
 
 ## What's Included
 
@@ -17,6 +17,7 @@ A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, Wrong
 | `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
 | `git-protect.py`      | PreToolUse (Bash)    | Blocks `git add -f/--force` on files listed in the global gitignore                             |
 | `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |
+| `buddy-seed-apply.sh` | SessionStart         | Claude Code only: re-applies a custom buddy seed that Claude Code resets on every startup      |
 
 ### Skills
 
@@ -26,8 +27,7 @@ A collection of hooks and skills for Factory Droid, Claude Code, OpenCode, Wrong
 | `task-plan`                    | `/task-plan`                    | PRD breakdown into features with autonomous execution and checkpointing          |
 | `bug-report`                   | `/bug-report`                   | General bug analysis plus focused audit subcommands writing to BUG-REPORT.md     |
 | `git-flow`                     | `/git-flow`                     | Structured branch management with strict validation rules                        |
-| `initialize`                   | `/initialize`                   | Creates AGENTS.md by scanning the codebase                                       |
-| `init-claude`                  | `/init-claude`                  | Creates CLAUDE.md by scanning the codebase                                       |
+| `initialize` / `init-claude`   | `/initialize`, `/init-claude`   | Scans the codebase and writes AGENTS.md (Factory, `initialize`) or CLAUDE.md (Claude Code, `init-claude`) |
 | `redate-commits`               | `/redate-commits`               | Rewrites commit dates across a selected range with safe workflow warnings        |
 | `frontend-design`              | `/frontend-design`              | Frontend code generation with 28-site design system catalog                      |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill                        |
@@ -112,20 +112,14 @@ cli-tweaks/
   factory/           <-- Factory Droid (copy to ~/.factory/)
     hooks/
     skills/
+    settings.json.example
   claude/            <-- Claude Code (copy to ~/.claude/)
     hooks/
     skills/
-  opencode/          <-- OpenCode (TS plugins + config, see opencode/README.md)
-    plugins/
-    opencode.json.example
-  wrongstack/        <-- WrongStack (Python shell hooks + skills, see wrongstack/README.md)
-    hooks/
-    skills/
-  codex/             <-- Codex (Python command hooks + config, see codex/README.md)
-    hooks/
-    hooks.json.example
+    settings.json.example
   SOUL.md.template          <-- Custom persona template
   GLOBAL-RULES.template.md  <-- Portable global agent-rules template
+  MEMORY.template.md        <-- Project memory structure template
   sample-BUG-REPORT.md      <-- Finding-format reference for audit skills
 ```
 
@@ -143,17 +137,6 @@ npx degit KilimcininKorOglu/cli-tweaks/factory ~/.factory
 
 # Claude Code
 npx degit KilimcininKorOglu/cli-tweaks/claude ~/.claude
-
-# WrongStack
-npx degit KilimcininKorOglu/cli-tweaks/wrongstack ~/.wrongstack
-
-# Codex skills
-npx degit KilimcininKorOglu/cli-tweaks/claude/skills ~/.agents/skills
-# Older Codex fallback path:
-# npx degit KilimcininKorOglu/cli-tweaks/claude/skills ~/.codex/skills
-
-# Codex hooks
-npx degit KilimcininKorOglu/cli-tweaks/codex ~/.codex
 ```
 
 **Merge with existing setup**:
@@ -172,28 +155,6 @@ npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
 cp -r /tmp/cli-tweaks-hooks/* ~/.claude/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.claude/skills/
 rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
-
-# WrongStack
-npx degit KilimcininKorOglu/cli-tweaks/wrongstack/hooks /tmp/cli-tweaks-hooks
-npx degit KilimcininKorOglu/cli-tweaks/wrongstack/skills /tmp/cli-tweaks-skills
-cp -r /tmp/cli-tweaks-hooks/* ~/.wrongstack/hooks/
-cp -r /tmp/cli-tweaks-skills/* ~/.wrongstack/skills/
-rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
-
-# Codex skills
-npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
-mkdir -p ~/.agents/skills
-cp -r /tmp/cli-tweaks-skills/* ~/.agents/skills/
-# Older Codex fallback path:
-# mkdir -p ~/.codex/skills && cp -r /tmp/cli-tweaks-skills/* ~/.codex/skills/
-rm -rf /tmp/cli-tweaks-skills
-
-# Codex hooks
-npx degit KilimcininKorOglu/cli-tweaks/codex/hooks /tmp/cli-tweaks-hooks
-mkdir -p ~/.codex/hooks
-cp -r /tmp/cli-tweaks-hooks/* ~/.codex/hooks/
-# Merge codex/hooks.json.example into ~/.codex/hooks.json if it already exists.
-rm -rf /tmp/cli-tweaks-hooks
 ```
 
 ### Alternative: git clone
@@ -209,22 +170,6 @@ cp -r factory/skills/* ~/.factory/skills/
 # Claude Code
 cp -r claude/hooks/* ~/.claude/hooks/
 cp -r claude/skills/* ~/.claude/skills/
-
-# WrongStack
-cp -r wrongstack/hooks/* ~/.wrongstack/hooks/
-cp -r wrongstack/skills/* ~/.wrongstack/skills/
-
-# Codex skills
-mkdir -p ~/.agents/skills
-cp -r claude/skills/* ~/.agents/skills/
-# Older Codex fallback path:
-# mkdir -p ~/.codex/skills && cp -r claude/skills/* ~/.codex/skills/
-
-# Codex hooks
-mkdir -p ~/.codex/hooks
-cp codex/hooks/*.py ~/.codex/hooks/
-# Merge codex/hooks.json.example into ~/.codex/hooks.json if it already exists.
-cp codex/hooks.json.example ~/.codex/hooks.json
 ```
 
 ### Hook Registration
@@ -235,10 +180,8 @@ After copying the files, register hooks by merging the hook definitions into you
 |---------------|---------------------------------|------------------------------|
 | Factory Droid | `factory/settings.json.example` | `~/.factory/settings.json`   |
 | Claude Code   | `claude/settings.json.example`  | `~/.claude/settings.json`    |
-| WrongStack    | `wrongstack/config.example.json`| `~/.wrongstack/config.json`  |
-| Codex         | `codex/hooks.json.example`      | `~/.codex/hooks.json`        |
 
-Copy the `hooks` section from the example file into your existing settings, or use the example as a starting point. Codex also requires opening `/hooks` after installation to review and trust non-managed command hooks.
+Copy the `hooks` section from the example file into your existing settings, or use the example as a starting point.
 
 ### Selective Install
 
@@ -328,138 +271,20 @@ Desktop notifications are configured per-feature in your `settings.json`:
 
 ## Requirements
 
-- Python 3.8+ (Factory Droid, Claude Code, WrongStack, Codex hooks)
-
-## Codex Support
-
-[Codex CLI](https://github.com/openai/codex) can use the existing `SKILL.md` directories and Codex-specific Python command hooks. Codex loads user-installed skills from `~/.agents/skills/`; older Codex setups may use `~/.codex/skills/`.
-
-This repository does not track a separate Codex skill tree because the canonical Claude skill directories already match Codex's `SKILL.md` format. Add a platform-specific Codex skill tree only if Codex later requires different wording, metadata, or bundled resources.
-
-Codex hooks are available under `codex/hooks/` with an example registration file at `codex/hooks.json.example`:
-
-| Hook | Codex event | Matcher | Status |
-|------|-------------|---------|--------|
-| `session-start.py` | `SessionStart` | `startup|resume|clear` | Ported |
-| `compact-reinject.py` | `SessionStart` | `compact` | Ported |
-| `memory-reinject.py` | `UserPromptSubmit` | not used | Ported |
-| `memory-save.py` | `Stop` | not used | Ported with Codex continuation semantics |
-| `git-protect.py` | `PreToolUse` | `Bash` | Ported |
-| `notify.py` | helper module | not applicable | Available for future notification hooks |
-
-`save-plan.py` is not ported because Codex plan-exit tool names and transcript semantics are not verified. Codex requires non-managed command hooks to be reviewed and trusted with `/hooks` before they run; do not use `--dangerously-bypass-hook-trust` as the normal install path.
-
-Optional Codex global instruction files are configured in `~/.codex/cli-tweaks.json`:
-
-```json
-{
-  "globalInjectFiles": [
-    "~/.codex/AGENTS.md"
-  ],
-  "hookNotifyPlanSave": false
-}
-```
-
-## OpenCode Support
-
-[OpenCode](https://opencode.ai) is supported through a mix of native features and TypeScript plugins. Full details, install steps, and the complete limitations list are in [`opencode/README.md`](opencode/README.md).
-
-- **Skills work natively.** OpenCode reads `SKILL.md` from `~/.claude/skills/`, so skills already deployed for Claude Code are visible -- invoked as the `skills_<name>` tool instead of a `/` command.
-- **Rules work natively.** OpenCode reads `AGENTS.md` and the `opencode.json` `instructions` field.
-- **Hooks become plugins.** The Python hooks are re-authored as TypeScript plugins under `opencode/plugins/`:
-
-| Plugin                | OpenCode hook                       | Python origin         |
-|-----------------------|-------------------------------------|-----------------------|
-| `memory-save.ts`      | `stop`                              | `memory-save.py`      |
-| `compact-reinject.ts` | `experimental.session.compacting`   | `compact-reinject.py` |
-| `memory-inject.ts`    | `experimental.chat.system.transform`| `memory-reinject.py`  |
-
-Install by copying the plugins to OpenCode's auto-loaded plugin directory and merging the example config:
-
-```bash
-cp opencode/plugins/*.ts ~/.config/opencode/plugins/
-# then merge opencode/opencode.json.example into ~/.config/opencode/opencode.json
-```
-
-> The plugins are authored against OpenCode's documented hook API and pass `bun` transpilation, but they were not runtime-tested -- OpenCode was not installed during authoring. `memory-inject.ts` relies on `experimental.chat.system.transform`, which is blocked by upstream issue #17100; use the static `instructions` path for reliable memory. `save-plan.py` is not ported (OpenCode's plan model was not verified).
-
-## WrongStack Support
-
-[WrongStack](https://github.com/WrongStack/WrongStack) is supported through Python shell hooks and platform-tailored skills. WrongStack's shell-hook transport is Claude-compatible (stdin JSON to stdout JSON, exit code 2 = block) but field names and the outcome shape differ -- a `_compat.py` shim absorbs those differences so hook logic stays identical to the Claude/Factory ports. Full details are in [`wrongstack/README.md`](wrongstack/README.md).
-
-- **Hooks are Python shell hooks.** Written under `wrongstack/hooks/`, the same Python source logic is wired through the `_compat.py` shim:
-
-| Hook                  | WrongStack event   | Matcher | Status |
-|-----------------------|--------------------|---------|--------|
-| `session-start.py`    | `SessionStart`     | --       | Ported (150-line memory cap for 64 KiB output safety) |
-| `git-protect.py`      | `PreToolUse`       | `Bash`  | Direct port |
-| `memory-reinject.py`  | `UserPromptSubmit` | --       | Ported (counter keyed by `sessionId`) |
-| `memory-save.py`      | `Stop`             | --       | Redesigned -- Stop is side-effects-only (no block), so it auto-generates/updates MEMORY.md directly from the session logs |
-| `save-plan.py`        | `PostToolUse`      | `*`     | Heuristic matcher v1 (plan-exit tool name unconfirmed) |
-| `compact-reinject.py` | --                  | --       | Not ported (no compaction event on WrongStack) |
-| `notify.py`           | --                  | --       | Helper module |
-
-- **Skills are available under `wrongstack/skills/`.** All 17 Claude skills are ported with platform-specific adjustments where needed:
-
-| Skill                          | Command                         | Description                                                                      |
-|--------------------------------|---------------------------------|----------------------------------------------------------------------------------|
-| `commit`                       | `/commit`                       | Conventional commits with repo style mimicry, smart staging, git safety protocol |
-| `git-flow`                     | `/git-flow`                     | Overrides WrongStack's bundled git-flow with extended triggers                   |
-| `bug-report`                   | `/bug-report`                   | General bug analysis plus focused audit subcommands                              |
-| `task-plan`                    | `/task-plan`                    | PRD breakdown into features with autonomous execution                            |
-| `initialize`                   | `/initialize`                   | Creates `AGENTS.md` by scanning the codebase                                     |
-| `redate-commits`               | `/redate-commits`               | Rewrites commit dates across a selected range                                    |
-| `frontend-design`              | `/frontend-design`              | Frontend code generation with 28-site design catalog                             |
-| `version-update-skill-creator` | *(meta-skill)*                  | Creates a `/version-update` skill tailored to the current project                |
-| `add-log`                      | `/add-log`                      | Adds centralized request, audit, and application logging                         |
-| `goal-prep`                    | `/goal-prep`                    | Converts free-form work into a verifiable `/goal` completion condition           |
-| `no-ai`                        | `/no-ai`                        | Rewrites text to remove common AI-generated writing patterns                     |
-| `ai-seo`                       | `/ai-seo`                       | GEO optimization for AI search engines                                           |
-| `draft-to-article`             | `/draft-to-article`             | Format drafts for X Articles, LinkedIn, or Medium/Substack                       |
-| `http-cache`                   | `/http-cache`                   | HTTP caching with ETag and Cache-Control headers                                 |
-| `audit-replay`                 | `/audit-replay`                 | User action tracking, audit event logging, and rrweb session replay              |
-| `ios-uikit`                    | `/ios-uikit`                    | Programmatic UIKit development with 20 reference documents                       |
-| `ios-simulator`                | `/ios-simulator`                | iOS simulator automation with 22 Node.js scripts                                 |
-
-Platform-specific adjustments in the WrongStack copies:
-- `draft-to-article`: generic ask-user phrasing (not `AskUserQuestion`)
-- `bug-report/fix.md`: generic plan-mode reference (not `ExitPlanMode`)
-- `initialize`: includes WrongStack in the agent list
-- `version-update-skill-creator`: outputs to `.wrongstack/skills/`
-- `git-flow`: override note in description
-- `goal-prep`: generic ask-user wording and non-interactive guidance
-- `no-ai`: WrongStack compatibility metadata and tool list
-
-Skills can alternatively be deployed from `claude/skills/` -- WrongStack also reads `~/.claude/skills/` natively -- but the `wrongstack/skills/` versions include the platform-specific fixes above.
-
-Install by registering hooks in `~/.wrongstack/config.json` and copying files:
-
-```bash
-# Hooks
-cp wrongstack/hooks/* ~/.wrongstack/hooks/
-# then merge the hooks block from wrongstack/config.example.json into ~/.wrongstack/config.json
-
-# Skills (optional -- WrongStack also reads skills from ~/.claude/skills/)
-cp -r wrongstack/skills/* ~/.wrongstack/skills/
-```
-
-> The hooks are authored against WrongStack's documented hook API (`docs/hooks.md`, `packages/core/src/types/hooks.ts`, `packages/core/src/hooks/shell-executor.ts`) and pass `python3 -m py_compile`, but they were not runtime-tested -- WrongStack was not installed during authoring. `memory-save.py`'s Claude pattern (block first stop, let second through) is impossible on WrongStack because Stop is side-effects-only, so it auto-generates MEMORY.md from the session logs instead. `save-plan.py` uses a heuristic tool-name matcher; the actual plan-exit tool name should be confirmed against your installed version. `compact-reinject.py` has no WrongStack equivalent (no compaction event). Skills are platform-agnostic and tested through their Claude/Factory equivalents.
+- Python 3.8+ (Factory Droid and Claude Code hooks)
 
 ## Platform Differences
 
-| Feature                 | Factory Droid    | Claude Code       | WrongStack          |
-|-------------------------|------------------|-------------------|---------------------|
-| Global config dir       | `~/.factory/`    | `~/.claude/`      | `~/.wrongstack/`    |
-| Shared data dir         | `~/.cli-tweaks/` | `~/.cli-tweaks/`  | `~/.cli-tweaks/`    |
-| Hook config file        | `settings.json`  | `settings.json`   | `config.json`       |
-| Hook runtime            | Python shell     | Python shell      | Python shell        |
-| Plan mode exit event    | `ExitSpecMode`   | `ExitPlanMode`    | Heuristic match     |
-| User question tool      | `AskUser`        | `AskUserQuestion` | (generic)           |
-| Re-injection target     | `AGENTS.md`      | `CLAUDE.md`       | config-driven       |
-| Skill invocation prefix | `/`              | `/`               | `/`                 |
-| Stop block support      | Yes              | Yes               | No, side-effects only |
-| Compaction event        | Yes              | Yes               | No                  |
-| Hook output cap         | None             | None              | 64 KiB              |
+| Feature                 | Factory Droid    | Claude Code       |
+|-------------------------|------------------|-------------------|
+| Global config dir       | `~/.factory/`    | `~/.claude/`      |
+| Shared data dir         | `~/.cli-tweaks/` | `~/.cli-tweaks/`  |
+| Hook config file        | `settings.json`  | `settings.json`   |
+| Hook runtime            | Python shell     | Python shell      |
+| Plan mode exit event    | `ExitSpecMode`   | `ExitPlanMode`    |
+| User question tool      | `AskUser`        | `AskUserQuestion` |
+| Re-injection target     | `AGENTS.md`      | `CLAUDE.md`       |
+| Skill invocation prefix | `/`              | `/`               |
 
 ## License
 

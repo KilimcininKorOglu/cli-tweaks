@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-Factory Droid, Claude Code, OpenCode, WrongStack ve Codex için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın. OpenCode, native skill/rules ile birlikte bir TypeScript plugin seti aracılığıyla; WrongStack, Python shell hook'ları aracılığıyla; Codex ise native user-level skill'ler ve Python command hook'ları aracılığıyla destekleniyor (bkz. [OpenCode Desteği](#opencode-desteği), [WrongStack Desteği](#wrongstack-desteği) ve [Codex Desteği](#codex-desteği)).
+Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın.
 
 ## İçerik
 
@@ -17,6 +17,7 @@ Factory Droid, Claude Code, OpenCode, WrongStack ve Codex için planlama otomasy
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                   |
 | `git-protect.py`      | PreToolUse (Bash)    | Global gitignore'daki dosyalara `git add -f/--force` uygulanmasını engeller                                         |
 | `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                                     |
+| `buddy-seed-apply.sh` | (yalnızca Claude)    | Oturum başında `~/.claude.json` buddy seed'ini yeniden uygular                                                      |
 
 ### Skill'ler
 
@@ -26,8 +27,7 @@ Factory Droid, Claude Code, OpenCode, WrongStack ve Codex için planlama otomasy
 | `task-plan`                    | `/task-plan`                    | PRD'yi özelliklere ayırma ve otonom yürütme                                     |
 | `bug-report`                   | `/bug-report`                   | Genel hata analizi ve `BUG-REPORT.md` yazan odaklı audit subcommand'leri        |
 | `git-flow`                     | `/git-flow`                     | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi                     |
-| `initialize`                   | `/initialize`                   | Kod tabanını tarayarak AGENTS.md oluşturur                                      |
-| `init-claude`                  | `/init-claude`                  | Kod tabanını tarayarak CLAUDE.md oluşturur                                      |
+| `initialize` / `init-claude`   | `/initialize`, `/init-claude`   | Kod tabanını tarayarak AGENTS.md (Factory) veya CLAUDE.md (Claude) oluşturur    |
 | `redate-commits`               | `/redate-commits`               | Commit tarihlerini seçilen aralığa yayar, güvenli iş akışı uyarıları verir      |
 | `frontend-design`              | `/frontend-design`              | 28 siteli tasarım kataloğu ile frontend kod üretimi                             |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur                         |
@@ -109,22 +109,16 @@ Factory Droid, Claude Code, OpenCode, WrongStack ve Codex için planlama otomasy
 
 ```
 cli-tweaks/
-  factory/           <-- Factory Droid (copy to ~/.factory/)
+  factory/           <-- Factory Droid (~/.factory/ içine kopyalayın)
     hooks/
     skills/
-  claude/            <-- Claude Code (copy to ~/.claude/)
+    settings.json.example
+  claude/            <-- Claude Code (~/.claude/ içine kopyalayın)
     hooks/
     skills/
-  opencode/          <-- OpenCode (TS plugin + config, bkz. opencode/README.md)
-    plugins/
-    opencode.json.example
-  wrongstack/        <-- WrongStack (Python shell hook + skills, bkz. wrongstack/README.md)
-    hooks/
-    skills/
-  codex/             <-- Codex (Python command hook + config, bkz. codex/README.md)
-    hooks/
-    hooks.json.example
+    settings.json.example
   SOUL.md.template          <-- Özel persona şablonu
+  MEMORY.template.md        <-- Canonical proje MEMORY.md yapısı
   GLOBAL-RULES.template.md  <-- Taşınabilir global ajan kuralları şablonu
   sample-BUG-REPORT.md      <-- Audit skill'leri için bulgu format referansı
 ```
@@ -143,17 +137,6 @@ npx degit KilimcininKorOglu/cli-tweaks/factory ~/.factory
 
 # Claude Code
 npx degit KilimcininKorOglu/cli-tweaks/claude ~/.claude
-
-# WrongStack
-npx degit KilimcininKorOglu/cli-tweaks/wrongstack ~/.wrongstack
-
-# Codex skill'leri
-npx degit KilimcininKorOglu/cli-tweaks/claude/skills ~/.agents/skills
-# Eski Codex fallback yolu:
-# npx degit KilimcininKorOglu/cli-tweaks/claude/skills ~/.codex/skills
-
-# Codex hook'ları
-npx degit KilimcininKorOglu/cli-tweaks/codex ~/.codex
 ```
 
 **Mevcut kurulumla birleştirme**:
@@ -172,28 +155,6 @@ npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
 cp -r /tmp/cli-tweaks-hooks/* ~/.claude/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.claude/skills/
 rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
-
-# WrongStack
-npx degit KilimcininKorOglu/cli-tweaks/wrongstack/hooks /tmp/cli-tweaks-hooks
-npx degit KilimcininKorOglu/cli-tweaks/wrongstack/skills /tmp/cli-tweaks-skills
-cp -r /tmp/cli-tweaks-hooks/* ~/.wrongstack/hooks/
-cp -r /tmp/cli-tweaks-skills/* ~/.wrongstack/skills/
-rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
-
-# Codex skill'leri
-npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
-mkdir -p ~/.agents/skills
-cp -r /tmp/cli-tweaks-skills/* ~/.agents/skills/
-# Eski Codex fallback yolu:
-# mkdir -p ~/.codex/skills && cp -r /tmp/cli-tweaks-skills/* ~/.codex/skills/
-rm -rf /tmp/cli-tweaks-skills
-
-# Codex hook'ları
-npx degit KilimcininKorOglu/cli-tweaks/codex/hooks /tmp/cli-tweaks-hooks
-mkdir -p ~/.codex/hooks
-cp -r /tmp/cli-tweaks-hooks/* ~/.codex/hooks/
-# Zaten varsa codex/hooks.json.example dosyasını ~/.codex/hooks.json içine birleştirin.
-rm -rf /tmp/cli-tweaks-hooks
 ```
 
 ### Alternatif: git clone
@@ -209,22 +170,6 @@ cp -r factory/skills/* ~/.factory/skills/
 # Claude Code
 cp -r claude/hooks/* ~/.claude/hooks/
 cp -r claude/skills/* ~/.claude/skills/
-
-# WrongStack
-cp -r wrongstack/hooks/* ~/.wrongstack/hooks/
-cp -r wrongstack/skills/* ~/.wrongstack/skills/
-
-# Codex skill'leri
-mkdir -p ~/.agents/skills
-cp -r claude/skills/* ~/.agents/skills/
-# Eski Codex fallback yolu:
-# mkdir -p ~/.codex/skills && cp -r claude/skills/* ~/.codex/skills/
-
-# Codex hook'ları
-mkdir -p ~/.codex/hooks
-cp codex/hooks/*.py ~/.codex/hooks/
-# Zaten varsa codex/hooks.json.example dosyasını ~/.codex/hooks.json içine birleştirin.
-cp codex/hooks.json.example ~/.codex/hooks.json
 ```
 
 ### Hook Kaydı
@@ -235,10 +180,8 @@ Dosyaları kopyaladıktan sonra, hook tanımlarını `settings.json` dosyanıza 
 |---------------|---------------------------------|------------------------------|
 | Factory Droid | `factory/settings.json.example` | `~/.factory/settings.json`   |
 | Claude Code   | `claude/settings.json.example`  | `~/.claude/settings.json`    |
-| WrongStack    | `wrongstack/config.example.json`| `~/.wrongstack/config.json`  |
-| Codex         | `codex/hooks.json.example`      | `~/.codex/hooks.json`        |
 
-Örnek dosyadaki `hooks` bölümünü mevcut ayarlarınıza kopyalayın veya örneği başlangıç noktası olarak kullanın. Codex ayrıca kurulumdan sonra non-managed command hook'ları inceleyip güvenmek için `/hooks` açmanızı gerektirir.
+Örnek dosyadaki `hooks` bölümünü mevcut ayarlarınıza kopyalayın veya örneği başlangıç noktası olarak kullanın.
 
 ### Seçmeli Kurulum
 
@@ -328,138 +271,20 @@ Masaüstü bildirimleri `settings.json` dosyanızda özellik bazında yapıland�
 
 ## Gereksinimler
 
-- Python 3.8+ (Factory Droid, Claude Code, WrongStack, Codex hook'ları)
-
-## Codex Desteği
-
-[Codex CLI](https://github.com/openai/codex), mevcut `SKILL.md` dizinlerini ve Codex'e özel Python command hook'larını kullanabilir. Codex, user-installed skill'leri `~/.agents/skills/` yolundan yükler; eski Codex kurulumları `~/.codex/skills/` yolunu kullanabilir.
-
-Bu repository ayrı bir Codex skill ağacı takip etmez, çünkü canonical Claude skill dizinleri zaten Codex'in `SKILL.md` formatıyla uyumludur. Codex ileride farklı ifade, metadata veya bundled resource gerektirirse platforma özel Codex skill ağacı ekleyin.
-
-Codex hook'ları `codex/hooks/` altında bulunur ve örnek kayıt dosyası `codex/hooks.json.example` yolundadır:
-
-| Hook | Codex olayı | Matcher | Durum |
-|------|-------------|---------|-------|
-| `session-start.py` | `SessionStart` | `startup|resume|clear` | Port edildi |
-| `compact-reinject.py` | `SessionStart` | `compact` | Port edildi |
-| `memory-reinject.py` | `UserPromptSubmit` | kullanılmaz | Port edildi |
-| `memory-save.py` | `Stop` | kullanılmaz | Codex continuation semantiğiyle port edildi |
-| `git-protect.py` | `PreToolUse` | `Bash` | Port edildi |
-| `notify.py` | yardımcı modül | uygulanmaz | Gelecekteki notification hook'ları için hazır |
-
-`save-plan.py` port edilmedi, çünkü Codex plan-exit tool adları ve transcript semantiği doğrulanmadı. Codex, non-managed command hook'ların çalışmadan önce `/hooks` ile incelenip güvenilmesini gerektirir; `--dangerously-bypass-hook-trust` normal kurulum yolu olarak kullanılmamalıdır.
-
-Opsiyonel Codex global talimat dosyaları `~/.codex/cli-tweaks.json` içinde yapılandırılır:
-
-```json
-{
-  "globalInjectFiles": [
-    "~/.codex/AGENTS.md"
-  ],
-  "hookNotifyPlanSave": false
-}
-```
-
-## OpenCode Desteği
-
-[OpenCode](https://opencode.ai), native özellikler ile TypeScript plugin'lerinin bir karması aracılığıyla destekleniyor. Tüm ayrıntılar, kurulum adımları ve eksiksiz kısıtlama listesi [`opencode/README.md`](opencode/README.md) dosyasındadır.
-
-- **Skill'ler native çalışır.** OpenCode, `SKILL.md` dosyalarını `~/.claude/skills/` konumundan okur; yani Claude Code için zaten dağıtılmış skill'ler görünür durumdadır -- `/` komutu yerine `skills_<name>` aracı olarak çağrılır.
-- **Kurallar native çalışır.** OpenCode, `AGENTS.md` dosyasını ve `opencode.json` `instructions` alanını okur.
-- **Hook'lar plugin'e dönüşür.** Python hook'ları `opencode/plugins/` altında TypeScript plugin'leri olarak yeniden yazıldı:
-
-| Plugin                | OpenCode hook'u                     | Python kaynağı        |
-|-----------------------|-------------------------------------|-----------------------|
-| `memory-save.ts`      | `stop`                              | `memory-save.py`      |
-| `compact-reinject.ts` | `experimental.session.compacting`   | `compact-reinject.py` |
-| `memory-inject.ts`    | `experimental.chat.system.transform`| `memory-reinject.py`  |
-
-Kurulum için plugin'leri OpenCode'un otomatik yüklenen plugin dizinine kopyalayın ve örnek yapılandırmayı birleştirin:
-
-```bash
-cp opencode/plugins/*.ts ~/.config/opencode/plugins/
-# ardından opencode/opencode.json.example dosyasını ~/.config/opencode/opencode.json içine birleştirin
-```
-
-> Plugin'ler OpenCode'un belgelenmiş hook API'sine göre yazıldı ve `bun` transpile'ından geçiyor, ancak runtime'da test edilmedi -- yazım sırasında OpenCode kurulu değildi. `memory-inject.ts`, upstream #17100 sorunu nedeniyle engellenen `experimental.chat.system.transform` hook'una dayanır; güvenilir bellek için statik `instructions` yolunu kullanın. `save-plan.py` port edilmedi (OpenCode'un plan modeli doğrulanmadı).
-
-## WrongStack Desteği
-
-[WrongStack](https://github.com/WrongStack/WrongStack), Python shell hook'ları ve platforma özel skill'ler aracılığıyla desteklenmektedir. WrongStack'in shell-hook transport'u Claude-uyumludur (stdin JSON to stdout JSON, exit code 2 = block) ancak alan adları ve çıktı formatı farklıdır -- `_compat.py` shim'i bu farkları emer, böylece hook mantığı Claude/Factory port'larıyla aynı kalır. Tüm ayrıntılar [`wrongstack/README.md`](wrongstack/README.md) dosyasındadır.
-
-- **Hook'lar Python shell hook'udur.** `wrongstack/hooks/` altında yazılır, aynı Python kaynak mantığı `_compat.py` shim'i üzerinden çalışır:
-
-| Hook                  | WrongStack olayı   | Matcher | Durum |
-|-----------------------|---------------------|---------|-------|
-| `session-start.py`    | `SessionStart`     | --       | Port edildi (64 KiB çıktı güvenliği için bellek 150 satırla sınırlı) |
-| `git-protect.py`      | `PreToolUse`       | `Bash`  | Doğrudan port |
-| `memory-reinject.py`  | `UserPromptSubmit` | --       | Port edildi (sayaç `sessionId` ile anahtarlı) |
-| `memory-save.py`      | `Stop`             | --       | Yeniden tasarlandı -- Stop side-effects-only (blok yok), bu yüzden MEMORY.md'yi doğrudan session log'larından otomatik üretir/günceller |
-| `save-plan.py`        | `PostToolUse`      | `*`     | Heuristic matcher v1 (plan-exit tool adı doğrulanmadı) |
-| `compact-reinject.py` | --                  | --       | Port edilmedi (WrongStack'te compaction olayı yok) |
-| `notify.py`           | --                  | --       | Yardımcı modül |
-
-- **Skill'ler `wrongstack/skills/` altında mevcut.** Claude'daki 17 skill'in tamamı platforma özel düzenlemelerle port edildi:
-
-| Skill                          | Komut                           | Açıklama                                                                     |
-|--------------------------------|---------------------------------|------------------------------------------------------------------------------|
-| `commit`                       | `/commit`                       | Repo stilini taklit eden conventional commit'ler                             |
-| `git-flow`                     | `/git-flow`                     | WrongStack bundled git-flow'unu genişletilmiş tetikleyicilerle ezer         |
-| `bug-report`                   | `/bug-report`                   | Genel hata analizi ve odaklı audit subcommand'leri                          |
-| `task-plan`                    | `/task-plan`                    | PRD'yi özelliklere ayırma ve otonom yürütme                                 |
-| `initialize`                   | `/initialize`                   | Kod tabanını tarayarak AGENTS.md oluşturur                                  |
-| `redate-commits`               | `/redate-commits`               | Commit tarihlerini seçilen aralığa yayar                                    |
-| `frontend-design`              | `/frontend-design`              | 28 siteli tasarım kataloğu ile frontend kod üretimi                         |
-| `version-update-skill-creator` | *(meta-skill)*                  | Projeye özel `/version-update` skill'i oluşturur                            |
-| `add-log`                      | `/add-log`                      | Merkezi request, audit ve application logging ekler                         |
-| `goal-prep`                    | `/goal-prep`                    | Serbest metni doğrulanabilir `/goal` tamamlanma koşuluna dönüştürür         |
-| `no-ai`                        | `/no-ai`                        | Metinden yaygın AI üretimi yazı kalıplarını kaldırır                        |
-| `ai-seo`                       | `/ai-seo`                       | AI arama motorları için GEO optimizasyonu                                    |
-| `draft-to-article`             | `/draft-to-article`             | Taslakları X, LinkedIn veya Medium/Substack formatına dönüştürme            |
-| `http-cache`                   | `/http-cache`                   | ETag ve Cache-Control header'ları ile HTTP caching                          |
-| `audit-replay`                 | `/audit-replay`                 | Kullanıcı eylem takibi, audit event logging ve rrweb session replay         |
-| `ios-uikit`                    | `/ios-uikit`                    | 20 referans belgeyle programatik UIKit geliştirme                           |
-| `ios-simulator`                | `/ios-simulator`                | 22 Node.js script ile iOS simülatör otomasyonu                              |
-
-Platforma özel düzenlemeler:
-- `draft-to-article`: jenerik "kullanıcıya sor" ifadesi (`AskUserQuestion` değil)
-- `bug-report/fix.md`: jenerik plan-modu referansı (`ExitPlanMode` değil)
-- `initialize`: WrongStack ajan listesine eklendi
-- `version-update-skill-creator`: çıktıyı `.wrongstack/skills/` yoluna yazar
-- `git-flow`: override notu eklendi
-- `goal-prep`: jenerik kullanıcıya sorma ifadesi ve non-interactive yönlendirme
-- `no-ai`: WrongStack compatibility metadata ve tool listesi
-
-Skill'ler alternatif olarak `claude/skills/` üzerinden dağıtılabilir -- WrongStack ayrıca `~/.claude/skills/` yolunu da native okur -- ancak `wrongstack/skills/` sürümleri yukarıdaki platform düzeltmelerini içerir.
-
-Kurulum için hook'ları `~/.wrongstack/config.json` dosyasına kaydedin ve dosyaları kopyalayın:
-
-```bash
-# Hook'lar
-cp wrongstack/hooks/* ~/.wrongstack/hooks/
-# ardından wrongstack/config.example.json içindeki hooks bloğunu ~/.wrongstack/config.json içine birleştirin
-
-# Skill'ler (isteğe bağlı -- WrongStack ayrıca ~/.claude/skills/ yolunu da okur)
-cp -r wrongstack/skills/* ~/.wrongstack/skills/
-```
-
-> Hook'lar WrongStack'in belgelenmiş hook API'sine (`docs/hooks.md`, `packages/core/src/types/hooks.ts`, `packages/core/src/hooks/shell-executor.ts`) göre yazıldı ve `python3 -m py_compile` denetiminden geçti, ancak runtime'da test edilmedi -- yazım sırasında WrongStack kurulu değildi. `memory-save.py`'nin Claude pattern'i (ilk stop'u bloke et, ikinciyi geçir) WrongStack'te imkansızdır çünkü Stop side-effects-only'dir, bu yüzden bunun yerine MEMORY.md'yi session log'larından otomatik üretir. `save-plan.py` heuristic bir tool-adı eşleştirici kullanır; gerçek plan-exit tool adı kurulumunuzda doğrulanmalıdır. `compact-reinject.py`'nin WrongStack karşılığı yoktur (compaction olayı yok). Skill'ler platform-agnostiktir ve Claude/Factory eşdeğerleri aracılığıyla test edilmiştir.
+- Python 3.8+ (Factory Droid ve Claude Code hook'ları)
 
 ## Platform Farklılıkları
 
-| Özellik                    | Factory Droid    | Claude Code       | WrongStack          |
-|----------------------------|------------------|-------------------|---------------------|
-| Global yapılandırma dizini | `~/.factory/`    | `~/.claude/`      | `~/.wrongstack/`    |
-| Ortak veri dizini          | `~/.cli-tweaks/` | `~/.cli-tweaks/`  | `~/.cli-tweaks/`    |
-| Hook yapılandırma dosyası  | `settings.json`  | `settings.json`   | `config.json`       |
-| Hook çalışma ortamı        | Python shell     | Python shell      | Python shell        |
-| Plan modu çıkış olayı      | `ExitSpecMode`   | `ExitPlanMode`    | Heuristic eşleştirme|
-| Kullanıcı soru aracı       | `AskUser`        | `AskUserQuestion` | (jenerik)           |
-| Yeniden enjeksiyon hedefi  | `AGENTS.md`      | `CLAUDE.md`       | config-ayarlı       |
-| Skill çağırma ön eki       | `/`              | `/`               | `/`                 |
-| Stop bloklama desteği      | Var              | Var               | Yok, side-effects only |
-| Sıkıştırma olayı           | Var              | Var               | Yok                  |
-| Hook çıktı sınırı          | Yok              | Yok               | 64 KiB              |
+| Özellik                    | Factory Droid    | Claude Code       |
+|----------------------------|------------------|-------------------|
+| Global yapılandırma dizini | `~/.factory/`    | `~/.claude/`      |
+| Ortak veri dizini          | `~/.cli-tweaks/` | `~/.cli-tweaks/`  |
+| Hook yapılandırma dosyası  | `settings.json`  | `settings.json`   |
+| Hook çalışma ortamı        | Python shell     | Python shell      |
+| Plan modu çıkış olayı      | `ExitSpecMode`   | `ExitPlanMode`    |
+| Kullanıcı soru aracı       | `AskUser`        | `AskUserQuestion` |
+| Yeniden enjeksiyon hedefi  | `AGENTS.md`      | `CLAUDE.md`       |
+| Skill çağırma ön eki       | `/`              | `/`               |
 
 ## Lisans
 
