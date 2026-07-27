@@ -40,6 +40,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `add-log`                      | `/add-log`                      | Adds centralized request, audit, and application logging                         |
 | `goal-prep`                    | `/goal-prep`                    | Converts free-form work into a verifiable `/goal` completion condition           |
 | `no-ai`                        | `/no-ai`                        | Rewrites text to remove common AI-generated writing patterns                     |
+| `check-golang`                 | `/check-golang`                 | Runs four Go scans (govulncheck, gosec, golangci-lint, modernize) into a ranked report |
 
 #### `bug-report` audit subcommands
 
