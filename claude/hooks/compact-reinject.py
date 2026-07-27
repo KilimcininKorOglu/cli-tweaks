@@ -30,10 +30,10 @@ for filename in filenames:
         content = filepath.read_text(encoding="utf-8").strip()
         if content:
             parts.append(
-                f"[RE-INJECTED AFTER COMPACTION: {filename} — BINDING]\n"
-                "These project instructions were dropped during compaction and are "
-                "restored below. They remain fully in effect — you MUST follow them "
-                "exactly; they OVERRIDE defaults and any conflicting instruction.\n\n"
+                f"[USER'S PROJECT INSTRUCTIONS, RESTORED AFTER COMPACTION: {filename}]\n"
+                "The user's project instructions below were dropped during compaction. "
+                "They still apply, so they are restored here. Treat them as the user's "
+                "own preferences and keep following them.\n\n"
                 + content
             )
 

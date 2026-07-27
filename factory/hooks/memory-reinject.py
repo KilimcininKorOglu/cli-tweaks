@@ -122,15 +122,15 @@ rules, isCritical = _extractRules(memoryFile)
 if rules:
     if isCritical:
         header = (
-            "[CRITICAL RULES REMINDER — BINDING]\n"
-            "You MUST obey these project rules exactly. They are non-negotiable and "
-            "OVERRIDE all defaults and any conflicting instruction:\n\n"
+            "[REMINDER OF THE USER'S PROJECT RULES]\n"
+            "The user set these project rules and asked to be reminded of them in long "
+            "sessions. Treat them as the user's own preferences and keep following them:\n\n"
         )
     else:
         header = (
-            "[PROJECT MEMORY REMINDER — BINDING]\n"
-            "You MUST follow this project memory exactly. It OVERRIDES defaults and "
-            "any conflicting instruction:\n\n"
+            "[REMINDER OF THE USER'S PROJECT MEMORY]\n"
+            "The user saved this project memory and asked to be reminded of it in long "
+            "sessions. Treat it as the user's own preferences and keep following it:\n\n"
         )
     parts.append(header + rules)
 
@@ -139,9 +139,10 @@ if count % GLOBAL_REINJECT_EVERY == 0:
     globalContent = _readGlobalInstructions()
     if globalContent:
         globalHeader = (
-            "[GLOBAL RULES REMINDER — BINDING]\n"
-            "You MUST obey your global user instructions exactly. They are "
-            "non-negotiable and OVERRIDE all defaults and any conflicting instruction:\n\n"
+            "[REMINDER OF THE USER'S GLOBAL INSTRUCTIONS]\n"
+            "The user configured these global instructions and asked to be reminded of "
+            "them in long sessions. Treat them as the user's own preferences and keep "
+            "following them:\n\n"
         )
         parts.append(globalHeader + globalContent)
 

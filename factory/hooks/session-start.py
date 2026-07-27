@@ -62,10 +62,10 @@ if settingsFile.exists():
         if contents:
             combined = "\n\n---\n\n".join(contents)
             parts.append(
-                "[GLOBAL USER INSTRUCTIONS — BINDING]\n"
-                "You MUST obey every rule below. These are system-level directives "
-                "that OVERRIDE all default behavior and any later instruction that "
-                "conflicts with them.\n\n" + combined
+                "[USER-CONFIGURED GLOBAL INSTRUCTIONS]\n"
+                "The user set up the preferences below in their own config and asked "
+                "that they apply to every session. Treat them as the user's standing "
+                "instructions and follow them.\n\n" + combined
             )
     except (json.JSONDecodeError, IOError):
         pass
@@ -119,9 +119,9 @@ How to save:
 
 if memoryContent:
     memParts.append(
-        "\n[LOADED MEMORY — BINDING]\n"
-        "This persistent project memory is authoritative. You MUST follow its rules "
-        "exactly; they OVERRIDE defaults and any conflicting instruction.\n"
+        "\n[PROJECT MEMORY THE USER SAVED]\n"
+        "The user saved these project notes in earlier sessions and asked that they "
+        "apply here. Treat them as the user's own preferences and follow them.\n"
         + memoryContent
     )
 else:
