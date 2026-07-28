@@ -20,22 +20,22 @@ Build, test, and automate iOS applications using accessibility-driven semantic n
 
 ```bash
 # 1. Check environment
-bash ${CLAUDE_SKILL_DIR}/scripts/sim_health_check.sh
+bash scripts/sim_health_check.sh
 
 # 2. Launch app
-node ${CLAUDE_SKILL_DIR}/scripts/appLauncher.js --launch com.example.app
+node scripts/appLauncher.js --launch com.example.app
 
 # 3. Map screen elements
-node ${CLAUDE_SKILL_DIR}/scripts/screenMapper.js
+node scripts/screenMapper.js
 
 # 4. Tap button by text
-node ${CLAUDE_SKILL_DIR}/scripts/navigator.js --find-text "Login" --tap
+node scripts/navigator.js --find-text "Login" --tap
 
 # 5. Enter text in field
-node ${CLAUDE_SKILL_DIR}/scripts/navigator.js --find-type TextField --enter-text "user@test.com"
+node scripts/navigator.js --find-type TextField --enter-text "user@test.com"
 
 # 6. Check accessibility
-node ${CLAUDE_SKILL_DIR}/scripts/accessibilityAudit.js
+node scripts/accessibilityAudit.js
 ```
 
 All scripts support `--help` for options and `--json` for machine-readable output.
@@ -118,28 +118,28 @@ Always prefer the accessibility tree over screenshots:
 ### Login Flow Test
 
 ```bash
-node ${CLAUDE_SKILL_DIR}/scripts/appLauncher.js --launch com.example.app
-node ${CLAUDE_SKILL_DIR}/scripts/screenMapper.js
-node ${CLAUDE_SKILL_DIR}/scripts/navigator.js --find-type TextField --index 0 --enter-text "user@test.com"
-node ${CLAUDE_SKILL_DIR}/scripts/navigator.js --find-type SecureTextField --enter-text "password"
-node ${CLAUDE_SKILL_DIR}/scripts/navigator.js --find-text "Login" --tap
-node ${CLAUDE_SKILL_DIR}/scripts/accessibilityAudit.js
+node scripts/appLauncher.js --launch com.example.app
+node scripts/screenMapper.js
+node scripts/navigator.js --find-type TextField --index 0 --enter-text "user@test.com"
+node scripts/navigator.js --find-type SecureTextField --enter-text "password"
+node scripts/navigator.js --find-text "Login" --tap
+node scripts/accessibilityAudit.js
 ```
 
 ### Permission Test
 
 ```bash
-node ${CLAUDE_SKILL_DIR}/scripts/privacyManager.js --bundle-id com.example.app --grant camera,location
+node scripts/privacyManager.js --bundle-id com.example.app --grant camera,location
 # Test app with permissions...
-node ${CLAUDE_SKILL_DIR}/scripts/privacyManager.js --bundle-id com.example.app --revoke camera,location
+node scripts/privacyManager.js --bundle-id com.example.app --revoke camera,location
 ```
 
 ### CI/CD Device Lifecycle
 
 ```bash
-DEVICE_ID=$(node ${CLAUDE_SKILL_DIR}/scripts/simctlCreate.js --device "iPhone 16 Pro" --json | jq -r '.new_udid')
-node ${CLAUDE_SKILL_DIR}/scripts/buildAndTest.js --project MyApp.xcodeproj --test
-node ${CLAUDE_SKILL_DIR}/scripts/simctlDelete.js --udid $DEVICE_ID --yes
+DEVICE_ID=$(node scripts/simctlCreate.js --device "iPhone 16 Pro" --json | jq -r '.new_udid')
+node scripts/buildAndTest.js --project MyApp.xcodeproj --test
+node scripts/simctlDelete.js --udid $DEVICE_ID --yes
 ```
 
 ## Quick Diagnostics
