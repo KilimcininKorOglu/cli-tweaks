@@ -1043,14 +1043,14 @@ Account:
 
 ### Color Contrast
 
-| Combination | Ratio | WCAG |
-|-------------|-------|------|
-| White on Starbucks Green (#00704A) | 4.8:1 | AA |
-| White on House Green (#1E3932) | 11.5:1 | AAA |
-| House Green on White | 11.5:1 | AAA |
-| Starbucks Green on White | 4.8:1 | AA |
-| Gold (#CBA258) on House Green | 5.2:1 | AA |
-| Text Secondary on White | 7.1:1 | AAA |
+| Combination                        | Ratio  | WCAG |
+|------------------------------------|--------|------|
+| White on Starbucks Green (#00704A) | 4.8:1  | AA   |
+| White on House Green (#1E3932)     | 11.5:1 | AAA  |
+| House Green on White               | 11.5:1 | AAA  |
+| Starbucks Green on White           | 4.8:1  | AA   |
+| Gold (#CBA258) on House Green      | 5.2:1  | AA   |
+| Text Secondary on White            | 7.1:1  | AAA  |
 
 ### Focus States
 

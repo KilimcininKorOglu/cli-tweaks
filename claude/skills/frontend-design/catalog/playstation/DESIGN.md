@@ -34,74 +34,74 @@ PlayStation embodies a **premium, immersive gaming** design philosophy. The inte
 
 ### Primary Brand Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
+| Token               | Hex       | Role                                         |
+|---------------------|-----------|----------------------------------------------|
 | `--ps-blue-primary` | `#003791` | Core PlayStation Blue, headers, key branding |
-| `--ps-blue-light` | `#0070d1` | Interactive elements, links, highlights |
-| `--ps-blue-bright` | `#00bfff` | Accent highlights, active states |
-| `--ps-white` | `#ffffff` | Primary text, icons on dark backgrounds |
+| `--ps-blue-light`   | `#0070d1` | Interactive elements, links, highlights      |
+| `--ps-blue-bright`  | `#00bfff` | Accent highlights, active states             |
+| `--ps-white`        | `#ffffff` | Primary text, icons on dark backgrounds      |
 
 ### Background Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--background-primary` | `#000000` | Main app background, pure black for OLED |
-| `--background-secondary` | `#1f1f1f` | Cards, panels, elevated surfaces |
-| `--background-tertiary` | `#2d2d2d` | Hover states, input fields |
-| `--background-elevated` | `#383838` | Modals, dropdowns, popovers |
-| `--background-gradient-start` | `#000000` | Gradient overlays on hero images |
-| `--background-gradient-end` | `transparent` | Fade to image content |
+| Token                         | Hex           | Role                                     |
+|-------------------------------|---------------|------------------------------------------|
+| `--background-primary`        | `#000000`     | Main app background, pure black for OLED |
+| `--background-secondary`      | `#1f1f1f`     | Cards, panels, elevated surfaces         |
+| `--background-tertiary`       | `#2d2d2d`     | Hover states, input fields               |
+| `--background-elevated`       | `#383838`     | Modals, dropdowns, popovers              |
+| `--background-gradient-start` | `#000000`     | Gradient overlays on hero images         |
+| `--background-gradient-end`   | `transparent` | Fade to image content                    |
 
 ### PS Plus & Subscription Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--ps-plus-yellow` | `#ffb800` | PS Plus branding, premium badge |
-| `--ps-plus-gold` | `#d4af37` | PS Plus Premium tier |
-| `--ps-plus-gradient-start` | `#ffb800` | PS Plus gradient |
-| `--ps-plus-gradient-end` | `#ff8c00` | PS Plus gradient end |
-| `--ps-now-blue` | `#0070d1` | Streaming service accent |
+| Token                      | Hex       | Role                            |
+|----------------------------|-----------|---------------------------------|
+| `--ps-plus-yellow`         | `#ffb800` | PS Plus branding, premium badge |
+| `--ps-plus-gold`           | `#d4af37` | PS Plus Premium tier            |
+| `--ps-plus-gradient-start` | `#ffb800` | PS Plus gradient                |
+| `--ps-plus-gradient-end`   | `#ff8c00` | PS Plus gradient end            |
+| `--ps-now-blue`            | `#0070d1` | Streaming service accent        |
 
 ### Trophy System Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--trophy-platinum` | `#7b9fcc` | Platinum trophy (rarest) |
-| `--trophy-gold` | `#cd9a1a` | Gold trophy |
-| `--trophy-silver` | `#a8a8a8` | Silver trophy |
-| `--trophy-bronze` | `#cd7f32` | Bronze trophy (most common) |
-| `--trophy-glow` | `rgba(123, 159, 204, 0.4)` | Trophy highlight glow |
+| Token               | Hex                        | Role                        |
+|---------------------|----------------------------|-----------------------------|
+| `--trophy-platinum` | `#7b9fcc`                  | Platinum trophy (rarest)    |
+| `--trophy-gold`     | `#cd9a1a`                  | Gold trophy                 |
+| `--trophy-silver`   | `#a8a8a8`                  | Silver trophy               |
+| `--trophy-bronze`   | `#cd7f32`                  | Bronze trophy (most common) |
+| `--trophy-glow`     | `rgba(123, 159, 204, 0.4)` | Trophy highlight glow       |
 
 ### Text Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--text-primary` | `#ffffff` | Primary headings, game titles |
-| `--text-secondary` | `#b3b3b3` | Body text, descriptions |
-| `--text-tertiary` | `#808080` | Metadata, timestamps, muted info |
-| `--text-link` | `#0070d1` | Hyperlinks, interactive text |
-| `--text-disabled` | `#4a4a4a` | Disabled states |
+| Token              | Hex       | Role                             |
+|--------------------|-----------|----------------------------------|
+| `--text-primary`   | `#ffffff` | Primary headings, game titles    |
+| `--text-secondary` | `#b3b3b3` | Body text, descriptions          |
+| `--text-tertiary`  | `#808080` | Metadata, timestamps, muted info |
+| `--text-link`      | `#0070d1` | Hyperlinks, interactive text     |
+| `--text-disabled`  | `#4a4a4a` | Disabled states                  |
 
 ### Semantic Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
+| Token       | Hex       | Role                                 |
+|-------------|-----------|--------------------------------------|
 | `--success` | `#00c853` | Purchase complete, download finished |
-| `--warning` | `#ffb800` | Storage warnings, update available |
-| `--error` | `#ff4444` | Errors, failed downloads |
-| `--info` | `#0070d1` | Informational messages |
-| `--online` | `#00c853` | Online status indicator |
-| `--offline` | `#808080` | Offline status |
-| `--busy` | `#ff4444` | Do not disturb |
+| `--warning` | `#ffb800` | Storage warnings, update available   |
+| `--error`   | `#ff4444` | Errors, failed downloads             |
+| `--info`    | `#0070d1` | Informational messages               |
+| `--online`  | `#00c853` | Online status indicator              |
+| `--offline` | `#808080` | Offline status                       |
+| `--busy`    | `#ff4444` | Do not disturb                       |
 
 ### Gradient Definitions
 
-| Name | Definition | Usage |
-|------|------------|-------|
-| Hero Overlay | `linear-gradient(to top, #000000 0%, transparent 60%)` | Game hero images |
-| PS Blue Gradient | `linear-gradient(135deg, #003791 0%, #0070d1 100%)` | Featured sections |
-| PS Plus Gradient | `linear-gradient(135deg, #ffb800 0%, #ff8c00 100%)` | PS Plus badges |
-| Card Hover | `linear-gradient(180deg, transparent 0%, rgba(0,112,209,0.2) 100%)` | Hover effects |
+| Name             | Definition                                                          | Usage             |
+|------------------|---------------------------------------------------------------------|-------------------|
+| Hero Overlay     | `linear-gradient(to top, #000000 0%, transparent 60%)`              | Game hero images  |
+| PS Blue Gradient | `linear-gradient(135deg, #003791 0%, #0070d1 100%)`                 | Featured sections |
+| PS Plus Gradient | `linear-gradient(135deg, #ffb800 0%, #ff8c00 100%)`                 | PS Plus badges    |
+| Card Hover       | `linear-gradient(180deg, transparent 0%, rgba(0,112,209,0.2) 100%)` | Hover effects     |
 
 ---
 
@@ -125,40 +125,40 @@ PlayStation embodies a **premium, immersive gaming** design philosophy. The inte
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing | Color |
-|---------|------|--------|-------------|----------------|-------|
-| Hero Title | 48px | 700 | 1.1 | -0.02em | `--text-primary` |
-| Page Title | 32px | 700 | 1.2 | -0.01em | `--text-primary` |
-| Section Header | 24px | 600 | 1.3 | 0 | `--text-primary` |
-| Card Title | 18px | 600 | 1.3 | 0 | `--text-primary` |
-| Subsection | 16px | 600 | 1.4 | 0 | `--text-primary` |
-| Body Large | 16px | 400 | 1.5 | 0 | `--text-secondary` |
-| Body Regular | 14px | 400 | 1.5 | 0 | `--text-secondary` |
-| Body Small | 13px | 400 | 1.4 | 0 | `--text-tertiary` |
-| Caption | 12px | 400 | 1.4 | 0.01em | `--text-tertiary` |
-| Button Text | 14px | 600 | 1 | 0.02em | `--text-primary` |
-| Price | 18px | 700 | 1 | 0 | `--text-primary` |
-| Price Sale | 18px | 700 | 1 | 0 | `--ps-plus-yellow` |
-| Badge | 11px | 700 | 1 | 0.05em | `--text-primary` |
+| Element        | Size | Weight | Line Height | Letter Spacing | Color              |
+|----------------|------|--------|-------------|----------------|--------------------|
+| Hero Title     | 48px | 700    | 1.1         | -0.02em        | `--text-primary`   |
+| Page Title     | 32px | 700    | 1.2         | -0.01em        | `--text-primary`   |
+| Section Header | 24px | 600    | 1.3         | 0              | `--text-primary`   |
+| Card Title     | 18px | 600    | 1.3         | 0              | `--text-primary`   |
+| Subsection     | 16px | 600    | 1.4         | 0              | `--text-primary`   |
+| Body Large     | 16px | 400    | 1.5         | 0              | `--text-secondary` |
+| Body Regular   | 14px | 400    | 1.5         | 0              | `--text-secondary` |
+| Body Small     | 13px | 400    | 1.4         | 0              | `--text-tertiary`  |
+| Caption        | 12px | 400    | 1.4         | 0.01em         | `--text-tertiary`  |
+| Button Text    | 14px | 600    | 1           | 0.02em         | `--text-primary`   |
+| Price          | 18px | 700    | 1           | 0              | `--text-primary`   |
+| Price Sale     | 18px | 700    | 1           | 0              | `--ps-plus-yellow` |
+| Badge          | 11px | 700    | 1           | 0.05em         | `--text-primary`   |
 
 ### Font Weights
 
-| Weight | Name | Usage |
-|--------|------|-------|
-| 300 | Light | Large display text, promotional |
-| 400 | Regular | Body text, descriptions |
-| 500 | Medium | UI labels, navigation |
-| 600 | Semibold | Card titles, section headers |
-| 700 | Bold | Page titles, prices, emphasis |
+| Weight | Name     | Usage                           |
+|--------|----------|---------------------------------|
+| 300    | Light    | Large display text, promotional |
+| 400    | Regular  | Body text, descriptions         |
+| 500    | Medium   | UI labels, navigation           |
+| 600    | Semibold | Card titles, section headers    |
+| 700    | Bold     | Page titles, prices, emphasis   |
 
 ### Marketing Typography
 
-| Element | Size | Weight | Usage |
-|---------|------|--------|-------|
-| Campaign Hero | 72px | 700 | Major launches, events |
-| Event Title | 56px | 700 | State of Play, showcases |
-| Feature Headline | 40px | 600 | Feature section headers |
-| Tagline | 24px | 400 | Supporting copy |
+| Element          | Size | Weight | Usage                    |
+|------------------|------|--------|--------------------------|
+| Campaign Hero    | 72px | 700    | Major launches, events   |
+| Event Title      | 56px | 700    | State of Play, showcases |
+| Feature Headline | 40px | 600    | Feature section headers  |
+| Tagline          | 24px | 400    | Supporting copy          |
 
 ---
 
@@ -837,17 +837,17 @@ PlayStation embodies a **premium, immersive gaming** design philosophy. The inte
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--spacing-2` | 2px | Tight gaps, inline elements |
-| `--spacing-4` | 4px | Icon padding, compact gaps |
-| `--spacing-8` | 8px | Standard small gaps |
-| `--spacing-12` | 12px | Card internal padding |
-| `--spacing-16` | 16px | Standard gaps, list items |
-| `--spacing-24` | 24px | Section gaps, card padding |
-| `--spacing-32` | 32px | Large section breaks |
-| `--spacing-48` | 48px | Major section separation |
-| `--spacing-64` | 64px | Hero spacing, page sections |
+| Token          | Value | Usage                       |
+|----------------|-------|-----------------------------|
+| `--spacing-2`  | 2px   | Tight gaps, inline elements |
+| `--spacing-4`  | 4px   | Icon padding, compact gaps  |
+| `--spacing-8`  | 8px   | Standard small gaps         |
+| `--spacing-12` | 12px  | Card internal padding       |
+| `--spacing-16` | 16px  | Standard gaps, list items   |
+| `--spacing-24` | 24px  | Section gaps, card padding  |
+| `--spacing-32` | 32px  | Large section breaks        |
+| `--spacing-48` | 48px  | Major section separation    |
+| `--spacing-64` | 64px  | Hero spacing, page sections |
 
 ### Core Layout Structure
 
@@ -901,22 +901,22 @@ PlayStation embodies a **premium, immersive gaming** design philosophy. The inte
 
 ### Grid System
 
-| Name | Columns | Gap | Max Width | Usage |
-|------|---------|-----|-----------|-------|
-| Store Grid | 5-6 | 16px | 1440px | Game browse pages |
-| Featured | 3 | 24px | 1440px | Featured sections |
-| Detail | 2 (60/40) | 32px | 1200px | Product pages |
-| List | 1 | 8px | 800px | Settings, downloads |
+| Name       | Columns   | Gap  | Max Width | Usage               |
+|------------|-----------|------|-----------|---------------------|
+| Store Grid | 5-6       | 16px | 1440px    | Game browse pages   |
+| Featured   | 3         | 24px | 1440px    | Featured sections   |
+| Detail     | 2 (60/40) | 32px | 1200px    | Product pages       |
+| List       | 1         | 8px  | 800px     | Settings, downloads |
 
 ### Content Width
 
-| Context | Max Width | Center |
-|---------|-----------|--------|
-| Full bleed hero | 100% | No |
-| Content container | 1440px | Yes |
-| Text content | 720px | Yes |
-| Modal content | 480px | Yes |
-| Narrow forms | 400px | Yes |
+| Context           | Max Width | Center |
+|-------------------|-----------|--------|
+| Full bleed hero   | 100%      | No     |
+| Content container | 1440px    | Yes    |
+| Text content      | 720px     | Yes    |
+| Modal content     | 480px     | Yes    |
+| Narrow forms      | 400px     | Yes    |
 
 ---
 
@@ -924,21 +924,21 @@ PlayStation embodies a **premium, immersive gaming** design philosophy. The inte
 
 ### Shadow System
 
-| Level | Shadow | Usage |
-|-------|--------|-------|
-| Level 0 | None | Base surfaces, cards at rest |
-| Level 1 | `0 2px 8px rgba(0, 0, 0, 0.3)` | Buttons, subtle lift |
-| Level 2 | `0 8px 24px rgba(0, 0, 0, 0.4)` | Hovered cards, dropdowns |
-| Level 3 | `0 16px 48px rgba(0, 0, 0, 0.5)` | Modals, dialogs |
+| Level   | Shadow                           | Usage                        |
+|---------|----------------------------------|------------------------------|
+| Level 0 | None                             | Base surfaces, cards at rest |
+| Level 1 | `0 2px 8px rgba(0, 0, 0, 0.3)`   | Buttons, subtle lift         |
+| Level 2 | `0 8px 24px rgba(0, 0, 0, 0.4)`  | Hovered cards, dropdowns     |
+| Level 3 | `0 16px 48px rgba(0, 0, 0, 0.5)` | Modals, dialogs              |
 | Level 4 | `0 24px 64px rgba(0, 0, 0, 0.6)` | Overlays, full-screen panels |
 
 ### Glow Effects
 
-| Type | Effect | Usage |
-|------|--------|-------|
-| Blue Glow | `0 0 24px rgba(0, 112, 209, 0.4)` | Selected items, focus states |
-| Trophy Glow | `0 0 16px rgba(205, 154, 26, 0.5)` | Trophy unlocked animations |
-| Active Glow | `0 0 32px rgba(0, 191, 255, 0.3)` | Active/playing states |
+| Type        | Effect                             | Usage                        |
+|-------------|------------------------------------|------------------------------|
+| Blue Glow   | `0 0 24px rgba(0, 112, 209, 0.4)`  | Selected items, focus states |
+| Trophy Glow | `0 0 16px rgba(205, 154, 26, 0.5)` | Trophy unlocked animations   |
+| Active Glow | `0 0 32px rgba(0, 191, 255, 0.3)`  | Active/playing states        |
 
 ### Surface Hierarchy
 
@@ -956,15 +956,15 @@ PlayStation embodies a **premium, immersive gaming** design philosophy. The inte
 
 ### Z-Index Scale
 
-| Layer | Z-Index | Elements |
-|-------|---------|----------|
-| Base | 0 | Content, cards |
-| Sticky | 100 | Navigation, fixed headers |
-| Dropdown | 200 | Menus, autocomplete |
-| Overlay | 300 | Game card hover expansion |
-| Modal | 400 | Dialogs, purchase confirmations |
-| Toast | 500 | Notifications, trophy popups |
-| System | 1000 | Controller prompts, critical alerts |
+| Layer    | Z-Index | Elements                            |
+|----------|---------|-------------------------------------|
+| Base     | 0       | Content, cards                      |
+| Sticky   | 100     | Navigation, fixed headers           |
+| Dropdown | 200     | Menus, autocomplete                 |
+| Overlay  | 300     | Game card hover expansion           |
+| Modal    | 400     | Dialogs, purchase confirmations     |
+| Toast    | 500     | Notifications, trophy popups        |
+| System   | 1000    | Controller prompts, critical alerts |
 
 ### Blur Effects
 
@@ -990,44 +990,44 @@ PlayStation embodies a **premium, immersive gaming** design philosophy. The inte
 
 ### Do's
 
-| Guideline | Rationale |
-|-----------|-----------|
-| Use PlayStation Blue (#003791, #0070d1) as primary accent | Brand recognition, trust |
-| Maintain pure black backgrounds (#000000) | OLED optimization, cinematic feel |
-| Showcase game art prominently | Games are the hero content |
-| Use smooth, cinematic animations (300-500ms) | Premium, console-like feel |
-| Display trophy counts and progress | Achievement engagement |
-| Show PS Plus benefits prominently | Subscription value |
-| Use rounded corners (8-12px) | Modern, friendly aesthetic |
-| Provide controller button prompts | Console-first experience |
-| Include platform badges (PS5/PS4) | Compatibility clarity |
-| Use gradient overlays on images | Text readability |
+| Guideline                                                 | Rationale                         |
+|-----------------------------------------------------------|-----------------------------------|
+| Use PlayStation Blue (#003791, #0070d1) as primary accent | Brand recognition, trust          |
+| Maintain pure black backgrounds (#000000)                 | OLED optimization, cinematic feel |
+| Showcase game art prominently                             | Games are the hero content        |
+| Use smooth, cinematic animations (300-500ms)              | Premium, console-like feel        |
+| Display trophy counts and progress                        | Achievement engagement            |
+| Show PS Plus benefits prominently                         | Subscription value                |
+| Use rounded corners (8-12px)                              | Modern, friendly aesthetic        |
+| Provide controller button prompts                         | Console-first experience          |
+| Include platform badges (PS5/PS4)                         | Compatibility clarity             |
+| Use gradient overlays on images                           | Text readability                  |
 
 ### Don'ts
 
-| Anti-Pattern | Why to Avoid |
-|--------------|--------------|
-| Don't use light backgrounds as default | Breaks immersion, off-brand |
-| Avoid sharp corners (0px radius) | Feels dated, not PlayStation |
-| Don't hide prices or purchase CTAs | Users expect clear commerce |
-| Avoid small game artwork | Art sells games, needs prominence |
-| Don't use generic blue (#0000ff) | Must use PlayStation Blue specifically |
-| Avoid slow, heavy animations (>500ms) | Feels sluggish on console |
-| Don't forget platform compatibility | PS5/PS4 distinction is crucial |
-| Avoid cluttered trophy displays | Trophy prestige requires clean presentation |
-| Don't mix PS Plus yellow with other yellows | Brand consistency |
-| Avoid hiding online status | Social features are core to PSN |
+| Anti-Pattern                                | Why to Avoid                                |
+|---------------------------------------------|---------------------------------------------|
+| Don't use light backgrounds as default      | Breaks immersion, off-brand                 |
+| Avoid sharp corners (0px radius)            | Feels dated, not PlayStation                |
+| Don't hide prices or purchase CTAs          | Users expect clear commerce                 |
+| Avoid small game artwork                    | Art sells games, needs prominence           |
+| Don't use generic blue (#0000ff)            | Must use PlayStation Blue specifically      |
+| Avoid slow, heavy animations (>500ms)       | Feels sluggish on console                   |
+| Don't forget platform compatibility         | PS5/PS4 distinction is crucial              |
+| Avoid cluttered trophy displays             | Trophy prestige requires clean presentation |
+| Don't mix PS Plus yellow with other yellows | Brand consistency                           |
+| Avoid hiding online status                  | Social features are core to PSN             |
 
 ### Content Guidelines
 
-| Do | Don't |
-|----|-------|
-| Use official game titles | Abbreviate or modify game names |
-| Show accurate prices with regional currency | Display incorrect pricing |
-| Indicate free PS Plus games clearly | Hide subscription requirements |
-| Display game ratings (ESRB/PEGI) | Omit content ratings |
-| Use "Add to Cart" / "Buy Now" | Vague purchase language |
-| Show download size clearly | Hide storage requirements |
+| Do                                          | Don't                           |
+|---------------------------------------------|---------------------------------|
+| Use official game titles                    | Abbreviate or modify game names |
+| Show accurate prices with regional currency | Display incorrect pricing       |
+| Indicate free PS Plus games clearly         | Hide subscription requirements  |
+| Display game ratings (ESRB/PEGI)            | Omit content ratings            |
+| Use "Add to Cart" / "Buy Now"               | Vague purchase language         |
+| Show download size clearly                  | Hide storage requirements       |
 
 ---
 
@@ -1035,23 +1035,23 @@ PlayStation embodies a **premium, immersive gaming** design philosophy. The inte
 
 ### Breakpoints
 
-| Name | Width | Behavior |
-|------|-------|----------|
-| 4K TV | >2560px | Scaled UI, larger text, full grid |
-| TV/Desktop Large | 1920px - 2559px | Standard console UI |
-| Desktop | 1280px - 1919px | Full layout, 5-column grid |
-| Tablet | 768px - 1279px | 3-4 column grid, collapsible sidebar |
-| Mobile | <768px | Single column, bottom navigation |
+| Name             | Width           | Behavior                             |
+|------------------|-----------------|--------------------------------------|
+| 4K TV            | >2560px         | Scaled UI, larger text, full grid    |
+| TV/Desktop Large | 1920px - 2559px | Standard console UI                  |
+| Desktop          | 1280px - 1919px | Full layout, 5-column grid           |
+| Tablet           | 768px - 1279px  | 3-4 column grid, collapsible sidebar |
+| Mobile           | <768px          | Single column, bottom navigation     |
 
 ### Device-Specific Adaptations
 
-| Component | Console/TV | Desktop | Mobile |
-|-----------|------------|---------|--------|
-| Navigation | D-pad focus, side rail | Top bar, mouse hover | Bottom tabs |
-| Game Cards | Large (200px+), focus highlight | Medium (150-200px), hover | Full-width list |
-| Buttons | Large (56px height), glow focus | Standard (44px), hover | Touch-optimized (48px) |
-| Typography | Larger scale (+25%) | Standard | Compact |
-| Spacing | Generous | Standard | Tighter |
+| Component  | Console/TV                      | Desktop                   | Mobile                 |
+|------------|---------------------------------|---------------------------|------------------------|
+| Navigation | D-pad focus, side rail          | Top bar, mouse hover      | Bottom tabs            |
+| Game Cards | Large (200px+), focus highlight | Medium (150-200px), hover | Full-width list        |
+| Buttons    | Large (56px height), glow focus | Standard (44px), hover    | Touch-optimized (48px) |
+| Typography | Larger scale (+25%)             | Standard                  | Compact                |
+| Spacing    | Generous                        | Standard                  | Tighter                |
 
 ### Console Controller Navigation
 
@@ -1081,13 +1081,13 @@ PlayStation embodies a **premium, immersive gaming** design philosophy. The inte
 
 ### Touch Targets
 
-| Element | Minimum Size | Notes |
-|---------|--------------|-------|
-| Buttons | 44px × 44px | iOS/Android standards |
-| Game Cards | Full card area | Entire card is tappable |
-| List Items | 48px height | Comfortable thumb reach |
-| Close buttons | 44px × 44px | Easy dismissal |
-| Navigation items | 48px × 48px | Bottom tab bar |
+| Element          | Minimum Size   | Notes                   |
+|------------------|----------------|-------------------------|
+| Buttons          | 44px × 44px    | iOS/Android standards   |
+| Game Cards       | Full card area | Entire card is tappable |
+| List Items       | 48px height    | Comfortable thumb reach |
+| Close buttons    | 44px × 44px    | Easy dismissal          |
+| Navigation items | 48px × 48px    | Bottom tab bar          |
 
 ### Mobile Navigation
 

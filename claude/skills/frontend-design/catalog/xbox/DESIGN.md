@@ -36,79 +36,79 @@ Xbox embodies a **modern, connected gaming** design philosophy rooted in Microso
 
 ### Primary Brand Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
+| Token                  | Hex       | Role                                       |
+|------------------------|-----------|--------------------------------------------|
 | `--xbox-green-primary` | `#107C10` | Core Xbox Green, primary actions, branding |
-| `--xbox-green-light` | `#0E8A0E` | Hover states, active elements |
-| `--xbox-green-bright` | `#10B910` | Highlights, success states, Game Pass |
-| `--xbox-green-dark` | `#0A5D0A` | Pressed states, depth |
-| `--white` | `#ffffff` | Primary text, icons on dark backgrounds |
+| `--xbox-green-light`   | `#0E8A0E` | Hover states, active elements              |
+| `--xbox-green-bright`  | `#10B910` | Highlights, success states, Game Pass      |
+| `--xbox-green-dark`    | `#0A5D0A` | Pressed states, depth                      |
+| `--white`              | `#ffffff` | Primary text, icons on dark backgrounds    |
 
 ### Background Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--background-primary` | `#0e0e0e` | Main app background, deepest layer |
-| `--background-secondary` | `#1f1f1f` | Cards, panels, elevated surfaces |
-| `--background-tertiary` | `#2d2d2d` | Hover states, input fields |
-| `--background-elevated` | `#3a3a3a` | Modals, dropdowns, popovers |
-| `--background-surface` | `#252525` | Content containers, list backgrounds |
-| `--background-acrylic` | `rgba(30, 30, 30, 0.85)` | Fluent acrylic blur panels |
+| Token                    | Hex                      | Role                                 |
+|--------------------------|--------------------------|--------------------------------------|
+| `--background-primary`   | `#0e0e0e`                | Main app background, deepest layer   |
+| `--background-secondary` | `#1f1f1f`                | Cards, panels, elevated surfaces     |
+| `--background-tertiary`  | `#2d2d2d`                | Hover states, input fields           |
+| `--background-elevated`  | `#3a3a3a`                | Modals, dropdowns, popovers          |
+| `--background-surface`   | `#252525`                | Content containers, list backgrounds |
+| `--background-acrylic`   | `rgba(30, 30, 30, 0.85)` | Fluent acrylic blur panels           |
 
 ### Game Pass & Subscription Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--gamepass-green` | `#107C10` | Game Pass Core branding |
-| `--gamepass-ultimate` | `#107C10` | Game Pass Ultimate |
-| `--gamepass-gradient-start` | `#107C10` | Game Pass gradient |
-| `--gamepass-gradient-end` | `#0E8A0E` | Game Pass gradient end |
-| `--ea-play` | `#ff4747` | EA Play integration accent |
-| `--cloud-gaming` | `#9147ff` | Cloud gaming indicator |
+| Token                       | Hex       | Role                       |
+|-----------------------------|-----------|----------------------------|
+| `--gamepass-green`          | `#107C10` | Game Pass Core branding    |
+| `--gamepass-ultimate`       | `#107C10` | Game Pass Ultimate         |
+| `--gamepass-gradient-start` | `#107C10` | Game Pass gradient         |
+| `--gamepass-gradient-end`   | `#0E8A0E` | Game Pass gradient end     |
+| `--ea-play`                 | `#ff4747` | EA Play integration accent |
+| `--cloud-gaming`            | `#9147ff` | Cloud gaming indicator     |
 
 ### Achievement & Gamerscore Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--achievement-unlocked` | `#107C10` | Unlocked achievement |
-| `--achievement-locked` | `#404040` | Locked achievement |
-| `--achievement-rare` | `#00b4ff` | Rare achievement |
-| `--achievement-secret` | `#7b2cbf` | Secret/hidden achievement |
-| `--gamerscore` | `#ffffff` | Gamerscore number display |
-| `--completion-fill` | `#107C10` | Completion progress fill |
+| Token                    | Hex       | Role                      |
+|--------------------------|-----------|---------------------------|
+| `--achievement-unlocked` | `#107C10` | Unlocked achievement      |
+| `--achievement-locked`   | `#404040` | Locked achievement        |
+| `--achievement-rare`     | `#00b4ff` | Rare achievement          |
+| `--achievement-secret`   | `#7b2cbf` | Secret/hidden achievement |
+| `--gamerscore`           | `#ffffff` | Gamerscore number display |
+| `--completion-fill`      | `#107C10` | Completion progress fill  |
 
 ### Text Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--text-primary` | `#ffffff` | Primary headings, game titles |
-| `--text-secondary` | `#c8c8c8` | Body text, descriptions |
-| `--text-tertiary` | `#8a8a8a` | Metadata, timestamps, muted info |
-| `--text-link` | `#107C10` | Hyperlinks, interactive text |
-| `--text-disabled` | `#5a5a5a` | Disabled states |
+| Token              | Hex       | Role                             |
+|--------------------|-----------|----------------------------------|
+| `--text-primary`   | `#ffffff` | Primary headings, game titles    |
+| `--text-secondary` | `#c8c8c8` | Body text, descriptions          |
+| `--text-tertiary`  | `#8a8a8a` | Metadata, timestamps, muted info |
+| `--text-link`      | `#107C10` | Hyperlinks, interactive text     |
+| `--text-disabled`  | `#5a5a5a` | Disabled states                  |
 
 ### Semantic Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--success` | `#107C10` | Success, online, complete |
-| `--warning` | `#f7630c` | Warnings, storage alerts |
-| `--error` | `#e81123` | Errors, failed operations |
-| `--info` | `#0078d4` | Informational messages (Microsoft Blue) |
-| `--online` | `#107C10` | Online status |
-| `--away` | `#f7630c` | Away status |
-| `--busy` | `#e81123` | Do not disturb |
-| `--offline` | `#8a8a8a` | Offline status |
+| Token       | Hex       | Role                                    |
+|-------------|-----------|-----------------------------------------|
+| `--success` | `#107C10` | Success, online, complete               |
+| `--warning` | `#f7630c` | Warnings, storage alerts                |
+| `--error`   | `#e81123` | Errors, failed operations               |
+| `--info`    | `#0078d4` | Informational messages (Microsoft Blue) |
+| `--online`  | `#107C10` | Online status                           |
+| `--away`    | `#f7630c` | Away status                             |
+| `--busy`    | `#e81123` | Do not disturb                          |
+| `--offline` | `#8a8a8a` | Offline status                          |
 
 ### Gradient Definitions
 
-| Name | Definition | Usage |
-|------|------------|-------|
-| Hero Overlay | `linear-gradient(to top, #0e0e0e 0%, transparent 60%)` | Game hero images |
-| Xbox Green Gradient | `linear-gradient(135deg, #107C10 0%, #0E8A0E 100%)` | Featured actions |
-| Game Pass Gradient | `linear-gradient(180deg, #107C10 0%, #0A5D0A 100%)` | Game Pass badges |
-| Card Hover | `linear-gradient(180deg, transparent 0%, rgba(16, 124, 16, 0.15) 100%)` | Hover effects |
-| Acrylic | `linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%)` | Fluent acrylic |
+| Name                | Definition                                                              | Usage            |
+|---------------------|-------------------------------------------------------------------------|------------------|
+| Hero Overlay        | `linear-gradient(to top, #0e0e0e 0%, transparent 60%)`                  | Game hero images |
+| Xbox Green Gradient | `linear-gradient(135deg, #107C10 0%, #0E8A0E 100%)`                     | Featured actions |
+| Game Pass Gradient  | `linear-gradient(180deg, #107C10 0%, #0A5D0A 100%)`                     | Game Pass badges |
+| Card Hover          | `linear-gradient(180deg, transparent 0%, rgba(16, 124, 16, 0.15) 100%)` | Hover effects    |
+| Acrylic             | `linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%)`  | Fluent acrylic   |
 
 ---
 
@@ -132,39 +132,39 @@ Xbox embodies a **modern, connected gaming** design philosophy rooted in Microso
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing | Color |
-|---------|------|--------|-------------|----------------|-------|
-| Hero Title | 48px | 600 | 1.1 | -0.01em | `--text-primary` |
-| Page Title | 34px | 600 | 1.2 | -0.01em | `--text-primary` |
-| Section Header | 24px | 600 | 1.3 | 0 | `--text-primary` |
-| Card Title | 16px | 600 | 1.3 | 0 | `--text-primary` |
-| Subsection | 14px | 600 | 1.4 | 0 | `--text-primary` |
-| Body Large | 16px | 400 | 1.5 | 0 | `--text-secondary` |
-| Body Regular | 14px | 400 | 1.5 | 0 | `--text-secondary` |
-| Body Small | 13px | 400 | 1.4 | 0 | `--text-tertiary` |
-| Caption | 12px | 400 | 1.4 | 0.01em | `--text-tertiary` |
-| Button Text | 14px | 600 | 1 | 0.02em | `--text-primary` |
-| Gamerscore | 20px | 700 | 1 | 0 | `--text-primary` |
-| Price | 16px | 600 | 1 | 0 | `--text-primary` |
-| Badge | 11px | 600 | 1 | 0.03em | `--text-primary` |
+| Element        | Size | Weight | Line Height | Letter Spacing | Color              |
+|----------------|------|--------|-------------|----------------|--------------------|
+| Hero Title     | 48px | 600    | 1.1         | -0.01em        | `--text-primary`   |
+| Page Title     | 34px | 600    | 1.2         | -0.01em        | `--text-primary`   |
+| Section Header | 24px | 600    | 1.3         | 0              | `--text-primary`   |
+| Card Title     | 16px | 600    | 1.3         | 0              | `--text-primary`   |
+| Subsection     | 14px | 600    | 1.4         | 0              | `--text-primary`   |
+| Body Large     | 16px | 400    | 1.5         | 0              | `--text-secondary` |
+| Body Regular   | 14px | 400    | 1.5         | 0              | `--text-secondary` |
+| Body Small     | 13px | 400    | 1.4         | 0              | `--text-tertiary`  |
+| Caption        | 12px | 400    | 1.4         | 0.01em         | `--text-tertiary`  |
+| Button Text    | 14px | 600    | 1           | 0.02em         | `--text-primary`   |
+| Gamerscore     | 20px | 700    | 1           | 0              | `--text-primary`   |
+| Price          | 16px | 600    | 1           | 0              | `--text-primary`   |
+| Badge          | 11px | 600    | 1           | 0.03em         | `--text-primary`   |
 
 ### Font Weights
 
-| Weight | Name | Usage |
-|--------|------|-------|
-| 300 | Light | Large display text, marketing |
-| 400 | Regular | Body text, descriptions |
-| 600 | Semibold | Headers, titles, buttons, emphasis |
-| 700 | Bold | Gamerscore, prices, key numbers |
+| Weight | Name     | Usage                              |
+|--------|----------|------------------------------------|
+| 300    | Light    | Large display text, marketing      |
+| 400    | Regular  | Body text, descriptions            |
+| 600    | Semibold | Headers, titles, buttons, emphasis |
+| 700    | Bold     | Gamerscore, prices, key numbers    |
 
 ### Marketing Typography
 
-| Element | Size | Weight | Usage |
-|---------|------|--------|-------|
-| Campaign Hero | 64px | 600 | Major launches, events |
-| Event Title | 48px | 600 | Xbox showcases, reveals |
-| Feature Headline | 36px | 600 | Feature section headers |
-| Tagline | 20px | 400 | Supporting copy |
+| Element          | Size | Weight | Usage                   |
+|------------------|------|--------|-------------------------|
+| Campaign Hero    | 64px | 600    | Major launches, events  |
+| Event Title      | 48px | 600    | Xbox showcases, reveals |
+| Feature Headline | 36px | 600    | Feature section headers |
+| Tagline          | 20px | 400    | Supporting copy         |
 
 ---
 
@@ -945,17 +945,17 @@ Xbox embodies a **modern, connected gaming** design philosophy rooted in Microso
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--spacing-2` | 2px | Tight gaps, borders |
-| `--spacing-4` | 4px | Icon padding, compact gaps |
-| `--spacing-8` | 8px | Standard small gaps |
-| `--spacing-12` | 12px | Card internal padding |
-| `--spacing-16` | 16px | Standard gaps, list items |
-| `--spacing-24` | 24px | Section gaps, card padding |
-| `--spacing-32` | 32px | Large section breaks |
-| `--spacing-48` | 48px | Major section separation |
-| `--spacing-64` | 64px | Hero spacing, page sections |
+| Token          | Value | Usage                       |
+|----------------|-------|-----------------------------|
+| `--spacing-2`  | 2px   | Tight gaps, borders         |
+| `--spacing-4`  | 4px   | Icon padding, compact gaps  |
+| `--spacing-8`  | 8px   | Standard small gaps         |
+| `--spacing-12` | 12px  | Card internal padding       |
+| `--spacing-16` | 16px  | Standard gaps, list items   |
+| `--spacing-24` | 24px  | Section gaps, card padding  |
+| `--spacing-32` | 32px  | Large section breaks        |
+| `--spacing-48` | 48px  | Major section separation    |
+| `--spacing-64` | 64px  | Hero spacing, page sections |
 
 ### Core Layout Structure
 
@@ -1014,22 +1014,22 @@ Xbox embodies a **modern, connected gaming** design philosophy rooted in Microso
 
 ### Grid System
 
-| Name | Columns | Gap | Max Width | Usage |
-|------|---------|-----|-----------|-------|
-| Store Grid | 5-7 | 16px | 1600px | Game browse pages |
-| Featured | 3-4 | 24px | 1600px | Featured sections |
-| Detail | 2 (65/35) | 32px | 1400px | Product pages |
-| List | 1 | 8px | 800px | Settings, downloads |
+| Name       | Columns   | Gap  | Max Width | Usage               |
+|------------|-----------|------|-----------|---------------------|
+| Store Grid | 5-7       | 16px | 1600px    | Game browse pages   |
+| Featured   | 3-4       | 24px | 1600px    | Featured sections   |
+| Detail     | 2 (65/35) | 32px | 1400px    | Product pages       |
+| List       | 1         | 8px  | 800px     | Settings, downloads |
 
 ### Content Width
 
-| Context | Max Width | Center |
-|---------|-----------|--------|
-| Full bleed hero | 100% | No |
-| Content container | 1600px | Yes |
-| Text content | 800px | Yes |
-| Modal content | 500px | Yes |
-| Narrow forms | 420px | Yes |
+| Context           | Max Width | Center |
+|-------------------|-----------|--------|
+| Full bleed hero   | 100%      | No     |
+| Content container | 1600px    | Yes    |
+| Text content      | 800px     | Yes    |
+| Modal content     | 500px     | Yes    |
+| Narrow forms      | 420px     | Yes    |
 
 ---
 
@@ -1037,22 +1037,22 @@ Xbox embodies a **modern, connected gaming** design philosophy rooted in Microso
 
 ### Shadow System
 
-| Level | Shadow | Usage |
-|-------|--------|-------|
-| Level 0 | None | Base surfaces |
-| Level 1 | `0 2px 4px rgba(0, 0, 0, 0.2)` | Buttons, subtle lift |
-| Level 2 | `0 4px 16px rgba(0, 0, 0, 0.3)` | Cards, dropdowns |
-| Level 3 | `0 8px 24px rgba(0, 0, 0, 0.4)` | Hovered cards |
-| Level 4 | `0 16px 48px rgba(0, 0, 0, 0.5)` | Modals, dialogs |
+| Level   | Shadow                           | Usage                |
+|---------|----------------------------------|----------------------|
+| Level 0 | None                             | Base surfaces        |
+| Level 1 | `0 2px 4px rgba(0, 0, 0, 0.2)`   | Buttons, subtle lift |
+| Level 2 | `0 4px 16px rgba(0, 0, 0, 0.3)`  | Cards, dropdowns     |
+| Level 3 | `0 8px 24px rgba(0, 0, 0, 0.4)`  | Hovered cards        |
+| Level 4 | `0 16px 48px rgba(0, 0, 0, 0.5)` | Modals, dialogs      |
 
 ### Focus & Glow Effects
 
-| Type | Effect | Usage |
-|------|--------|-------|
-| Focus Ring | `outline: 2px solid #ffffff` | Keyboard focus |
-| Green Glow | `0 0 16px rgba(16, 124, 16, 0.4)` | Selected items, CTA |
-| Achievement Glow | `0 0 12px rgba(0, 180, 255, 0.5)` | Rare achievements |
-| Active Game | `0 0 20px rgba(16, 124, 16, 0.3)` | Currently playing |
+| Type             | Effect                            | Usage               |
+|------------------|-----------------------------------|---------------------|
+| Focus Ring       | `outline: 2px solid #ffffff`      | Keyboard focus      |
+| Green Glow       | `0 0 16px rgba(16, 124, 16, 0.4)` | Selected items, CTA |
+| Achievement Glow | `0 0 12px rgba(0, 180, 255, 0.5)` | Rare achievements   |
+| Active Game      | `0 0 20px rgba(16, 124, 16, 0.3)` | Currently playing   |
 
 ### Surface Hierarchy
 
@@ -1072,16 +1072,16 @@ Xbox embodies a **modern, connected gaming** design philosophy rooted in Microso
 
 ### Z-Index Scale
 
-| Layer | Z-Index | Elements |
-|-------|---------|----------|
-| Base | 0 | Content, cards |
-| Sticky | 100 | Navigation, fixed headers |
-| Dropdown | 200 | Menus, autocomplete |
-| Overlay | 300 | Game tile expansion |
-| Guide | 400 | Guide panel |
-| Modal | 500 | Dialogs, purchases |
-| Toast | 600 | Notifications, achievements |
-| System | 1000 | Controller prompts |
+| Layer    | Z-Index | Elements                    |
+|----------|---------|-----------------------------|
+| Base     | 0       | Content, cards              |
+| Sticky   | 100     | Navigation, fixed headers   |
+| Dropdown | 200     | Menus, autocomplete         |
+| Overlay  | 300     | Game tile expansion         |
+| Guide    | 400     | Guide panel                 |
+| Modal    | 500     | Dialogs, purchases          |
+| Toast    | 600     | Notifications, achievements |
+| System   | 1000    | Controller prompts          |
 
 ### Fluent Design Effects
 
@@ -1140,13 +1140,13 @@ Xbox embodies a **modern, connected gaming** design philosophy rooted in Microso
 
 ### Do's
 
-| Guideline | Rationale |
-|-----------|-----------|
-| Use Xbox Green (#107C10) as primary accent | Brand recognition, Xbox identity |
+| Guideline                                    | Rationale                             |
+|----------------------------------------------|---------------------------------------|
+| Use Xbox Green (#107C10) as primary accent   | Brand recognition, Xbox identity      |
 | Maintain dark backgrounds (#0e0e0e, #1f1f1f) | Console-optimized, reduces eye strain |
-| Showcase Game Pass value prominently | Key subscription driver |
-| Display gamerscore and achievements | Core Xbox engagement mechanic |
-| Use white focus rings for accessibility | High contrast, controller navigation |
+| Showcase Game Pass value prominently         | Key subscription driver               |
+| Display gamerscore and achievements          | Core Xbox engagement mechanic         |
+| Use white focus rings for accessibility      | High contrast, controller navigation  |
 | Show platform badges (Series X|S, One, PC, Cloud) | Cross-platform clarity |
 | Implement Fluent Design principles | Microsoft ecosystem consistency |
 | Use Segoe UI font family | Microsoft/Xbox brand typography |
@@ -1155,29 +1155,29 @@ Xbox embodies a **modern, connected gaming** design philosophy rooted in Microso
 
 ### Don'ts
 
-| Anti-Pattern | Why to Avoid |
-|--------------|--------------|
-| Don't use light backgrounds as default | Off-brand, breaks console experience |
-| Avoid colors other than Xbox Green for CTAs | Brand consistency, recognition |
-| Don't hide gamerscore/achievements | Achievements are core to Xbox culture |
-| Avoid tiny game tiles | Art sells games, needs visibility |
-| Don't use rounded pill buttons | Xbox uses subtle 4px radius |
-| Avoid heavy animations (>200ms) | Feels sluggish, Xbox is snappy |
-| Don't forget Smart Delivery badges | Key Xbox feature communication |
-| Avoid hiding Game Pass availability | Subscription value must be clear |
-| Don't use PlayStation-style glows | Distinct console identities |
-| Avoid cluttered interfaces | Xbox prioritizes clean, scannable layouts |
+| Anti-Pattern                                | Why to Avoid                              |
+|---------------------------------------------|-------------------------------------------|
+| Don't use light backgrounds as default      | Off-brand, breaks console experience      |
+| Avoid colors other than Xbox Green for CTAs | Brand consistency, recognition            |
+| Don't hide gamerscore/achievements          | Achievements are core to Xbox culture     |
+| Avoid tiny game tiles                       | Art sells games, needs visibility         |
+| Don't use rounded pill buttons              | Xbox uses subtle 4px radius               |
+| Avoid heavy animations (>200ms)             | Feels sluggish, Xbox is snappy            |
+| Don't forget Smart Delivery badges          | Key Xbox feature communication            |
+| Avoid hiding Game Pass availability         | Subscription value must be clear          |
+| Don't use PlayStation-style glows           | Distinct console identities               |
+| Avoid cluttered interfaces                  | Xbox prioritizes clean, scannable layouts |
 
 ### Content Guidelines
 
-| Do | Don't |
-|----|-------|
-| Use official game titles | Abbreviate game names |
-| Show accurate regional pricing | Display wrong currency |
-| Indicate Game Pass inclusion | Hide subscription benefits |
-| Display ESRB/PEGI ratings | Omit content ratings |
-| Use "Buy" / "Get" / "Play" | Vague action language |
-| Show download/install size | Hide storage requirements |
+| Do                                | Don't                        |
+|-----------------------------------|------------------------------|
+| Use official game titles          | Abbreviate game names        |
+| Show accurate regional pricing    | Display wrong currency       |
+| Indicate Game Pass inclusion      | Hide subscription benefits   |
+| Display ESRB/PEGI ratings         | Omit content ratings         |
+| Use "Buy" / "Get" / "Play"        | Vague action language        |
+| Show download/install size        | Hide storage requirements    |
 | Display achievement count clearly | Make gamerscore hard to find |
 
 ---
@@ -1186,23 +1186,23 @@ Xbox embodies a **modern, connected gaming** design philosophy rooted in Microso
 
 ### Breakpoints
 
-| Name | Width | Behavior |
-|------|-------|----------|
-| 4K TV | >2560px | Scaled UI (150-200%), larger tiles |
-| TV/Desktop Large | 1920px - 2559px | Standard console UI |
-| Desktop | 1280px - 1919px | Full layout, 5-6 column grid |
-| Tablet | 768px - 1279px | 3-4 column grid, hamburger nav |
-| Mobile | <768px | 2 column grid, bottom navigation |
+| Name             | Width           | Behavior                           |
+|------------------|-----------------|------------------------------------|
+| 4K TV            | >2560px         | Scaled UI (150-200%), larger tiles |
+| TV/Desktop Large | 1920px - 2559px | Standard console UI                |
+| Desktop          | 1280px - 1919px | Full layout, 5-6 column grid       |
+| Tablet           | 768px - 1279px  | 3-4 column grid, hamburger nav     |
+| Mobile           | <768px          | 2 column grid, bottom navigation   |
 
 ### Device-Specific Adaptations
 
-| Component | Console/TV | Desktop | Mobile |
-|-----------|------------|---------|--------|
-| Navigation | Guide panel, D-pad | Top bar, mouse | Bottom tabs |
-| Game Tiles | Large (180px+), focus | Medium (140px), hover | Grid (2-up) |
-| Buttons | Large (48px), focus ring | Standard (40px) | Touch (44px) |
-| Typography | Scaled +20-30% | Standard | Compact |
-| Spacing | Generous (TV viewing) | Standard | Tighter |
+| Component  | Console/TV               | Desktop               | Mobile       |
+|------------|--------------------------|-----------------------|--------------|
+| Navigation | Guide panel, D-pad       | Top bar, mouse        | Bottom tabs  |
+| Game Tiles | Large (180px+), focus    | Medium (140px), hover | Grid (2-up)  |
+| Buttons    | Large (48px), focus ring | Standard (40px)       | Touch (44px) |
+| Typography | Scaled +20-30%           | Standard              | Compact      |
+| Spacing    | Generous (TV viewing)    | Standard              | Tighter      |
 
 ### Controller Navigation
 
@@ -1237,13 +1237,13 @@ Xbox embodies a **modern, connected gaming** design philosophy rooted in Microso
 
 ### Touch Targets
 
-| Element | Minimum Size | Notes |
-|---------|--------------|-------|
-| Buttons | 40px × 40px | Xbox standard |
-| Game Tiles | Full tile area | Entire card tappable |
-| List Items | 48px height | Touch-friendly |
-| Close buttons | 44px × 44px | Easy dismissal |
-| Nav items | 48px × 48px | Bottom tab bar |
+| Element       | Minimum Size   | Notes                |
+|---------------|----------------|----------------------|
+| Buttons       | 40px × 40px    | Xbox standard        |
+| Game Tiles    | Full tile area | Entire card tappable |
+| List Items    | 48px height    | Touch-friendly       |
+| Close buttons | 44px × 44px    | Easy dismissal       |
+| Nav items     | 48px × 48px    | Bottom tab bar       |
 
 ### Mobile Navigation
 

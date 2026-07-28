@@ -90,9 +90,9 @@ function resolveUdid(udidArg) {
 
   throw new Error(
     "No device UDID provided and no simulator is currently booted.\n" +
-      "Boot a simulator or provide --udid explicitly:\n" +
-      "  xcrun simctl boot <device-name>\n" +
-      "  node scripts/script_name.js --udid <device-udid>"
+    "Boot a simulator or provide --udid explicitly:\n" +
+    "  xcrun simctl boot <device-name>\n" +
+    "  node scripts/script_name.js --udid <device-udid>"
   );
 }
 
@@ -146,7 +146,7 @@ function resolveDeviceIdentifier(identifier) {
     if (booted) return booted;
     throw new Error(
       "No simulator is currently booted. " +
-        "Boot a simulator first: xcrun simctl boot <device-udid>"
+      "Boot a simulator first: xcrun simctl boot <device-udid>"
     );
   }
 
@@ -167,7 +167,7 @@ function resolveDeviceIdentifier(identifier) {
 
   throw new Error(
     `Device '${identifier}' not found. ` +
-      "Use 'xcrun simctl list devices' to see available simulators."
+    "Use 'xcrun simctl list devices' to see available simulators."
   );
 }
 

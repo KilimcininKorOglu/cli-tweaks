@@ -36,7 +36,7 @@ class KeyboardController {
       for (const char of text) {
         if (!this._typeSingle(char)) return false;
         const end = Date.now() + delaySec * 1000;
-        while (Date.now() < end) {}
+        while (Date.now() < end) { }
       }
       return true;
     }
@@ -61,7 +61,7 @@ class KeyboardController {
     try {
       for (let i = 0; i < count; i++) {
         execFileSync("idb", cmd, { stdio: ["pipe", "pipe", "pipe"] });
-        if (count > 1) { const end = Date.now() + 100; while (Date.now() < end) {} }
+        if (count > 1) { const end = Date.now() + 100; while (Date.now() < end) { } }
       }
       return true;
     } catch { return false; }

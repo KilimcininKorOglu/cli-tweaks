@@ -13,13 +13,13 @@ TikTok's design is **bold, immersive, and unapologetically Gen-Z**. The interfac
 - **Instant Gratification**: One-tap interactions, swipe navigation, zero loading states.
 
 ### Mood & Feeling
-| Attribute | Expression |
-|-----------|------------|
-| Energy | High-octane, dynamic, pulsing |
-| Personality | Playful, irreverent, bold |
-| Accessibility | Effortless, intuitive, addictive |
-| Aesthetic | Dark mode native, neon accents, cinematic |
-| Generation | Digital-native, trend-forward, authentic |
+| Attribute     | Expression                                |
+|---------------|-------------------------------------------|
+| Energy        | High-octane, dynamic, pulsing             |
+| Personality   | Playful, irreverent, bold                 |
+| Accessibility | Effortless, intuitive, addictive          |
+| Aesthetic     | Dark mode native, neon accents, cinematic |
+| Generation    | Digital-native, trend-forward, authentic  |
 
 ### Visual Metaphors
 - **The Stage**: Every video is a performance; the interface is the darkened theater.
@@ -32,26 +32,26 @@ TikTok's design is **bold, immersive, and unapologetically Gen-Z**. The interfac
 
 ### Primary Colors
 
-| Name | Hex | RGB | Usage |
-|------|-----|-----|-------|
-| TikTok Black | `#000000` | 0, 0, 0 | Primary background, video container |
-| Deep Black | `#121212` | 18, 18, 18 | Secondary surfaces, cards |
-| TikTok Cyan | `#25F4EE` | 37, 244, 238 | Accent, highlights, left gradient |
-| TikTok Pink | `#FE2C55` | 254, 44, 85 | Accent, likes, right gradient |
+| Name         | Hex       | RGB          | Usage                               |
+|--------------|-----------|--------------|-------------------------------------|
+| TikTok Black | `#000000` | 0, 0, 0      | Primary background, video container |
+| Deep Black   | `#121212` | 18, 18, 18   | Secondary surfaces, cards           |
+| TikTok Cyan  | `#25F4EE` | 37, 244, 238 | Accent, highlights, left gradient   |
+| TikTok Pink  | `#FE2C55` | 254, 44, 85  | Accent, likes, right gradient       |
 
 ### Extended Palette
 
-| Name | Hex | Usage |
-|------|-----|-------|
-| Surface Dark | `#1A1A1A` | Elevated cards, modals |
-| Surface Elevated | `#2A2A2A` | Input fields, buttons |
-| Border Subtle | `#333333` | Dividers, subtle borders |
-| Text Primary | `#FFFFFF` | Headlines, usernames |
-| Text Secondary | `#AAAAAA` | Descriptions, metadata |
-| Text Tertiary | `#666666` | Placeholders, disabled |
-| Success Green | `#00F076` | Verified badges, success states |
-| Warning Yellow | `#FFE135` | Cautions, highlights |
-| Error Red | `#FF4444` | Errors, destructive actions |
+| Name             | Hex       | Usage                           |
+|------------------|-----------|---------------------------------|
+| Surface Dark     | `#1A1A1A` | Elevated cards, modals          |
+| Surface Elevated | `#2A2A2A` | Input fields, buttons           |
+| Border Subtle    | `#333333` | Dividers, subtle borders        |
+| Text Primary     | `#FFFFFF` | Headlines, usernames            |
+| Text Secondary   | `#AAAAAA` | Descriptions, metadata          |
+| Text Tertiary    | `#666666` | Placeholders, disabled          |
+| Success Green    | `#00F076` | Verified badges, success states |
+| Warning Yellow   | `#FFE135` | Cautions, highlights            |
+| Error Red        | `#FF4444` | Errors, destructive actions     |
 
 ### The Signature Gradient
 ```css
@@ -66,16 +66,16 @@ animation: gradient-shift 3s ease infinite;
 
 ### Color Roles
 
-| Role | Light Environment | Dark Environment |
-|------|-------------------|------------------|
-| Background | `#FFFFFF` | `#000000` |
-| Surface | `#F5F5F5` | `#121212` |
-| Primary Action | `#FE2C55` | `#FE2C55` |
-| Secondary Action | `#25F4EE` | `#25F4EE` |
-| Interactive | `#FFFFFF` | `#FFFFFF` |
-| Like Active | `#FE2C55` | `#FE2C55` (with glow) |
-| Follow Button | `#FE2C55` | `#FE2C55` |
-| Following State | `#2F2F2F` | `#2F2F2F` |
+| Role             | Light Environment | Dark Environment      |
+|------------------|-------------------|-----------------------|
+| Background       | `#FFFFFF`         | `#000000`             |
+| Surface          | `#F5F5F5`         | `#121212`             |
+| Primary Action   | `#FE2C55`         | `#FE2C55`             |
+| Secondary Action | `#25F4EE`         | `#25F4EE`             |
+| Interactive      | `#FFFFFF`         | `#FFFFFF`             |
+| Like Active      | `#FE2C55`         | `#FE2C55` (with glow) |
+| Follow Button    | `#FE2C55`         | `#FE2C55`             |
+| Following State  | `#2F2F2F`         | `#2F2F2F`             |
 
 ### Glow Effects
 ```css
@@ -103,16 +103,16 @@ font-family: 'TikTok Sans', 'Proxima Nova', -apple-system, BlinkMacSystemFont,
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing |
-|---------|------|--------|-------------|----------------|
-| Display | 32px | 700 | 1.2 | -0.02em |
-| Headline 1 | 24px | 700 | 1.3 | -0.01em |
-| Headline 2 | 20px | 600 | 1.3 | 0 |
-| Title | 18px | 600 | 1.4 | 0 |
-| Body Large | 16px | 400 | 1.5 | 0 |
-| Body | 14px | 400 | 1.5 | 0 |
-| Caption | 12px | 400 | 1.4 | 0.01em |
-| Micro | 10px | 500 | 1.3 | 0.02em |
+| Element    | Size | Weight | Line Height | Letter Spacing |
+|------------|------|--------|-------------|----------------|
+| Display    | 32px | 700    | 1.2         | -0.02em        |
+| Headline 1 | 24px | 700    | 1.3         | -0.01em        |
+| Headline 2 | 20px | 600    | 1.3         | 0              |
+| Title      | 18px | 600    | 1.4         | 0              |
+| Body Large | 16px | 400    | 1.5         | 0              |
+| Body       | 14px | 400    | 1.5         | 0              |
+| Caption    | 12px | 400    | 1.4         | 0.01em         |
+| Micro      | 10px | 500    | 1.3         | 0.02em         |
 
 ### Typography Styles
 
@@ -810,14 +810,14 @@ TikTok uses minimal shadows in favor of darkness and glow effects.
 ```
 
 ### Elevation Hierarchy
-| Level | Usage | Treatment |
-|-------|-------|-----------|
-| 0 | Video background | Pure black, no shadow |
-| 1 | Feed content | Overlay on video |
-| 2 | Cards, surfaces | Subtle elevation |
-| 3 | Bottom nav, headers | Fixed, slight shadow |
-| 4 | Modals, sheets | Strong shadow + backdrop |
-| 5 | Toasts, tooltips | Floating, glow optional |
+| Level | Usage               | Treatment                |
+|-------|---------------------|--------------------------|
+| 0     | Video background    | Pure black, no shadow    |
+| 1     | Feed content        | Overlay on video         |
+| 2     | Cards, surfaces     | Subtle elevation         |
+| 3     | Bottom nav, headers | Fixed, slight shadow     |
+| 4     | Modals, sheets      | Strong shadow + backdrop |
+| 5     | Toasts, tooltips    | Floating, glow optional  |
 
 ---
 
@@ -897,16 +897,16 @@ TikTok uses minimal shadows in favor of darkness and glow effects.
 
 ### Common Pitfalls
 
-| Mistake | Better Approach |
-|---------|-----------------|
-| Horizontal scroll for videos | Vertical snap-scroll feed |
-| Small action buttons | 44px+ touch targets |
-| Static like button | Animated pop + glow |
-| Generic loading spinner | Skeleton or content blur |
-| Heavy navigation UI | Minimal bottom nav + gestures |
-| Text without shadow | Text-shadow for all overlays |
-| Muted brand colors | Vibrant cyan and pink |
-| Square video thumbnails | 9:16 aspect ratio |
+| Mistake                      | Better Approach               |
+|------------------------------|-------------------------------|
+| Horizontal scroll for videos | Vertical snap-scroll feed     |
+| Small action buttons         | 44px+ touch targets           |
+| Static like button           | Animated pop + glow           |
+| Generic loading spinner      | Skeleton or content blur      |
+| Heavy navigation UI          | Minimal bottom nav + gestures |
+| Text without shadow          | Text-shadow for all overlays  |
+| Muted brand colors           | Vibrant cyan and pink         |
+| Square video thumbnails      | 9:16 aspect ratio             |
 
 ---
 

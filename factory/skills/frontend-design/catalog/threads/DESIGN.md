@@ -25,13 +25,13 @@ Threads embodies a **clean, text-first, conversational** design philosophy. As M
 - **Instagram-adjacent**: Comfortable for Instagram users transitioning
 
 ### Visual Personality
-| Attribute | Expression |
-|-----------|------------|
-| Simplicity | Stripped-down UI, essential elements only |
-| Connection | Threaded replies, avatar clusters, visual continuity |
-| Authenticity | Profile-first design, real identities from Instagram |
-| Clarity | High contrast, readable typography, clear hierarchy |
-| Modernity | Contemporary sans-serif typography, smooth animations |
+| Attribute    | Expression                                            |
+|--------------|-------------------------------------------------------|
+| Simplicity   | Stripped-down UI, essential elements only             |
+| Connection   | Threaded replies, avatar clusters, visual continuity  |
+| Authenticity | Profile-first design, real identities from Instagram  |
+| Clarity      | High contrast, readable typography, clear hierarchy   |
+| Modernity    | Contemporary sans-serif typography, smooth animations |
 
 ---
 
@@ -39,55 +39,55 @@ Threads embodies a **clean, text-first, conversational** design philosophy. As M
 
 ### Primary Colors
 
-| Color | Hex | RGB | Role |
-|-------|-----|-----|------|
-| White | `#FFFFFF` | rgb(255, 255, 255) | Primary background (light mode) |
-| Black | `#000000` | rgb(0, 0, 0) | Primary background (dark mode) |
-| Pure Black Text | `#000000` | rgb(0, 0, 0) | Primary text (light mode) |
-| Pure White Text | `#FFFFFF` | rgb(255, 255, 255) | Primary text (dark mode) |
+| Color           | Hex       | RGB                | Role                            |
+|-----------------|-----------|--------------------|---------------------------------|
+| White           | `#FFFFFF` | rgb(255, 255, 255) | Primary background (light mode) |
+| Black           | `#000000` | rgb(0, 0, 0)       | Primary background (dark mode)  |
+| Pure Black Text | `#000000` | rgb(0, 0, 0)       | Primary text (light mode)       |
+| Pure White Text | `#FFFFFF` | rgb(255, 255, 255) | Primary text (dark mode)        |
 
 ### Instagram Gradient (Branding Only)
 
-| Color | Hex | Usage |
-|-------|-----|-------|
+| Color            | Hex       | Usage               |
+|------------------|-----------|---------------------|
 | Instagram Yellow | `#FEDA77` | Logo gradient start |
-| Instagram Orange | `#F58529` | Logo gradient |
-| Instagram Pink | `#DD2A7B` | Logo gradient |
-| Instagram Purple | `#8134AF` | Logo gradient |
-| Instagram Blue | `#515BD4` | Logo gradient end |
+| Instagram Orange | `#F58529` | Logo gradient       |
+| Instagram Pink   | `#DD2A7B` | Logo gradient       |
+| Instagram Purple | `#8134AF` | Logo gradient       |
+| Instagram Blue   | `#515BD4` | Logo gradient end   |
 
 > **Note**: The Instagram gradient is used exclusively for the Threads @ logo and occasional branding elements. It is NOT used in the UI.
 
 ### Extended Palette
 
 #### Neutral Grays (Light Mode)
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Primary Text | `#000000` | Headlines, body text |
-| Secondary Text | `#999999` | Timestamps, metadata, handles |
-| Tertiary Text | `#737373` | Subtitles, hints |
-| Divider | `#E0E0E0` | Borders, separators |
-| Hover Surface | `#F5F5F5` | Hover states on cards |
-| Input Background | `#F0F0F0` | Search bars, input fields |
+| Color            | Hex       | Usage                         |
+|------------------|-----------|-------------------------------|
+| Primary Text     | `#000000` | Headlines, body text          |
+| Secondary Text   | `#999999` | Timestamps, metadata, handles |
+| Tertiary Text    | `#737373` | Subtitles, hints              |
+| Divider          | `#E0E0E0` | Borders, separators           |
+| Hover Surface    | `#F5F5F5` | Hover states on cards         |
+| Input Background | `#F0F0F0` | Search bars, input fields     |
 
 #### Neutral Grays (Dark Mode)
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Primary Text | `#FFFFFF` | Headlines, body text |
-| Secondary Text | `#777777` | Timestamps, metadata, handles |
-| Tertiary Text | `#A8A8A8` | Subtitles, hints |
-| Divider | `#262626` | Borders, separators |
-| Hover Surface | `#1A1A1A` | Hover states on cards |
-| Input Background | `#262626` | Search bars, input fields |
+| Color            | Hex       | Usage                         |
+|------------------|-----------|-------------------------------|
+| Primary Text     | `#FFFFFF` | Headlines, body text          |
+| Secondary Text   | `#777777` | Timestamps, metadata, handles |
+| Tertiary Text    | `#A8A8A8` | Subtitles, hints              |
+| Divider          | `#262626` | Borders, separators           |
+| Hover Surface    | `#1A1A1A` | Hover states on cards         |
+| Input Background | `#262626` | Search bars, input fields     |
 
 #### Semantic Colors
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Like Red | `#FF3040` | Like heart active state |
-| Error Red | `#ED4956` | Error messages, delete |
-| Link Blue | `#0095F6` | Links, mentions (Instagram blue) |
-| Success Green | `#00A400` | Success states |
-| Verified Blue | `#0095F6` | Verified badge |
+| Color         | Hex       | Usage                            |
+|---------------|-----------|----------------------------------|
+| Like Red      | `#FF3040` | Like heart active state          |
+| Error Red     | `#ED4956` | Error messages, delete           |
+| Link Blue     | `#0095F6` | Links, mentions (Instagram blue) |
+| Success Green | `#00A400` | Success states                   |
+| Verified Blue | `#0095F6` | Verified badge                   |
 
 ### Color Application Rules
 
@@ -106,14 +106,14 @@ Background Layers (Dark Mode):
 ```
 
 ### Mode-Specific Variants
-| Element | Light Mode | Dark Mode |
-|---------|------------|-----------|
-| Background | `#FFFFFF` | `#000000` |
-| Primary Text | `#000000` | `#FFFFFF` |
-| Secondary Text | `#999999` | `#777777` |
-| Dividers | `#E0E0E0` | `#262626` |
-| Cards | `#FFFFFF` | `#000000` |
-| Input Fields | `#F0F0F0` | `#262626` |
+| Element        | Light Mode | Dark Mode |
+|----------------|------------|-----------|
+| Background     | `#FFFFFF`  | `#000000` |
+| Primary Text   | `#000000`  | `#FFFFFF` |
+| Secondary Text | `#999999`  | `#777777` |
+| Dividers       | `#E0E0E0`  | `#262626` |
+| Cards          | `#FFFFFF`  | `#000000` |
+| Input Fields   | `#F0F0F0`  | `#262626` |
 
 ---
 
@@ -134,17 +134,17 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing |
-|---------|------|--------|-------------|----------------|
-| Display | 24px | 700 | 28px | -0.5px |
-| Heading Large | 20px | 600 | 24px | -0.3px |
-| Heading Medium | 17px | 600 | 22px | 0 |
-| Body Large | 16px | 400 | 22px | 0 |
-| Body | 15px | 400 | 20px | 0 |
-| Body Bold | 15px | 600 | 20px | 0 |
-| Caption | 13px | 400 | 18px | 0 |
-| Small | 12px | 400 | 16px | 0.1px |
-| Tiny | 11px | 400 | 14px | 0.1px |
+| Element        | Size | Weight | Line Height | Letter Spacing |
+|----------------|------|--------|-------------|----------------|
+| Display        | 24px | 700    | 28px        | -0.5px         |
+| Heading Large  | 20px | 600    | 24px        | -0.3px         |
+| Heading Medium | 17px | 600    | 22px        | 0              |
+| Body Large     | 16px | 400    | 22px        | 0              |
+| Body           | 15px | 400    | 20px        | 0              |
+| Body Bold      | 15px | 600    | 20px        | 0              |
+| Caption        | 13px | 400    | 18px        | 0              |
+| Small          | 12px | 400    | 16px        | 0.1px          |
+| Tiny           | 11px | 400    | 14px        | 0.1px          |
 
 ### Typography Usage
 
@@ -576,14 +576,14 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
 
 ### Grid Specifications
 
-| Element | Width | Notes |
-|---------|-------|-------|
-| Content Max Width | 640px | Main feed area |
-| Left Sidebar | 240px | Desktop navigation |
-| Right Sidebar | 320px | Optional, suggestions |
-| Thread Card | 100% | Full width of content |
-| Avatar Column | 48px | Including thread line space |
-| Content Column | Flexible | Remainder of card width |
+| Element           | Width    | Notes                       |
+|-------------------|----------|-----------------------------|
+| Content Max Width | 640px    | Main feed area              |
+| Left Sidebar      | 240px    | Desktop navigation          |
+| Right Sidebar     | 320px    | Optional, suggestions       |
+| Thread Card       | 100%     | Full width of content       |
+| Avatar Column     | 48px     | Including thread line space |
+| Content Column    | Flexible | Remainder of card width     |
 
 ### Spacing System
 
@@ -604,15 +604,15 @@ Spacing Scale:
 
 ### Component Spacing
 
-| Context | Padding/Margin |
-|---------|----------------|
-| Thread card | 12px 16px |
-| Between action icons | 4px |
-| Avatar to content | 12px |
-| Thread line margin | 4px auto |
-| Section divider | 0 (1px border) |
-| Modal padding | 16px |
-| Navigation item | 12px |
+| Context              | Padding/Margin |
+|----------------------|----------------|
+| Thread card          | 12px 16px      |
+| Between action icons | 4px            |
+| Avatar to content    | 12px           |
+| Thread line margin   | 4px auto       |
+| Section divider      | 0 (1px border) |
+| Modal padding        | 16px           |
+| Navigation item      | 12px           |
 
 ### Content Width Constraints
 
@@ -673,23 +673,23 @@ Threads uses a **flat design approach** with virtually no shadows. Depth is comm
 
 ### Surface Hierarchy (Light Mode)
 
-| Level | Background | Use Case |
-|-------|------------|----------|
-| 0 - Base | `#FFFFFF` | Main background |
-| 1 - Hover | `#FAFAFA` | Card hover states |
-| 2 - Surface | `#F0F0F0` | Input fields, search |
-| 3 - Active | `#EBEBEB` | Pressed states |
-| 4 - Overlay | `rgba(0, 0, 0, 0.65)` | Modal backdrops |
+| Level       | Background            | Use Case             |
+|-------------|-----------------------|----------------------|
+| 0 - Base    | `#FFFFFF`             | Main background      |
+| 1 - Hover   | `#FAFAFA`             | Card hover states    |
+| 2 - Surface | `#F0F0F0`             | Input fields, search |
+| 3 - Active  | `#EBEBEB`             | Pressed states       |
+| 4 - Overlay | `rgba(0, 0, 0, 0.65)` | Modal backdrops      |
 
 ### Surface Hierarchy (Dark Mode)
 
-| Level | Background | Use Case |
-|-------|------------|----------|
-| 0 - Base | `#000000` | Main background |
-| 1 - Hover | `#1A1A1A` | Card hover states |
-| 2 - Surface | `#262626` | Input fields, modals |
-| 3 - Active | `#363636` | Pressed states |
-| 4 - Overlay | `rgba(0, 0, 0, 0.85)` | Modal backdrops |
+| Level       | Background            | Use Case             |
+|-------------|-----------------------|----------------------|
+| 0 - Base    | `#000000`             | Main background      |
+| 1 - Hover   | `#1A1A1A`             | Card hover states    |
+| 2 - Surface | `#262626`             | Input fields, modals |
+| 3 - Active  | `#363636`             | Pressed states       |
+| 4 - Overlay | `rgba(0, 0, 0, 0.85)` | Modal backdrops      |
 
 ### Shadow Usage
 
@@ -865,14 +865,14 @@ Toast/Alerts:      600
 
 ### Common Mistakes to Avoid
 
-| Mistake | Correct Approach |
-|---------|------------------|
-| Adding card shadows | Use border-bottom dividers only |
-| Using gradient buttons | Use solid black/white buttons |
-| Small avatars (< 36px) | Keep avatars 36-48px minimum |
-| Breaking thread lines | Maintain continuous visual connection |
-| Complex loading states | Use simple skeleton patterns |
-| Colored action icons (default) | Icons are black/gray until active |
+| Mistake                        | Correct Approach                      |
+|--------------------------------|---------------------------------------|
+| Adding card shadows            | Use border-bottom dividers only       |
+| Using gradient buttons         | Use solid black/white buttons         |
+| Small avatars (< 36px)         | Keep avatars 36-48px minimum          |
+| Breaking thread lines          | Maintain continuous visual connection |
+| Complex loading states         | Use simple skeleton patterns          |
+| Colored action icons (default) | Icons are black/gray until active     |
 
 ---
 
@@ -880,13 +880,13 @@ Toast/Alerts:      600
 
 ### Breakpoint System
 
-| Breakpoint | Width | Layout Changes |
-|------------|-------|----------------|
-| Desktop XL | ≥1200px | Three-column with right sidebar |
-| Desktop | 1024-1199px | Two-column, sidebar + feed |
-| Tablet | 768-1023px | Single column, collapsed nav |
-| Mobile L | 428-767px | Single column, bottom nav |
-| Mobile | <428px | Single column, compact spacing |
+| Breakpoint | Width       | Layout Changes                  |
+|------------|-------------|---------------------------------|
+| Desktop XL | ≥1200px     | Three-column with right sidebar |
+| Desktop    | 1024-1199px | Two-column, sidebar + feed      |
+| Tablet     | 768-1023px  | Single column, collapsed nav    |
+| Mobile L   | 428-767px   | Single column, bottom nav       |
+| Mobile     | <428px      | Single column, compact spacing  |
 
 ### Desktop (≥1024px)
 ```
@@ -1208,28 +1208,28 @@ Success States:
 
 ## Quick Reference Card
 
-| Element | Value |
-|---------|-------|
-| Primary Background (Light) | `#FFFFFF` |
-| Primary Background (Dark) | `#000000` |
-| Primary Text (Light) | `#000000` |
-| Primary Text (Dark) | `#FFFFFF` |
-| Secondary Text (Light) | `#999999` |
-| Secondary Text (Dark) | `#777777` |
-| Link Blue | `#0095F6` |
-| Like Red | `#FF3040` |
-| Dividers (Light) | `#E0E0E0` |
-| Dividers (Dark) | `#262626` |
-| Font Family | System fonts |
-| Base Font Size | 15px |
-| Button Radius | 10px |
-| Card Radius | N/A (flat) |
-| Content Width | 640px |
-| Avatar Size | 36-48px |
-| Thread Line Width | 2px |
-| Icon Size | 20-24px |
-| Spacing Unit | 4px |
-| Bottom Nav Height | 50px |
+| Element                    | Value        |
+|----------------------------|--------------|
+| Primary Background (Light) | `#FFFFFF`    |
+| Primary Background (Dark)  | `#000000`    |
+| Primary Text (Light)       | `#000000`    |
+| Primary Text (Dark)        | `#FFFFFF`    |
+| Secondary Text (Light)     | `#999999`    |
+| Secondary Text (Dark)      | `#777777`    |
+| Link Blue                  | `#0095F6`    |
+| Like Red                   | `#FF3040`    |
+| Dividers (Light)           | `#E0E0E0`    |
+| Dividers (Dark)            | `#262626`    |
+| Font Family                | System fonts |
+| Base Font Size             | 15px         |
+| Button Radius              | 10px         |
+| Card Radius                | N/A (flat)   |
+| Content Width              | 640px        |
+| Avatar Size                | 36-48px      |
+| Thread Line Width          | 2px          |
+| Icon Size                  | 20-24px      |
+| Spacing Unit               | 4px          |
+| Bottom Nav Height          | 50px         |
 
 ---
 

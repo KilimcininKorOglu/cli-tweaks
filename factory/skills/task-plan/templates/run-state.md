@@ -28,9 +28,9 @@ Priority-sorted remaining tasks:
 3. T006 (P2, F002) - no deps
 
 ## Error Log
-| Task | Attempt | Error                          | Timestamp |
-|------|---------|--------------------------------|-----------|
-| T003 | 1       | Build failed: missing dep      | 11:35     |
+| Task | Attempt | Error                     | Timestamp |
+|------|---------|---------------------------|-----------|
+| T003 | 1       | Build failed: missing dep | 11:35     |
 
 ## Summary
 - Total Features: 2

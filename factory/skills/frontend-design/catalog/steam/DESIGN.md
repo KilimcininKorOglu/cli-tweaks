@@ -34,67 +34,67 @@ Steam embraces a **dark, industrial gaming** design philosophy. The interface fe
 
 ### Primary Dark Theme
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--background-darkest` | `#171a21` | Navigation bars, deepest surfaces |
-| `--background-primary` | `#1b2838` | Main content area, store background |
-| `--background-secondary` | `#2a475e` | Cards, elevated surfaces |
-| `--background-tertiary` | `#1e3a4c` | Hover states, highlighted sections |
-| `--background-gradient-top` | `#1b2838` | Gradient backgrounds start |
-| `--background-gradient-bottom` | `#171a21` | Gradient backgrounds end |
-| `--background-modal` | `#171d25` | Modal/dialog backgrounds |
-| `--background-input` | `#32465a` | Form inputs, search fields |
+| Token                          | Hex       | Role                                |
+|--------------------------------|-----------|-------------------------------------|
+| `--background-darkest`         | `#171a21` | Navigation bars, deepest surfaces   |
+| `--background-primary`         | `#1b2838` | Main content area, store background |
+| `--background-secondary`       | `#2a475e` | Cards, elevated surfaces            |
+| `--background-tertiary`        | `#1e3a4c` | Hover states, highlighted sections  |
+| `--background-gradient-top`    | `#1b2838` | Gradient backgrounds start          |
+| `--background-gradient-bottom` | `#171a21` | Gradient backgrounds end            |
+| `--background-modal`           | `#171d25` | Modal/dialog backgrounds            |
+| `--background-input`           | `#32465a` | Form inputs, search fields          |
 
 ### Accent Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--accent-primary` | `#66c0f4` | Primary accent, links, highlights |
-| `--accent-hover` | `#67c1f5` | Link hover states |
-| `--accent-light` | `#a5d7f7` | Light accent for emphasis |
-| `--accent-dark` | `#417a9b` | Muted accent for secondary elements |
-| `--purchase-green` | `#5c7e10` | Purchase buttons, "Add to Cart" |
-| `--purchase-green-hover` | `#6d8f1a` | Purchase button hover |
-| `--wishlist-blue` | `#4c6b8a` | Wishlist button, secondary actions |
+| Token                    | Hex       | Role                                |
+|--------------------------|-----------|-------------------------------------|
+| `--accent-primary`       | `#66c0f4` | Primary accent, links, highlights   |
+| `--accent-hover`         | `#67c1f5` | Link hover states                   |
+| `--accent-light`         | `#a5d7f7` | Light accent for emphasis           |
+| `--accent-dark`          | `#417a9b` | Muted accent for secondary elements |
+| `--purchase-green`       | `#5c7e10` | Purchase buttons, "Add to Cart"     |
+| `--purchase-green-hover` | `#6d8f1a` | Purchase button hover               |
+| `--wishlist-blue`        | `#4c6b8a` | Wishlist button, secondary actions  |
 
 ### Text Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--text-primary` | `#c7d5e0` | Primary body text |
-| `--text-secondary` | `#8f98a0` | Secondary text, metadata |
-| `--text-muted` | `#6b7785` | Tertiary text, timestamps |
-| `--text-bright` | `#ffffff` | Headers, important labels |
-| `--text-link` | `#66c0f4` | Hyperlinks |
-| `--text-link-hover` | `#ffffff` | Link hover state |
-| `--text-price` | `#acdbf5` | Price displays |
-| `--text-discount` | `#a4d007` | Discount percentages |
+| Token               | Hex       | Role                      |
+|---------------------|-----------|---------------------------|
+| `--text-primary`    | `#c7d5e0` | Primary body text         |
+| `--text-secondary`  | `#8f98a0` | Secondary text, metadata  |
+| `--text-muted`      | `#6b7785` | Tertiary text, timestamps |
+| `--text-bright`     | `#ffffff` | Headers, important labels |
+| `--text-link`       | `#66c0f4` | Hyperlinks                |
+| `--text-link-hover` | `#ffffff` | Link hover state          |
+| `--text-price`      | `#acdbf5` | Price displays            |
+| `--text-discount`   | `#a4d007` | Discount percentages      |
 
 ### Status & Semantic Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--status-online` | `#57cbde` | Online friends indicator |
-| `--status-in-game` | `#90ba3c` | Currently playing game |
-| `--status-away` | `#a0a0a0` | Away status |
-| `--status-offline` | `#636363` | Offline status |
-| `--review-positive` | `#66c0f4` | Positive review (thumbs up) |
-| `--review-negative` | `#a34c25` | Negative review (thumbs down) |
-| `--review-mixed` | `#b9a074` | Mixed reviews indicator |
-| `--sale-red` | `#cd4b2e` | Sale tags, limited time offers |
-| `--discount-green` | `#a4d007` | Discount badge background |
-| `--error` | `#c33c3c` | Error states |
-| `--success` | `#5c7e10` | Success confirmations |
+| Token               | Hex       | Role                           |
+|---------------------|-----------|--------------------------------|
+| `--status-online`   | `#57cbde` | Online friends indicator       |
+| `--status-in-game`  | `#90ba3c` | Currently playing game         |
+| `--status-away`     | `#a0a0a0` | Away status                    |
+| `--status-offline`  | `#636363` | Offline status                 |
+| `--review-positive` | `#66c0f4` | Positive review (thumbs up)    |
+| `--review-negative` | `#a34c25` | Negative review (thumbs down)  |
+| `--review-mixed`    | `#b9a074` | Mixed reviews indicator        |
+| `--sale-red`        | `#cd4b2e` | Sale tags, limited time offers |
+| `--discount-green`  | `#a4d007` | Discount badge background      |
+| `--error`           | `#c33c3c` | Error states                   |
+| `--success`         | `#5c7e10` | Success confirmations          |
 
 ### Sale & Promotional Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--sale-banner` | `#1a3b4d` | Sale event banner backgrounds |
-| `--flash-sale` | `#ff5f00` | Flash deal highlights |
-| `--bundle-purple` | `#6b4c8a` | Bundle indicators |
-| `--early-access` | `#7289da` | Early Access badge |
-| `--free-to-play` | `#4c6b22` | F2P game indicator |
+| Token             | Hex       | Role                          |
+|-------------------|-----------|-------------------------------|
+| `--sale-banner`   | `#1a3b4d` | Sale event banner backgrounds |
+| `--flash-sale`    | `#ff5f00` | Flash deal highlights         |
+| `--bundle-purple` | `#6b4c8a` | Bundle indicators             |
+| `--early-access`  | `#7289da` | Early Access badge            |
+| `--free-to-play`  | `#4c6b22` | F2P game indicator            |
 
 ---
 
@@ -118,39 +118,39 @@ Steam embraces a **dark, industrial gaming** design philosophy. The interface fe
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing | Color |
-|---------|------|--------|-------------|----------------|-------|
-| Game Title (Hero) | 26px | Bold | 30px | 0 | `--text-bright` |
-| Game Title (Card) | 14px | Normal | 18px | 0 | `--text-primary` |
-| Section Header | 14px | Bold | 18px | 0.03em (uppercase) | `--text-primary` |
-| Navigation Tab | 14px | Normal | 18px | 0 | `--text-primary` |
-| Body Text | 13px | Normal | 18px | 0 | `--text-primary` |
-| Description | 14px | Light | 21px | 0 | `--text-secondary` |
-| Price (Large) | 16px | Normal | 20px | 0 | `--text-price` |
-| Price (Small) | 13px | Normal | 16px | 0 | `--text-price` |
-| Discount Badge | 12px | Bold | 14px | 0 | `--text-bright` |
-| Review Summary | 12px | Normal | 16px | 0 | Review color |
-| Metadata/Tags | 11px | Normal | 14px | 0 | `--text-secondary` |
-| Button Text | 14px | Normal | 16px | 0 | `--text-bright` |
-| Tooltip | 12px | Normal | 16px | 0 | `--text-primary` |
+| Element           | Size | Weight | Line Height | Letter Spacing     | Color              |
+|-------------------|------|--------|-------------|--------------------|--------------------|
+| Game Title (Hero) | 26px | Bold   | 30px        | 0                  | `--text-bright`    |
+| Game Title (Card) | 14px | Normal | 18px        | 0                  | `--text-primary`   |
+| Section Header    | 14px | Bold   | 18px        | 0.03em (uppercase) | `--text-primary`   |
+| Navigation Tab    | 14px | Normal | 18px        | 0                  | `--text-primary`   |
+| Body Text         | 13px | Normal | 18px        | 0                  | `--text-primary`   |
+| Description       | 14px | Light  | 21px        | 0                  | `--text-secondary` |
+| Price (Large)     | 16px | Normal | 20px        | 0                  | `--text-price`     |
+| Price (Small)     | 13px | Normal | 16px        | 0                  | `--text-price`     |
+| Discount Badge    | 12px | Bold   | 14px        | 0                  | `--text-bright`    |
+| Review Summary    | 12px | Normal | 16px        | 0                  | Review color       |
+| Metadata/Tags     | 11px | Normal | 14px        | 0                  | `--text-secondary` |
+| Button Text       | 14px | Normal | 16px        | 0                  | `--text-bright`    |
+| Tooltip           | 12px | Normal | 16px        | 0                  | `--text-primary`   |
 
 ### Font Weights
 
-| Weight | Name | Usage |
-|--------|------|-------|
-| 300 | Light | Long-form descriptions, reviews |
-| 400 | Normal | Body text, navigation, prices |
-| 500 | Medium | Sub-headers, emphasized text |
-| 700 | Bold | Game titles, section headers, CTAs |
+| Weight | Name   | Usage                              |
+|--------|--------|------------------------------------|
+| 300    | Light  | Long-form descriptions, reviews    |
+| 400    | Normal | Body text, navigation, prices      |
+| 500    | Medium | Sub-headers, emphasized text       |
+| 700    | Bold   | Game titles, section headers, CTAs |
 
 ### Marketing Typography
 
-| Element | Size | Weight | Usage |
-|---------|------|--------|-------|
-| Sale Headline | 48px | Bold | Major sale event headers |
-| Feature Title | 28px | Bold | Featured game callouts |
-| Promo Subtext | 18px | Normal | Sale descriptions |
-| Banner CTA | 16px | Bold | Call-to-action buttons |
+| Element       | Size | Weight | Usage                    |
+|---------------|------|--------|--------------------------|
+| Sale Headline | 48px | Bold   | Major sale event headers |
+| Feature Title | 28px | Bold   | Featured game callouts   |
+| Promo Subtext | 18px | Normal | Sale descriptions        |
+| Banner CTA    | 16px | Bold   | Call-to-action buttons   |
 
 ---
 
@@ -761,15 +761,15 @@ Steam embraces a **dark, industrial gaming** design philosophy. The interface fe
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--spacing-xs` | 4px | Tight gaps, inline elements |
-| `--spacing-sm` | 8px | Component internal padding |
-| `--spacing-md` | 12px | Standard gaps |
-| `--spacing-lg` | 16px | Section spacing |
-| `--spacing-xl` | 24px | Major section breaks |
-| `--spacing-2xl` | 32px | Page section margins |
-| `--spacing-3xl` | 48px | Hero section padding |
+| Token           | Value | Usage                       |
+|-----------------|-------|-----------------------------|
+| `--spacing-xs`  | 4px   | Tight gaps, inline elements |
+| `--spacing-sm`  | 8px   | Component internal padding  |
+| `--spacing-md`  | 12px  | Standard gaps               |
+| `--spacing-lg`  | 16px  | Section spacing             |
+| `--spacing-xl`  | 24px  | Major section breaks        |
+| `--spacing-2xl` | 32px  | Page section margins        |
+| `--spacing-3xl` | 48px  | Hero section padding        |
 
 ### Core Layout Structure
 
@@ -826,26 +826,26 @@ Steam embraces a **dark, industrial gaming** design philosophy. The interface fe
 
 ### Content Widths
 
-| Context | Width | Notes |
-|---------|-------|-------|
-| Store container | 940px | Centered, fixed width |
-| Wide store | 1400px | Sales events, expanded views |
-| Library sidebar | 260px | Fixed, scrollable |
-| Game detail | Flexible | Fills remaining space |
-| Modal small | 400px | Confirmations |
-| Modal medium | 600px | Forms, settings |
-| Modal large | 900px | Screenshots, detailed info |
+| Context         | Width    | Notes                        |
+|-----------------|----------|------------------------------|
+| Store container | 940px    | Centered, fixed width        |
+| Wide store      | 1400px   | Sales events, expanded views |
+| Library sidebar | 260px    | Fixed, scrollable            |
+| Game detail     | Flexible | Fills remaining space        |
+| Modal small     | 400px    | Confirmations                |
+| Modal medium    | 600px    | Forms, settings              |
+| Modal large     | 900px    | Screenshots, detailed info   |
 
 ### Capsule Image Sizes
 
-| Type | Dimensions | Usage |
-|------|------------|-------|
-| Header | 460×215 | Main game image |
-| Small | 231×87 | List views, search results |
-| Large | 616×353 | Featured carousel |
-| Library Hero | 1920×620 | Library detail background |
-| Icon | 32×32, 64×64 | Library list, shortcuts |
-| Achievement | 64×64 | Achievement display |
+| Type         | Dimensions   | Usage                      |
+|--------------|--------------|----------------------------|
+| Header       | 460×215      | Main game image            |
+| Small        | 231×87       | List views, search results |
+| Large        | 616×353      | Featured carousel          |
+| Library Hero | 1920×620     | Library detail background  |
+| Icon         | 32×32, 64×64 | Library list, shortcuts    |
+| Achievement  | 64×64        | Achievement display        |
 
 ### Whitespace Philosophy
 - **Information-dense but organized**: Clear visual groupings
@@ -859,13 +859,13 @@ Steam embraces a **dark, industrial gaming** design philosophy. The interface fe
 
 ### Shadow System
 
-| Level | Shadow | Usage |
-|-------|--------|-------|
-| Level 0 | None | Base surfaces, flat elements |
-| Level 1 | `0 0 5px rgba(0,0,0,0.3)` | Subtle lift, cards |
-| Level 2 | `0 0 10px rgba(0,0,0,0.4)` | Dropdowns, popovers |
-| Level 3 | `0 0 20px rgba(0,0,0,0.5)` | Modals, dialogs |
-| Glow | `0 0 15px rgba(102,192,244,0.3)` | Hover highlight effect |
+| Level   | Shadow                           | Usage                        |
+|---------|----------------------------------|------------------------------|
+| Level 0 | None                             | Base surfaces, flat elements |
+| Level 1 | `0 0 5px rgba(0,0,0,0.3)`        | Subtle lift, cards           |
+| Level 2 | `0 0 10px rgba(0,0,0,0.4)`       | Dropdowns, popovers          |
+| Level 3 | `0 0 20px rgba(0,0,0,0.5)`       | Modals, dialogs              |
+| Glow    | `0 0 15px rgba(102,192,244,0.3)` | Hover highlight effect       |
 
 ### Surface Hierarchy
 
@@ -885,16 +885,16 @@ Steam embraces a **dark, industrial gaming** design philosophy. The interface fe
 
 ### Z-Index Scale
 
-| Layer | Z-Index | Elements |
-|-------|---------|----------|
-| Base | 0 | Main content, game cards |
-| Sticky | 100 | Navigation bar, sidebar headers |
-| Dropdown | 200 | Search results, filter dropdowns |
-| Overlay | 300 | Sale banners, featured highlights |
-| Popover | 400 | Profile cards, quick menus |
-| Modal | 500 | Dialogs, confirmations |
-| Toast | 600 | Notifications, download progress |
-| Tooltip | 700 | Help tooltips |
+| Layer    | Z-Index | Elements                          |
+|----------|---------|-----------------------------------|
+| Base     | 0       | Main content, game cards          |
+| Sticky   | 100     | Navigation bar, sidebar headers   |
+| Dropdown | 200     | Search results, filter dropdowns  |
+| Overlay  | 300     | Sale banners, featured highlights |
+| Popover  | 400     | Profile cards, quick menus        |
+| Modal    | 500     | Dialogs, confirmations            |
+| Toast    | 600     | Notifications, download progress  |
+| Tooltip  | 700     | Help tooltips                     |
 
 ### Gradient Treatments
 
@@ -926,44 +926,44 @@ Steam embraces a **dark, industrial gaming** design philosophy. The interface fe
 
 ### Do's
 
-| Guideline | Rationale |
-|-----------|-----------|
-| Use Steam Blue (#1b2838) as primary background | Brand identity, reduces eye strain |
-| Keep purchase buttons green (#5c7e10) | Clear conversion CTA, established pattern |
-| Use cyan (#66c0f4) for links and accents | Steam's signature interactive color |
-| Show prices prominently | Commerce-driven platform |
-| Display discount percentages in green badges | Draws attention to deals |
-| Use horizontal carousels for discovery | Efficient browsing of large catalog |
-| Show review sentiment with thumbs + percentage | Trust and social proof |
-| Include friend activity contextually | Social discovery, "friend is playing" |
-| Use game artwork as visual anchors | Let games sell themselves |
-| Provide dense but scannable layouts | Power users expect information density |
+| Guideline                                      | Rationale                                 |
+|------------------------------------------------|-------------------------------------------|
+| Use Steam Blue (#1b2838) as primary background | Brand identity, reduces eye strain        |
+| Keep purchase buttons green (#5c7e10)          | Clear conversion CTA, established pattern |
+| Use cyan (#66c0f4) for links and accents       | Steam's signature interactive color       |
+| Show prices prominently                        | Commerce-driven platform                  |
+| Display discount percentages in green badges   | Draws attention to deals                  |
+| Use horizontal carousels for discovery         | Efficient browsing of large catalog       |
+| Show review sentiment with thumbs + percentage | Trust and social proof                    |
+| Include friend activity contextually           | Social discovery, "friend is playing"     |
+| Use game artwork as visual anchors             | Let games sell themselves                 |
+| Provide dense but scannable layouts            | Power users expect information density    |
 
 ### Don'ts
 
-| Anti-Pattern | Why to Avoid |
-|--------------|--------------|
-| Don't use white or light backgrounds | Off-brand, gaming aesthetic |
-| Avoid rounded corners beyond 3px | Steam uses sharp/minimal rounding |
-| Don't hide pricing information | Transparency is expected |
-| Avoid colorful, playful UI elements | Steam is sophisticated, not casual |
-| Don't remove the green purchase button | Established conversion pattern |
-| Avoid tiny touch targets | Many PC users, but accessibility matters |
-| Don't overcomplicate the review system | Thumbs up/down is simple and effective |
-| Avoid pop-ups that block content | Users need to browse freely |
-| Don't use generic placeholder images | Always show real game artwork |
-| Avoid slow-loading carousels | Users expect snappy performance |
+| Anti-Pattern                           | Why to Avoid                             |
+|----------------------------------------|------------------------------------------|
+| Don't use white or light backgrounds   | Off-brand, gaming aesthetic              |
+| Avoid rounded corners beyond 3px       | Steam uses sharp/minimal rounding        |
+| Don't hide pricing information         | Transparency is expected                 |
+| Avoid colorful, playful UI elements    | Steam is sophisticated, not casual       |
+| Don't remove the green purchase button | Established conversion pattern           |
+| Avoid tiny touch targets               | Many PC users, but accessibility matters |
+| Don't overcomplicate the review system | Thumbs up/down is simple and effective   |
+| Avoid pop-ups that block content       | Users need to browse freely              |
+| Don't use generic placeholder images   | Always show real game artwork            |
+| Avoid slow-loading carousels           | Users expect snappy performance          |
 
 ### Content Guidelines
 
-| Do | Don't |
-|----|-------|
-| Use clear pricing (e.g., "$19.99") | Vague pricing or hidden costs |
-| Show review counts with sentiment | Only show aggregate scores |
-| Display discount percentages prominently | Bury savings information |
-| Include system requirements | Assume users know compatibility |
-| Show "In Library" for owned games | Let users accidentally re-purchase |
-| Provide release dates | Leave users guessing |
+| Do                                       | Don't                              |
+|------------------------------------------|------------------------------------|
+| Use clear pricing (e.g., "$19.99")       | Vague pricing or hidden costs      |
+| Show review counts with sentiment        | Only show aggregate scores         |
+| Display discount percentages prominently | Bury savings information           |
+| Include system requirements              | Assume users know compatibility    |
+| Show "In Library" for owned games        | Let users accidentally re-purchase |
+| Provide release dates                    | Leave users guessing               |
 
 ---
 
@@ -971,59 +971,59 @@ Steam embraces a **dark, industrial gaming** design philosophy. The interface fe
 
 ### Breakpoints
 
-| Name | Width | Behavior |
-|------|-------|----------|
-| Full Desktop | >1400px | Wide store layout, all sidebars visible |
-| Desktop | 1100px - 1400px | Standard layout, friends sidebar collapsible |
-| Tablet | 768px - 1099px | Simplified layout, stacked sections |
-| Mobile (Big Picture) | <768px | Full-screen card view, big controls |
+| Name                 | Width           | Behavior                                     |
+|----------------------|-----------------|----------------------------------------------|
+| Full Desktop         | >1400px         | Wide store layout, all sidebars visible      |
+| Desktop              | 1100px - 1400px | Standard layout, friends sidebar collapsible |
+| Tablet               | 768px - 1099px  | Simplified layout, stacked sections          |
+| Mobile (Big Picture) | <768px          | Full-screen card view, big controls          |
 
 ### Desktop Scaling
 
-| Viewport | Store Width | Behavior |
-|----------|-------------|----------|
-| >1400px | 1400px | Full wide layout |
-| 1200-1400px | 1200px | Standard layout |
-| 940-1200px | 940px | Compact layout |
-| <940px | 100% | Fluid with padding |
+| Viewport    | Store Width | Behavior           |
+|-------------|-------------|--------------------|
+| >1400px     | 1400px      | Full wide layout   |
+| 1200-1400px | 1200px      | Standard layout    |
+| 940-1200px  | 940px       | Compact layout     |
+| <940px      | 100%        | Fluid with padding |
 
 ### Big Picture Mode (TV/Controller)
 
-| Component | Standard | Big Picture |
-|-----------|----------|-------------|
-| Navigation | Tab-based | Large tiles |
-| Game Grid | Small capsules | Large capsules |
-| Buttons | Standard size | 60px+ height |
-| Text | 13px body | 20px+ body |
-| Interaction | Mouse hover | Focus states |
+| Component   | Standard       | Big Picture    |
+|-------------|----------------|----------------|
+| Navigation  | Tab-based      | Large tiles    |
+| Game Grid   | Small capsules | Large capsules |
+| Buttons     | Standard size  | 60px+ height   |
+| Text        | 13px body      | 20px+ body     |
+| Interaction | Mouse hover    | Focus states   |
 
 ### Mobile/Steam Deck Adaptations
 
-| Component | Desktop | Mobile/Deck |
-|-----------|---------|-------------|
-| Navigation | Horizontal tabs | Bottom navigation |
-| Game List | Sidebar | Full-screen list |
-| Screenshots | Thumbnail grid | Swipeable gallery |
-| Reviews | Expandable cards | Full-screen view |
-| Purchase | Button | Floating action |
+| Component   | Desktop          | Mobile/Deck       |
+|-------------|------------------|-------------------|
+| Navigation  | Horizontal tabs  | Bottom navigation |
+| Game List   | Sidebar          | Full-screen list  |
+| Screenshots | Thumbnail grid   | Swipeable gallery |
+| Reviews     | Expandable cards | Full-screen view  |
+| Purchase    | Button           | Floating action   |
 
 ### Touch Targets
 
-| Element | Minimum Size | Notes |
-|---------|--------------|-------|
-| Navigation items | 44px × 44px | Comfortable tapping |
-| Game cards | 100px × 50px minimum | Clear tap areas |
-| Buttons | 44px height | Finger-friendly |
-| Close buttons | 44px × 44px | Easy dismissal |
+| Element          | Minimum Size         | Notes               |
+|------------------|----------------------|---------------------|
+| Navigation items | 44px × 44px          | Comfortable tapping |
+| Game cards       | 100px × 50px minimum | Clear tap areas     |
+| Buttons          | 44px height          | Finger-friendly     |
+| Close buttons    | 44px × 44px          | Easy dismissal      |
 
 ### Image Handling
 
-| Type | Desktop | Mobile |
-|------|---------|--------|
-| Capsule (header) | 460×215 | Full width, maintain ratio |
-| Capsule (small) | 231×87 | Full width on mobile |
-| Screenshots | Thumbnail grid | Full-screen swipeable |
-| Backgrounds | Fixed | Scroll with parallax |
+| Type             | Desktop        | Mobile                     |
+|------------------|----------------|----------------------------|
+| Capsule (header) | 460×215        | Full width, maintain ratio |
+| Capsule (small)  | 231×87         | Full width on mobile       |
+| Screenshots      | Thumbnail grid | Full-screen swipeable      |
+| Backgrounds      | Fixed          | Scroll with parallax       |
 
 ---
 

@@ -388,7 +388,7 @@ class StackAnimationViewController: UIViewController {
 ## Summary of Key Patterns
 
 | Technique                                   | What to Animate              | When to Use                           |
-| ------------------------------------------- | ---------------------------- | ------------------------------------- |
+|---------------------------------------------|------------------------------|---------------------------------------|
 | Constraint `.constant` + `layoutIfNeeded()` | Position, size               | Moving views relative to layout       |
 | `CGAffineTransform`                         | Scale, rotation, translation | Visual effects without layout changes |
 | `.concatenating()`                          | Multiple transforms          | Combining scale + translate, etc.     |

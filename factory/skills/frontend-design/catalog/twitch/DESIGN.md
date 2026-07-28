@@ -34,66 +34,66 @@ Twitch embodies a **vibrant, energetic, gaming-centric** design philosophy. The 
 
 ### Primary Brand Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--color-twitch-purple` | `#9146FF` | Primary brand, buttons, links, accents |
-| `--color-twitch-purple-hover` | `#772CE8` | Purple hover states |
-| `--color-twitch-purple-active` | `#5C16C5` | Purple pressed/active states |
-| `--color-twitch-purple-light` | `#BF94FF` | Light purple for secondary accents |
-| `--color-twitch-purple-dark` | `#451093` | Deep purple backgrounds |
+| Token                          | Hex       | Role                                   |
+|--------------------------------|-----------|----------------------------------------|
+| `--color-twitch-purple`        | `#9146FF` | Primary brand, buttons, links, accents |
+| `--color-twitch-purple-hover`  | `#772CE8` | Purple hover states                    |
+| `--color-twitch-purple-active` | `#5C16C5` | Purple pressed/active states           |
+| `--color-twitch-purple-light`  | `#BF94FF` | Light purple for secondary accents     |
+| `--color-twitch-purple-dark`   | `#451093` | Deep purple backgrounds                |
 
 ### Background Colors (Dark Theme)
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--color-background-base` | `#0e0e10` | Page background, deepest level |
-| `--color-background-alt` | `#18181b` | Cards, panels, elevated surfaces |
-| `--color-background-alt-2` | `#1f1f23` | Secondary panels, hover states |
-| `--color-background-input` | `#3d3d40` | Input fields, search bars |
-| `--color-background-overlay` | `rgba(0, 0, 0, 0.6)` | Video overlays, modals |
-| `--color-background-interactable-hover` | `#26262c` | Hover states on cards |
-| `--color-background-interactable-selected` | `#3d3d40` | Selected/active states |
+| Token                                      | Hex                  | Role                             |
+|--------------------------------------------|----------------------|----------------------------------|
+| `--color-background-base`                  | `#0e0e10`            | Page background, deepest level   |
+| `--color-background-alt`                   | `#18181b`            | Cards, panels, elevated surfaces |
+| `--color-background-alt-2`                 | `#1f1f23`            | Secondary panels, hover states   |
+| `--color-background-input`                 | `#3d3d40`            | Input fields, search bars        |
+| `--color-background-overlay`               | `rgba(0, 0, 0, 0.6)` | Video overlays, modals           |
+| `--color-background-interactable-hover`    | `#26262c`            | Hover states on cards            |
+| `--color-background-interactable-selected` | `#3d3d40`            | Selected/active states           |
 
 ### Text Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--color-text-base` | `#efeff1` | Primary body text, headings |
-| `--color-text-alt` | `#adadb8` | Secondary text, metadata |
-| `--color-text-alt-2` | `#7c7c8a` | Tertiary text, timestamps |
-| `--color-text-link` | `#bf94ff` | Hyperlinks (light purple) |
-| `--color-text-overlay` | `#ffffff` | Text on overlays, video |
-| `--color-text-live` | `#eb0400` | Live indicator text |
+| Token                  | Hex       | Role                        |
+|------------------------|-----------|-----------------------------|
+| `--color-text-base`    | `#efeff1` | Primary body text, headings |
+| `--color-text-alt`     | `#adadb8` | Secondary text, metadata    |
+| `--color-text-alt-2`   | `#7c7c8a` | Tertiary text, timestamps   |
+| `--color-text-link`    | `#bf94ff` | Hyperlinks (light purple)   |
+| `--color-text-overlay` | `#ffffff` | Text on overlays, video     |
+| `--color-text-live`    | `#eb0400` | Live indicator text         |
 
 ### Semantic Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--color-live` | `#eb0400` | Live indicators, recording |
-| `--color-success` | `#00f593` | Success states, online |
-| `--color-warning` | `#ffca5f` | Warnings, cautions |
-| `--color-error` | `#eb0400` | Errors, destructive actions |
-| `--color-info` | `#1db3ff` | Informational highlights |
+| Token             | Hex       | Role                        |
+|-------------------|-----------|-----------------------------|
+| `--color-live`    | `#eb0400` | Live indicators, recording  |
+| `--color-success` | `#00f593` | Success states, online      |
+| `--color-warning` | `#ffca5f` | Warnings, cautions          |
+| `--color-error`   | `#eb0400` | Errors, destructive actions |
+| `--color-info`    | `#1db3ff` | Informational highlights    |
 
 ### Special Feature Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--color-bits-teal` | `#1db3ff` | Bits, cheering |
-| `--color-bits-purple` | `#9146ff` | Bit badge tiers |
-| `--color-sub-purple` | `#9146ff` | Subscriptions |
-| `--color-prime-blue` | `#00c8af` | Prime Gaming |
-| `--color-hype-train` | `#ff6905` | Hype train events |
-| `--color-raid` | `#9146ff` | Raid notifications |
+| Token                 | Hex       | Role               |
+|-----------------------|-----------|--------------------|
+| `--color-bits-teal`   | `#1db3ff` | Bits, cheering     |
+| `--color-bits-purple` | `#9146ff` | Bit badge tiers    |
+| `--color-sub-purple`  | `#9146ff` | Subscriptions      |
+| `--color-prime-blue`  | `#00c8af` | Prime Gaming       |
+| `--color-hype-train`  | `#ff6905` | Hype train events  |
+| `--color-raid`        | `#9146ff` | Raid notifications |
 
 ### Light Theme (Alternate)
 
-| Token | Hex | Role |
-|-------|-----|------|
+| Token                           | Hex       | Role            |
+|---------------------------------|-----------|-----------------|
 | `--color-background-base-light` | `#f7f7f8` | Page background |
-| `--color-background-alt-light` | `#ffffff` | Cards, panels |
-| `--color-text-base-light` | `#0e0e10` | Primary text |
-| `--color-text-alt-light` | `#53535f` | Secondary text |
+| `--color-background-alt-light`  | `#ffffff` | Cards, panels   |
+| `--color-text-base-light`       | `#0e0e10` | Primary text    |
+| `--color-text-alt-light`        | `#53535f` | Secondary text  |
 
 ---
 
@@ -111,39 +111,39 @@ Twitch embodies a **vibrant, energetic, gaming-centric** design philosophy. The 
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing | Color |
-|---------|------|--------|-------------|----------------|-------|
-| Page Title (H1) | 32px | 700 | 40px | -0.02em | `--color-text-base` |
-| Section Title (H2) | 24px | 600 | 32px | -0.01em | `--color-text-base` |
-| Card Title (H3) | 18px | 600 | 24px | 0 | `--color-text-base` |
-| Subsection (H4) | 16px | 600 | 20px | 0 | `--color-text-base` |
-| Body Large | 16px | 400 | 24px | 0 | `--color-text-base` |
-| Body Regular | 14px | 400 | 20px | 0 | `--color-text-base` |
-| Body Small | 13px | 400 | 18px | 0 | `--color-text-alt` |
-| Caption | 12px | 400 | 16px | 0 | `--color-text-alt-2` |
-| Button Text | 13px | 600 | 18px | 0 | White or contextual |
-| Chat Message | 13px | 400 | 18px | 0 | `--color-text-base` |
-| Stream Title | 14px | 600 | 20px | 0 | `--color-text-base` |
-| Viewer Count | 13px | 400 | 18px | 0 | `--color-text-alt` |
-| Category Tag | 12px | 500 | 16px | 0 | `--color-text-alt` |
+| Element            | Size | Weight | Line Height | Letter Spacing | Color                |
+|--------------------|------|--------|-------------|----------------|----------------------|
+| Page Title (H1)    | 32px | 700    | 40px        | -0.02em        | `--color-text-base`  |
+| Section Title (H2) | 24px | 600    | 32px        | -0.01em        | `--color-text-base`  |
+| Card Title (H3)    | 18px | 600    | 24px        | 0              | `--color-text-base`  |
+| Subsection (H4)    | 16px | 600    | 20px        | 0              | `--color-text-base`  |
+| Body Large         | 16px | 400    | 24px        | 0              | `--color-text-base`  |
+| Body Regular       | 14px | 400    | 20px        | 0              | `--color-text-base`  |
+| Body Small         | 13px | 400    | 18px        | 0              | `--color-text-alt`   |
+| Caption            | 12px | 400    | 16px        | 0              | `--color-text-alt-2` |
+| Button Text        | 13px | 600    | 18px        | 0              | White or contextual  |
+| Chat Message       | 13px | 400    | 18px        | 0              | `--color-text-base`  |
+| Stream Title       | 14px | 600    | 20px        | 0              | `--color-text-base`  |
+| Viewer Count       | 13px | 400    | 18px        | 0              | `--color-text-alt`   |
+| Category Tag       | 12px | 500    | 16px        | 0              | `--color-text-alt`   |
 
 ### Font Weights
 
-| Weight | Name | Usage |
-|--------|------|-------|
-| 400 | Regular | Body text, descriptions, chat |
-| 500 | Medium | Secondary emphasis, tags |
-| 600 | Semibold | Headings, buttons, usernames |
-| 700 | Bold | Page titles, strong emphasis |
+| Weight | Name     | Usage                         |
+|--------|----------|-------------------------------|
+| 400    | Regular  | Body text, descriptions, chat |
+| 500    | Medium   | Secondary emphasis, tags      |
+| 600    | Semibold | Headings, buttons, usernames  |
+| 700    | Bold     | Page titles, strong emphasis  |
 
 ### Special Typography
 
-| Element | Style | Usage |
-|---------|-------|-------|
-| Live Badge | 12px, 700, uppercase | "LIVE" indicator |
-| Viewer Count | 13px with eye icon | Stream metrics |
-| Username (Chat) | 13px, 600, name color | Chat usernames |
-| Emote Text | 28px emoji size | Inline emotes |
+| Element         | Style                 | Usage            |
+|-----------------|-----------------------|------------------|
+| Live Badge      | 12px, 700, uppercase  | "LIVE" indicator |
+| Viewer Count    | 13px with eye icon    | Stream metrics   |
+| Username (Chat) | 13px, 600, name color | Chat usernames   |
+| Emote Text      | 28px emoji size       | Inline emotes    |
 
 ---
 
@@ -1085,15 +1085,15 @@ Twitch embodies a **vibrant, energetic, gaming-centric** design philosophy. The 
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--space-05` | 4px | Tight gaps, badge margins |
-| `--space-1` | 8px | Component padding |
-| `--space-2` | 10px | Standard gaps |
-| `--space-3` | 16px | Section gaps |
-| `--space-4` | 20px | Card padding, modal padding |
-| `--space-5` | 24px | Large section breaks |
-| `--space-6` | 32px | Page margins |
+| Token        | Value | Usage                       |
+|--------------|-------|-----------------------------|
+| `--space-05` | 4px   | Tight gaps, badge margins   |
+| `--space-1`  | 8px   | Component padding           |
+| `--space-2`  | 10px  | Standard gaps               |
+| `--space-3`  | 16px  | Section gaps                |
+| `--space-4`  | 20px  | Card padding, modal padding |
+| `--space-5`  | 24px  | Large section breaks        |
+| `--space-6`  | 32px  | Page margins                |
 
 ### Core Layout Structure (Stream View)
 
@@ -1137,13 +1137,13 @@ Twitch embodies a **vibrant, energetic, gaming-centric** design philosophy. The 
 
 ### Panel Widths
 
-| Panel | Width | Notes |
-|-------|-------|-------|
-| Left Sidebar (Collapsed) | 50px | Shows avatars only |
-| Left Sidebar (Expanded) | 240px | Shows full channel info |
-| Chat Panel | 340px | Fixed, collapsible |
-| Video Player | Flexible | Maintains 16:9 aspect |
-| Top Navigation | 50px height | Fixed |
+| Panel                    | Width       | Notes                   |
+|--------------------------|-------------|-------------------------|
+| Left Sidebar (Collapsed) | 50px        | Shows avatars only      |
+| Left Sidebar (Expanded)  | 240px       | Shows full channel info |
+| Chat Panel               | 340px       | Fixed, collapsible      |
+| Video Player             | Flexible    | Maintains 16:9 aspect   |
+| Top Navigation           | 50px height | Fixed                   |
 
 ### Grid System
 
@@ -1182,13 +1182,13 @@ Twitch embodies a **vibrant, energetic, gaming-centric** design philosophy. The 
 
 ### Shadow System
 
-| Level | Shadow | Usage |
-|-------|--------|-------|
-| Level 0 | None | Base surfaces |
-| Level 1 | `0 1px 2px rgba(0,0,0,0.3)` | Cards, subtle lift |
-| Level 2 | `0 4px 8px rgba(0,0,0,0.4)` | Dropdowns, popovers |
-| Level 3 | `0 8px 16px rgba(0,0,0,0.5)` | Modals, dialogs |
-| Level 4 | `0 16px 32px rgba(0,0,0,0.6)` | Full overlays |
+| Level   | Shadow                        | Usage               |
+|---------|-------------------------------|---------------------|
+| Level 0 | None                          | Base surfaces       |
+| Level 1 | `0 1px 2px rgba(0,0,0,0.3)`   | Cards, subtle lift  |
+| Level 2 | `0 4px 8px rgba(0,0,0,0.4)`   | Dropdowns, popovers |
+| Level 3 | `0 8px 16px rgba(0,0,0,0.5)`  | Modals, dialogs     |
+| Level 4 | `0 16px 32px rgba(0,0,0,0.6)` | Full overlays       |
 
 ### Surface Hierarchy
 
@@ -1208,17 +1208,17 @@ Twitch embodies a **vibrant, energetic, gaming-centric** design philosophy. The 
 
 ### Z-Index Scale
 
-| Layer | Z-Index | Elements |
-|-------|---------|----------|
-| Base | 0 | Main content, video |
-| Sidebar | 100 | Left sidebar |
-| Chat | 100 | Chat panel |
-| Sticky | 200 | Top navigation |
-| Dropdown | 1000 | Menus, autocomplete |
-| Popout | 1001 | User cards, emote picker |
-| Modal | 1002 | Modals, dialogs |
-| Toast | 1003 | Notifications |
-| Tooltip | 1004 | Tooltips |
+| Layer    | Z-Index | Elements                 |
+|----------|---------|--------------------------|
+| Base     | 0       | Main content, video      |
+| Sidebar  | 100     | Left sidebar             |
+| Chat     | 100     | Chat panel               |
+| Sticky   | 200     | Top navigation           |
+| Dropdown | 1000    | Menus, autocomplete      |
+| Popout   | 1001    | User cards, emote picker |
+| Modal    | 1002    | Modals, dialogs          |
+| Toast    | 1003    | Notifications            |
+| Tooltip  | 1004    | Tooltips                 |
 
 ### Overlay Treatment
 - Modal backdrop: `rgba(0, 0, 0, 0.7)`
@@ -1231,43 +1231,43 @@ Twitch embodies a **vibrant, energetic, gaming-centric** design philosophy. The 
 
 ### Do's
 
-| Guideline | Rationale |
-|-----------|-----------|
-| Use Twitch Purple (#9146FF) as primary accent | Brand recognition, calls-to-action |
-| Maintain dark backgrounds (#0e0e10, #18181b) | Eye comfort, video focus |
-| Include live indicators with pulsing animation | Real-time urgency |
-| Use rounded corners (8px cards, 4px buttons) | Approachable, modern feel |
-| Show viewer counts prominently | Social proof, discovery |
-| Display badges and emotes inline | Community identity |
-| Provide dense chat with clear message separation | Scannable real-time content |
-| Use gradient backgrounds for celebrations | Hype train, raids, subs |
-| Include hover previews on thumbnails | Quick stream preview |
-| Support emote autocomplete in chat | Efficient emote usage |
+| Guideline                                        | Rationale                          |
+|--------------------------------------------------|------------------------------------|
+| Use Twitch Purple (#9146FF) as primary accent    | Brand recognition, calls-to-action |
+| Maintain dark backgrounds (#0e0e10, #18181b)     | Eye comfort, video focus           |
+| Include live indicators with pulsing animation   | Real-time urgency                  |
+| Use rounded corners (8px cards, 4px buttons)     | Approachable, modern feel          |
+| Show viewer counts prominently                   | Social proof, discovery            |
+| Display badges and emotes inline                 | Community identity                 |
+| Provide dense chat with clear message separation | Scannable real-time content        |
+| Use gradient backgrounds for celebrations        | Hype train, raids, subs            |
+| Include hover previews on thumbnails             | Quick stream preview               |
+| Support emote autocomplete in chat               | Efficient emote usage              |
 
 ### Don'ts
 
-| Anti-Pattern | Why to Avoid |
-|--------------|--------------|
-| Never use pure white backgrounds in dark mode | Jarring contrast, off-brand |
-| Avoid hiding the chat panel by default | Chat is core to experience |
-| Don't overcomplicate stream card info | Quick scanning is key |
-| Never omit live status indicators | Users need to know what's live |
-| Avoid slow loading thumbnails | Fast browsing is expected |
-| Don't use small emotes (<20px) | Emotes must be recognizable |
-| Never hide viewer counts | Key discovery metric |
-| Avoid generic avatar placeholders | Each user should feel unique |
-| Don't use purple on purple text | Contrast accessibility issues |
-| Never autoplay audio without consent | Respect user control |
+| Anti-Pattern                                  | Why to Avoid                   |
+|-----------------------------------------------|--------------------------------|
+| Never use pure white backgrounds in dark mode | Jarring contrast, off-brand    |
+| Avoid hiding the chat panel by default        | Chat is core to experience     |
+| Don't overcomplicate stream card info         | Quick scanning is key          |
+| Never omit live status indicators             | Users need to know what's live |
+| Avoid slow loading thumbnails                 | Fast browsing is expected      |
+| Don't use small emotes (<20px)                | Emotes must be recognizable    |
+| Never hide viewer counts                      | Key discovery metric           |
+| Avoid generic avatar placeholders             | Each user should feel unique   |
+| Don't use purple on purple text               | Contrast accessibility issues  |
+| Never autoplay audio without consent          | Respect user control           |
 
 ### Content Guidelines
 
-| Do | Don't |
-|----|-------|
-| Use energetic, community-focused language | Overly corporate tone |
-| Celebrate subscription milestones | Downplay community contributions |
-| Make raid/host events feel special | Treat them as routine |
-| Provide clear follow/subscribe CTAs | Hide engagement options |
-| Show streamer personality in UI | Make all channels look identical |
+| Do                                        | Don't                            |
+|-------------------------------------------|----------------------------------|
+| Use energetic, community-focused language | Overly corporate tone            |
+| Celebrate subscription milestones         | Downplay community contributions |
+| Make raid/host events feel special        | Treat them as routine            |
+| Provide clear follow/subscribe CTAs       | Hide engagement options          |
+| Show streamer personality in UI           | Make all channels look identical |
 
 ---
 
@@ -1275,34 +1275,34 @@ Twitch embodies a **vibrant, energetic, gaming-centric** design philosophy. The 
 
 ### Breakpoints
 
-| Name | Width | Behavior |
-|------|-------|----------|
-| Desktop Large | >1440px | Full layout with expanded sidebar |
-| Desktop | 1200px - 1440px | Standard layout |
-| Desktop Small | 1024px - 1199px | Collapsed sidebar |
-| Tablet | 768px - 1023px | Chat toggleable, single column browse |
-| Mobile | <768px | Theater mode, drawer chat |
+| Name          | Width           | Behavior                              |
+|---------------|-----------------|---------------------------------------|
+| Desktop Large | >1440px         | Full layout with expanded sidebar     |
+| Desktop       | 1200px - 1440px | Standard layout                       |
+| Desktop Small | 1024px - 1199px | Collapsed sidebar                     |
+| Tablet        | 768px - 1023px  | Chat toggleable, single column browse |
+| Mobile        | <768px          | Theater mode, drawer chat             |
 
 ### Mobile Adaptations
 
-| Component | Desktop | Mobile |
-|-----------|---------|--------|
-| Left Sidebar | Fixed rail | Hidden, swipe drawer |
-| Chat Panel | Fixed right | Full-screen drawer |
-| Video Player | In-page | Full-width, theater mode |
-| Browse Grid | Multi-column | Single or two column |
-| Navigation | Full top bar | Simplified + bottom nav |
-| Stream Cards | Card grid | Vertical list |
+| Component    | Desktop      | Mobile                   |
+|--------------|--------------|--------------------------|
+| Left Sidebar | Fixed rail   | Hidden, swipe drawer     |
+| Chat Panel   | Fixed right  | Full-screen drawer       |
+| Video Player | In-page      | Full-width, theater mode |
+| Browse Grid  | Multi-column | Single or two column     |
+| Navigation   | Full top bar | Simplified + bottom nav  |
+| Stream Cards | Card grid    | Vertical list            |
 
 ### Touch Targets
 
-| Element | Minimum Size | Notes |
-|---------|--------------|-------|
-| Follow Button | 44px height | Easy tap |
-| Chat Send | 44px × 44px | Thumb-friendly |
-| Stream Card | Full width tap | Entire card tappable |
-| Navigation Icons | 44px × 44px | Comfortable touch |
-| Emote Buttons | 36px × 36px | Frequent interaction |
+| Element          | Minimum Size   | Notes                |
+|------------------|----------------|----------------------|
+| Follow Button    | 44px height    | Easy tap             |
+| Chat Send        | 44px × 44px    | Thumb-friendly       |
+| Stream Card      | Full width tap | Entire card tappable |
+| Navigation Icons | 44px × 44px    | Comfortable touch    |
+| Emote Buttons    | 36px × 36px    | Frequent interaction |
 
 ### Theater Mode
 - Video expands to fill viewport

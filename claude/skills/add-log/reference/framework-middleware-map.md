@@ -22,24 +22,24 @@ manifest file (`go.mod`, `package.json`, `requirements.txt`/`pyproject.toml`, `p
 `*.csproj`, `Gemfile`, `composer.json`, `Cargo.toml`) before writing code, and follow the idiomatic
 pattern already used elsewhere in that codebase.
 
-| Language   | Framework             | Mechanism                                         |
-|------------|------------------------|----------------------------------------------------|
-| Go         | Gin                    | `gin.HandlerFunc` middleware (as in the source note) |
-| Go         | net/http, Chi, Echo    | `http.Handler` wrapping / framework-specific middleware |
-| Node.js    | Express                | `app.use()` middleware function `(req, res, next)` |
-| Node.js    | NestJS                 | `Interceptor` (logging) + `Guard` (auth/permission) |
-| Node.js    | Fastify                | `onRequest`/`onResponse` hooks                     |
-| Python     | Django                 | `MIDDLEWARE` class with `__call__`                 |
-| Python     | FastAPI                | `Depends()` dependency or `BaseHTTPMiddleware`     |
-| Python     | Flask                  | `before_request`/`after_request` hooks             |
-| Java       | Spring Boot            | `HandlerInterceptor` or `OncePerRequestFilter`     |
-| Kotlin     | Spring Boot, Ktor      | Same as Spring Boot, or Ktor `Plugin`/`Interceptor` |
-| C#         | ASP.NET Core           | `IMiddleware` / custom middleware delegate         |
-| Ruby       | Rails                  | `before_action`/`around_action` filter             |
-| PHP        | Laravel                | `Middleware` class registered in `Kernel.php`      |
-| PHP        | Symfony                | `EventSubscriber` on `kernel.request`/`kernel.response` |
-| Rust       | Axum                   | `tower::Layer` / `from_fn` middleware              |
-| Rust       | Actix-web               | `Transform`/middleware service                     |
+| Language | Framework           | Mechanism                                               |
+|----------|---------------------|---------------------------------------------------------|
+| Go       | Gin                 | `gin.HandlerFunc` middleware (as in the source note)    |
+| Go       | net/http, Chi, Echo | `http.Handler` wrapping / framework-specific middleware |
+| Node.js  | Express             | `app.use()` middleware function `(req, res, next)`      |
+| Node.js  | NestJS              | `Interceptor` (logging) + `Guard` (auth/permission)     |
+| Node.js  | Fastify             | `onRequest`/`onResponse` hooks                          |
+| Python   | Django              | `MIDDLEWARE` class with `__call__`                      |
+| Python   | FastAPI             | `Depends()` dependency or `BaseHTTPMiddleware`          |
+| Python   | Flask               | `before_request`/`after_request` hooks                  |
+| Java     | Spring Boot         | `HandlerInterceptor` or `OncePerRequestFilter`          |
+| Kotlin   | Spring Boot, Ktor   | Same as Spring Boot, or Ktor `Plugin`/`Interceptor`     |
+| C#       | ASP.NET Core        | `IMiddleware` / custom middleware delegate              |
+| Ruby     | Rails               | `before_action`/`around_action` filter                  |
+| PHP      | Laravel             | `Middleware` class registered in `Kernel.php`           |
+| PHP      | Symfony             | `EventSubscriber` on `kernel.request`/`kernel.response` |
+| Rust     | Axum                | `tower::Layer` / `from_fn` middleware                   |
+| Rust     | Actix-web           | `Transform`/middleware service                          |
 
 ## Sensitive field redaction
 

@@ -34,75 +34,75 @@ Vercel embodies **Swiss design principles meets developer tooling**. The interfa
 
 ### Core Foundation
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--geist-foreground` | `#171717` | Primary text, icons, active elements |
-| `--geist-background` | `#ffffff` | Primary background, page base |
-| `--geist-foreground-rgb` | `23, 23, 23` | RGB value for alpha operations |
-| `--geist-background-rgb` | `255, 255, 255` | RGB value for alpha operations |
+| Token                    | Hex             | Role                                 |
+|--------------------------|-----------------|--------------------------------------|
+| `--geist-foreground`     | `#171717`       | Primary text, icons, active elements |
+| `--geist-background`     | `#ffffff`       | Primary background, page base        |
+| `--geist-foreground-rgb` | `23, 23, 23`    | RGB value for alpha operations       |
+| `--geist-background-rgb` | `255, 255, 255` | RGB value for alpha operations       |
 
 ### Gray Scale (Light Theme)
 
-| Token | Hex | Role |
-|-------|-----|------|
+| Token         | Hex       | Role                             |
+|---------------|-----------|----------------------------------|
 | `--accents-1` | `#fafafa` | Subtle backgrounds, hover states |
-| `--accents-2` | `#eaeaea` | Dividers, subtle borders |
+| `--accents-2` | `#eaeaea` | Dividers, subtle borders         |
 | `--accents-3` | `#999999` | Placeholder text, disabled icons |
-| `--accents-4` | `#888888` | Secondary text, metadata |
-| `--accents-5` | `#666666` | Tertiary text, timestamps |
-| `--accents-6` | `#444444` | Strong secondary text |
-| `--accents-7` | `#333333` | Near-primary text |
-| `--accents-8` | `#111111` | Headlines, maximum emphasis |
+| `--accents-4` | `#888888` | Secondary text, metadata         |
+| `--accents-5` | `#666666` | Tertiary text, timestamps        |
+| `--accents-6` | `#444444` | Strong secondary text            |
+| `--accents-7` | `#333333` | Near-primary text                |
+| `--accents-8` | `#111111` | Headlines, maximum emphasis      |
 
 ### Gray Scale (Dark Theme)
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--geist-background` | `#000000` | Pure black background |
-| `--accents-1` | `#111111` | Elevated surfaces |
-| `--accents-2` | `#333333` | Subtle borders, dividers |
-| `--accents-3` | `#444444` | Placeholder text |
-| `--accents-4` | `#666666` | Secondary text |
-| `--accents-5` | `#888888` | Tertiary text |
-| `--accents-6` | `#999999` | Metadata |
-| `--accents-7` | `#eaeaea` | Primary body text |
-| `--accents-8` | `#fafafa` | Headlines, maximum emphasis |
+| Token                | Hex       | Role                        |
+|----------------------|-----------|-----------------------------|
+| `--geist-background` | `#000000` | Pure black background       |
+| `--accents-1`        | `#111111` | Elevated surfaces           |
+| `--accents-2`        | `#333333` | Subtle borders, dividers    |
+| `--accents-3`        | `#444444` | Placeholder text            |
+| `--accents-4`        | `#666666` | Secondary text              |
+| `--accents-5`        | `#888888` | Tertiary text               |
+| `--accents-6`        | `#999999` | Metadata                    |
+| `--accents-7`        | `#eaeaea` | Primary body text           |
+| `--accents-8`        | `#fafafa` | Headlines, maximum emphasis |
 
 ### Workflow Colors (The Vercel Triad)
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--geist-error` / Ship | `#ff5b4f` | Production, errors, Ship workflow |
-| `--geist-warning` / Preview | `#de1d8d` | Preview deployments, staging |
+| Token                       | Hex       | Role                                   |
+|-----------------------------|-----------|----------------------------------------|
+| `--geist-error` / Ship      | `#ff5b4f` | Production, errors, Ship workflow      |
+| `--geist-warning` / Preview | `#de1d8d` | Preview deployments, staging           |
 | `--geist-success` / Develop | `#0a72ef` | Development, local, success indicators |
 
 ### Extended Workflow Palette
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--geist-error-light` | `#ff8a82` | Error backgrounds, light mode |
-| `--geist-error-dark` | `#e5443a` | Error hover states |
-| `--geist-warning-light` | `#e94da0` | Preview hover states |
-| `--geist-warning-dark` | `#c0176f` | Preview active states |
-| `--geist-success-light` | `#3d8ef2` | Success backgrounds |
-| `--geist-success-dark` | `#0860c7` | Success active states |
+| Token                   | Hex       | Role                          |
+|-------------------------|-----------|-------------------------------|
+| `--geist-error-light`   | `#ff8a82` | Error backgrounds, light mode |
+| `--geist-error-dark`    | `#e5443a` | Error hover states            |
+| `--geist-warning-light` | `#e94da0` | Preview hover states          |
+| `--geist-warning-dark`  | `#c0176f` | Preview active states         |
+| `--geist-success-light` | `#3d8ef2` | Success backgrounds           |
+| `--geist-success-dark`  | `#0860c7` | Success active states         |
 
 ### Semantic Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--geist-cyan` | `#79ffe1` | Highlights, special callouts |
-| `--geist-purple` | `#f81ce5` | Premium features, pro badges |
-| `--geist-violet` | `#7928ca` | AI features, experimental |
-| `--geist-alert` | `#ff0080` | Critical alerts, urgent notices |
+| Token            | Hex       | Role                            |
+|------------------|-----------|---------------------------------|
+| `--geist-cyan`   | `#79ffe1` | Highlights, special callouts    |
+| `--geist-purple` | `#f81ce5` | Premium features, pro badges    |
+| `--geist-violet` | `#7928ca` | AI features, experimental       |
+| `--geist-alert`  | `#ff0080` | Critical alerts, urgent notices |
 
 ### Focus & Interaction
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--focus-ring` | `hsla(212, 100%, 48%, 1)` | Keyboard focus indicator |
+| Token                | Hex                         | Role                         |
+|----------------------|-----------------------------|------------------------------|
+| `--focus-ring`       | `hsla(212, 100%, 48%, 1)`   | Keyboard focus indicator     |
 | `--focus-ring-alpha` | `hsla(212, 100%, 48%, 0.5)` | Focus ring with transparency |
-| `--selection-bg` | `rgba(0, 112, 243, 0.15)` | Text selection background |
+| `--selection-bg`     | `rgba(0, 112, 243, 0.15)`   | Text selection background    |
 
 ---
 
@@ -122,30 +122,30 @@ Vercel embodies **Swiss design principles meets developer tooling**. The interfa
 
 ### Type Scale with Letter Spacing
 
-| Element | Size | Weight | Line Height | Letter Spacing | Color |
-|---------|------|--------|-------------|----------------|-------|
-| Hero Display | 64px | 700 | 1.1 | -0.04em | `--accents-8` |
-| Page Title | 48px | 700 | 1.15 | -0.035em | `--accents-8` |
-| Section Title | 32px | 600 | 1.2 | -0.03em | `--accents-8` |
-| Card Title | 24px | 600 | 1.25 | -0.025em | `--geist-foreground` |
-| Subsection | 20px | 600 | 1.3 | -0.02em | `--geist-foreground` |
-| Large Body | 18px | 400 | 1.6 | -0.01em | `--accents-6` |
-| Body | 16px | 400 | 1.6 | -0.01em | `--accents-5` |
-| Small Body | 14px | 400 | 1.5 | -0.006em | `--accents-5` |
-| Caption | 13px | 400 | 1.4 | 0 | `--accents-4` |
-| Tiny | 12px | 500 | 1.4 | 0 | `--accents-4` |
-| Label | 12px | 500 | 1.3 | 0.02em | `--accents-4` |
-| Code Inline | 14px | 400 | 1.6 | 0 | `--geist-foreground` |
-| Code Block | 14px | 400 | 1.7 | 0 | `--accents-7` |
+| Element       | Size | Weight | Line Height | Letter Spacing | Color                |
+|---------------|------|--------|-------------|----------------|----------------------|
+| Hero Display  | 64px | 700    | 1.1         | -0.04em        | `--accents-8`        |
+| Page Title    | 48px | 700    | 1.15        | -0.035em       | `--accents-8`        |
+| Section Title | 32px | 600    | 1.2         | -0.03em        | `--accents-8`        |
+| Card Title    | 24px | 600    | 1.25        | -0.025em       | `--geist-foreground` |
+| Subsection    | 20px | 600    | 1.3         | -0.02em        | `--geist-foreground` |
+| Large Body    | 18px | 400    | 1.6         | -0.01em        | `--accents-6`        |
+| Body          | 16px | 400    | 1.6         | -0.01em        | `--accents-5`        |
+| Small Body    | 14px | 400    | 1.5         | -0.006em       | `--accents-5`        |
+| Caption       | 13px | 400    | 1.4         | 0              | `--accents-4`        |
+| Tiny          | 12px | 500    | 1.4         | 0              | `--accents-4`        |
+| Label         | 12px | 500    | 1.3         | 0.02em         | `--accents-4`        |
+| Code Inline   | 14px | 400    | 1.6         | 0              | `--geist-foreground` |
+| Code Block    | 14px | 400    | 1.7         | 0              | `--accents-7`        |
 
 ### Font Weights
 
-| Weight | Name | Usage |
-|--------|------|-------|
-| 400 | Regular | Body text, descriptions, paragraphs |
-| 500 | Medium | Labels, metadata, table headers |
-| 600 | Semibold | Card titles, navigation items, buttons |
-| 700 | Bold | Headlines, page titles, emphasis |
+| Weight | Name     | Usage                                  |
+|--------|----------|----------------------------------------|
+| 400    | Regular  | Body text, descriptions, paragraphs    |
+| 500    | Medium   | Labels, metadata, table headers        |
+| 600    | Semibold | Card titles, navigation items, buttons |
+| 700    | Bold     | Headlines, page titles, emphasis       |
 
 ### Letter Spacing Philosophy
 Vercel employs **aggressive negative letter-spacing** on headlines, tightening character spacing as size increases. This creates a dense, confident, magazine-quality typographic presence. The tighter tracking on large text reads as more modern and premium.
@@ -160,12 +160,12 @@ Vercel employs **aggressive negative letter-spacing** on headlines, tightening c
 
 ### Monospace Typography (Geist Mono)
 
-| Element | Size | Weight | Usage |
-|---------|------|--------|-------|
-| Code Block | 14px | 400 | Multi-line code, terminal output |
-| Inline Code | 13px | 400 | Technical terms in prose |
-| Terminal | 13px | 400 | CLI examples, commands |
-| File Path | 12px | 400 | Breadcrumbs, file names |
+| Element     | Size | Weight | Usage                            |
+|-------------|------|--------|----------------------------------|
+| Code Block  | 14px | 400    | Multi-line code, terminal output |
+| Inline Code | 13px | 400    | Technical terms in prose         |
+| Terminal    | 13px | 400    | CLI examples, commands           |
+| File Path   | 12px | 400    | Breadcrumbs, file names          |
 
 ---
 
@@ -274,11 +274,11 @@ Vercel employs **aggressive negative letter-spacing** on headlines, tightening c
 
 #### Button Sizes
 
-| Size | Height | Padding | Font Size |
-|------|--------|---------|-----------|
-| Small | 28px | 0 8px | 13px |
-| Medium (default) | 36px | 0 12px | 14px |
-| Large | 44px | 0 16px | 15px |
+| Size             | Height | Padding | Font Size |
+|------------------|--------|---------|-----------|
+| Small            | 28px   | 0 8px   | 13px      |
+| Medium (default) | 36px   | 0 12px  | 14px      |
+| Large            | 44px   | 0 16px  | 15px      |
 
 ### Inputs
 
@@ -704,18 +704,18 @@ Vercel employs **aggressive negative letter-spacing** on headlines, tightening c
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--space-1` | 4px | Tight element gaps, icon padding |
-| `--space-2` | 8px | Small gaps, compact layouts |
-| `--space-3` | 12px | Standard element spacing |
-| `--space-4` | 16px | Card padding, section gaps |
-| `--space-5` | 24px | Large card padding, component separation |
-| `--space-6` | 32px | Section padding |
-| `--space-7` | 48px | Major section breaks |
-| `--space-8` | 64px | Page section separation |
-| `--space-9` | 80px | Hero padding, gallery spacing |
-| `--space-10` | 128px | Maximum breathing room |
+| Token        | Value | Usage                                    |
+|--------------|-------|------------------------------------------|
+| `--space-1`  | 4px   | Tight element gaps, icon padding         |
+| `--space-2`  | 8px   | Small gaps, compact layouts              |
+| `--space-3`  | 12px  | Standard element spacing                 |
+| `--space-4`  | 16px  | Card padding, section gaps               |
+| `--space-5`  | 24px  | Large card padding, component separation |
+| `--space-6`  | 32px  | Section padding                          |
+| `--space-7`  | 48px  | Major section breaks                     |
+| `--space-8`  | 64px  | Page section separation                  |
+| `--space-9`  | 80px  | Hero padding, gallery spacing            |
+| `--space-10` | 128px | Maximum breathing room                   |
 
 ### Core Layout Structure
 
@@ -743,13 +743,13 @@ Vercel employs **aggressive negative letter-spacing** on headlines, tightening c
 
 ### Content Widths
 
-| Context | Max Width | Centering |
-|---------|-----------|-----------|
-| Dashboard Content | 1200px | Centered |
-| Documentation | 768px | Centered |
-| Settings/Forms | 560px | Left-aligned |
-| Modal Content | 480px | Centered |
-| Landing Page Hero | 1400px | Centered |
+| Context           | Max Width | Centering    |
+|-------------------|-----------|--------------|
+| Dashboard Content | 1200px    | Centered     |
+| Documentation     | 768px     | Centered     |
+| Settings/Forms    | 560px     | Left-aligned |
+| Modal Content     | 480px     | Centered     |
+| Landing Page Hero | 1400px    | Centered     |
 
 ### Grid System
 
@@ -897,15 +897,15 @@ Vercel uses stacked shadows for premium depth:
 
 ### Z-Index Scale
 
-| Layer | Z-Index | Elements |
-|-------|---------|----------|
-| Base | 0 | Main content, cards |
-| Sticky | 100 | Navigation, headers |
-| Dropdown | 200 | Menus, autocomplete |
-| Modal | 300 | Dialogs, full-screen overlays |
-| Toast | 400 | Notifications |
-| Tooltip | 500 | Tooltips, popovers |
-| Maximum | 9999 | Debug overlays |
+| Layer    | Z-Index | Elements                      |
+|----------|---------|-------------------------------|
+| Base     | 0       | Main content, cards           |
+| Sticky   | 100     | Navigation, headers           |
+| Dropdown | 200     | Menus, autocomplete           |
+| Modal    | 300     | Dialogs, full-screen overlays |
+| Toast    | 400     | Notifications                 |
+| Tooltip  | 500     | Tooltips, popovers            |
+| Maximum  | 9999    | Debug overlays                |
 
 ---
 
@@ -913,45 +913,45 @@ Vercel uses stacked shadows for premium depth:
 
 ### Do's
 
-| Guideline | Rationale |
-|-----------|-----------|
-| Use shadow-as-border technique | Refined edges without box-model impact |
-| Apply aggressive negative letter-spacing on headlines | Modern, premium typographic presence |
-| Embrace generous whitespace | Gallery-like focus and reduced cognitive load |
-| Use the workflow triad (Red/Pink/Blue) semantically | Consistent meaning across Ship/Preview/Develop |
-| Keep interactions minimal and fast (<200ms) | Developer efficiency, no wasted time |
-| Use Geist Sans and Geist Mono exclusively | Brand consistency, optimized legibility |
-| Prefer monochrome palette with color as exception | Intentional color draws appropriate attention |
-| Use multi-layer shadow stacks for depth | Premium, realistic elevation |
-| Keep border-radius consistent (6px buttons, 8px cards) | Visual harmony |
-| Show system status clearly with badges | Deployment clarity is critical |
+| Guideline                                              | Rationale                                      |
+|--------------------------------------------------------|------------------------------------------------|
+| Use shadow-as-border technique                         | Refined edges without box-model impact         |
+| Apply aggressive negative letter-spacing on headlines  | Modern, premium typographic presence           |
+| Embrace generous whitespace                            | Gallery-like focus and reduced cognitive load  |
+| Use the workflow triad (Red/Pink/Blue) semantically    | Consistent meaning across Ship/Preview/Develop |
+| Keep interactions minimal and fast (<200ms)            | Developer efficiency, no wasted time           |
+| Use Geist Sans and Geist Mono exclusively              | Brand consistency, optimized legibility        |
+| Prefer monochrome palette with color as exception      | Intentional color draws appropriate attention  |
+| Use multi-layer shadow stacks for depth                | Premium, realistic elevation                   |
+| Keep border-radius consistent (6px buttons, 8px cards) | Visual harmony                                 |
+| Show system status clearly with badges                 | Deployment clarity is critical                 |
 
 ### Don'ts
 
-| Anti-Pattern | Why to Avoid |
-|--------------|--------------|
-| Never use visible borders (1px solid) | Shadow-as-border is the standard |
-| Avoid decorative elements or ornamentation | Contradicts minimalist philosophy |
-| Don't use gradients on UI elements | Reserved for marketing/special cases |
+| Anti-Pattern                                   | Why to Avoid                           |
+|------------------------------------------------|----------------------------------------|
+| Never use visible borders (1px solid)          | Shadow-as-border is the standard       |
+| Avoid decorative elements or ornamentation     | Contradicts minimalist philosophy      |
+| Don't use gradients on UI elements             | Reserved for marketing/special cases   |
 | Never use rounded-full on rectangular elements | Only pills and avatars use full radius |
-| Avoid dense, cluttered layouts | Whitespace is a feature, not a bug |
-| Don't use color for decoration | Color is semantic, not aesthetic |
-| Never use positive letter-spacing on body text | Counter to Geist's tight aesthetic |
-| Avoid animations >200ms for UI interactions | Perceived sluggishness |
-| Don't mix font families | Geist Sans + Mono only |
-| Never use pure black (#000000) in light mode | Reserve for dark mode backgrounds |
+| Avoid dense, cluttered layouts                 | Whitespace is a feature, not a bug     |
+| Don't use color for decoration                 | Color is semantic, not aesthetic       |
+| Never use positive letter-spacing on body text | Counter to Geist's tight aesthetic     |
+| Avoid animations >200ms for UI interactions    | Perceived sluggishness                 |
+| Don't mix font families                        | Geist Sans + Mono only                 |
+| Never use pure black (#000000) in light mode   | Reserve for dark mode backgrounds      |
 
 ### Content Guidelines
 
-| Do | Don't |
-|----|-------|
-| Use clear, technical language | Use marketing fluff in the dashboard |
-| Provide specific error messages | Show generic "Something went wrong" |
-| Show deployment URLs prominently | Hide or abbreviate URLs |
-| Use consistent terminology (Deploy, Preview, Build) | Mix terminology (Launch, Stage, Compile) |
-| Display timestamps in relative format ("2m ago") | Show only absolute timestamps |
-| Confirm destructive actions | Delete without warning |
-| Show loading states with progress | Use indefinite spinners when progress is known |
+| Do                                                  | Don't                                          |
+|-----------------------------------------------------|------------------------------------------------|
+| Use clear, technical language                       | Use marketing fluff in the dashboard           |
+| Provide specific error messages                     | Show generic "Something went wrong"            |
+| Show deployment URLs prominently                    | Hide or abbreviate URLs                        |
+| Use consistent terminology (Deploy, Preview, Build) | Mix terminology (Launch, Stage, Compile)       |
+| Display timestamps in relative format ("2m ago")    | Show only absolute timestamps                  |
+| Confirm destructive actions                         | Delete without warning                         |
+| Show loading states with progress                   | Use indefinite spinners when progress is known |
 
 ---
 
@@ -959,43 +959,43 @@ Vercel uses stacked shadows for premium depth:
 
 ### Breakpoints
 
-| Name | Width | Behavior |
-|------|-------|----------|
-| Mobile | <640px | Single column, stacked navigation |
-| Tablet | 640px - 1024px | Collapsible sidebar, 2-column grids |
-| Desktop | 1024px - 1440px | Full layout, 3-4 column grids |
-| Wide | >1440px | Maximum content width, centered |
+| Name    | Width           | Behavior                            |
+|---------|-----------------|-------------------------------------|
+| Mobile  | <640px          | Single column, stacked navigation   |
+| Tablet  | 640px - 1024px  | Collapsible sidebar, 2-column grids |
+| Desktop | 1024px - 1440px | Full layout, 3-4 column grids       |
+| Wide    | >1440px         | Maximum content width, centered     |
 
 ### Mobile Adaptations
 
-| Component | Desktop | Mobile |
-|-----------|---------|--------|
-| Navigation | Horizontal top bar | Hamburger menu + drawer |
-| Sidebar | Fixed 240px | Full-screen overlay |
-| Project Grid | 3-4 columns | Single column |
-| Deployment List | Table view | Card stack |
-| Actions | Inline buttons | Bottom sheet or dropdown |
-| Tabs | Horizontal scroll | Horizontal scroll (same) |
+| Component       | Desktop            | Mobile                   |
+|-----------------|--------------------|--------------------------|
+| Navigation      | Horizontal top bar | Hamburger menu + drawer  |
+| Sidebar         | Fixed 240px        | Full-screen overlay      |
+| Project Grid    | 3-4 columns        | Single column            |
+| Deployment List | Table view         | Card stack               |
+| Actions         | Inline buttons     | Bottom sheet or dropdown |
+| Tabs            | Horizontal scroll  | Horizontal scroll (same) |
 
 ### Touch Targets
 
-| Element | Minimum Size | Notes |
-|---------|--------------|-------|
-| Buttons | 44px height | Comfortable tap target |
-| Navigation Items | 48px height | Larger for quick navigation |
-| Form Inputs | 44px height | Standard mobile input |
-| Icon Buttons | 40px × 40px | Square touch targets |
-| List Items | Full width × 56px | Easy row selection |
+| Element          | Minimum Size      | Notes                       |
+|------------------|-------------------|-----------------------------|
+| Buttons          | 44px height       | Comfortable tap target      |
+| Navigation Items | 48px height       | Larger for quick navigation |
+| Form Inputs      | 44px height       | Standard mobile input       |
+| Icon Buttons     | 40px × 40px       | Square touch targets        |
+| List Items       | Full width × 56px | Easy row selection          |
 
 ### Responsive Typography
 
-| Element | Desktop | Mobile |
-|---------|---------|--------|
-| Hero Display | 64px | 36px |
-| Page Title | 48px | 28px |
-| Section Title | 32px | 24px |
-| Body | 16px | 16px |
-| Caption | 13px | 13px |
+| Element       | Desktop | Mobile |
+|---------------|---------|--------|
+| Hero Display  | 64px    | 36px   |
+| Page Title    | 48px    | 28px   |
+| Section Title | 32px    | 24px   |
+| Body          | 16px    | 16px   |
+| Caption       | 13px    | 13px   |
 
 ### Adaptive Spacing
 

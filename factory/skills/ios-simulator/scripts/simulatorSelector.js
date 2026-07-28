@@ -109,9 +109,11 @@ class SimulatorSelector {
 }
 
 function formatSuggestions(suggestions, jsonFormat = false) {
-  if (jsonFormat) return JSON.stringify({ suggestions: suggestions.map((s) => ({
-    device: s.name, udid: s.udid, ios: s.iosVersion, status: s.status, reasons: s.reasons,
-  }))}, null, 2);
+  if (jsonFormat) return JSON.stringify({
+    suggestions: suggestions.map((s) => ({
+      device: s.name, udid: s.udid, ios: s.iosVersion, status: s.status, reasons: s.reasons,
+    }))
+  }, null, 2);
 
   if (!suggestions.length) return "No simulators available";
 

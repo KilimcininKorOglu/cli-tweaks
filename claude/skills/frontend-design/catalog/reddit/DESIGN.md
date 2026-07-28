@@ -10,12 +10,12 @@
 Reddit's design balances **community identity** with **content accessibility**. The interface prioritizes readability and scanability, enabling users to browse massive amounts of user-generated content efficiently. Every element serves the core purpose: facilitating discussion and discovery.
 
 ### Mood & Character
-| Attribute | Description |
-|-----------|-------------|
-| **Tone** | Casual, democratic, community-driven |
-| **Energy** | Active, participatory, always-updating |
-| **Personality** | Approachable (Snoo mascot), opinionated (voting system), tribal (subreddits) |
-| **Visual density** | Medium-high; content-rich but organized into digestible cards |
+| Attribute          | Description                                                                  |
+|--------------------|------------------------------------------------------------------------------|
+| **Tone**           | Casual, democratic, community-driven                                         |
+| **Energy**         | Active, participatory, always-updating                                       |
+| **Personality**    | Approachable (Snoo mascot), opinionated (voting system), tribal (subreddits) |
+| **Visual density** | Medium-high; content-rich but organized into digestible cards                |
 
 ### Brand Identity
 - **Snoo**: The alien mascot appears throughout, customizable per subreddit
@@ -36,37 +36,37 @@ Reddit's design balances **community identity** with **content accessibility**. 
 
 ### Light Mode
 
-| Name | Hex | RGB | Role |
-|------|-----|-----|------|
-| **Orangered** | `#FF4500` | 255, 69, 0 | Primary brand, upvotes, CTAs |
-| **Periwinkle** | `#7193FF` | 113, 147, 255 | Downvotes, secondary accent |
-| **Reddit Blue** | `#0079D3` | 0, 121, 211 | Links, interactive elements |
-| **Canvas** | `#DAE0E6` | 218, 224, 230 | Page background |
-| **Card White** | `#FFFFFF` | 255, 255, 255 | Content cards, surfaces |
-| **Text Primary** | `#1C1C1C` | 28, 28, 28 | Headlines, body text |
-| **Text Secondary** | `#7C7C7C` | 124, 124, 124 | Metadata, timestamps |
-| **Text Tertiary** | `#878A8C` | 135, 138, 140 | Placeholders, hints |
-| **Border** | `#EDEFF1` | 237, 239, 241 | Card borders, dividers |
-| **Online Green** | `#46D160` | 70, 209, 96 | Online indicators, success |
-| **Gold** | `#FFD635` | 255, 214, 53 | Awards, premium features |
-| **Silver** | `#C4C4C4` | 196, 196, 196 | Silver award |
-| **Platinum** | `#A0E8FF` | 160, 232, 255 | Platinum award |
+| Name               | Hex       | RGB           | Role                         |
+|--------------------|-----------|---------------|------------------------------|
+| **Orangered**      | `#FF4500` | 255, 69, 0    | Primary brand, upvotes, CTAs |
+| **Periwinkle**     | `#7193FF` | 113, 147, 255 | Downvotes, secondary accent  |
+| **Reddit Blue**    | `#0079D3` | 0, 121, 211   | Links, interactive elements  |
+| **Canvas**         | `#DAE0E6` | 218, 224, 230 | Page background              |
+| **Card White**     | `#FFFFFF` | 255, 255, 255 | Content cards, surfaces      |
+| **Text Primary**   | `#1C1C1C` | 28, 28, 28    | Headlines, body text         |
+| **Text Secondary** | `#7C7C7C` | 124, 124, 124 | Metadata, timestamps         |
+| **Text Tertiary**  | `#878A8C` | 135, 138, 140 | Placeholders, hints          |
+| **Border**         | `#EDEFF1` | 237, 239, 241 | Card borders, dividers       |
+| **Online Green**   | `#46D160` | 70, 209, 96   | Online indicators, success   |
+| **Gold**           | `#FFD635` | 255, 214, 53  | Awards, premium features     |
+| **Silver**         | `#C4C4C4` | 196, 196, 196 | Silver award                 |
+| **Platinum**       | `#A0E8FF` | 160, 232, 255 | Platinum award               |
 
 ### Dark Mode
 
-| Name | Hex | RGB | Role |
-|------|-----|-----|------|
-| **Orangered** | `#FF4500` | 255, 69, 0 | Primary brand, upvotes (unchanged) |
-| **Periwinkle** | `#7193FF` | 113, 147, 255 | Downvotes (unchanged) |
-| **Reddit Blue** | `#4FBCFF` | 79, 188, 255 | Links (brighter for dark bg) |
-| **Canvas** | `#030303` | 3, 3, 3 | Page background |
-| **Card Dark** | `#1A1A1B` | 26, 26, 27 | Content cards, surfaces |
-| **Elevated Surface** | `#272729` | 39, 39, 41 | Modals, dropdowns, hovers |
-| **Text Primary** | `#D7DADC` | 215, 218, 220 | Headlines, body text |
-| **Text Secondary** | `#818384` | 129, 131, 132 | Metadata, timestamps |
-| **Text Tertiary** | `#6B6C6D` | 107, 108, 109 | Placeholders, hints |
-| **Border** | `#343536` | 52, 53, 54 | Card borders, dividers |
-| **Online Green** | `#46D160` | 70, 209, 96 | Online indicators (unchanged) |
+| Name                 | Hex       | RGB           | Role                               |
+|----------------------|-----------|---------------|------------------------------------|
+| **Orangered**        | `#FF4500` | 255, 69, 0    | Primary brand, upvotes (unchanged) |
+| **Periwinkle**       | `#7193FF` | 113, 147, 255 | Downvotes (unchanged)              |
+| **Reddit Blue**      | `#4FBCFF` | 79, 188, 255  | Links (brighter for dark bg)       |
+| **Canvas**           | `#030303` | 3, 3, 3       | Page background                    |
+| **Card Dark**        | `#1A1A1B` | 26, 26, 27    | Content cards, surfaces            |
+| **Elevated Surface** | `#272729` | 39, 39, 41    | Modals, dropdowns, hovers          |
+| **Text Primary**     | `#D7DADC` | 215, 218, 220 | Headlines, body text               |
+| **Text Secondary**   | `#818384` | 129, 131, 132 | Metadata, timestamps               |
+| **Text Tertiary**    | `#6B6C6D` | 107, 108, 109 | Placeholders, hints                |
+| **Border**           | `#343536` | 52, 53, 54    | Card borders, dividers             |
+| **Online Green**     | `#46D160` | 70, 209, 96   | Online indicators (unchanged)      |
 
 ### Semantic Color Usage
 
@@ -92,28 +92,28 @@ Cake day:          #FF4500 (cake icon)
 
 ### Font Stack
 
-| Use | Family | Fallback |
-|-----|--------|----------|
-| **Headings** | IBM Plex Sans | -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif |
-| **Body** | -apple-system, BlinkMacSystemFont | Segoe UI, Roboto, Helvetica Neue, sans-serif |
-| **Code** | Source Code Pro | Menlo, Monaco, Consolas, monospace |
-| **Brand/Logo** | Reddit Sans (custom) | IBM Plex Sans |
+| Use            | Family                            | Fallback                                                |
+|----------------|-----------------------------------|---------------------------------------------------------|
+| **Headings**   | IBM Plex Sans                     | -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif |
+| **Body**       | -apple-system, BlinkMacSystemFont | Segoe UI, Roboto, Helvetica Neue, sans-serif            |
+| **Code**       | Source Code Pro                   | Menlo, Monaco, Consolas, monospace                      |
+| **Brand/Logo** | Reddit Sans (custom)              | IBM Plex Sans                                           |
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing |
-|---------|------|--------|-------------|----------------|
-| **Page title** | 24px | 700 | 28px | -0.02em |
-| **Post title** | 18px | 500 | 22px | 0 |
-| **Post title (compact)** | 14px | 500 | 18px | 0 |
-| **Subreddit name** | 16px | 700 | 20px | 0 |
-| **Body text** | 14px | 400 | 21px | 0 |
-| **Comment text** | 14px | 400 | 21px | 0 |
-| **Metadata** | 12px | 400 | 16px | 0 |
-| **Button text** | 14px | 700 | 17px | 0.5px |
-| **Nav item** | 14px | 500 | 18px | 0 |
-| **Flair text** | 12px | 500 | 14px | 0 |
-| **Tiny/caption** | 10px | 400 | 12px | 0.3px |
+| Element                  | Size | Weight | Line Height | Letter Spacing |
+|--------------------------|------|--------|-------------|----------------|
+| **Page title**           | 24px | 700    | 28px        | -0.02em        |
+| **Post title**           | 18px | 500    | 22px        | 0              |
+| **Post title (compact)** | 14px | 500    | 18px        | 0              |
+| **Subreddit name**       | 16px | 700    | 20px        | 0              |
+| **Body text**            | 14px | 400    | 21px        | 0              |
+| **Comment text**         | 14px | 400    | 21px        | 0              |
+| **Metadata**             | 12px | 400    | 16px        | 0              |
+| **Button text**          | 14px | 700    | 17px        | 0.5px          |
+| **Nav item**             | 14px | 500    | 18px        | 0              |
+| **Flair text**           | 12px | 500    | 14px        | 0              |
+| **Tiny/caption**         | 10px | 400    | 12px        | 0.3px          |
 
 ### Typography Rules
 - **Post titles**: Medium weight (500), never exceed 2 lines in card view
@@ -670,19 +670,19 @@ Cake day:          #FF4500 (cake icon)
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--space-0` | 0px | Reset |
-| `--space-1` | 4px | Tight inline spacing |
-| `--space-2` | 8px | Icon padding, compact gaps |
-| `--space-3` | 12px | Card inner padding |
-| `--space-4` | 16px | Standard component padding |
-| `--space-5` | 20px | Section padding |
-| `--space-6` | 24px | Card gaps, medium spacing |
-| `--space-7` | 32px | Large gaps |
-| `--space-8` | 40px | Section dividers |
-| `--space-9` | 48px | Header height |
-| `--space-10` | 64px | Major section breaks |
+| Token        | Value | Usage                      |
+|--------------|-------|----------------------------|
+| `--space-0`  | 0px   | Reset                      |
+| `--space-1`  | 4px   | Tight inline spacing       |
+| `--space-2`  | 8px   | Icon padding, compact gaps |
+| `--space-3`  | 12px  | Card inner padding         |
+| `--space-4`  | 16px  | Standard component padding |
+| `--space-5`  | 20px  | Section padding            |
+| `--space-6`  | 24px  | Card gaps, medium spacing  |
+| `--space-7`  | 32px  | Large gaps                 |
+| `--space-8`  | 40px  | Section dividers           |
+| `--space-9`  | 48px  | Header height              |
+| `--space-10` | 64px  | Major section breaks       |
 
 ### Grid System
 
@@ -736,13 +736,13 @@ Cake day:          #FF4500 (cake icon)
 
 ### Container Widths
 
-| Context | Width | Notes |
-|---------|-------|-------|
-| **Feed container** | 640px | Max width for post cards |
-| **Sidebar** | 312px | Fixed width |
-| **Modal** | 538px | Standard modal |
-| **Full page max** | 1280px | Outer container limit |
-| **Compact card** | 100% | Card view uses full feed width |
+| Context            | Width  | Notes                          |
+|--------------------|--------|--------------------------------|
+| **Feed container** | 640px  | Max width for post cards       |
+| **Sidebar**        | 312px  | Fixed width                    |
+| **Modal**          | 538px  | Standard modal                 |
+| **Full page max**  | 1280px | Outer container limit          |
+| **Compact card**   | 100%   | Card view uses full feed width |
 
 ### Whitespace Philosophy
 - **Breathing room**: Cards have clear separation, never touching
@@ -756,13 +756,13 @@ Cake day:          #FF4500 (cake icon)
 
 ### Shadow System
 
-| Level | Value | Usage |
-|-------|-------|-------|
-| **Flat** | none | Default cards, inline elements |
-| **Hover** | `0 2px 4px rgba(0, 0, 0, 0.08)` | Card hover, button hover |
-| **Dropdown** | `0 2px 4px rgba(0, 0, 0, 0.12)` | Menus, popovers |
-| **Modal** | `0 4px 12px rgba(0, 0, 0, 0.15)` | Modal dialogs |
-| **Sticky** | `0 2px 8px rgba(0, 0, 0, 0.08)` | Sticky headers |
+| Level        | Value                            | Usage                          |
+|--------------|----------------------------------|--------------------------------|
+| **Flat**     | none                             | Default cards, inline elements |
+| **Hover**    | `0 2px 4px rgba(0, 0, 0, 0.08)`  | Card hover, button hover       |
+| **Dropdown** | `0 2px 4px rgba(0, 0, 0, 0.12)`  | Menus, popovers                |
+| **Modal**    | `0 4px 12px rgba(0, 0, 0, 0.15)` | Modal dialogs                  |
+| **Sticky**   | `0 2px 8px rgba(0, 0, 0, 0.08)`  | Sticky headers                 |
 
 ### Dark Mode Shadows
 
@@ -783,25 +783,25 @@ Cake day:          #FF4500 (cake icon)
 
 ### Surface Hierarchy
 
-| Surface | Light | Dark | Usage |
-|---------|-------|------|-------|
-| **Page** | `#DAE0E6` | `#030303` | Background canvas |
-| **Card** | `#FFFFFF` | `#1A1A1B` | Post cards, widgets |
-| **Elevated** | `#FFFFFF` | `#272729` | Dropdowns, modals, hovers |
-| **Inset** | `#F6F7F8` | `#161617` | Vote column, input backgrounds |
-| **Overlay** | `rgba(0,0,0,0.4)` | `rgba(0,0,0,0.7)` | Modal backdrop |
+| Surface      | Light             | Dark              | Usage                          |
+|--------------|-------------------|-------------------|--------------------------------|
+| **Page**     | `#DAE0E6`         | `#030303`         | Background canvas              |
+| **Card**     | `#FFFFFF`         | `#1A1A1B`         | Post cards, widgets            |
+| **Elevated** | `#FFFFFF`         | `#272729`         | Dropdowns, modals, hovers      |
+| **Inset**    | `#F6F7F8`         | `#161617`         | Vote column, input backgrounds |
+| **Overlay**  | `rgba(0,0,0,0.4)` | `rgba(0,0,0,0.7)` | Modal backdrop                 |
 
 ### Z-Index Scale
 
-| Layer | Value | Usage |
-|-------|-------|-------|
-| **Base** | 0 | Standard content |
-| **Raised** | 10 | Sticky elements on scroll |
-| **Dropdown** | 50 | Dropdown menus |
-| **Sticky nav** | 100 | Top navigation bar |
-| **Modal** | 1000 | Modal dialogs |
-| **Toast** | 1100 | Toast notifications |
-| **Tooltip** | 1200 | Tooltips |
+| Layer          | Value | Usage                     |
+|----------------|-------|---------------------------|
+| **Base**       | 0     | Standard content          |
+| **Raised**     | 10    | Sticky elements on scroll |
+| **Dropdown**   | 50    | Dropdown menus            |
+| **Sticky nav** | 100   | Top navigation bar        |
+| **Modal**      | 1000  | Modal dialogs             |
+| **Toast**      | 1100  | Toast notifications       |
+| **Tooltip**    | 1200  | Tooltips                  |
 
 ---
 
@@ -809,32 +809,32 @@ Cake day:          #FF4500 (cake icon)
 
 ### Do's
 
-| Category | Guideline |
-|----------|-----------|
-| **Color** | Use orangered (#FF4500) exclusively for upvotes, primary CTAs, and brand moments |
-| **Color** | Maintain high contrast between text and background (4.5:1 minimum) |
-| **Typography** | Abbreviate large numbers (1.2k, 15.6k, 2.3m) for karma and counts |
-| **Typography** | Use relative timestamps ("2h ago") not absolute dates |
-| **Components** | Keep buttons fully rounded (pill shape) for primary actions |
-| **Components** | Preserve vote button spacing in the left column of cards |
-| **Layout** | Maintain the 640px max-width for readable post content |
-| **Layout** | Use thread lines to visually connect nested comments |
-| **Branding** | Allow Snoo to be customizable per community |
-| **Interaction** | Animate vote color changes smoothly |
+| Category        | Guideline                                                                        |
+|-----------------|----------------------------------------------------------------------------------|
+| **Color**       | Use orangered (#FF4500) exclusively for upvotes, primary CTAs, and brand moments |
+| **Color**       | Maintain high contrast between text and background (4.5:1 minimum)               |
+| **Typography**  | Abbreviate large numbers (1.2k, 15.6k, 2.3m) for karma and counts                |
+| **Typography**  | Use relative timestamps ("2h ago") not absolute dates                            |
+| **Components**  | Keep buttons fully rounded (pill shape) for primary actions                      |
+| **Components**  | Preserve vote button spacing in the left column of cards                         |
+| **Layout**      | Maintain the 640px max-width for readable post content                           |
+| **Layout**      | Use thread lines to visually connect nested comments                             |
+| **Branding**    | Allow Snoo to be customizable per community                                      |
+| **Interaction** | Animate vote color changes smoothly                                              |
 
 ### Don'ts
 
-| Category | Anti-pattern |
-|----------|-------------|
-| **Color** | Never use orangered for negative actions (delete, error) |
-| **Color** | Don't use periwinkle blue for anything except downvotes |
-| **Typography** | Avoid full timestamps in feeds; save them for detail views |
-| **Typography** | Don't make post titles smaller than 14px even in compact mode |
-| **Components** | Never hide the voting UI; it's core to Reddit's identity |
-| **Components** | Don't break comment thread indentation visually |
-| **Layout** | Avoid full-width cards; maintain readable line lengths |
-| **Layout** | Don't let sidebar width compress below 300px |
-| **Branding** | Never use a non-circular shape for avatars/community icons |
+| Category        | Anti-pattern                                                   |
+|-----------------|----------------------------------------------------------------|
+| **Color**       | Never use orangered for negative actions (delete, error)       |
+| **Color**       | Don't use periwinkle blue for anything except downvotes        |
+| **Typography**  | Avoid full timestamps in feeds; save them for detail views     |
+| **Typography**  | Don't make post titles smaller than 14px even in compact mode  |
+| **Components**  | Never hide the voting UI; it's core to Reddit's identity       |
+| **Components**  | Don't break comment thread indentation visually                |
+| **Layout**      | Avoid full-width cards; maintain readable line lengths         |
+| **Layout**      | Don't let sidebar width compress below 300px                   |
+| **Branding**    | Never use a non-circular shape for avatars/community icons     |
 | **Interaction** | Don't remove hover states; users expect interactivity feedback |
 
 ### Accessibility Requirements
@@ -850,13 +850,13 @@ Cake day:          #FF4500 (cake icon)
 
 ### Breakpoints
 
-| Name | Width | Behavior |
-|------|-------|----------|
-| **Desktop XL** | ≥1280px | Full layout with sidebar |
-| **Desktop** | 960–1279px | Full layout, narrower margins |
-| **Tablet** | 768–959px | Sidebar collapses to dropdown or hidden |
-| **Mobile** | 640–767px | Single column, bottom nav |
-| **Mobile S** | <640px | Compact cards, minimal chrome |
+| Name           | Width      | Behavior                                |
+|----------------|------------|-----------------------------------------|
+| **Desktop XL** | ≥1280px    | Full layout with sidebar                |
+| **Desktop**    | 960–1279px | Full layout, narrower margins           |
+| **Tablet**     | 768–959px  | Sidebar collapses to dropdown or hidden |
+| **Mobile**     | 640–767px  | Single column, bottom nav               |
+| **Mobile S**   | <640px     | Compact cards, minimal chrome           |
 
 ### Responsive Grid Changes
 
@@ -898,13 +898,13 @@ Cake day:          #FF4500 (cake icon)
 
 ### Touch Adaptations
 
-| Element | Desktop | Mobile |
-|---------|---------|--------|
-| **Vote buttons** | 24x24px | 44x44px tap target |
-| **Action buttons** | Icon only | Icon + larger tap area |
-| **Comment collapse** | Click thread line | Tap collapse button |
-| **Navigation** | Top bar | Bottom tab bar |
-| **Create post** | Inline prompt | FAB or bottom bar button |
+| Element              | Desktop           | Mobile                   |
+|----------------------|-------------------|--------------------------|
+| **Vote buttons**     | 24x24px           | 44x44px tap target       |
+| **Action buttons**   | Icon only         | Icon + larger tap area   |
+| **Comment collapse** | Click thread line | Tap collapse button      |
+| **Navigation**       | Top bar           | Bottom tab bar           |
+| **Create post**      | Inline prompt     | FAB or bottom bar button |
 
 ### Mobile-Specific Components
 
@@ -1142,9 +1142,9 @@ Support both light mode (default) and dark mode toggle.
 
 ## Version History
 
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0 | 2024 | Initial Reddit design system documentation |
+| Version | Date | Changes                                    |
+|---------|------|--------------------------------------------|
+| 1.0     | 2024 | Initial Reddit design system documentation |
 
 ---
 

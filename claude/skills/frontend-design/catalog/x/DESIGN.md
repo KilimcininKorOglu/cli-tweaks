@@ -23,12 +23,12 @@ X embodies a **minimalist, content-first** design philosophy. The platform prior
 - **Bold simplicity**: The X logo represents transformation and confident rebrand
 
 ### Visual Personality
-| Attribute | Expression |
-|-----------|------------|
-| Speed | Instant loading states, minimal animations |
-| Authenticity | Raw, unfiltered content presentation |
-| Connectivity | Threaded conversations, quoted posts |
-| Accessibility | High contrast, clear hierarchy |
+| Attribute     | Expression                                 |
+|---------------|--------------------------------------------|
+| Speed         | Instant loading states, minimal animations |
+| Authenticity  | Raw, unfiltered content presentation       |
+| Connectivity  | Threaded conversations, quoted posts       |
+| Accessibility | High contrast, clear hierarchy             |
 
 ---
 
@@ -36,32 +36,32 @@ X embodies a **minimalist, content-first** design philosophy. The platform prior
 
 ### Primary Colors
 
-| Color | Hex | RGB | Role |
-|-------|-----|-----|------|
-| Black | `#000000` | rgb(0, 0, 0) | Primary background (dark mode) |
-| White | `#FFFFFF` | rgb(255, 255, 255) | Primary text, light mode background |
-| X Blue | `#1D9BF0` | rgb(29, 155, 240) | Links, highlights, interactive elements |
+| Color  | Hex       | RGB                | Role                                    |
+|--------|-----------|--------------------|-----------------------------------------|
+| Black  | `#000000` | rgb(0, 0, 0)       | Primary background (dark mode)          |
+| White  | `#FFFFFF` | rgb(255, 255, 255) | Primary text, light mode background     |
+| X Blue | `#1D9BF0` | rgb(29, 155, 240)  | Links, highlights, interactive elements |
 
 ### Extended Palette
 
 #### Neutral Grays
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Dark Gray | `#0F1419` | Text on light backgrounds |
-| Medium Gray | `#536471` | Secondary text, timestamps |
-| Light Gray | `#71767B` | Placeholder text, disabled states |
-| Border Gray | `#2F3336` | Dividers, card borders (dark mode) |
-| Hover Gray | `#1D1F23` | Hover states on dark backgrounds |
+| Color        | Hex       | Usage                                |
+|--------------|-----------|--------------------------------------|
+| Dark Gray    | `#0F1419` | Text on light backgrounds            |
+| Medium Gray  | `#536471` | Secondary text, timestamps           |
+| Light Gray   | `#71767B` | Placeholder text, disabled states    |
+| Border Gray  | `#2F3336` | Dividers, card borders (dark mode)   |
+| Hover Gray   | `#1D1F23` | Hover states on dark backgrounds     |
 | Surface Gray | `#16181C` | Elevated surfaces, cards (dark mode) |
 
 #### Semantic Colors
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Success Green | `#00BA7C` | Repost (retweet) icon active |
-| Like Pink | `#F91880` | Like heart icon active |
-| Warning Yellow | `#FFD400` | Gold/Premium indicators |
-| Error Red | `#F4212E` | Errors, delete confirmations |
-| Premium Gold | `#E2B719` | Verified organization badge |
+| Color          | Hex       | Usage                        |
+|----------------|-----------|------------------------------|
+| Success Green  | `#00BA7C` | Repost (retweet) icon active |
+| Like Pink      | `#F91880` | Like heart icon active       |
+| Warning Yellow | `#FFD400` | Gold/Premium indicators      |
+| Error Red      | `#F4212E` | Errors, delete confirmations |
+| Premium Gold   | `#E2B719` | Verified organization badge  |
 
 ### Color Application Rules
 
@@ -80,13 +80,13 @@ Background Layers (Light Mode):
 ```
 
 ### Light Mode Variant
-| Element | Light Mode | Dark Mode |
-|---------|------------|-----------|
-| Background | `#FFFFFF` | `#000000` |
-| Primary Text | `#0F1419` | `#E7E9EA` |
-| Secondary Text | `#536471` | `#71767B` |
-| Borders | `#EFF3F4` | `#2F3336` |
-| Cards | `#F7F9F9` | `#16181C` |
+| Element        | Light Mode | Dark Mode |
+|----------------|------------|-----------|
+| Background     | `#FFFFFF`  | `#000000` |
+| Primary Text   | `#0F1419`  | `#E7E9EA` |
+| Secondary Text | `#536471`  | `#71767B` |
+| Borders        | `#EFF3F4`  | `#2F3336` |
+| Cards          | `#F7F9F9`  | `#16181C` |
 
 ---
 
@@ -107,16 +107,16 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing |
-|---------|------|--------|-------------|----------------|
-| Display (trending) | 31px | 800 | 36px | -0.5px |
-| Heading Large | 23px | 700 | 28px | 0 |
-| Heading Medium | 20px | 700 | 24px | 0 |
-| Body | 15px | 400 | 20px | 0 |
-| Body Bold | 15px | 700 | 20px | 0 |
-| Caption | 13px | 400 | 16px | 0 |
-| Small | 12px | 400 | 16px | 0.2px |
-| Tiny | 11px | 400 | 14px | 0.2px |
+| Element            | Size | Weight | Line Height | Letter Spacing |
+|--------------------|------|--------|-------------|----------------|
+| Display (trending) | 31px | 800    | 36px        | -0.5px         |
+| Heading Large      | 23px | 700    | 28px        | 0              |
+| Heading Medium     | 20px | 700    | 24px        | 0              |
+| Body               | 15px | 400    | 20px        | 0              |
+| Body Bold          | 15px | 700    | 20px        | 0              |
+| Caption            | 13px | 400    | 16px        | 0              |
+| Small              | 12px | 400    | 16px        | 0.2px          |
+| Tiny               | 11px | 400    | 14px        | 0.2px          |
 
 ### Typography Usage
 
@@ -477,12 +477,12 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
 
 ### Grid Specifications
 
-| Column | Width | Max Width | Min Width |
-|--------|-------|-----------|-----------|
-| Left Sidebar | 275px | 275px | 68px (collapsed) |
-| Main Feed | 600px | 600px | 600px |
-| Right Sidebar | 350px | 350px | 0 (hidden) |
-| Total Content | 1225px | 1400px | 600px |
+| Column        | Width  | Max Width | Min Width        |
+|---------------|--------|-----------|------------------|
+| Left Sidebar  | 275px  | 275px     | 68px (collapsed) |
+| Main Feed     | 600px  | 600px     | 600px            |
+| Right Sidebar | 350px  | 350px     | 0 (hidden)       |
+| Total Content | 1225px | 1400px    | 600px            |
 
 ### Spacing System
 
@@ -502,14 +502,14 @@ Spacing Scale:
 
 ### Component Spacing
 
-| Context | Padding/Margin |
-|---------|----------------|
-| Post card | 12px 16px |
-| Navigation item | 12px |
-| Section gap | 16px |
-| Modal padding | 16px |
-| Card internal | 12px |
-| Icon spacing | 4px |
+| Context         | Padding/Margin |
+|-----------------|----------------|
+| Post card       | 12px 16px      |
+| Navigation item | 12px           |
+| Section gap     | 16px           |
+| Modal padding   | 16px           |
+| Card internal   | 12px           |
+| Icon spacing    | 4px            |
 
 ### Content Width Constraints
 
@@ -575,12 +575,12 @@ X uses a **flat design approach** with minimal shadows. Depth is communicated th
 
 ### Surface Hierarchy (Dark Mode)
 
-| Level | Background | Use Case |
-|-------|------------|----------|
-| 0 - Base | `#000000` | Main background |
-| 1 - Surface | `#16181C` | Cards, widgets, sidebars |
-| 2 - Elevated | `#1D1F23` | Hover states, dropdowns |
-| 3 - Overlay | `rgba(91, 112, 131, 0.4)` | Modal backdrops |
+| Level        | Background                | Use Case                 |
+|--------------|---------------------------|--------------------------|
+| 0 - Base     | `#000000`                 | Main background          |
+| 1 - Surface  | `#16181C`                 | Cards, widgets, sidebars |
+| 2 - Elevated | `#1D1F23`                 | Hover states, dropdowns  |
+| 3 - Overlay  | `rgba(91, 112, 131, 0.4)` | Modal backdrops          |
 
 ### Shadow Usage
 
@@ -745,13 +745,13 @@ Toast/Alerts:   700
 
 ### Common Mistakes to Avoid
 
-| Mistake | Correct Approach |
-|---------|------------------|
-| Adding card shadows | Use border-bottom dividers |
-| Rounded corners at 8px | Use 16px for cards, 9999px for pills |
-| Blue backgrounds | Keep blue for text/icons only |
-| Dense information | Generous whitespace, clear hierarchy |
-| Custom loading spinners | Use shimmer/skeleton patterns |
+| Mistake                 | Correct Approach                     |
+|-------------------------|--------------------------------------|
+| Adding card shadows     | Use border-bottom dividers           |
+| Rounded corners at 8px  | Use 16px for cards, 9999px for pills |
+| Blue backgrounds        | Keep blue for text/icons only        |
+| Dense information       | Generous whitespace, clear hierarchy |
+| Custom loading spinners | Use shimmer/skeleton patterns        |
 
 ---
 
@@ -759,13 +759,13 @@ Toast/Alerts:   700
 
 ### Breakpoint System
 
-| Breakpoint | Width | Layout Changes |
-|------------|-------|----------------|
-| Desktop XL | ≥1400px | Full three-column, expanded nav labels |
-| Desktop | 1100-1399px | Three-column, full nav |
-| Tablet | 1005-1099px | Two-column, collapsed nav icons |
-| Mobile L | 688-1004px | Single column with bottom nav |
-| Mobile | <688px | Single column, compact UI |
+| Breakpoint | Width       | Layout Changes                         |
+|------------|-------------|----------------------------------------|
+| Desktop XL | ≥1400px     | Full three-column, expanded nav labels |
+| Desktop    | 1100-1399px | Three-column, full nav                 |
+| Tablet     | 1005-1099px | Two-column, collapsed nav icons        |
+| Mobile L   | 688-1004px  | Single column with bottom nav          |
+| Mobile     | <688px      | Single column, compact UI              |
 
 ### Desktop (≥1100px)
 ```
@@ -1034,21 +1034,21 @@ Success States:
 
 ## Quick Reference Card
 
-| Element | Value |
-|---------|-------|
-| Primary Background | `#000000` |
-| Primary Text | `#E7E9EA` |
-| Accent Blue | `#1D9BF0` |
-| Secondary Text | `#71767B` |
-| Borders | `#2F3336` |
-| Font Family | System fonts |
-| Base Font Size | 15px |
-| Button Radius | 9999px |
-| Card Radius | 16px |
-| Content Width | 600px |
-| Avatar Size | 40px |
-| Icon Size | 18-24px |
-| Spacing Unit | 4px |
+| Element            | Value        |
+|--------------------|--------------|
+| Primary Background | `#000000`    |
+| Primary Text       | `#E7E9EA`    |
+| Accent Blue        | `#1D9BF0`    |
+| Secondary Text     | `#71767B`    |
+| Borders            | `#2F3336`    |
+| Font Family        | System fonts |
+| Base Font Size     | 15px         |
+| Button Radius      | 9999px       |
+| Card Radius        | 16px         |
+| Content Width      | 600px        |
+| Avatar Size        | 40px         |
+| Icon Size          | 18-24px      |
+| Spacing Unit       | 4px          |
 
 ---
 

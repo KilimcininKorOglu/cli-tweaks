@@ -14,12 +14,12 @@ When `/task-plan status` is executed, display a formatted table of all tasks.
 ## Output Format
 
 ```
-| Task ID | Task Name                 | Status       | Priority | Feature |
-|---------|---------------------------|--------------|----------|---------|
-| T001    | Kayit formu UI            | COMPLETED    | P2       | F001    |
-| T002    | Input validation          | COMPLETED    | P2       | F001    |
-| T003    | API endpoint              | IN_PROGRESS  | P1       | F001    |
-| T004    | Database migration        | NOT_STARTED  | P1       | F001    |
+| Task ID | Task Name          | Status      | Priority | Feature |
+|---------|--------------------|-------------|----------|---------|
+| T001    | Kayit formu UI     | COMPLETED   | P2       | F001    |
+| T002    | Input validation   | COMPLETED   | P2       | F001    |
+| T003    | API endpoint       | IN_PROGRESS | P1       | F001    |
+| T004    | Database migration | NOT_STARTED | P1       | F001    |
 
 Summary:
   Total: 7 tasks

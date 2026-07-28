@@ -34,94 +34,94 @@ Snapchat embraces a **youthful, spontaneous, and ephemeral** design philosophy. 
 
 ### Primary Brand Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--snap-yellow` | `#FFFC00` | Primary brand color, logo, highlights |
-| `--snap-yellow-light` | `#FFFB4D` | Yellow variants, glows |
-| `--snap-yellow-dark` | `#E6E300` | Pressed states on yellow |
-| `--snap-black` | `#000000` | Text on yellow, dark mode background |
-| `--snap-white` | `#FFFFFF` | Light mode background, text on dark |
+| Token                 | Hex       | Role                                  |
+|-----------------------|-----------|---------------------------------------|
+| `--snap-yellow`       | `#FFFC00` | Primary brand color, logo, highlights |
+| `--snap-yellow-light` | `#FFFB4D` | Yellow variants, glows                |
+| `--snap-yellow-dark`  | `#E6E300` | Pressed states on yellow              |
+| `--snap-black`        | `#000000` | Text on yellow, dark mode background  |
+| `--snap-white`        | `#FFFFFF` | Light mode background, text on dark   |
 
 ### Light Theme (Default)
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--background-primary` | `#FFFFFF` | Main app background |
+| Token                    | Hex       | Role                              |
+|--------------------------|-----------|-----------------------------------|
+| `--background-primary`   | `#FFFFFF` | Main app background               |
 | `--background-secondary` | `#F7F7F7` | Card backgrounds, subtle sections |
-| `--background-tertiary` | `#EFEFEF` | Input fields, inactive areas |
-| `--surface-elevated` | `#FFFFFF` | Floating cards, modals |
-| `--border-subtle` | `#E8E8E8` | Subtle dividers, card borders |
-| `--border-default` | `#D1D1D1` | Standard borders |
+| `--background-tertiary`  | `#EFEFEF` | Input fields, inactive areas      |
+| `--surface-elevated`     | `#FFFFFF` | Floating cards, modals            |
+| `--border-subtle`        | `#E8E8E8` | Subtle dividers, card borders     |
+| `--border-default`       | `#D1D1D1` | Standard borders                  |
 
 ### Dark Theme
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--background-primary` | `#000000` | Main app background |
-| `--background-secondary` | `#1C1C1C` | Card backgrounds, panels |
-| `--background-tertiary` | `#2C2C2C` | Input fields, elevated sections |
-| `--surface-elevated` | `#1C1C1C` | Floating elements |
-| `--border-subtle` | `#2C2C2C` | Subtle dividers |
-| `--border-default` | `#3C3C3C` | Standard borders |
+| Token                    | Hex       | Role                            |
+|--------------------------|-----------|---------------------------------|
+| `--background-primary`   | `#000000` | Main app background             |
+| `--background-secondary` | `#1C1C1C` | Card backgrounds, panels        |
+| `--background-tertiary`  | `#2C2C2C` | Input fields, elevated sections |
+| `--surface-elevated`     | `#1C1C1C` | Floating elements               |
+| `--border-subtle`        | `#2C2C2C` | Subtle dividers                 |
+| `--border-default`       | `#3C3C3C` | Standard borders                |
 
 ### Text Colors
 
-| Token | Light Mode | Dark Mode | Role |
-|-------|------------|-----------|------|
-| `--text-primary` | `#000000` | `#FFFFFF` | Headlines, primary content |
-| `--text-secondary` | `#6E6E6E` | `#A0A0A0` | Subtitles, metadata, timestamps |
-| `--text-tertiary` | `#999999` | `#666666` | Placeholders, hints |
-| `--text-inverse` | `#FFFFFF` | `#000000` | Text on accent backgrounds |
-| `--text-on-yellow` | `#000000` | `#000000` | Always black text on yellow |
+| Token              | Light Mode | Dark Mode | Role                            |
+|--------------------|------------|-----------|---------------------------------|
+| `--text-primary`   | `#000000`  | `#FFFFFF` | Headlines, primary content      |
+| `--text-secondary` | `#6E6E6E`  | `#A0A0A0` | Subtitles, metadata, timestamps |
+| `--text-tertiary`  | `#999999`  | `#666666` | Placeholders, hints             |
+| `--text-inverse`   | `#FFFFFF`  | `#000000` | Text on accent backgrounds      |
+| `--text-on-yellow` | `#000000`  | `#000000` | Always black text on yellow     |
 
 ### Chat Bubble Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--chat-sent` | `#0FADFF` | Sent text messages (blue) |
-| `--chat-received` | `#9B9B9B` | Received text messages (gray) |
-| `--chat-snap-sent` | `#E5395E` | Sent snap indicator (red) |
+| Token                  | Hex       | Role                             |
+|------------------------|-----------|----------------------------------|
+| `--chat-sent`          | `#0FADFF` | Sent text messages (blue)        |
+| `--chat-received`      | `#9B9B9B` | Received text messages (gray)    |
+| `--chat-snap-sent`     | `#E5395E` | Sent snap indicator (red)        |
 | `--chat-snap-received` | `#9B30FF` | Received snap indicator (purple) |
-| `--chat-snap-viewed` | `#C4C4C4` | Opened/viewed snap |
-| `--chat-delivered` | `#0FADFF` | Delivered message indicator |
+| `--chat-snap-viewed`   | `#C4C4C4` | Opened/viewed snap               |
+| `--chat-delivered`     | `#0FADFF` | Delivered message indicator      |
 
 ### Snap Status Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--snap-red` | `#E5395E` | Snap without audio (sent/received) |
-| `--snap-purple` | `#9B30FF` | Snap with audio |
-| `--snap-blue` | `#0FADFF` | Chat message |
-| `--snap-red-hollow` | `#E5395E` (outline) | Opened snap without audio |
-| `--snap-purple-hollow` | `#9B30FF` (outline) | Opened snap with audio |
-| `--snap-blue-hollow` | `#0FADFF` (outline) | Opened chat |
+| Token                  | Hex                 | Role                               |
+|------------------------|---------------------|------------------------------------|
+| `--snap-red`           | `#E5395E`           | Snap without audio (sent/received) |
+| `--snap-purple`        | `#9B30FF`           | Snap with audio                    |
+| `--snap-blue`          | `#0FADFF`           | Chat message                       |
+| `--snap-red-hollow`    | `#E5395E` (outline) | Opened snap without audio          |
+| `--snap-purple-hollow` | `#9B30FF` (outline) | Opened snap with audio             |
+| `--snap-blue-hollow`   | `#0FADFF` (outline) | Opened chat                        |
 
 ### Story Ring Gradients
 
-| Type | Gradient | Role |
-|------|----------|------|
-| Unseen Story | `linear-gradient(135deg, #FFFC00 0%, #FF6600 100%)` | Yellow-orange ring |
-| Close Friends | `linear-gradient(135deg, #00E676 0%, #00BFA5 100%)` | Green ring |
-| Seen Story | `#D1D1D1` (solid) | Gray ring |
-| Your Story | `linear-gradient(135deg, #0FADFF 0%, #7B68EE 100%)` | Blue-purple ring |
+| Type          | Gradient                                            | Role               |
+|---------------|-----------------------------------------------------|--------------------|
+| Unseen Story  | `linear-gradient(135deg, #FFFC00 0%, #FF6600 100%)` | Yellow-orange ring |
+| Close Friends | `linear-gradient(135deg, #00E676 0%, #00BFA5 100%)` | Green ring         |
+| Seen Story    | `#D1D1D1` (solid)                                   | Gray ring          |
+| Your Story    | `linear-gradient(135deg, #0FADFF 0%, #7B68EE 100%)` | Blue-purple ring   |
 
 ### Semantic Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--success` | `#00E676` | Success states, streaks, verifications |
-| `--warning` | `#FFB300` | Caution, pending states |
-| `--error` | `#FF3B30` | Errors, destructive actions |
-| `--info` | `#0FADFF` | Information, links |
-| `--streak-fire` | `#FF9500` | Streak fire icon |
+| Token           | Hex       | Role                                   |
+|-----------------|-----------|----------------------------------------|
+| `--success`     | `#00E676` | Success states, streaks, verifications |
+| `--warning`     | `#FFB300` | Caution, pending states                |
+| `--error`       | `#FF3B30` | Errors, destructive actions            |
+| `--info`        | `#0FADFF` | Information, links                     |
+| `--streak-fire` | `#FF9500` | Streak fire icon                       |
 
 ### Snapchat+ Premium
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--plus-gold` | `#FFD700` | Snapchat+ badge |
+| Token                   | Hex       | Role                   |
+|-------------------------|-----------|------------------------|
+| `--plus-gold`           | `#FFD700` | Snapchat+ badge        |
 | `--plus-gradient-start` | `#FFD700` | Premium gradient start |
-| `--plus-gradient-end` | `#FF8C00` | Premium gradient end |
+| `--plus-gradient-end`   | `#FF8C00` | Premium gradient end   |
 
 ---
 
@@ -142,30 +142,30 @@ Snapchat embraces a **youthful, spontaneous, and ephemeral** design philosophy. 
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing | Color |
-|---------|------|--------|-------------|----------------|-------|
-| Hero Title | 32px | 700 | 38px | -0.5px | `--text-primary` |
-| Section Header | 24px | 700 | 30px | -0.3px | `--text-primary` |
-| Page Title | 20px | 600 | 26px | 0 | `--text-primary` |
-| Card Title | 17px | 600 | 22px | 0 | `--text-primary` |
-| Body Large | 17px | 400 | 22px | 0 | `--text-primary` |
-| Body Regular | 15px | 400 | 20px | 0 | `--text-primary` |
-| Body Small | 13px | 400 | 18px | 0 | `--text-secondary` |
-| Caption | 12px | 500 | 16px | 0.2px | `--text-secondary` |
-| Micro | 10px | 600 | 14px | 0.5px | `--text-tertiary` |
-| Username | 15px | 600 | 20px | 0 | `--text-primary` |
-| Timestamp | 11px | 400 | 14px | 0.3px | `--text-tertiary` |
-| Button Text | 15px | 600 | 20px | 0.3px | Contextual |
-| Tab Label | 12px | 600 | 16px | 0.5px | Contextual |
+| Element        | Size | Weight | Line Height | Letter Spacing | Color              |
+|----------------|------|--------|-------------|----------------|--------------------|
+| Hero Title     | 32px | 700    | 38px        | -0.5px         | `--text-primary`   |
+| Section Header | 24px | 700    | 30px        | -0.3px         | `--text-primary`   |
+| Page Title     | 20px | 600    | 26px        | 0              | `--text-primary`   |
+| Card Title     | 17px | 600    | 22px        | 0              | `--text-primary`   |
+| Body Large     | 17px | 400    | 22px        | 0              | `--text-primary`   |
+| Body Regular   | 15px | 400    | 20px        | 0              | `--text-primary`   |
+| Body Small     | 13px | 400    | 18px        | 0              | `--text-secondary` |
+| Caption        | 12px | 500    | 16px        | 0.2px          | `--text-secondary` |
+| Micro          | 10px | 600    | 14px        | 0.5px          | `--text-tertiary`  |
+| Username       | 15px | 600    | 20px        | 0              | `--text-primary`   |
+| Timestamp      | 11px | 400    | 14px        | 0.3px          | `--text-tertiary`  |
+| Button Text    | 15px | 600    | 20px        | 0.3px          | Contextual         |
+| Tab Label      | 12px | 600    | 16px        | 0.5px          | Contextual         |
 
 ### Font Weights
 
-| Weight | Name | Usage |
-|--------|------|-------|
-| 400 | Regular | Body text, descriptions, chat messages |
-| 500 | Medium | Subtitles, secondary buttons, metadata |
-| 600 | Semibold | Usernames, titles, primary buttons |
-| 700 | Bold | Headlines, section headers, emphasis |
+| Weight | Name     | Usage                                  |
+|--------|----------|----------------------------------------|
+| 400    | Regular  | Body text, descriptions, chat messages |
+| 500    | Medium   | Subtitles, secondary buttons, metadata |
+| 600    | Semibold | Usernames, titles, primary buttons     |
+| 700    | Bold     | Headlines, section headers, emphasis   |
 
 ### Text Styling
 
@@ -928,16 +928,16 @@ Snapchat embraces a **youthful, spontaneous, and ephemeral** design philosophy. 
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--spacing-2` | 2px | Micro gaps, icon padding |
-| `--spacing-4` | 4px | Tight gaps, inline spacing |
-| `--spacing-8` | 8px | Standard element gaps |
-| `--spacing-12` | 12px | Card internal padding |
-| `--spacing-16` | 16px | Section padding, margins |
-| `--spacing-20` | 20px | Large gaps |
-| `--spacing-24` | 24px | Modal padding, section breaks |
-| `--spacing-32` | 32px | Major section spacing |
+| Token          | Value | Usage                         |
+|----------------|-------|-------------------------------|
+| `--spacing-2`  | 2px   | Micro gaps, icon padding      |
+| `--spacing-4`  | 4px   | Tight gaps, inline spacing    |
+| `--spacing-8`  | 8px   | Standard element gaps         |
+| `--spacing-12` | 12px  | Card internal padding         |
+| `--spacing-16` | 16px  | Section padding, margins      |
+| `--spacing-20` | 20px  | Large gaps                    |
+| `--spacing-24` | 24px  | Modal padding, section breaks |
+| `--spacing-32` | 32px  | Major section spacing         |
 
 ### Core Layout Structure
 
@@ -1008,13 +1008,13 @@ Snapchat uses a **fluid, gesture-based layout** rather than rigid grids. The pri
 
 ### Shadow System
 
-| Level | Shadow | Usage |
-|-------|--------|-------|
-| Level 0 | None | Flat surfaces, background |
-| Level 1 | `0 1px 3px rgba(0,0,0,0.08)` | Subtle lift, cards |
-| Level 2 | `0 4px 12px rgba(0,0,0,0.12)` | Floating buttons, chips |
-| Level 3 | `0 8px 24px rgba(0,0,0,0.15)` | Modals, bottom sheets |
-| Level 4 | `0 16px 48px rgba(0,0,0,0.2)` | Snap Map cards, overlays |
+| Level   | Shadow                        | Usage                     |
+|---------|-------------------------------|---------------------------|
+| Level 0 | None                          | Flat surfaces, background |
+| Level 1 | `0 1px 3px rgba(0,0,0,0.08)`  | Subtle lift, cards        |
+| Level 2 | `0 4px 12px rgba(0,0,0,0.12)` | Floating buttons, chips   |
+| Level 3 | `0 8px 24px rgba(0,0,0,0.15)` | Modals, bottom sheets     |
+| Level 4 | `0 16px 48px rgba(0,0,0,0.2)` | Snap Map cards, overlays  |
 
 ### Surface Hierarchy
 
@@ -1034,16 +1034,16 @@ Snapchat uses a **fluid, gesture-based layout** rather than rigid grids. The pri
 
 ### Z-Index Scale
 
-| Layer | Z-Index | Elements |
-|-------|---------|----------|
-| Base | 0 | Main content, camera feed |
-| Sticky | 10 | Headers, navigation |
-| Overlay Controls | 100 | Camera controls, AR lenses |
-| Dropdown | 200 | Menus, autocomplete |
-| Bottom Sheet | 300 | Action sheets, share menus |
-| Modal | 400 | Dialogs, profiles |
-| Toast | 500 | Notifications, snackbars |
-| System | 600 | Loading states, critical alerts |
+| Layer            | Z-Index | Elements                        |
+|------------------|---------|---------------------------------|
+| Base             | 0       | Main content, camera feed       |
+| Sticky           | 10      | Headers, navigation             |
+| Overlay Controls | 100     | Camera controls, AR lenses      |
+| Dropdown         | 200     | Menus, autocomplete             |
+| Bottom Sheet     | 300     | Action sheets, share menus      |
+| Modal            | 400     | Dialogs, profiles               |
+| Toast            | 500     | Notifications, snackbars        |
+| System           | 600     | Loading states, critical alerts |
 
 ### Blur Effects
 
@@ -1079,44 +1079,44 @@ Snapchat uses a **fluid, gesture-based layout** rather than rigid grids. The pri
 
 ### Do's
 
-| Guideline | Rationale |
-|-----------|-----------|
-| Use Snapchat Yellow (#FFFC00) as the primary brand accent | Instant brand recognition |
-| Keep camera as the home screen experience | Camera-first philosophy |
-| Use circular avatars and story rings consistently | Platform identity |
-| Implement swipe gestures for navigation | Natural mobile interaction |
-| Show Bitmoji avatars for personality | Personal connection |
-| Use ephemeral indicators (viewed/delivered status) | Core platform concept |
-| Apply rounded corners (16-24px on cards) | Friendly, approachable feel |
-| Include streak indicators and friend emojis | Social engagement features |
-| Use gradient story rings for unviewed content | Visual urgency |
-| Design for full-bleed, edge-to-edge content | Modern mobile experience |
+| Guideline                                                 | Rationale                   |
+|-----------------------------------------------------------|-----------------------------|
+| Use Snapchat Yellow (#FFFC00) as the primary brand accent | Instant brand recognition   |
+| Keep camera as the home screen experience                 | Camera-first philosophy     |
+| Use circular avatars and story rings consistently         | Platform identity           |
+| Implement swipe gestures for navigation                   | Natural mobile interaction  |
+| Show Bitmoji avatars for personality                      | Personal connection         |
+| Use ephemeral indicators (viewed/delivered status)        | Core platform concept       |
+| Apply rounded corners (16-24px on cards)                  | Friendly, approachable feel |
+| Include streak indicators and friend emojis               | Social engagement features  |
+| Use gradient story rings for unviewed content             | Visual urgency              |
+| Design for full-bleed, edge-to-edge content               | Modern mobile experience    |
 
 ### Don'ts
 
-| Anti-Pattern | Why to Avoid |
-|--------------|--------------|
-| Never make camera secondary to feeds | Breaks core platform identity |
-| Avoid static, permanent content feel | Snapchat is about ephemeral moments |
-| Don't use square avatars or sharp corners | Inconsistent with brand |
-| Never use small touch targets (<44px) | Poor mobile usability |
-| Avoid complex navigation hierarchies | Users expect swipe simplicity |
-| Don't overload camera UI with controls | Keep focus on capturing |
-| Avoid formal, corporate tone | Target audience is Gen-Z |
-| Never show raw timestamps (use "2h ago") | More casual, approachable |
-| Don't forget dark mode support | User expectation |
-| Avoid heavy text-based interfaces | Visual-first platform |
+| Anti-Pattern                              | Why to Avoid                        |
+|-------------------------------------------|-------------------------------------|
+| Never make camera secondary to feeds      | Breaks core platform identity       |
+| Avoid static, permanent content feel      | Snapchat is about ephemeral moments |
+| Don't use square avatars or sharp corners | Inconsistent with brand             |
+| Never use small touch targets (<44px)     | Poor mobile usability               |
+| Avoid complex navigation hierarchies      | Users expect swipe simplicity       |
+| Don't overload camera UI with controls    | Keep focus on capturing             |
+| Avoid formal, corporate tone              | Target audience is Gen-Z            |
+| Never show raw timestamps (use "2h ago")  | More casual, approachable           |
+| Don't forget dark mode support            | User expectation                    |
+| Avoid heavy text-based interfaces         | Visual-first platform               |
 
 ### Content Guidelines
 
-| Do | Don't |
-|----|-------|
-| Use casual, friendly language | Formal corporate speak |
+| Do                                          | Don't                       |
+|---------------------------------------------|-----------------------------|
+| Use casual, friendly language               | Formal corporate speak      |
 | Show relative timestamps ("Just now", "5m") | Exact timestamps everywhere |
-| Include emoji and Bitmoji naturally | Text-heavy explanations |
-| Give immediate visual feedback on actions | Silent state changes |
-| Communicate through status colors | Rely only on text labels |
-| Keep copy short and scannable | Long paragraphs of text |
+| Include emoji and Bitmoji naturally         | Text-heavy explanations     |
+| Give immediate visual feedback on actions   | Silent state changes        |
+| Communicate through status colors           | Rely only on text labels    |
+| Keep copy short and scannable               | Long paragraphs of text     |
 
 ---
 
@@ -1124,32 +1124,32 @@ Snapchat uses a **fluid, gesture-based layout** rather than rigid grids. The pri
 
 ### Device Breakpoints
 
-| Name | Width | Behavior |
-|------|-------|----------|
-| Mobile Small | <375px | Compact layouts, smaller avatars |
-| Mobile Standard | 375px-414px | Default design specs |
-| Mobile Large | 414px-428px | Slightly larger touch targets |
-| Tablet | 768px+ | Not primary target, scaled mobile |
+| Name            | Width       | Behavior                          |
+|-----------------|-------------|-----------------------------------|
+| Mobile Small    | <375px      | Compact layouts, smaller avatars  |
+| Mobile Standard | 375px-414px | Default design specs              |
+| Mobile Large    | 414px-428px | Slightly larger touch targets     |
+| Tablet          | 768px+      | Not primary target, scaled mobile |
 
 ### Mobile-First Adaptations
 
-| Component | Standard Mobile | Large Mobile |
-|-----------|-----------------|--------------|
-| Story Ring | 64px | 72px |
-| Avatar (Chat List) | 56px | 60px |
-| Bottom Nav Height | 84px (with safe area) | 84px |
-| Card Border Radius | 16px | 20px |
-| Chat Bubble Max Width | 75% | 70% |
+| Component             | Standard Mobile       | Large Mobile |
+|-----------------------|-----------------------|--------------|
+| Story Ring            | 64px                  | 72px         |
+| Avatar (Chat List)    | 56px                  | 60px         |
+| Bottom Nav Height     | 84px (with safe area) | 84px         |
+| Card Border Radius    | 16px                  | 20px         |
+| Chat Bubble Max Width | 75%                   | 70%          |
 
 ### Touch Targets
 
-| Element | Minimum Size | Recommended |
-|---------|--------------|-------------|
-| Any tappable element | 44px × 44px | 48px × 48px |
-| Primary CTA buttons | 48px height | 56px height |
-| Capture button | 72px × 72px | 72px × 72px |
-| Story ring (tappable) | 64px × 64px | 64px × 64px |
-| Bottom nav item | 64px × 64px | 68px × 68px |
+| Element               | Minimum Size | Recommended |
+|-----------------------|--------------|-------------|
+| Any tappable element  | 44px × 44px  | 48px × 48px |
+| Primary CTA buttons   | 48px height  | 56px height |
+| Capture button        | 72px × 72px  | 72px × 72px |
+| Story ring (tappable) | 64px × 64px  | 64px × 64px |
+| Bottom nav item       | 64px × 64px  | 68px × 68px |
 
 ### Gesture Zones
 

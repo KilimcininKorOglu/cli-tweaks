@@ -79,26 +79,26 @@ Hunt for these waste categories across the ENTIRE codebase:
 
 Before marking anything dead, rule out:
 
-| Exemption | Description |
-|---|---|
-| Dynamic dispatch | Reflection, runtime type resolution |
-| Dependency injection | Wiring via string names or decorators |
-| Serialization targets | ORM models, JSON mappers, protobuf |
-| Metaprogramming | Macros, annotations, code generators |
-| Test fixtures | Test-only utilities and mocks |
-| Public API surface | Library exports consumed externally |
-| Framework hooks | beforeEach, onMount, middleware chains |
+| Exemption              | Description                            |
+|------------------------|----------------------------------------|
+| Dynamic dispatch       | Reflection, runtime type resolution    |
+| Dependency injection   | Wiring via string names or decorators  |
+| Serialization targets  | ORM models, JSON mappers, protobuf     |
+| Metaprogramming        | Macros, annotations, code generators   |
+| Test fixtures          | Test-only utilities and mocks          |
+| Public API surface     | Library exports consumed externally    |
+| Framework hooks        | beforeEach, onMount, middleware chains |
 | Config-driven behavior | Symbol names in config files, env vars |
 
 If any exemption applies, lower confidence and state the reason.
 
 ### Phase 3: Triage
 
-| Risk | Meaning |
-|---|---|
-| HIGH | Safe to delete immediately; zero external callers, no framework magic |
-| MEDIUM | Likely dead but indirect usage possible; verify before deleting |
-| LOW | Probably used via reflection/config/public API; flag for human review |
+| Risk   | Meaning                                                               |
+|--------|-----------------------------------------------------------------------|
+| HIGH   | Safe to delete immediately; zero external callers, no framework magic |
+| MEDIUM | Likely dead but indirect usage possible; verify before deleting       |
+| LOW    | Probably used via reflection/config/public API; flag for human review |
 
 Write each HIGH/MEDIUM finding to `BUG-REPORT.md` using the shared format from `../SKILL.md`.
 Severity: LOW for dead code (cleanup, not a bug). Suggested Commit: `dead: remove [description]`.

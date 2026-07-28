@@ -591,23 +591,23 @@ eBay uses a comprehensive SVG icon system with consistent sizing and styling:
 ```
 
 ### Common Icons
-| Icon | Use Case |
-|------|----------|
-| `icon-search` | Search functionality |
-| `icon-cart` | Shopping cart |
-| `icon-heart` | Watchlist/favorites |
-| `icon-notification` | Alerts and notifications |
-| `icon-user` | Account/profile |
-| `icon-chevron-down` | Dropdowns, expandable |
-| `icon-chevron-right` | Navigation, links |
-| `icon-close` | Close/dismiss |
-| `icon-menu` | Mobile menu |
-| `icon-star` | Ratings |
-| `icon-star-filled` | Filled ratings |
-| `icon-check` | Success, confirmation |
-| `icon-info` | Information |
-| `icon-warning` | Warnings |
-| `icon-error` | Errors |
+| Icon                 | Use Case                 |
+|----------------------|--------------------------|
+| `icon-search`        | Search functionality     |
+| `icon-cart`          | Shopping cart            |
+| `icon-heart`         | Watchlist/favorites      |
+| `icon-notification`  | Alerts and notifications |
+| `icon-user`          | Account/profile          |
+| `icon-chevron-down`  | Dropdowns, expandable    |
+| `icon-chevron-right` | Navigation, links        |
+| `icon-close`         | Close/dismiss            |
+| `icon-menu`          | Mobile menu              |
+| `icon-star`          | Ratings                  |
+| `icon-star-filled`   | Filled ratings           |
+| `icon-check`         | Success, confirmation    |
+| `icon-info`          | Information              |
+| `icon-warning`       | Warnings                 |
+| `icon-error`         | Errors                   |
 
 ### Star Rating
 ```css

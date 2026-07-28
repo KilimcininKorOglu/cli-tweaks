@@ -38,7 +38,7 @@ let layout = UICollectionViewCompositionalLayout(section: section)
 ### Size Dimensions
 
 | Dimension                | Meaning                                           |
-| ------------------------ | ------------------------------------------------- |
+|--------------------------|---------------------------------------------------|
 | `.fractionalWidth(0.5)`  | 50% of the container's width                      |
 | `.fractionalHeight(1.0)` | 100% of the container's height                    |
 | `.absolute(200)`         | Fixed 200pt                                       |
@@ -548,7 +548,7 @@ private static func createBannerSection() -> NSCollectionLayoutSection {
 ### Orthogonal Scrolling Behaviors
 
 | Behavior                          | Description                                      |
-| --------------------------------- | ------------------------------------------------ |
+|-----------------------------------|--------------------------------------------------|
 | `.continuous`                     | Free-scrolling, no snapping                      |
 | `.continuousGroupLeadingBoundary` | Snaps group leading edge to section leading edge |
 | `.paging`                         | Full-width page snapping                         |

@@ -877,7 +877,7 @@ final class WeatherPresenterTests: XCTestCase {
 ## 5. Comparison Table: Protocol-Delegate vs Closures
 
 | Aspect                | Protocol-Delegate                                                                     | Closures                                                                |
-| --------------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+|-----------------------|---------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
 | **Coupling**          | Low -- communicates through a protocol contract                                       | Slightly higher -- closure captures call-site context                   |
 | **Number of methods** | Scales well for many callbacks (multiple delegate methods)                            | Best for 1-2 callbacks; many closures clutter the API                   |
 | **Flexibility**       | Single delegate at a time (1:1 relationship)                                          | Each call site can supply a different closure                           |

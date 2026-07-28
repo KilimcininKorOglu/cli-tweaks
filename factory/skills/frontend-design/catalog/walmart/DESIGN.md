@@ -104,17 +104,17 @@ Divider: #CCCCCC
 
 ### Functional Colors
 
-| Purpose | Color | Hex Code |
-|---------|-------|----------|
-| Primary Action | Walmart Blue | #0071DC |
-| Savings/Value | Spark Yellow | #FFC220 |
-| Rollback | Rollback Red | #DE1C24 |
-| Success | Success Green | #2E7D32 |
-| Warning | Orange | #F57C00 |
-| Error | Error Red | #B00020 |
-| Info | Info Blue | #0288D1 |
-| Pickup Today | Green | #1E8900 |
-| Delivery | Blue | #0071DC |
+| Purpose        | Color         | Hex Code |
+|----------------|---------------|----------|
+| Primary Action | Walmart Blue  | #0071DC  |
+| Savings/Value  | Spark Yellow  | #FFC220  |
+| Rollback       | Rollback Red  | #DE1C24  |
+| Success        | Success Green | #2E7D32  |
+| Warning        | Orange        | #F57C00  |
+| Error          | Error Red     | #B00020  |
+| Info           | Info Blue     | #0288D1  |
+| Pickup Today   | Green         | #1E8900  |
+| Delivery       | Blue          | #0071DC  |
 
 ### Color Usage Guidelines
 
@@ -138,12 +138,12 @@ font-family: 'Bogle', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 ```
 
 #### Font Weights
-| Weight | Value | Usage |
-|--------|-------|-------|
-| Regular | 400 | Body text, descriptions |
-| Medium | 500 | Subheadings, emphasis |
-| Bold | 700 | Headlines, prices, CTAs |
-| Black | 900 | Hero headlines, major promotions |
+| Weight  | Value | Usage                            |
+|---------|-------|----------------------------------|
+| Regular | 400   | Body text, descriptions          |
+| Medium  | 500   | Subheadings, emphasis            |
+| Bold    | 700   | Headlines, prices, CTAs          |
+| Black   | 900   | Hero headlines, major promotions |
 
 ### Type Scale
 
@@ -268,18 +268,18 @@ Prices are a critical element in Walmart's design and require special treatment:
 
 Walmart uses an 8px base unit for consistent spacing:
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| spacing-0 | 0px | Reset |
-| spacing-1 | 4px | Tight spacing, icon gaps |
-| spacing-2 | 8px | Base unit, small gaps |
-| spacing-3 | 12px | Compact padding |
-| spacing-4 | 16px | Standard padding |
-| spacing-5 | 24px | Section padding |
-| spacing-6 | 32px | Large gaps |
-| spacing-7 | 48px | Section breaks |
-| spacing-8 | 64px | Major sections |
-| spacing-9 | 96px | Page sections |
+| Token     | Value | Usage                    |
+|-----------|-------|--------------------------|
+| spacing-0 | 0px   | Reset                    |
+| spacing-1 | 4px   | Tight spacing, icon gaps |
+| spacing-2 | 8px   | Base unit, small gaps    |
+| spacing-3 | 12px  | Compact padding          |
+| spacing-4 | 16px  | Standard padding         |
+| spacing-5 | 24px  | Section padding          |
+| spacing-6 | 32px  | Large gaps               |
+| spacing-7 | 48px  | Section breaks           |
+| spacing-8 | 64px  | Major sections           |
+| spacing-9 | 96px  | Page sections            |
 
 ### Grid System
 
@@ -346,14 +346,14 @@ Walmart uses an 8px base unit for consistent spacing:
 
 ### Breakpoints
 
-| Breakpoint | Value | Device |
-|------------|-------|--------|
-| xs | 0-479px | Small phones |
-| sm | 480-767px | Large phones |
-| md | 768-1023px | Tablets |
-| lg | 1024-1279px | Small desktop |
-| xl | 1280-1439px | Desktop |
-| xxl | 1440px+ | Large desktop |
+| Breakpoint | Value       | Device        |
+|------------|-------------|---------------|
+| xs         | 0-479px     | Small phones  |
+| sm         | 480-767px   | Large phones  |
+| md         | 768-1023px  | Tablets       |
+| lg         | 1024-1279px | Small desktop |
+| xl         | 1280-1439px | Desktop       |
+| xxl        | 1440px+     | Large desktop |
 
 ---
 
@@ -638,18 +638,18 @@ Walmart icons are simple, functional, and universally recognizable:
 
 ### Core Icons
 
-| Icon | Usage | Size |
-|------|-------|------|
-| Spark | Logo element, rewards | 24-48px |
-| Cart | Shopping cart | 24px |
-| Search | Search functionality | 24px |
-| Store | Store locator, pickup | 24px |
-| Delivery | Delivery options | 24px |
-| Heart | Favorites/wishlist | 24px |
-| User | Account | 24px |
-| Menu | Mobile navigation | 24px |
-| Filter | Sort/filter options | 24px |
-| Check | Success, selection | 20px |
+| Icon     | Usage                 | Size    |
+|----------|-----------------------|---------|
+| Spark    | Logo element, rewards | 24-48px |
+| Cart     | Shopping cart         | 24px    |
+| Search   | Search functionality  | 24px    |
+| Store    | Store locator, pickup | 24px    |
+| Delivery | Delivery options      | 24px    |
+| Heart    | Favorites/wishlist    | 24px    |
+| User     | Account               | 24px    |
+| Menu     | Mobile navigation     | 24px    |
+| Filter   | Sort/filter options   | 24px    |
+| Check    | Success, selection    | 20px    |
 
 ### The Spark
 
@@ -724,14 +724,14 @@ The Walmart Spark is the most recognizable brand element:
 
 ### Image Specifications
 
-| Type | Aspect Ratio | Min Resolution |
-|------|--------------|----------------|
-| Product (Square) | 1:1 | 1000x1000px |
-| Product (Detail) | 1:1 | 1500x1500px |
-| Hero Banner | 16:9 | 1920x1080px |
-| Category Tile | 4:3 | 800x600px |
-| Thumbnail | 1:1 | 200x200px |
-| Mobile Banner | 2:1 | 750x375px |
+| Type             | Aspect Ratio | Min Resolution |
+|------------------|--------------|----------------|
+| Product (Square) | 1:1          | 1000x1000px    |
+| Product (Detail) | 1:1          | 1500x1500px    |
+| Hero Banner      | 16:9         | 1920x1080px    |
+| Category Tile    | 4:3          | 800x600px      |
+| Thumbnail        | 1:1          | 200x200px      |
+| Mobile Banner    | 2:1          | 750x375px      |
 
 ### Image Treatment
 
@@ -907,11 +907,11 @@ Walmart is committed to WCAG 2.1 AA compliance across all digital properties.
 
 ### Color Contrast
 
-| Text Type | Minimum Ratio | Walmart Implementation |
-|-----------|---------------|----------------------|
-| Normal Text | 4.5:1 | #2E2F32 on #FFFFFF = 13.9:1 |
-| Large Text | 3:1 | #0071DC on #FFFFFF = 5.2:1 |
-| UI Components | 3:1 | All interactive elements |
+| Text Type     | Minimum Ratio | Walmart Implementation      |
+|---------------|---------------|-----------------------------|
+| Normal Text   | 4.5:1         | #2E2F32 on #FFFFFF = 13.9:1 |
+| Large Text    | 3:1           | #0071DC on #FFFFFF = 5.2:1  |
+| UI Components | 3:1           | All interactive elements    |
 
 ### Focus States
 

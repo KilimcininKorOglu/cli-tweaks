@@ -24,12 +24,12 @@ The core question: *Is this a real credential committed to the repository?*
 
 ### Severity by Exposure
 
-| Exposure | Severity | Rationale |
-|----------|----------|-----------|
-| Frontend/client code (browser JS, mobile app source) | CRITICAL | Extractable by any external attacker |
-| Backend code in a public repository | HIGH | Accessible to anyone who finds the repo |
-| Backend code in a private repository | MEDIUM | Exposed to all repo collaborators, risk if repo leaks |
-| Test/development key in non-test code | LOW | May indicate prod keys follow same pattern |
+| Exposure                                             | Severity | Rationale                                             |
+|------------------------------------------------------|----------|-------------------------------------------------------|
+| Frontend/client code (browser JS, mobile app source) | CRITICAL | Extractable by any external attacker                  |
+| Backend code in a public repository                  | HIGH     | Accessible to anyone who finds the repo               |
+| Backend code in a private repository                 | MEDIUM   | Exposed to all repo collaborators, risk if repo leaks |
+| Test/development key in non-test code                | LOW      | May indicate prod keys follow same pattern            |
 
 ### What IS a Hardcoded Secret
 
@@ -62,27 +62,27 @@ Do not flag these:
 
 ### High-Confidence Regex Patterns
 
-| Secret Type                    | Pattern                                              |
-|--------------------------------|------------------------------------------------------|
-| AWS Access Key ID              | `AKIA[0-9A-Z]{16}`                                  |
-| AWS Secret Access Key          | 40-char base64 string near an `AKIA` key             |
-| Google API Key                 | `AIza[0-9A-Za-z\-_]{35}`                             |
-| Google OAuth Client Secret     | `GOCSPX-[0-9A-Za-z\-_]{28}`                          |
-| GitHub Token                   | `ghp_[0-9A-Za-z]{36}`, `github_pat_[0-9A-Za-z_]{82}` |
-| GitLab Token                   | `glpat-[0-9A-Za-z\-_]{20}`                           |
-| Slack Token                    | `xoxb-`, `xoxp-`, `xoxa-`, `xoxr-`                   |
-| Slack Webhook URL              | `hooks.slack.com/services/T[A-Z0-9]+/B[A-Z0-9]+/`    |
-| Stripe Secret Key              | `sk_live_[0-9A-Za-z]{24,}`, `sk_test_[0-9A-Za-z]{24,}` |
-| SendGrid API Key               | `SG\.[0-9A-Za-z\-_]{22}\.[0-9A-Za-z\-_]{43}`        |
-| Twilio Account SID             | `AC[0-9a-f]{32}`                                     |
-| OpenAI API Key                 | `sk-[A-Za-z0-9]{48}`, `sk-proj-[A-Za-z0-9\-_]{100,}` |
-| Anthropic API Key              | `sk-ant-[A-Za-z0-9\-_]{90,}`                         |
-| Private Key Header             | `-----BEGIN (RSA\|EC\|OPENSSH\|DSA)?PRIVATE KEY-----` |
-| DB Connection String           | `(postgresql\|mysql\|mongodb\|redis)://[^:]+:[^@]+@`  |
-| Heroku API Key                 | UUID format in Heroku context                         |
-| Azure Storage Key              | ~88 char base64 string assigned to storage key var    |
-| Mailgun API Key                | `key-[0-9a-zA-Z]{32}`                                |
-| Firebase Admin/Server Key      | Service account JSON with `private_key` field         |
+| Secret Type                | Pattern                                                |
+|----------------------------|--------------------------------------------------------|
+| AWS Access Key ID          | `AKIA[0-9A-Z]{16}`                                     |
+| AWS Secret Access Key      | 40-char base64 string near an `AKIA` key               |
+| Google API Key             | `AIza[0-9A-Za-z\-_]{35}`                               |
+| Google OAuth Client Secret | `GOCSPX-[0-9A-Za-z\-_]{28}`                            |
+| GitHub Token               | `ghp_[0-9A-Za-z]{36}`, `github_pat_[0-9A-Za-z_]{82}`   |
+| GitLab Token               | `glpat-[0-9A-Za-z\-_]{20}`                             |
+| Slack Token                | `xoxb-`, `xoxp-`, `xoxa-`, `xoxr-`                     |
+| Slack Webhook URL          | `hooks.slack.com/services/T[A-Z0-9]+/B[A-Z0-9]+/`      |
+| Stripe Secret Key          | `sk_live_[0-9A-Za-z]{24,}`, `sk_test_[0-9A-Za-z]{24,}` |
+| SendGrid API Key           | `SG\.[0-9A-Za-z\-_]{22}\.[0-9A-Za-z\-_]{43}`           |
+| Twilio Account SID         | `AC[0-9a-f]{32}`                                       |
+| OpenAI API Key             | `sk-[A-Za-z0-9]{48}`, `sk-proj-[A-Za-z0-9\-_]{100,}`   |
+| Anthropic API Key          | `sk-ant-[A-Za-z0-9\-_]{90,}`                           |
+| Private Key Header         | `-----BEGIN (RSA\|EC\|OPENSSH\|DSA)?PRIVATE KEY-----`  |
+| DB Connection String       | `(postgresql\|mysql\|mongodb\|redis)://[^:]+:[^@]+@`   |
+| Heroku API Key             | UUID format in Heroku context                          |
+| Azure Storage Key          | ~88 char base64 string assigned to storage key var     |
+| Mailgun API Key            | `key-[0-9a-zA-Z]{32}`                                  |
+| Firebase Admin/Server Key  | Service account JSON with `private_key` field          |
 
 ### Variable Name Patterns (Require Value Inspection)
 

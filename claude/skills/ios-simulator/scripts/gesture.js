@@ -42,7 +42,7 @@ class GestureController {
   scroll(direction, amount = 3) {
     for (let i = 0; i < amount; i++) {
       if (!this.swipe(direction, 0.3)) return false;
-      const end = Date.now() + 200; while (Date.now() < end) {}
+      const end = Date.now() + 200; while (Date.now() < end) { }
     }
     return true;
   }
@@ -52,7 +52,7 @@ class GestureController {
     if (this.udid) cmd.push("--udid", this.udid);
     try { execFileSync("idb", cmd, { stdio: ["pipe", "pipe", "pipe"] }); }
     catch { return false; }
-    const end = Date.now() + durationSec * 1000; while (Date.now() < end) {}
+    const end = Date.now() + durationSec * 1000; while (Date.now() < end) { }
     return true;
   }
 

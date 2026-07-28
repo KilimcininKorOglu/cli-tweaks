@@ -11,16 +11,16 @@ custom sink/handler/transport/appender to the existing library that also writes 
 in addition to its existing stdout/file output. Detect the existing library from the manifest file
 before choosing an approach.
 
-| Language    | Common library                          | DB sink mechanism                                                   |
-|-------------|------------------------------------------|------------------------------------------------------------------------|
-| Go          | `log/slog` (stdlib), `zap`, `zerolog`     | custom `slog.Handler` / `zapcore.Core` / `zerolog.Hook` that also inserts into `app_logs` |
-| Node.js     | `winston`, `pino`                         | custom `winston.Transport` subclass / `pino` transport stream         |
-| Python      | `logging` (stdlib)                        | custom `logging.Handler` subclass implementing `emit()`               |
-| Java/Kotlin | SLF4J + Logback or Log4j2                 | custom Logback `Appender` / Log4j2 `Appender`, wrapped in an async appender |
-| C#          | `Microsoft.Extensions.Logging`, Serilog   | custom `ILoggerProvider`/`ILogger` / Serilog sink (model on `Serilog.Sinks.PeriodicBatching`) |
-| Ruby        | `Logger` (stdlib), `semantic_logger`      | custom `Logger` device (`def write(msg)`) / `semantic_logger` appender |
-| PHP         | Monolog                                   | custom handler extending `Monolog\Handler\AbstractProcessingHandler`  |
-| Rust        | `log` + `env_logger`, or `tracing`         | custom `log::Log` implementation / `tracing_subscriber::Layer`        |
+| Language    | Common library                          | DB sink mechanism                                                                             |
+|-------------|-----------------------------------------|-----------------------------------------------------------------------------------------------|
+| Go          | `log/slog` (stdlib), `zap`, `zerolog`   | custom `slog.Handler` / `zapcore.Core` / `zerolog.Hook` that also inserts into `app_logs`     |
+| Node.js     | `winston`, `pino`                       | custom `winston.Transport` subclass / `pino` transport stream                                 |
+| Python      | `logging` (stdlib)                      | custom `logging.Handler` subclass implementing `emit()`                                       |
+| Java/Kotlin | SLF4J + Logback or Log4j2               | custom Logback `Appender` / Log4j2 `Appender`, wrapped in an async appender                   |
+| C#          | `Microsoft.Extensions.Logging`, Serilog | custom `ILoggerProvider`/`ILogger` / Serilog sink (model on `Serilog.Sinks.PeriodicBatching`) |
+| Ruby        | `Logger` (stdlib), `semantic_logger`    | custom `Logger` device (`def write(msg)`) / `semantic_logger` appender                        |
+| PHP         | Monolog                                 | custom handler extending `Monolog\Handler\AbstractProcessingHandler`                          |
+| Rust        | `log` + `env_logger`, or `tracing`      | custom `log::Log` implementation / `tracing_subscriber::Layer`                                |
 
 If no logging library exists yet, introduce the most idiomatic stdlib-adjacent one for that
 language/ecosystem (e.g. `slog` for Go, `logging` for Python) rather than a heavyweight new

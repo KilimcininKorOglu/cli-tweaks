@@ -37,85 +37,85 @@ Anthropic embodies **thoughtful research meets human warmth**. The interface fee
 
 ### Core Foundation
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--bg-cream` | `#FAF9F5` | Primary background, page base |
-| `--bg-cream-deep` | `#F5F3ED` | Subtle surface differentiation |
-| `--bg-warm-white` | `#FFFFFE` | Cards, elevated surfaces |
-| `--text-primary` | `#1F1915` | Primary text, headlines |
-| `--text-warm-dark` | `#2D2825` | Strong secondary text |
+| Token              | Hex       | Role                           |
+|--------------------|-----------|--------------------------------|
+| `--bg-cream`       | `#FAF9F5` | Primary background, page base  |
+| `--bg-cream-deep`  | `#F5F3ED` | Subtle surface differentiation |
+| `--bg-warm-white`  | `#FFFFFE` | Cards, elevated surfaces       |
+| `--text-primary`   | `#1F1915` | Primary text, headlines        |
+| `--text-warm-dark` | `#2D2825` | Strong secondary text          |
 
 ### Brand Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--anthropic-coral` | `#DA7756` | Primary accent, Claude brand |
-| `--anthropic-terracotta` | `#C4553D` | Darker coral, CTAs, active states |
-| `--anthropic-coral-light` | `#F5DDD4` | Coral backgrounds, highlights |
-| `--anthropic-coral-subtle` | `rgba(218, 119, 86, 0.12)` | Subtle coral tints |
-| `--anthropic-coral-hover` | `#E88B6A` | Hover state for coral elements |
+| Token                      | Hex                        | Role                              |
+|----------------------------|----------------------------|-----------------------------------|
+| `--anthropic-coral`        | `#DA7756`                  | Primary accent, Claude brand      |
+| `--anthropic-terracotta`   | `#C4553D`                  | Darker coral, CTAs, active states |
+| `--anthropic-coral-light`  | `#F5DDD4`                  | Coral backgrounds, highlights     |
+| `--anthropic-coral-subtle` | `rgba(218, 119, 86, 0.12)` | Subtle coral tints                |
+| `--anthropic-coral-hover`  | `#E88B6A`                  | Hover state for coral elements    |
 
 ### Warm Gray Scale (Light Theme)
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--warm-50` | `#FAF9F7` | Lightest background |
-| `--warm-100` | `#F5F3EF` | Subtle backgrounds, hover states |
-| `--warm-200` | `#EBE8E2` | Dividers, borders |
+| Token        | Hex       | Role                               |
+|--------------|-----------|------------------------------------|
+| `--warm-50`  | `#FAF9F7` | Lightest background                |
+| `--warm-100` | `#F5F3EF` | Subtle backgrounds, hover states   |
+| `--warm-200` | `#EBE8E2` | Dividers, borders                  |
 | `--warm-300` | `#DDD9D1` | Disabled states, secondary borders |
-| `--warm-400` | `#B5AFA5` | Placeholder text |
-| `--warm-500` | `#8A8279` | Secondary text, metadata |
-| `--warm-600` | `#6B6359` | Tertiary text |
-| `--warm-700` | `#4D463E` | Body text (light mode) |
-| `--warm-800` | `#2D2825` | Strong secondary text |
-| `--warm-900` | `#1F1915` | Primary text, maximum emphasis |
+| `--warm-400` | `#B5AFA5` | Placeholder text                   |
+| `--warm-500` | `#8A8279` | Secondary text, metadata           |
+| `--warm-600` | `#6B6359` | Tertiary text                      |
+| `--warm-700` | `#4D463E` | Body text (light mode)             |
+| `--warm-800` | `#2D2825` | Strong secondary text              |
+| `--warm-900` | `#1F1915` | Primary text, maximum emphasis     |
 
 ### Dark Theme
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--dark-bg` | `#1A1816` | Page background |
-| `--dark-surface` | `#242220` | Elevated surfaces |
-| `--dark-surface-hover` | `#2E2C29` | Hover states |
-| `--dark-card` | `#1F1D1B` | Card backgrounds |
-| `--dark-border` | `#3A3634` | Borders, dividers |
-| `--dark-text-primary` | `#F5F3EF` | Primary text |
-| `--dark-text-secondary` | `#B5AFA5` | Secondary text |
-| `--dark-text-tertiary` | `#8A8279` | Tertiary text |
+| Token                   | Hex       | Role              |
+|-------------------------|-----------|-------------------|
+| `--dark-bg`             | `#1A1816` | Page background   |
+| `--dark-surface`        | `#242220` | Elevated surfaces |
+| `--dark-surface-hover`  | `#2E2C29` | Hover states      |
+| `--dark-card`           | `#1F1D1B` | Card backgrounds  |
+| `--dark-border`         | `#3A3634` | Borders, dividers |
+| `--dark-text-primary`   | `#F5F3EF` | Primary text      |
+| `--dark-text-secondary` | `#B5AFA5` | Secondary text    |
+| `--dark-text-tertiary`  | `#8A8279` | Tertiary text     |
 
 ### Claude Chat Interface Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--chat-bg-light` | `#FAF9F5` | Conversation background (light) |
-| `--chat-user-bg` | `#FFFFFE` | User message background |
+| Token                 | Hex       | Role                              |
+|-----------------------|-----------|-----------------------------------|
+| `--chat-bg-light`     | `#FAF9F5` | Conversation background (light)   |
+| `--chat-user-bg`      | `#FFFFFE` | User message background           |
 | `--chat-assistant-bg` | `#F5F3ED` | Claude message background (light) |
-| `--chat-input-bg` | `#FFFFFE` | Input area background |
-| `--claude-avatar` | `#DA7756` | Claude avatar accent |
-| `--user-avatar` | `#4D463E` | User avatar default |
+| `--chat-input-bg`     | `#FFFFFE` | Input area background             |
+| `--claude-avatar`     | `#DA7756` | Claude avatar accent              |
+| `--user-avatar`       | `#4D463E` | User avatar default               |
 
 ### Semantic Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--error-red` | `#D84C4C` | Errors, destructive actions |
-| `--error-bg` | `#FDF2F2` | Error backgrounds |
-| `--warning-amber` | `#D4883A` | Warnings, caution states |
-| `--warning-bg` | `#FDF8F0` | Warning backgrounds |
-| `--success-green` | `#3D8B6E` | Success, confirmation |
-| `--success-bg` | `#F0F7F4` | Success backgrounds |
-| `--info-blue` | `#4A7FB5` | Information, links |
-| `--info-bg` | `#F0F5FA` | Info backgrounds |
+| Token             | Hex       | Role                        |
+|-------------------|-----------|-----------------------------|
+| `--error-red`     | `#D84C4C` | Errors, destructive actions |
+| `--error-bg`      | `#FDF2F2` | Error backgrounds           |
+| `--warning-amber` | `#D4883A` | Warnings, caution states    |
+| `--warning-bg`    | `#FDF8F0` | Warning backgrounds         |
+| `--success-green` | `#3D8B6E` | Success, confirmation       |
+| `--success-bg`    | `#F0F7F4` | Success backgrounds         |
+| `--info-blue`     | `#4A7FB5` | Information, links          |
+| `--info-bg`       | `#F0F5FA` | Info backgrounds            |
 
 ### Documentation & Code Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--code-purple` | `#8B5CF6` | API endpoints, keywords |
-| `--code-blue` | `#3B82F6` | Method names, attributes |
-| `--code-green` | `#059669` | Strings, success states |
-| `--code-orange` | `#EA580C` | Warnings, deprecated |
-| `--code-coral` | `#DA7756` | Important highlights |
+| Token           | Hex       | Role                     |
+|-----------------|-----------|--------------------------|
+| `--code-purple` | `#8B5CF6` | API endpoints, keywords  |
+| `--code-blue`   | `#3B82F6` | Method names, attributes |
+| `--code-green`  | `#059669` | Strings, success states  |
+| `--code-orange` | `#EA580C` | Warnings, deprecated     |
+| `--code-coral`  | `#DA7756` | Important highlights     |
 
 ---
 
@@ -142,30 +142,30 @@ Anthropic embodies **thoughtful research meets human warmth**. The interface fee
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing | Color |
-|---------|------|--------|-------------|----------------|-------|
-| Hero Display | 52px | 500 | 1.1 | -0.02em | `--warm-900` |
-| Page Title | 36px | 500 | 1.2 | -0.015em | `--warm-900` |
-| Section Title | 28px | 500 | 1.25 | -0.01em | `--warm-900` |
-| Card Title | 22px | 500 | 1.3 | -0.005em | `--warm-800` |
-| Subsection | 18px | 500 | 1.35 | 0 | `--warm-800` |
-| Large Body | 17px | 400 | 1.65 | 0.005em | `--warm-700` |
-| Body | 15px | 400 | 1.65 | 0.005em | `--warm-700` |
-| Small Body | 14px | 400 | 1.55 | 0.005em | `--warm-600` |
-| Caption | 13px | 400 | 1.45 | 0.01em | `--warm-500` |
-| Label | 12px | 500 | 1.4 | 0.02em | `--warm-500` |
-| Chat Message | 15px | 400 | 1.7 | 0.005em | `--warm-800` |
-| Code Inline | 14px | 400 | 1.6 | 0 | `--code-coral` |
-| Code Block | 13px | 400 | 1.6 | 0 | `--warm-800` |
+| Element       | Size | Weight | Line Height | Letter Spacing | Color          |
+|---------------|------|--------|-------------|----------------|----------------|
+| Hero Display  | 52px | 500    | 1.1         | -0.02em        | `--warm-900`   |
+| Page Title    | 36px | 500    | 1.2         | -0.015em       | `--warm-900`   |
+| Section Title | 28px | 500    | 1.25        | -0.01em        | `--warm-900`   |
+| Card Title    | 22px | 500    | 1.3         | -0.005em       | `--warm-800`   |
+| Subsection    | 18px | 500    | 1.35        | 0              | `--warm-800`   |
+| Large Body    | 17px | 400    | 1.65        | 0.005em        | `--warm-700`   |
+| Body          | 15px | 400    | 1.65        | 0.005em        | `--warm-700`   |
+| Small Body    | 14px | 400    | 1.55        | 0.005em        | `--warm-600`   |
+| Caption       | 13px | 400    | 1.45        | 0.01em         | `--warm-500`   |
+| Label         | 12px | 500    | 1.4         | 0.02em         | `--warm-500`   |
+| Chat Message  | 15px | 400    | 1.7         | 0.005em        | `--warm-800`   |
+| Code Inline   | 14px | 400    | 1.6         | 0              | `--code-coral` |
+| Code Block    | 13px | 400    | 1.6         | 0              | `--warm-800`   |
 
 ### Font Weights
 
-| Weight | Name | Usage |
-|--------|------|-------|
-| 400 | Regular | Body text, chat messages, descriptions |
-| 450 | Book | Extended reading, documentation |
-| 500 | Medium | Headlines, titles, buttons, emphasis |
-| 600 | Semibold | Strong emphasis, critical UI |
+| Weight | Name     | Usage                                  |
+|--------|----------|----------------------------------------|
+| 400    | Regular  | Body text, chat messages, descriptions |
+| 450    | Book     | Extended reading, documentation        |
+| 500    | Medium   | Headlines, titles, buttons, emphasis   |
+| 600    | Semibold | Strong emphasis, critical UI           |
 
 ### Typography Philosophy
 Anthropic's typography embodies **editorial warmth with technical precision**. The Styrene typeface provides a distinctive, modern yet approachable feel—geometric foundations softened with humanist details. Headlines use subtle negative tracking for refinement, while body text employs slight positive tracking for enhanced readability during extended conversations.
@@ -181,12 +181,12 @@ Anthropic's typography embodies **editorial warmth with technical precision**. T
 
 ### Monospace Typography
 
-| Element | Size | Weight | Usage |
-|---------|------|--------|-------|
-| Code Block | 13px | 400 | Multi-line code, API examples |
-| Inline Code | 13px | 400 | Technical terms, parameters |
-| Terminal | 13px | 400 | CLI commands |
-| API Endpoint | 14px | 500 | API documentation |
+| Element      | Size | Weight | Usage                         |
+|--------------|------|--------|-------------------------------|
+| Code Block   | 13px | 400    | Multi-line code, API examples |
+| Inline Code  | 13px | 400    | Technical terms, parameters   |
+| Terminal     | 13px | 400    | CLI commands                  |
+| API Endpoint | 14px | 500    | API documentation             |
 
 ---
 
@@ -297,11 +297,11 @@ Anthropic's typography embodies **editorial warmth with technical precision**. T
 
 #### Button Sizes
 
-| Size | Height | Padding | Font Size |
-|------|--------|---------|-----------|
-| Small | 32px | 8px 14px | 13px |
-| Medium (default) | 40px | 10px 18px | 14px |
-| Large | 48px | 12px 24px | 15px |
+| Size             | Height | Padding   | Font Size |
+|------------------|--------|-----------|-----------|
+| Small            | 32px   | 8px 14px  | 13px      |
+| Medium (default) | 40px   | 10px 18px | 14px      |
+| Large            | 48px   | 12px 24px | 15px      |
 
 ### Inputs
 
@@ -751,18 +751,18 @@ Anthropic's typography embodies **editorial warmth with technical precision**. T
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--space-1` | 4px | Tight gaps, icon padding |
-| `--space-2` | 8px | Small gaps, inline spacing |
-| `--space-3` | 12px | Compact element spacing |
-| `--space-4` | 16px | Standard element spacing |
-| `--space-5` | 20px | Card content spacing |
-| `--space-6` | 24px | Section padding |
-| `--space-7` | 32px | Large section gaps |
-| `--space-8` | 48px | Major section separation |
-| `--space-9` | 64px | Page section breaks |
-| `--space-10` | 96px | Hero spacing |
+| Token        | Value | Usage                      |
+|--------------|-------|----------------------------|
+| `--space-1`  | 4px   | Tight gaps, icon padding   |
+| `--space-2`  | 8px   | Small gaps, inline spacing |
+| `--space-3`  | 12px  | Compact element spacing    |
+| `--space-4`  | 16px  | Standard element spacing   |
+| `--space-5`  | 20px  | Card content spacing       |
+| `--space-6`  | 24px  | Section padding            |
+| `--space-7`  | 32px  | Large section gaps         |
+| `--space-8`  | 48px  | Major section separation   |
+| `--space-9`  | 64px  | Page section breaks        |
+| `--space-10` | 96px  | Hero spacing               |
 
 ### Core Layout Structure
 
@@ -809,14 +809,14 @@ Anthropic's typography embodies **editorial warmth with technical precision**. T
 
 ### Content Widths
 
-| Context | Max Width | Centering |
-|---------|-----------|-----------|
-| Chat Messages | 720px | Centered |
-| Documentation | 720px | Centered |
-| Landing Page Content | 1120px | Centered |
-| API Reference | 100% | Split layout |
-| Settings/Forms | 520px | Left-aligned |
-| Modal Content | 480px | Centered |
+| Context              | Max Width | Centering    |
+|----------------------|-----------|--------------|
+| Chat Messages        | 720px     | Centered     |
+| Documentation        | 720px     | Centered     |
+| Landing Page Content | 1120px    | Centered     |
+| API Reference        | 100%      | Split layout |
+| Settings/Forms       | 520px     | Left-aligned |
+| Modal Content        | 480px     | Centered     |
 
 ### Grid System
 
@@ -940,15 +940,15 @@ Anthropic uses whitespace to create **focus and contemplation**. The Claude inte
 
 ### Z-Index Scale
 
-| Layer | Z-Index | Elements |
-|-------|---------|----------|
-| Base | 0 | Main content, messages |
-| Sticky | 100 | Navigation headers |
-| Dropdown | 200 | Menus, autocomplete |
-| Sidebar Overlay | 250 | Mobile sidebar |
-| Modal | 300 | Dialogs |
-| Toast | 400 | Notifications |
-| Tooltip | 500 | Tooltips |
+| Layer           | Z-Index | Elements               |
+|-----------------|---------|------------------------|
+| Base            | 0       | Main content, messages |
+| Sticky          | 100     | Navigation headers     |
+| Dropdown        | 200     | Menus, autocomplete    |
+| Sidebar Overlay | 250     | Mobile sidebar         |
+| Modal           | 300     | Dialogs                |
+| Toast           | 400     | Notifications          |
+| Tooltip         | 500     | Tooltips               |
 
 ---
 
@@ -956,46 +956,46 @@ Anthropic uses whitespace to create **focus and contemplation**. The Claude inte
 
 ### Do's
 
-| Guideline | Rationale |
-|-----------|-----------|
-| Use warm cream (#FAF9F5) as primary background | Brand distinction, warmth, eye comfort |
-| Apply coral (#DA7756) sparingly for emphasis | Maintains warmth without overwhelming |
-| Use generous line-height (1.65-1.7) for text | Enhanced readability, editorial quality |
-| Keep message containers centered and constrained | Optimal reading width, focused experience |
-| Use subtle rounded corners (8-12px) | Approachable without being playful |
-| Implement warm gray tones throughout | Cohesive visual language, softened contrast |
-| Show Claude attribution clearly | Transparency about AI interaction |
-| Use subtle borders over heavy shadows | Clean, academic aesthetic |
-| Apply consistent warm color temperature | Brand coherence across all elements |
-| Provide safety-focused messaging patterns | Core to Anthropic's mission and values |
+| Guideline                                        | Rationale                                   |
+|--------------------------------------------------|---------------------------------------------|
+| Use warm cream (#FAF9F5) as primary background   | Brand distinction, warmth, eye comfort      |
+| Apply coral (#DA7756) sparingly for emphasis     | Maintains warmth without overwhelming       |
+| Use generous line-height (1.65-1.7) for text     | Enhanced readability, editorial quality     |
+| Keep message containers centered and constrained | Optimal reading width, focused experience   |
+| Use subtle rounded corners (8-12px)              | Approachable without being playful          |
+| Implement warm gray tones throughout             | Cohesive visual language, softened contrast |
+| Show Claude attribution clearly                  | Transparency about AI interaction           |
+| Use subtle borders over heavy shadows            | Clean, academic aesthetic                   |
+| Apply consistent warm color temperature          | Brand coherence across all elements         |
+| Provide safety-focused messaging patterns        | Core to Anthropic's mission and values      |
 
 ### Don'ts
 
-| Anti-Pattern | Why to Avoid |
-|--------------|--------------|
+| Anti-Pattern                                      | Why to Avoid                                 |
+|---------------------------------------------------|----------------------------------------------|
 | Never use pure white (#FFFFFF) as page background | Contradicts warm aesthetic, appears clinical |
-| Avoid cool-toned grays | Breaks warm color harmony |
-| Don't use multiple bright accent colors | Coral is the singular brand accent |
-| Never hide safety-related information | Transparency is core to trust |
-| Avoid aggressive animations | Thoughtful, calm environment |
-| Don't use overly small text for messages | Readability is paramount |
-| Never auto-submit without user review | Respect for deliberate interaction |
-| Avoid pure black (#000000) text | Use warm dark gray for softer contrast |
-| Don't use heavy shadows for primary UI | Flat, editorial aesthetic preferred |
-| Never create urgent/aggressive UI patterns | Counter to safety-focused brand |
+| Avoid cool-toned grays                            | Breaks warm color harmony                    |
+| Don't use multiple bright accent colors           | Coral is the singular brand accent           |
+| Never hide safety-related information             | Transparency is core to trust                |
+| Avoid aggressive animations                       | Thoughtful, calm environment                 |
+| Don't use overly small text for messages          | Readability is paramount                     |
+| Never auto-submit without user review             | Respect for deliberate interaction           |
+| Avoid pure black (#000000) text                   | Use warm dark gray for softer contrast       |
+| Don't use heavy shadows for primary UI            | Flat, editorial aesthetic preferred          |
+| Never create urgent/aggressive UI patterns        | Counter to safety-focused brand              |
 
 ### Content Guidelines
 
-| Do | Don't |
-|----|-------|
-| Use thoughtful, considered AI responses | Provide instant, unconsidered answers |
-| Acknowledge limitations honestly | Assert false certainty |
-| Show examples with context | Provide abstract explanations only |
-| Indicate when Claude is uncertain | Pretend omniscience |
-| Use consistent model naming (Claude, Sonnet, etc.) | Use internal codenames |
-| Explain capabilities and limitations clearly | Overpromise functionality |
-| Reflect safety values in UI copy | Ignore safety considerations |
-| Use warm, conversational tone | Be cold or robotic |
+| Do                                                 | Don't                                 |
+|----------------------------------------------------|---------------------------------------|
+| Use thoughtful, considered AI responses            | Provide instant, unconsidered answers |
+| Acknowledge limitations honestly                   | Assert false certainty                |
+| Show examples with context                         | Provide abstract explanations only    |
+| Indicate when Claude is uncertain                  | Pretend omniscience                   |
+| Use consistent model naming (Claude, Sonnet, etc.) | Use internal codenames                |
+| Explain capabilities and limitations clearly       | Overpromise functionality             |
+| Reflect safety values in UI copy                   | Ignore safety considerations          |
+| Use warm, conversational tone                      | Be cold or robotic                    |
 
 ---
 
@@ -1003,44 +1003,44 @@ Anthropic uses whitespace to create **focus and contemplation**. The Claude inte
 
 ### Breakpoints
 
-| Name | Width | Behavior |
-|------|-------|----------|
-| Mobile | <640px | Full-width chat, collapsible sidebar |
-| Tablet | 640px - 1024px | Overlay sidebar, centered content |
-| Desktop | 1024px - 1440px | Full layout, persistent sidebar |
-| Wide | >1440px | Maximum content width, centered |
+| Name    | Width           | Behavior                             |
+|---------|-----------------|--------------------------------------|
+| Mobile  | <640px          | Full-width chat, collapsible sidebar |
+| Tablet  | 640px - 1024px  | Overlay sidebar, centered content    |
+| Desktop | 1024px - 1440px | Full layout, persistent sidebar      |
+| Wide    | >1440px         | Maximum content width, centered      |
 
 ### Mobile Adaptations
 
-| Component | Desktop | Mobile |
-|-----------|---------|--------|
-| Sidebar | Persistent 280px | Full-screen overlay |
-| Chat Messages | 720px max-width | Full width with 16px padding |
-| Navigation | Full items | Hamburger menu |
-| Input Area | Single row expandable | Full width, larger touch targets |
-| Code Blocks | Horizontal scroll | Horizontal scroll, smaller text |
-| Modal | Centered 480px | Full screen or bottom sheet |
+| Component     | Desktop               | Mobile                           |
+|---------------|-----------------------|----------------------------------|
+| Sidebar       | Persistent 280px      | Full-screen overlay              |
+| Chat Messages | 720px max-width       | Full width with 16px padding     |
+| Navigation    | Full items            | Hamburger menu                   |
+| Input Area    | Single row expandable | Full width, larger touch targets |
+| Code Blocks   | Horizontal scroll     | Horizontal scroll, smaller text  |
+| Modal         | Centered 480px        | Full screen or bottom sheet      |
 
 ### Touch Targets
 
-| Element | Minimum Size | Notes |
-|---------|--------------|-------|
-| Buttons | 44px height | iOS guidelines |
-| Send Button | 48px × 48px | Critical action |
-| Navigation Items | 48px height | Easy thumb access |
-| Conversation Items | Full width × 56px | Easy selection |
-| Input Field | 52px min-height | Comfortable typing |
+| Element            | Minimum Size      | Notes              |
+|--------------------|-------------------|--------------------|
+| Buttons            | 44px height       | iOS guidelines     |
+| Send Button        | 48px × 48px       | Critical action    |
+| Navigation Items   | 48px height       | Easy thumb access  |
+| Conversation Items | Full width × 56px | Easy selection     |
+| Input Field        | 52px min-height   | Comfortable typing |
 
 ### Responsive Typography
 
-| Element | Desktop | Mobile |
-|---------|---------|--------|
-| Hero Display | 52px | 32px |
-| Page Title | 36px | 26px |
-| Section Title | 28px | 22px |
-| Chat Message | 15px | 15px |
-| Body | 15px | 15px |
-| Caption | 13px | 13px |
+| Element       | Desktop | Mobile |
+|---------------|---------|--------|
+| Hero Display  | 52px    | 32px   |
+| Page Title    | 36px    | 26px   |
+| Section Title | 28px    | 22px   |
+| Chat Message  | 15px    | 15px   |
+| Body          | 15px    | 15px   |
+| Caption       | 13px    | 13px   |
 
 ### Chat Interface Responsive
 

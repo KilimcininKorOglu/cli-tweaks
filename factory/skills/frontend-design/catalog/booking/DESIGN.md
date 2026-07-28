@@ -3,38 +3,38 @@
 ## 1. Color Palette
 
 ### Primary Colors
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| Booking Blue | `#003580` | rgb(0, 53, 128) | Primary brand color, headers, navigation, links |
-| Booking Dark Blue | `#00224f` | rgb(0, 34, 79) | Hover states, footers, dark sections |
-| Booking Light Blue | `#0071c2` | rgb(0, 113, 194) | Secondary actions, interactive elements |
+| Color Name         | Hex Code  | RGB              | Usage                                           |
+|--------------------|-----------|------------------|-------------------------------------------------|
+| Booking Blue       | `#003580` | rgb(0, 53, 128)  | Primary brand color, headers, navigation, links |
+| Booking Dark Blue  | `#00224f` | rgb(0, 34, 79)   | Hover states, footers, dark sections            |
+| Booking Light Blue | `#0071c2` | rgb(0, 113, 194) | Secondary actions, interactive elements         |
 
 ### Accent Colors
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| Booking Yellow | `#febb02` | rgb(254, 187, 2) | Primary CTAs, deal badges, highlights |
-| Booking Yellow Hover | `#e5a800` | rgb(229, 168, 0) | CTA hover states |
-| Success Green | `#008009` | rgb(0, 128, 9) | Availability, confirmations, savings |
-| Genius Blue | `#004cb8` | rgb(0, 76, 184) | Genius loyalty program elements |
+| Color Name           | Hex Code  | RGB              | Usage                                 |
+|----------------------|-----------|------------------|---------------------------------------|
+| Booking Yellow       | `#febb02` | rgb(254, 187, 2) | Primary CTAs, deal badges, highlights |
+| Booking Yellow Hover | `#e5a800` | rgb(229, 168, 0) | CTA hover states                      |
+| Success Green        | `#008009` | rgb(0, 128, 9)   | Availability, confirmations, savings  |
+| Genius Blue          | `#004cb8` | rgb(0, 76, 184)  | Genius loyalty program elements       |
 
 ### Neutral Colors
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| Text Primary | `#262626` | rgb(38, 38, 38) | Main body text, headings |
-| Text Secondary | `#6b6b6b` | rgb(107, 107, 107) | Secondary text, descriptions |
-| Text Muted | `#8c8c8c` | rgb(140, 140, 140) | Helper text, placeholders |
-| Border Light | `#e7e7e7` | rgb(231, 231, 231) | Card borders, dividers |
-| Background Light | `#f5f5f5` | rgb(245, 245, 245) | Page backgrounds, sections |
+| Color Name           | Hex Code  | RGB                | Usage                            |
+|----------------------|-----------|--------------------|----------------------------------|
+| Text Primary         | `#262626` | rgb(38, 38, 38)    | Main body text, headings         |
+| Text Secondary       | `#6b6b6b` | rgb(107, 107, 107) | Secondary text, descriptions     |
+| Text Muted           | `#8c8c8c` | rgb(140, 140, 140) | Helper text, placeholders        |
+| Border Light         | `#e7e7e7` | rgb(231, 231, 231) | Card borders, dividers           |
+| Background Light     | `#f5f5f5` | rgb(245, 245, 245) | Page backgrounds, sections       |
 | Background Blue Tint | `#ebf3ff` | rgb(235, 243, 255) | Highlighted sections, info boxes |
-| White | `#ffffff` | rgb(255, 255, 255) | Cards, main backgrounds |
+| White                | `#ffffff` | rgb(255, 255, 255) | Cards, main backgrounds          |
 
 ### Semantic Colors
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| Error Red | `#d4111e` | rgb(212, 17, 30) | Error messages, alerts, sold out |
+| Color Name     | Hex Code  | RGB              | Usage                                  |
+|----------------|-----------|------------------|----------------------------------------|
+| Error Red      | `#d4111e` | rgb(212, 17, 30) | Error messages, alerts, sold out       |
 | Warning Orange | `#f56700` | rgb(245, 103, 0) | Urgency messages, limited availability |
-| Info Blue | `#0071c2` | rgb(0, 113, 194) | Information notices |
-| Rating Score | `#003580` | rgb(0, 53, 128) | Review score backgrounds |
+| Info Blue      | `#0071c2` | rgb(0, 113, 194) | Information notices                    |
+| Rating Score   | `#003580` | rgb(0, 53, 128)  | Review score backgrounds               |
 
 ---
 
@@ -46,26 +46,26 @@ font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Helvetica, A
 ```
 
 ### Type Scale
-| Element | Size | Weight | Line Height | Letter Spacing |
-|---------|------|--------|-------------|----------------|
-| Hero Title | 32px / 2rem | 700 | 1.25 | -0.5px |
-| Page Title | 24px / 1.5rem | 700 | 1.33 | -0.25px |
-| Section Heading | 20px / 1.25rem | 700 | 1.4 | 0 |
-| Card Title | 16px / 1rem | 700 | 1.5 | 0 |
-| Body Large | 16px / 1rem | 400 | 1.5 | 0 |
-| Body | 14px / 0.875rem | 400 | 1.43 | 0 |
-| Body Small | 12px / 0.75rem | 400 | 1.33 | 0 |
-| Price Display | 24px / 1.5rem | 700 | 1.25 | 0 |
-| Price Small | 14px / 0.875rem | 400 | 1.43 | 0 |
-| Caption | 12px / 0.75rem | 400 | 1.33 | 0.1px |
-| Badge Text | 12px / 0.75rem | 500 | 1 | 0.25px |
+| Element         | Size            | Weight | Line Height | Letter Spacing |
+|-----------------|-----------------|--------|-------------|----------------|
+| Hero Title      | 32px / 2rem     | 700    | 1.25        | -0.5px         |
+| Page Title      | 24px / 1.5rem   | 700    | 1.33        | -0.25px        |
+| Section Heading | 20px / 1.25rem  | 700    | 1.4         | 0              |
+| Card Title      | 16px / 1rem     | 700    | 1.5         | 0              |
+| Body Large      | 16px / 1rem     | 400    | 1.5         | 0              |
+| Body            | 14px / 0.875rem | 400    | 1.43        | 0              |
+| Body Small      | 12px / 0.75rem  | 400    | 1.33        | 0              |
+| Price Display   | 24px / 1.5rem   | 700    | 1.25        | 0              |
+| Price Small     | 14px / 0.875rem | 400    | 1.43        | 0              |
+| Caption         | 12px / 0.75rem  | 400    | 1.33        | 0.1px          |
+| Badge Text      | 12px / 0.75rem  | 500    | 1           | 0.25px         |
 
 ### Font Weights
-| Weight Name | Value | Usage |
-|-------------|-------|-------|
-| Regular | 400 | Body text, descriptions |
-| Medium | 500 | Badges, emphasized text |
-| Bold | 700 | Headings, prices, CTAs |
+| Weight Name | Value | Usage                   |
+|-------------|-------|-------------------------|
+| Regular     | 400   | Body text, descriptions |
+| Medium      | 500   | Badges, emphasized text |
+| Bold        | 700   | Headings, prices, CTAs  |
 
 ### Text Colors
 ```css
@@ -99,16 +99,16 @@ color: #d4111e;
 Base unit: **4px**
 
 ### Spacing Scale
-| Token | Value | Usage |
-|-------|-------|-------|
-| `space-xxs` | 4px | Inline spacing, icon gaps |
-| `space-xs` | 8px | Tight component spacing |
-| `space-sm` | 12px | Small padding, list items |
-| `space-md` | 16px | Standard padding, card content |
-| `space-lg` | 24px | Section spacing, card gaps |
-| `space-xl` | 32px | Large section margins |
-| `space-xxl` | 48px | Page sections, major breaks |
-| `space-xxxl` | 64px | Hero sections |
+| Token        | Value | Usage                          |
+|--------------|-------|--------------------------------|
+| `space-xxs`  | 4px   | Inline spacing, icon gaps      |
+| `space-xs`   | 8px   | Tight component spacing        |
+| `space-sm`   | 12px  | Small padding, list items      |
+| `space-md`   | 16px  | Standard padding, card content |
+| `space-lg`   | 24px  | Section spacing, card gaps     |
+| `space-xl`   | 32px  | Large section margins          |
+| `space-xxl`  | 48px  | Page sections, major breaks    |
+| `space-xxxl` | 64px  | Hero sections                  |
 
 ### Component Spacing
 ```css
@@ -600,25 +600,25 @@ Booking.com uses a custom icon set with consistent styling.
 ```
 
 ### Common Icons Used
-| Icon | Usage | Context |
-|------|-------|---------|
-| Bed | Room type indicator | Property cards, search |
-| Calendar | Date selection | Search form, booking |
-| User | Guest count | Search form, account |
-| Location Pin | Map/location | Property cards, search |
-| Star | Rating display | Reviews, quality |
-| Heart | Wishlist/save | Property cards |
-| Checkmark | Confirmation | Booking flow, amenities |
-| WiFi | Amenity | Property details |
-| Parking | Amenity | Property details |
-| Breakfast | Amenity | Property details |
-| Swimming Pool | Amenity | Property details |
-| Air Conditioning | Amenity | Property details |
-| Search | Search action | Navigation, forms |
-| Filter | Filter controls | Search results |
-| Sort | Sort options | Search results |
-| Map | Map view toggle | Search results |
-| Genius G | Loyalty program | Badges, discounts |
+| Icon             | Usage               | Context                 |
+|------------------|---------------------|-------------------------|
+| Bed              | Room type indicator | Property cards, search  |
+| Calendar         | Date selection      | Search form, booking    |
+| User             | Guest count         | Search form, account    |
+| Location Pin     | Map/location        | Property cards, search  |
+| Star             | Rating display      | Reviews, quality        |
+| Heart            | Wishlist/save       | Property cards          |
+| Checkmark        | Confirmation        | Booking flow, amenities |
+| WiFi             | Amenity             | Property details        |
+| Parking          | Amenity             | Property details        |
+| Breakfast        | Amenity             | Property details        |
+| Swimming Pool    | Amenity             | Property details        |
+| Air Conditioning | Amenity             | Property details        |
+| Search           | Search action       | Navigation, forms       |
+| Filter           | Filter controls     | Search results          |
+| Sort             | Sort options        | Search results          |
+| Map              | Map view toggle     | Search results          |
+| Genius G         | Loyalty program     | Badges, discounts       |
 
 ### Amenity Icons Grid
 ```css
@@ -666,13 +666,13 @@ Booking.com uses a custom icon set with consistent styling.
 ```
 
 ### Duration Scale
-| Duration | Value | Usage |
-|----------|-------|-------|
-| Instant | 100ms | Hover states, button feedback |
-| Fast | 150ms | Small transitions, toggles |
-| Normal | 200ms | Standard transitions |
-| Moderate | 300ms | Modal openings, accordions |
-| Slow | 400ms | Page transitions, complex animations |
+| Duration | Value | Usage                                |
+|----------|-------|--------------------------------------|
+| Instant  | 100ms | Hover states, button feedback        |
+| Fast     | 150ms | Small transitions, toggles           |
+| Normal   | 200ms | Standard transitions                 |
+| Moderate | 300ms | Modal openings, accordions           |
+| Slow     | 400ms | Page transitions, complex animations |
 
 ### Common Animations
 ```css

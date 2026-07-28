@@ -52,16 +52,16 @@ Launch a subagent with the following instructions:
 >
 > Search for all dependency files in the project:
 >
-> | Ecosystem  | Manifest Files                                            | Lock Files                                            |
-> |------------|-----------------------------------------------------------|-------------------------------------------------------|
-> | npm        | `package.json`                                            | `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`   |
-> | pip        | `requirements.txt`, `pyproject.toml`, `Pipfile`, `setup.py`, `setup.cfg` | `Pipfile.lock`, `poetry.lock`          |
-> | cargo      | `Cargo.toml`                                              | `Cargo.lock`                                          |
-> | go         | `go.mod`                                                  | `go.sum`                                              |
-> | maven      | `pom.xml`, `build.gradle`, `build.gradle.kts`             | `gradle.lockfile`                                     |
-> | composer   | `composer.json`                                           | `composer.lock`                                       |
-> | gems       | `Gemfile`                                                 | `Gemfile.lock`                                        |
-> | nuget      | `*.csproj`, `packages.config`                             | `packages.lock.json`                                  |
+> | Ecosystem | Manifest Files                                                           | Lock Files                                         |
+> |-----------|--------------------------------------------------------------------------|----------------------------------------------------|
+> | npm       | `package.json`                                                           | `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml` |
+> | pip       | `requirements.txt`, `pyproject.toml`, `Pipfile`, `setup.py`, `setup.cfg` | `Pipfile.lock`, `poetry.lock`                      |
+> | cargo     | `Cargo.toml`                                                             | `Cargo.lock`                                       |
+> | go        | `go.mod`                                                                 | `go.sum`                                           |
+> | maven     | `pom.xml`, `build.gradle`, `build.gradle.kts`                            | `gradle.lockfile`                                  |
+> | composer  | `composer.json`                                                          | `composer.lock`                                    |
+> | gems      | `Gemfile`                                                                | `Gemfile.lock`                                     |
+> | nuget     | `*.csproj`, `packages.config`                                            | `packages.lock.json`                               |
 >
 > Flag any manifest file that lacks a corresponding lock file — this is a supply chain risk (non-deterministic builds).
 >

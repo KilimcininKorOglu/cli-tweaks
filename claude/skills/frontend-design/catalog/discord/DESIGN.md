@@ -31,67 +31,67 @@ Discord embraces a **gaming-centric, community-oriented** design philosophy. The
 
 ### Primary Dark Theme
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--background-primary` | `#313338` | Main content area, chat background |
-| `--background-secondary` | `#2b2d31` | Sidebars, channel lists, secondary panels |
-| `--background-secondary-alt` | `#232428` | Hover states on secondary backgrounds |
-| `--background-tertiary` | `#1e1f22` | Deepest background, server list, inputs |
-| `--background-floating` | `#111214` | Modals, popouts, floating elements |
-| `--background-modifier-hover` | `rgba(79, 84, 92, 0.16)` | Interactive hover states |
-| `--background-modifier-active` | `rgba(79, 84, 92, 0.24)` | Active/pressed states |
-| `--background-modifier-selected` | `rgba(79, 84, 92, 0.32)` | Selected items |
+| Token                            | Hex                      | Role                                      |
+|----------------------------------|--------------------------|-------------------------------------------|
+| `--background-primary`           | `#313338`                | Main content area, chat background        |
+| `--background-secondary`         | `#2b2d31`                | Sidebars, channel lists, secondary panels |
+| `--background-secondary-alt`     | `#232428`                | Hover states on secondary backgrounds     |
+| `--background-tertiary`          | `#1e1f22`                | Deepest background, server list, inputs   |
+| `--background-floating`          | `#111214`                | Modals, popouts, floating elements        |
+| `--background-modifier-hover`    | `rgba(79, 84, 92, 0.16)` | Interactive hover states                  |
+| `--background-modifier-active`   | `rgba(79, 84, 92, 0.24)` | Active/pressed states                     |
+| `--background-modifier-selected` | `rgba(79, 84, 92, 0.32)` | Selected items                            |
 
 ### Brand Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
+| Token                   | Hex       | Role                                     |
+|-------------------------|-----------|------------------------------------------|
 | `--brand-500` (Blurple) | `#5865F2` | Primary accent, buttons, links, mentions |
-| `--brand-560` | `#4752C4` | Blurple hover state |
-| `--brand-600` | `#3C45A5` | Blurple pressed/active state |
-| `--brand-260` | `#A5B3F0` | Light Blurple for hover text |
+| `--brand-560`           | `#4752C4` | Blurple hover state                      |
+| `--brand-600`           | `#3C45A5` | Blurple pressed/active state             |
+| `--brand-260`           | `#A5B3F0` | Light Blurple for hover text             |
 
 ### Text Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--text-normal` | `#dbdee1` | Primary body text, messages |
-| `--text-muted` | `#949ba4` | Secondary text, timestamps, subtitles |
-| `--text-link` | `#00a8fc` | Hyperlinks |
-| `--header-primary` | `#f2f3f5` | Headers, usernames, important text |
-| `--header-secondary` | `#b5bac1` | Subheaders, channel descriptions |
-| `--text-positive` | `#23a55a` | Success states, online indicators |
-| `--text-warning` | `#f0b232` | Warnings, idle status |
-| `--text-danger` | `#f23f43` | Errors, do not disturb, destructive actions |
+| Token                | Hex       | Role                                        |
+|----------------------|-----------|---------------------------------------------|
+| `--text-normal`      | `#dbdee1` | Primary body text, messages                 |
+| `--text-muted`       | `#949ba4` | Secondary text, timestamps, subtitles       |
+| `--text-link`        | `#00a8fc` | Hyperlinks                                  |
+| `--header-primary`   | `#f2f3f5` | Headers, usernames, important text          |
+| `--header-secondary` | `#b5bac1` | Subheaders, channel descriptions            |
+| `--text-positive`    | `#23a55a` | Success states, online indicators           |
+| `--text-warning`     | `#f0b232` | Warnings, idle status                       |
+| `--text-danger`      | `#f23f43` | Errors, do not disturb, destructive actions |
 
 ### Status Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--status-online` | `#23a55a` | Online presence indicator |
-| `--status-idle` | `#f0b232` | Idle/Away status |
-| `--status-dnd` | `#f23f43` | Do Not Disturb |
-| `--status-offline` | `#80848e` | Offline/Invisible |
+| Token                | Hex       | Role                        |
+|----------------------|-----------|-----------------------------|
+| `--status-online`    | `#23a55a` | Online presence indicator   |
+| `--status-idle`      | `#f0b232` | Idle/Away status            |
+| `--status-dnd`       | `#f23f43` | Do Not Disturb              |
+| `--status-offline`   | `#80848e` | Offline/Invisible           |
 | `--status-streaming` | `#593695` | Streaming on Twitch/YouTube |
 
 ### Semantic Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--green-360` | `#23a55a` | Success, confirmations, positive actions |
-| `--yellow-300` | `#f0b232` | Warnings, cautions |
-| `--red-400` | `#f23f43` | Errors, destructive actions, alerts |
-| `--blue-345` | `#00a8fc` | Links, informational highlights |
+| Token          | Hex       | Role                                     |
+|----------------|-----------|------------------------------------------|
+| `--green-360`  | `#23a55a` | Success, confirmations, positive actions |
+| `--yellow-300` | `#f0b232` | Warnings, cautions                       |
+| `--red-400`    | `#f23f43` | Errors, destructive actions, alerts      |
+| `--blue-345`   | `#00a8fc` | Links, informational highlights          |
 
 ### Light Theme (Alternate)
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--background-primary` | `#ffffff` | Main content area |
+| Token                    | Hex       | Role                       |
+|--------------------------|-----------|----------------------------|
+| `--background-primary`   | `#ffffff` | Main content area          |
 | `--background-secondary` | `#f2f3f5` | Sidebars, secondary panels |
-| `--background-tertiary` | `#e3e5e8` | Deepest sections, inputs |
-| `--text-normal` | `#313338` | Primary body text |
-| `--text-muted` | `#5c5e66` | Secondary text |
+| `--background-tertiary`  | `#e3e5e8` | Deepest sections, inputs   |
+| `--text-normal`          | `#313338` | Primary body text          |
+| `--text-muted`           | `#5c5e66` | Secondary text             |
 
 ---
 
@@ -112,39 +112,39 @@ Discord embraces a **gaming-centric, community-oriented** design philosophy. The
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing | Color |
-|---------|------|--------|-------------|----------------|-------|
-| Server Name | 16px | 600 | 20px | 0 | `--header-primary` |
-| Channel Category | 12px | 700 | 16px | 0.02em (uppercase) | `--channels-default` |
-| Channel Name | 16px | 500 | 20px | 0 | `--channels-default` |
-| Username (Chat) | 16px | 500 | 22px | 0 | Role color or `--header-primary` |
-| Message Body | 16px | 400 | 22px | 0 | `--text-normal` |
-| Timestamp | 12px | 500 | 22px | 0 | `--text-muted` |
-| Modal Title | 20px | 600 | 24px | 0 | `--header-primary` |
-| Button Text | 14px | 500 | 16px | 0 | White or contextual |
-| Input Label | 12px | 700 | 16px | 0.02em (uppercase) | `--header-secondary` |
-| Input Text | 16px | 400 | 20px | 0 | `--text-normal` |
-| Tooltip | 14px | 500 | 18px | 0 | White |
+| Element          | Size | Weight | Line Height | Letter Spacing     | Color                            |
+|------------------|------|--------|-------------|--------------------|----------------------------------|
+| Server Name      | 16px | 600    | 20px        | 0                  | `--header-primary`               |
+| Channel Category | 12px | 700    | 16px        | 0.02em (uppercase) | `--channels-default`             |
+| Channel Name     | 16px | 500    | 20px        | 0                  | `--channels-default`             |
+| Username (Chat)  | 16px | 500    | 22px        | 0                  | Role color or `--header-primary` |
+| Message Body     | 16px | 400    | 22px        | 0                  | `--text-normal`                  |
+| Timestamp        | 12px | 500    | 22px        | 0                  | `--text-muted`                   |
+| Modal Title      | 20px | 600    | 24px        | 0                  | `--header-primary`               |
+| Button Text      | 14px | 500    | 16px        | 0                  | White or contextual              |
+| Input Label      | 12px | 700    | 16px        | 0.02em (uppercase) | `--header-secondary`             |
+| Input Text       | 16px | 400    | 20px        | 0                  | `--text-normal`                  |
+| Tooltip          | 14px | 500    | 18px        | 0                  | White                            |
 
 ### Font Weights
 
-| Weight | Name | Usage |
-|--------|------|-------|
-| 300 | Light | Rarely used, subtle text |
-| 400 | Regular | Body text, messages, descriptions |
-| 500 | Medium | Usernames, channel names, interactive elements |
-| 600 | Semibold | Headers, server names, emphasis |
-| 700 | Bold | Category labels, strong emphasis, uppercase labels |
+| Weight | Name     | Usage                                              |
+|--------|----------|----------------------------------------------------|
+| 300    | Light    | Rarely used, subtle text                           |
+| 400    | Regular  | Body text, messages, descriptions                  |
+| 500    | Medium   | Usernames, channel names, interactive elements     |
+| 600    | Semibold | Headers, server names, emphasis                    |
+| 700    | Bold     | Category labels, strong emphasis, uppercase labels |
 
 ### Marketing Typography (Poppins)
 
-| Element | Size | Weight | Usage |
-|---------|------|--------|-------|
-| Hero Headline | 56px | 700 | Landing page main headline |
-| Section Title | 40px | 600 | Feature section headers |
-| Subheadline | 24px | 500 | Supporting headlines |
-| Body Large | 20px | 400 | Feature descriptions |
-| Body Regular | 16px | 400 | Standard marketing copy |
+| Element       | Size | Weight | Usage                      |
+|---------------|------|--------|----------------------------|
+| Hero Headline | 56px | 700    | Landing page main headline |
+| Section Title | 40px | 600    | Feature section headers    |
+| Subheadline   | 24px | 500    | Supporting headlines       |
+| Body Large    | 20px | 400    | Feature descriptions       |
+| Body Regular  | 16px | 400    | Standard marketing copy    |
 
 ---
 
@@ -625,14 +625,14 @@ Discord embraces a **gaming-centric, community-oriented** design philosophy. The
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--spacing-4` | 4px | Tight gaps, icon padding |
-| `--spacing-8` | 8px | Standard element gaps |
-| `--spacing-12` | 12px | Section gaps |
-| `--spacing-16` | 16px | Card padding, modal padding |
-| `--spacing-20` | 20px | Large section breaks |
-| `--spacing-24` | 24px | Panel padding |
+| Token          | Value | Usage                       |
+|----------------|-------|-----------------------------|
+| `--spacing-4`  | 4px   | Tight gaps, icon padding    |
+| `--spacing-8`  | 8px   | Standard element gaps       |
+| `--spacing-12` | 12px  | Section gaps                |
+| `--spacing-16` | 16px  | Card padding, modal padding |
+| `--spacing-20` | 20px  | Large section breaks        |
+| `--spacing-24` | 24px  | Panel padding               |
 
 ### Core Layout Structure
 
@@ -653,13 +653,13 @@ Discord embraces a **gaming-centric, community-oriented** design philosophy. The
 
 ### Panel Widths
 
-| Panel | Width | Notes |
-|-------|-------|-------|
-| Server List | 72px | Fixed, vertically scrolling |
-| Channel Sidebar | 240px | Fixed, contains channels + voice |
-| Chat Area | Flexible | Min 480px, centered max-width for readability |
-| Member Sidebar | 240px | Collapsible, shows online members |
-| User Panel (Bottom) | 52px height | Shows current user status |
+| Panel               | Width       | Notes                                         |
+|---------------------|-------------|-----------------------------------------------|
+| Server List         | 72px        | Fixed, vertically scrolling                   |
+| Channel Sidebar     | 240px       | Fixed, contains channels + voice              |
+| Chat Area           | Flexible    | Min 480px, centered max-width for readability |
+| Member Sidebar      | 240px       | Collapsible, shows online members             |
+| User Panel (Bottom) | 52px height | Shows current user status                     |
 
 ### Grid System
 Discord uses a **flex-based layout** rather than traditional grid. Panels are fixed-width sidebars with a flexible center content area.
@@ -680,13 +680,13 @@ Discord uses a **flex-based layout** rather than traditional grid. Panels are fi
 
 ### Shadow System
 
-| Level | Shadow | Usage |
-|-------|--------|-------|
-| Level 0 | None | Base surfaces |
-| Level 1 | `0 1px 0 rgba(0,0,0,0.2)` | Dividers, subtle lift |
-| Level 2 | `0 4px 8px rgba(0,0,0,0.2)` | Cards, dropdowns |
+| Level   | Shadow                        | Usage                      |
+|---------|-------------------------------|----------------------------|
+| Level 0 | None                          | Base surfaces              |
+| Level 1 | `0 1px 0 rgba(0,0,0,0.2)`     | Dividers, subtle lift      |
+| Level 2 | `0 4px 8px rgba(0,0,0,0.2)`   | Cards, dropdowns           |
 | Level 3 | `0 8px 16px rgba(0,0,0,0.24)` | Modals, popovers, tooltips |
-| Level 4 | `0 16px 24px rgba(0,0,0,0.3)` | Full-screen overlays |
+| Level 4 | `0 16px 24px rgba(0,0,0,0.3)` | Full-screen overlays       |
 
 ### Surface Hierarchy
 
@@ -704,15 +704,15 @@ Discord uses a **flex-based layout** rather than traditional grid. Panels are fi
 
 ### Z-Index Scale
 
-| Layer | Z-Index | Elements |
-|-------|---------|----------|
-| Base | 0 | Main content, messages |
-| Sticky | 100 | Channel header, pinned elements |
-| Dropdown | 1000 | Context menus, autocomplete |
-| Popout | 1001 | User cards, emoji picker |
-| Modal | 1002 | Modals, dialogs |
-| Toast | 1003 | Notifications, toasts |
-| Tooltip | 1004 | Tooltips (always on top) |
+| Layer    | Z-Index | Elements                        |
+|----------|---------|---------------------------------|
+| Base     | 0       | Main content, messages          |
+| Sticky   | 100     | Channel header, pinned elements |
+| Dropdown | 1000    | Context menus, autocomplete     |
+| Popout   | 1001    | User cards, emoji picker        |
+| Modal    | 1002    | Modals, dialogs                 |
+| Toast    | 1003    | Notifications, toasts           |
+| Tooltip  | 1004    | Tooltips (always on top)        |
 
 ### Overlay Treatment
 - Modal backdrop: `rgba(0, 0, 0, 0.85)` - heavy dim for focus
@@ -725,43 +725,43 @@ Discord uses a **flex-based layout** rather than traditional grid. Panels are fi
 
 ### ✅ Do's
 
-| Guideline | Rationale |
-|-----------|-----------|
-| Use Blurple (#5865F2) as the primary accent | Brand recognition, interactive elements |
-| Maintain dark backgrounds for all surfaces | Eye comfort for extended use, gaming context |
-| Show user presence with status indicators | Community awareness, real-time feel |
-| Use rounded corners (8px cards, 3-4px buttons) | Friendly, approachable, gaming aesthetic |
-| Group messages from the same user | Reduce visual noise, show conversation flow |
-| Display role colors for usernames | Community identity, server hierarchy |
-| Include micro-animations for state changes | Smooth, polished interaction feedback |
-| Use uppercase + letter-spacing for labels | Clear hierarchy, form guidance |
-| Provide keyboard shortcuts | Power user efficiency |
-| Show typing indicators | Real-time communication feel |
+| Guideline                                      | Rationale                                    |
+|------------------------------------------------|----------------------------------------------|
+| Use Blurple (#5865F2) as the primary accent    | Brand recognition, interactive elements      |
+| Maintain dark backgrounds for all surfaces     | Eye comfort for extended use, gaming context |
+| Show user presence with status indicators      | Community awareness, real-time feel          |
+| Use rounded corners (8px cards, 3-4px buttons) | Friendly, approachable, gaming aesthetic     |
+| Group messages from the same user              | Reduce visual noise, show conversation flow  |
+| Display role colors for usernames              | Community identity, server hierarchy         |
+| Include micro-animations for state changes     | Smooth, polished interaction feedback        |
+| Use uppercase + letter-spacing for labels      | Clear hierarchy, form guidance               |
+| Provide keyboard shortcuts                     | Power user efficiency                        |
+| Show typing indicators                         | Real-time communication feel                 |
 
 ### ❌ Don'ts
 
-| Anti-Pattern | Why to Avoid |
-|--------------|--------------|
-| Never use pure white backgrounds | Jarring contrast, off-brand |
-| Avoid sharp corners (0px radius) | Feels harsh, not Discord aesthetic |
-| Don't use thin/light font weights for UI | Readability issues on dark backgrounds |
-| Never omit status indicators for users | Loses presence awareness |
-| Avoid blue links that match Blurple | Links should be cyan `#00a8fc` to differentiate |
-| Don't overcrowd the message input | Keep it clean, one primary action |
-| Avoid modals for simple confirmations | Use inline or toast patterns when possible |
-| Don't hide the server list on desktop | Core navigation should remain visible |
-| Never use generic avatar placeholders | Each user gets a unique default avatar |
-| Avoid slow animations (>300ms) | Feels sluggish, gaming users expect speed |
+| Anti-Pattern                             | Why to Avoid                                    |
+|------------------------------------------|-------------------------------------------------|
+| Never use pure white backgrounds         | Jarring contrast, off-brand                     |
+| Avoid sharp corners (0px radius)         | Feels harsh, not Discord aesthetic              |
+| Don't use thin/light font weights for UI | Readability issues on dark backgrounds          |
+| Never omit status indicators for users   | Loses presence awareness                        |
+| Avoid blue links that match Blurple      | Links should be cyan `#00a8fc` to differentiate |
+| Don't overcrowd the message input        | Keep it clean, one primary action               |
+| Avoid modals for simple confirmations    | Use inline or toast patterns when possible      |
+| Don't hide the server list on desktop    | Core navigation should remain visible           |
+| Never use generic avatar placeholders    | Each user gets a unique default avatar          |
+| Avoid slow animations (>300ms)           | Feels sluggish, gaming users expect speed       |
 
 ### Content Guidelines
 
-| Do | Don't |
-|----|-------|
-| Use conversational, friendly tone | Overly formal or corporate language |
-| Provide clear action labels ("Send", "Cancel") | Vague labels ("Submit", "OK") |
-| Show error states inline with context | Generic error modals |
-| Use emoji naturally in UI copy | Excessive emoji that feels forced |
-| Confirm destructive actions | Delete without warning |
+| Do                                             | Don't                               |
+|------------------------------------------------|-------------------------------------|
+| Use conversational, friendly tone              | Overly formal or corporate language |
+| Provide clear action labels ("Send", "Cancel") | Vague labels ("Submit", "OK")       |
+| Show error states inline with context          | Generic error modals                |
+| Use emoji naturally in UI copy                 | Excessive emoji that feels forced   |
+| Confirm destructive actions                    | Delete without warning              |
 
 ---
 
@@ -769,31 +769,31 @@ Discord uses a **flex-based layout** rather than traditional grid. Panels are fi
 
 ### Breakpoints
 
-| Name | Width | Behavior |
-|------|-------|----------|
-| Desktop Large | >1200px | Full layout with member sidebar visible |
-| Desktop | 940px - 1200px | Member sidebar collapsed by default |
-| Tablet | 768px - 939px | Unified sidebar, swipe to reveal |
-| Mobile | <768px | Single-panel view, bottom navigation |
+| Name          | Width          | Behavior                                |
+|---------------|----------------|-----------------------------------------|
+| Desktop Large | >1200px        | Full layout with member sidebar visible |
+| Desktop       | 940px - 1200px | Member sidebar collapsed by default     |
+| Tablet        | 768px - 939px  | Unified sidebar, swipe to reveal        |
+| Mobile        | <768px         | Single-panel view, bottom navigation    |
 
 ### Mobile Adaptations
 
-| Component | Desktop | Mobile |
-|-----------|---------|--------|
-| Server List | Left rail, always visible | Swipe-in drawer from left |
-| Channel List | Fixed sidebar | Full-screen when active |
-| Member List | Right sidebar, toggleable | Swipe-in drawer from right |
-| Message Input | Fixed bottom of chat | Fixed bottom, expands for multiline |
-| Voice Controls | In-chat overlay | Bottom sheet |
+| Component      | Desktop                   | Mobile                              |
+|----------------|---------------------------|-------------------------------------|
+| Server List    | Left rail, always visible | Swipe-in drawer from left           |
+| Channel List   | Fixed sidebar             | Full-screen when active             |
+| Member List    | Right sidebar, toggleable | Swipe-in drawer from right          |
+| Message Input  | Fixed bottom of chat      | Fixed bottom, expands for multiline |
+| Voice Controls | In-chat overlay           | Bottom sheet                        |
 
 ### Touch Targets
 
-| Element | Minimum Size | Notes |
-|---------|--------------|-------|
-| Server Icon | 48px × 48px | Optimized for thumb |
-| Channel Item | Full width × 36px | Easy tap targets |
-| Message Actions | 32px × 32px | Shown on long-press |
-| Buttons | 44px height minimum | Comfortable touch |
+| Element         | Minimum Size        | Notes               |
+|-----------------|---------------------|---------------------|
+| Server Icon     | 48px × 48px         | Optimized for thumb |
+| Channel Item    | Full width × 36px   | Easy tap targets    |
+| Message Actions | 32px × 32px         | Shown on long-press |
+| Buttons         | 44px height minimum | Comfortable touch   |
 
 ### Collapsing Strategy
 1. **Member sidebar** collapses first (toggle-able)

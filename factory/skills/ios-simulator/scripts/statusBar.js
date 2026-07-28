@@ -139,8 +139,8 @@ function parseArgs() {
       case "--help":
         console.log(
           "Usage: node statusBar.js [--preset clean|testing|low-battery|airplane] " +
-            "[--time HH:MM] [--data-network TYPE] [--battery-level N] " +
-            "[--clear] [--udid UDID]"
+          "[--time HH:MM] [--data-network TYPE] [--battery-level N] " +
+          "[--clear] [--udid UDID]"
         );
         process.exit(0);
     }
@@ -205,8 +205,8 @@ function main() {
   } else {
     console.log(
       "Usage: node statusBar.js [--preset clean|testing|low-battery|airplane] " +
-        "[--time HH:MM] [--data-network TYPE] [--battery-level N] " +
-        "[--clear] [--udid UDID]"
+      "[--time HH:MM] [--data-network TYPE] [--battery-level N] " +
+      "[--clear] [--udid UDID]"
     );
     process.exit(1);
   }

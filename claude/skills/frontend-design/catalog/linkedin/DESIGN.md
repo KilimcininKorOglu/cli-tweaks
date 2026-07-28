@@ -3,30 +3,30 @@
 ## 1. Color Palette
 
 ### Primary Colors
-| Name | Hex | RGB | Usage |
-|------|-----|-----|-------|
-| LinkedIn Blue | `#0A66C2` | `rgb(10, 102, 194)` | Primary brand color, CTAs, links, active states |
-| Light Blue | `#70B5F9` | `rgb(112, 181, 249)` | Hover states, secondary accents, skill badges |
-| Dark Blue | `#004182` | `rgb(0, 65, 130)` | Pressed states, emphasis, premium features |
+| Name          | Hex       | RGB                  | Usage                                           |
+|---------------|-----------|----------------------|-------------------------------------------------|
+| LinkedIn Blue | `#0A66C2` | `rgb(10, 102, 194)`  | Primary brand color, CTAs, links, active states |
+| Light Blue    | `#70B5F9` | `rgb(112, 181, 249)` | Hover states, secondary accents, skill badges   |
+| Dark Blue     | `#004182` | `rgb(0, 65, 130)`    | Pressed states, emphasis, premium features      |
 
 ### Neutral Colors
-| Name | Hex | RGB | Usage |
-|------|-----|-----|-------|
-| Black | `#000000` | `rgb(0, 0, 0)` | Primary text (with opacity) |
-| Black 90% | `#000000E6` | `rgba(0, 0, 0, 0.9)` | Primary body text |
-| Black 60% | `#00000099` | `rgba(0, 0, 0, 0.6)` | Secondary text, timestamps |
-| Black 40% | `#00000066` | `rgba(0, 0, 0, 0.4)` | Placeholder text, disabled states |
-| White | `#FFFFFF` | `rgb(255, 255, 255)` | Backgrounds, cards, modals |
-| Light Gray | `#F3F2EF` | `rgb(243, 242, 239)` | Page background, section dividers |
-| Border Gray | `#E0DFDC` | `rgb(224, 223, 220)` | Card borders, dividers |
+| Name        | Hex         | RGB                  | Usage                             |
+|-------------|-------------|----------------------|-----------------------------------|
+| Black       | `#000000`   | `rgb(0, 0, 0)`       | Primary text (with opacity)       |
+| Black 90%   | `#000000E6` | `rgba(0, 0, 0, 0.9)` | Primary body text                 |
+| Black 60%   | `#00000099` | `rgba(0, 0, 0, 0.6)` | Secondary text, timestamps        |
+| Black 40%   | `#00000066` | `rgba(0, 0, 0, 0.4)` | Placeholder text, disabled states |
+| White       | `#FFFFFF`   | `rgb(255, 255, 255)` | Backgrounds, cards, modals        |
+| Light Gray  | `#F3F2EF`   | `rgb(243, 242, 239)` | Page background, section dividers |
+| Border Gray | `#E0DFDC`   | `rgb(224, 223, 220)` | Card borders, dividers            |
 
 ### Semantic Colors
-| Name | Hex | RGB | Usage |
-|------|-----|-----|-------|
-| Success Green | `#057642` | `rgb(5, 118, 66)` | Success states, online indicators |
-| Light Green | `#7FC15E` | `rgb(127, 193, 94)` | Open to work banner, growth indicators |
-| Warning Orange | `#B24020` | `rgb(178, 64, 32)` | Error states, urgent notifications |
-| Premium Gold | `#C37D16` | `rgb(195, 125, 22)` | LinkedIn Premium features |
+| Name           | Hex       | RGB                 | Usage                                  |
+|----------------|-----------|---------------------|----------------------------------------|
+| Success Green  | `#057642` | `rgb(5, 118, 66)`   | Success states, online indicators      |
+| Light Green    | `#7FC15E` | `rgb(127, 193, 94)` | Open to work banner, growth indicators |
+| Warning Orange | `#B24020` | `rgb(178, 64, 32)`  | Error states, urgent notifications     |
+| Premium Gold   | `#C37D16` | `rgb(195, 125, 22)` | LinkedIn Premium features              |
 
 ### Gradient Definitions
 ```css
@@ -50,35 +50,35 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubun
 ```
 
 ### Type Scale
-| Style | Size | Weight | Line Height | Letter Spacing | Usage |
-|-------|------|--------|-------------|----------------|-------|
-| Display Large | 32px | 600 | 40px | -0.5px | Profile names (hero) |
-| Display Medium | 24px | 600 | 32px | -0.25px | Section headings |
-| Heading Large | 20px | 600 | 28px | 0 | Card titles, job titles |
-| Heading Medium | 18px | 600 | 24px | 0 | Subheadings |
-| Heading Small | 16px | 600 | 22px | 0 | Component headers |
-| Body Large | 16px | 400 | 24px | 0 | Post content |
-| Body Medium | 14px | 400 | 20px | 0 | Primary body text |
-| Body Small | 12px | 400 | 16px | 0.1px | Secondary text, metadata |
-| Caption | 11px | 400 | 14px | 0.2px | Timestamps, helper text |
-| Overline | 12px | 600 | 16px | 1px | Labels, categories |
+| Style          | Size | Weight | Line Height | Letter Spacing | Usage                    |
+|----------------|------|--------|-------------|----------------|--------------------------|
+| Display Large  | 32px | 600    | 40px        | -0.5px         | Profile names (hero)     |
+| Display Medium | 24px | 600    | 32px        | -0.25px        | Section headings         |
+| Heading Large  | 20px | 600    | 28px        | 0              | Card titles, job titles  |
+| Heading Medium | 18px | 600    | 24px        | 0              | Subheadings              |
+| Heading Small  | 16px | 600    | 22px        | 0              | Component headers        |
+| Body Large     | 16px | 400    | 24px        | 0              | Post content             |
+| Body Medium    | 14px | 400    | 20px        | 0              | Primary body text        |
+| Body Small     | 12px | 400    | 16px        | 0.1px          | Secondary text, metadata |
+| Caption        | 11px | 400    | 14px        | 0.2px          | Timestamps, helper text  |
+| Overline       | 12px | 600    | 16px        | 1px            | Labels, categories       |
 
 ### Font Weights
-| Weight | Value | Usage |
-|--------|-------|-------|
-| Regular | 400 | Body text, descriptions |
-| Medium | 500 | Emphasized text, subtitles |
-| Semibold | 600 | Headings, names, CTAs |
-| Bold | 700 | Strong emphasis (rare) |
+| Weight   | Value | Usage                      |
+|----------|-------|----------------------------|
+| Regular  | 400   | Body text, descriptions    |
+| Medium   | 500   | Emphasized text, subtitles |
+| Semibold | 600   | Headings, names, CTAs      |
+| Bold     | 700   | Strong emphasis (rare)     |
 
 ### Text Colors
-| Type | Color | Opacity | Usage |
-|------|-------|---------|-------|
-| Primary | `#000000` | 90% | Headlines, body text |
-| Secondary | `#000000` | 60% | Timestamps, secondary info |
-| Tertiary | `#000000` | 40% | Placeholders, disabled |
-| Link | `#0A66C2` | 100% | Clickable text, hashtags |
-| Inverse | `#FFFFFF` | 100% | Text on dark backgrounds |
+| Type      | Color     | Opacity | Usage                      |
+|-----------|-----------|---------|----------------------------|
+| Primary   | `#000000` | 90%     | Headlines, body text       |
+| Secondary | `#000000` | 60%     | Timestamps, secondary info |
+| Tertiary  | `#000000` | 40%     | Placeholders, disabled     |
+| Link      | `#0A66C2` | 100%    | Clickable text, hashtags   |
+| Inverse   | `#FFFFFF` | 100%    | Text on dark backgrounds   |
 
 ---
 
@@ -88,31 +88,31 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubun
 Base unit: **4px**
 
 ### Spacing Scale
-| Token | Value | Usage |
-|-------|-------|-------|
-| `spacing-0` | 0px | No spacing |
-| `spacing-1` | 4px | Tight inline spacing, icon gaps |
-| `spacing-2` | 8px | Compact component padding |
-| `spacing-3` | 12px | Standard inline spacing |
-| `spacing-4` | 16px | Default component padding |
-| `spacing-5` | 20px | Section margins |
-| `spacing-6` | 24px | Card padding |
-| `spacing-8` | 32px | Large section spacing |
-| `spacing-10` | 40px | Major section breaks |
-| `spacing-12` | 48px | Page-level spacing |
-| `spacing-16` | 64px | Large gaps |
+| Token        | Value | Usage                           |
+|--------------|-------|---------------------------------|
+| `spacing-0`  | 0px   | No spacing                      |
+| `spacing-1`  | 4px   | Tight inline spacing, icon gaps |
+| `spacing-2`  | 8px   | Compact component padding       |
+| `spacing-3`  | 12px  | Standard inline spacing         |
+| `spacing-4`  | 16px  | Default component padding       |
+| `spacing-5`  | 20px  | Section margins                 |
+| `spacing-6`  | 24px  | Card padding                    |
+| `spacing-8`  | 32px  | Large section spacing           |
+| `spacing-10` | 40px  | Major section breaks            |
+| `spacing-12` | 48px  | Page-level spacing              |
+| `spacing-16` | 64px  | Large gaps                      |
 
 ### Component Spacing
-| Component | Padding | Margin | Gap |
-|-----------|---------|--------|-----|
-| Feed Card | 16px | 0 0 8px 0 | 12px |
-| Profile Card | 24px | 0 0 8px 0 | 16px |
-| Navigation | 0 16px | 0 | 24px |
-| Modal | 24px | auto | 16px |
-| Dropdown | 8px 0 | 4px 0 0 0 | 0 |
-| Button | 6px 16px | 0 | 8px |
-| Input | 12px 16px | 0 | 8px |
-| Message Bubble | 12px 16px | 4px 0 | - |
+| Component      | Padding   | Margin    | Gap  |
+|----------------|-----------|-----------|------|
+| Feed Card      | 16px      | 0 0 8px 0 | 12px |
+| Profile Card   | 24px      | 0 0 8px 0 | 16px |
+| Navigation     | 0 16px    | 0         | 24px |
+| Modal          | 24px      | auto      | 16px |
+| Dropdown       | 8px 0     | 4px 0 0 0 | 0    |
+| Button         | 6px 16px  | 0         | 8px  |
+| Input          | 12px 16px | 0         | 8px  |
+| Message Bubble | 12px 16px | 4px 0     | -    |
 
 ### Layout Grid
 ```css
@@ -141,46 +141,46 @@ Base unit: **4px**
 ## 4. Border Radius
 
 ### Radius Scale
-| Token | Value | Usage |
-|-------|-------|-------|
-| `radius-none` | 0px | Sharp edges, dividers |
-| `radius-xs` | 2px | Tags, small badges |
-| `radius-sm` | 4px | Buttons, inputs |
-| `radius-md` | 8px | Cards, dropdowns |
-| `radius-lg` | 12px | Modals, large cards |
-| `radius-xl` | 16px | Featured content |
+| Token         | Value  | Usage                            |
+|---------------|--------|----------------------------------|
+| `radius-none` | 0px    | Sharp edges, dividers            |
+| `radius-xs`   | 2px    | Tags, small badges               |
+| `radius-sm`   | 4px    | Buttons, inputs                  |
+| `radius-md`   | 8px    | Cards, dropdowns                 |
+| `radius-lg`   | 12px   | Modals, large cards              |
+| `radius-xl`   | 16px   | Featured content                 |
 | `radius-full` | 9999px | Avatars, pills, circular buttons |
 
 ### Component Radius
-| Component | Radius |
-|-----------|--------|
+| Component              | Radius         |
+|------------------------|----------------|
 | Profile Avatar (Large) | 50% (circular) |
 | Profile Avatar (Small) | 50% (circular) |
-| Company Logo | 4px |
-| Feed Card | 8px |
-| Modal | 8px |
-| Button Primary | 24px (pill) |
-| Button Secondary | 24px (pill) |
-| Input Field | 4px |
-| Dropdown | 8px |
-| Message Bubble | 18px |
-| Skill Badge | 4px |
-| Notification Badge | 50% (circular) |
-| Post Image | 8px |
+| Company Logo           | 4px            |
+| Feed Card              | 8px            |
+| Modal                  | 8px            |
+| Button Primary         | 24px (pill)    |
+| Button Secondary       | 24px (pill)    |
+| Input Field            | 4px            |
+| Dropdown               | 8px            |
+| Message Bubble         | 18px           |
+| Skill Badge            | 4px            |
+| Notification Badge     | 50% (circular) |
+| Post Image             | 8px            |
 
 ---
 
 ## 5. Shadows and Elevation
 
 ### Shadow Scale
-| Level | Shadow | Usage |
-|-------|--------|-------|
-| `elevation-0` | none | Flat elements |
-| `elevation-1` | `0 0 0 1px rgba(0, 0, 0, 0.08)` | Cards at rest |
-| `elevation-2` | `0 4px 12px rgba(0, 0, 0, 0.15)` | Cards on hover |
-| `elevation-3` | `0 8px 24px rgba(0, 0, 0, 0.2)` | Dropdowns, tooltips |
-| `elevation-4` | `0 12px 32px rgba(0, 0, 0, 0.25)` | Modals |
-| `elevation-5` | `0 20px 48px rgba(0, 0, 0, 0.3)` | Full-screen overlays |
+| Level         | Shadow                            | Usage                |
+|---------------|-----------------------------------|----------------------|
+| `elevation-0` | none                              | Flat elements        |
+| `elevation-1` | `0 0 0 1px rgba(0, 0, 0, 0.08)`   | Cards at rest        |
+| `elevation-2` | `0 4px 12px rgba(0, 0, 0, 0.15)`  | Cards on hover       |
+| `elevation-3` | `0 8px 24px rgba(0, 0, 0, 0.2)`   | Dropdowns, tooltips  |
+| `elevation-4` | `0 12px 32px rgba(0, 0, 0, 0.25)` | Modals               |
+| `elevation-5` | `0 20px 48px rgba(0, 0, 0, 0.3)`  | Full-screen overlays |
 
 ### Component Shadows
 ```css
@@ -237,13 +237,13 @@ input:focus {
 ## 6. Iconography
 
 ### Icon Sizes
-| Size | Dimensions | Usage |
-|------|------------|-------|
-| Extra Small | 16px | Inline icons, badges |
-| Small | 20px | Button icons, list items |
-| Medium | 24px | Navigation, primary actions |
-| Large | 32px | Empty states, featured |
-| Extra Large | 48px | Illustrations, heroes |
+| Size        | Dimensions | Usage                       |
+|-------------|------------|-----------------------------|
+| Extra Small | 16px       | Inline icons, badges        |
+| Small       | 20px       | Button icons, list items    |
+| Medium      | 24px       | Navigation, primary actions |
+| Large       | 32px       | Empty states, featured      |
+| Extra Large | 48px       | Illustrations, heroes       |
 
 ### Icon Style Guidelines
 - **Style**: Outlined icons for navigation, filled for active states
@@ -253,37 +253,37 @@ input:focus {
 - **Active Color**: `#0A66C2` for selected/active states
 
 ### Core Navigation Icons
-| Icon | Default State | Active State | Size |
-|------|---------------|--------------|------|
-| Home | Outline | Filled + Blue | 24px |
-| Network | Outline | Filled + Blue | 24px |
-| Jobs | Outline | Filled + Blue | 24px |
-| Messaging | Outline | Filled + Blue | 24px |
-| Notifications | Outline | Filled + Blue | 24px |
-| Profile | Avatar | Blue ring | 24px |
+| Icon          | Default State | Active State  | Size |
+|---------------|---------------|---------------|------|
+| Home          | Outline       | Filled + Blue | 24px |
+| Network       | Outline       | Filled + Blue | 24px |
+| Jobs          | Outline       | Filled + Blue | 24px |
+| Messaging     | Outline       | Filled + Blue | 24px |
+| Notifications | Outline       | Filled + Blue | 24px |
+| Profile       | Avatar        | Blue ring     | 24px |
 
 ### Action Icons
-| Icon | Usage | Size |
-|------|-------|------|
-| Like (Thumbs up) | Post reactions | 20px |
-| Comment | Post engagement | 20px |
-| Repost | Share content | 20px |
-| Send | Share via message | 20px |
-| More (3 dots) | Overflow menu | 20px |
-| Close (X) | Dismiss modals | 24px |
-| Search | Search input | 20px |
-| Edit (Pencil) | Edit actions | 20px |
-| Settings (Gear) | Configuration | 24px |
+| Icon             | Usage             | Size |
+|------------------|-------------------|------|
+| Like (Thumbs up) | Post reactions    | 20px |
+| Comment          | Post engagement   | 20px |
+| Repost           | Share content     | 20px |
+| Send             | Share via message | 20px |
+| More (3 dots)    | Overflow menu     | 20px |
+| Close (X)        | Dismiss modals    | 24px |
+| Search           | Search input      | 20px |
+| Edit (Pencil)    | Edit actions      | 20px |
+| Settings (Gear)  | Configuration     | 24px |
 
 ### Reaction Icons
-| Reaction | Color |
-|----------|-------|
-| Like | `#0A66C2` (Blue) |
-| Celebrate | `#44712E` (Green) |
-| Support | `#7A3E98` (Purple) |
-| Love | `#DF704D` (Coral) |
-| Insightful | `#E7A33E` (Gold) |
-| Funny | `#7FC15E` (Light Green) |
+| Reaction   | Color                   |
+|------------|-------------------------|
+| Like       | `#0A66C2` (Blue)        |
+| Celebrate  | `#44712E` (Green)       |
+| Support    | `#7A3E98` (Purple)      |
+| Love       | `#DF704D` (Coral)       |
+| Insightful | `#E7A33E` (Gold)        |
+| Funny      | `#7FC15E` (Light Green) |
 
 ---
 
@@ -954,14 +954,14 @@ input:focus {
 ```
 
 ### Duration Scale
-| Token | Duration | Usage |
-|-------|----------|-------|
-| `duration-instant` | 100ms | Hover states, color changes |
-| `duration-fast` | 150ms | Button presses, micro-interactions |
-| `duration-normal` | 200ms | Standard transitions |
-| `duration-slow` | 300ms | Expanding panels, modals entering |
-| `duration-slower` | 400ms | Complex animations |
-| `duration-slowest` | 500ms | Page transitions |
+| Token              | Duration | Usage                              |
+|--------------------|----------|------------------------------------|
+| `duration-instant` | 100ms    | Hover states, color changes        |
+| `duration-fast`    | 150ms    | Button presses, micro-interactions |
+| `duration-normal`  | 200ms    | Standard transitions               |
+| `duration-slow`    | 300ms    | Expanding panels, modals entering  |
+| `duration-slower`  | 400ms    | Complex animations                 |
+| `duration-slowest` | 500ms    | Page transitions                   |
 
 ### Standard Transitions
 ```css
@@ -1117,14 +1117,14 @@ input:focus {
 ## 9. Responsive Breakpoints
 
 ### Breakpoint Scale
-| Name | Min Width | Max Width | Usage |
-|------|-----------|-----------|-------|
-| Mobile Small | 0px | 479px | Small phones |
-| Mobile | 480px | 767px | Standard phones |
-| Tablet | 768px | 1023px | Tablets, small laptops |
-| Desktop | 1024px | 1279px | Standard desktops |
-| Desktop Large | 1280px | 1535px | Large desktops |
-| Desktop XL | 1536px+ | - | Ultra-wide monitors |
+| Name          | Min Width | Max Width | Usage                  |
+|---------------|-----------|-----------|------------------------|
+| Mobile Small  | 0px       | 479px     | Small phones           |
+| Mobile        | 480px     | 767px     | Standard phones        |
+| Tablet        | 768px     | 1023px    | Tablets, small laptops |
+| Desktop       | 1024px    | 1279px    | Standard desktops      |
+| Desktop Large | 1280px    | 1535px    | Large desktops         |
+| Desktop XL    | 1536px+   | -         | Ultra-wide monitors    |
 
 ### Media Query Mixins
 ```css

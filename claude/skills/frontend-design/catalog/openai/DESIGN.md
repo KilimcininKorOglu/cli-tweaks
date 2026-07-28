@@ -35,83 +35,83 @@ OpenAI embodies **academic rigor meets accessible technology**. The interface fe
 
 ### Core Foundation
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--primary-white` | `#ffffff` | Light mode background, cards |
-| `--primary-dark` | `#212121` | Dark mode background base |
-| `--chat-dark` | `#343541` | ChatGPT dark mode conversation bg |
-| `--chat-input-dark` | `#40414f` | ChatGPT input area dark mode |
-| `--text-primary` | `#202123` | Primary text light mode |
+| Token               | Hex       | Role                              |
+|---------------------|-----------|-----------------------------------|
+| `--primary-white`   | `#ffffff` | Light mode background, cards      |
+| `--primary-dark`    | `#212121` | Dark mode background base         |
+| `--chat-dark`       | `#343541` | ChatGPT dark mode conversation bg |
+| `--chat-input-dark` | `#40414f` | ChatGPT input area dark mode      |
+| `--text-primary`    | `#202123` | Primary text light mode           |
 
 ### Brand Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--openai-green` | `#10a37f` | Primary accent, CTAs, ChatGPT brand |
-| `--openai-green-hover` | `#0d8a6a` | Green hover state |
-| `--openai-green-light` | `#d1fae5` | Green backgrounds, highlights |
-| `--openai-green-subtle` | `rgba(16, 163, 127, 0.1)` | Subtle green backgrounds |
+| Token                   | Hex                       | Role                                |
+|-------------------------|---------------------------|-------------------------------------|
+| `--openai-green`        | `#10a37f`                 | Primary accent, CTAs, ChatGPT brand |
+| `--openai-green-hover`  | `#0d8a6a`                 | Green hover state                   |
+| `--openai-green-light`  | `#d1fae5`                 | Green backgrounds, highlights       |
+| `--openai-green-subtle` | `rgba(16, 163, 127, 0.1)` | Subtle green backgrounds            |
 
 ### Gray Scale (Light Theme)
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--gray-50` | `#f7f7f8` | Subtle backgrounds, hover states |
-| `--gray-100` | `#ececf1` | Dividers, borders |
+| Token        | Hex       | Role                               |
+|--------------|-----------|------------------------------------|
+| `--gray-50`  | `#f7f7f8` | Subtle backgrounds, hover states   |
+| `--gray-100` | `#ececf1` | Dividers, borders                  |
 | `--gray-200` | `#d9d9e3` | Disabled states, secondary borders |
-| `--gray-300` | `#c5c5d2` | Placeholder text |
-| `--gray-400` | `#8e8ea0` | Secondary text, metadata |
-| `--gray-500` | `#6e6e80` | Tertiary text |
-| `--gray-600` | `#565869` | Body text (light mode) |
-| `--gray-700` | `#353740` | Strong secondary text |
-| `--gray-800` | `#202123` | Primary text |
-| `--gray-900` | `#0d0d0d` | Maximum emphasis |
+| `--gray-300` | `#c5c5d2` | Placeholder text                   |
+| `--gray-400` | `#8e8ea0` | Secondary text, metadata           |
+| `--gray-500` | `#6e6e80` | Tertiary text                      |
+| `--gray-600` | `#565869` | Body text (light mode)             |
+| `--gray-700` | `#353740` | Strong secondary text              |
+| `--gray-800` | `#202123` | Primary text                       |
+| `--gray-900` | `#0d0d0d` | Maximum emphasis                   |
 
 ### Gray Scale (Dark Theme)
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--dark-bg` | `#212121` | Page background |
-| `--dark-surface` | `#2f2f2f` | Elevated surfaces |
-| `--dark-surface-hover` | `#3a3a3a` | Hover states |
-| `--dark-border` | `#4d4d4d` | Borders, dividers |
-| `--dark-text-primary` | `#ececec` | Primary text |
-| `--dark-text-secondary` | `#b4b4b4` | Secondary text |
-| `--dark-text-tertiary` | `#8e8e8e` | Tertiary text |
+| Token                   | Hex       | Role              |
+|-------------------------|-----------|-------------------|
+| `--dark-bg`             | `#212121` | Page background   |
+| `--dark-surface`        | `#2f2f2f` | Elevated surfaces |
+| `--dark-surface-hover`  | `#3a3a3a` | Hover states      |
+| `--dark-border`         | `#4d4d4d` | Borders, dividers |
+| `--dark-text-primary`   | `#ececec` | Primary text      |
+| `--dark-text-secondary` | `#b4b4b4` | Secondary text    |
+| `--dark-text-tertiary`  | `#8e8e8e` | Tertiary text     |
 
 ### ChatGPT Specific Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--chat-bg-light` | `#ffffff` | User message background (light) |
-| `--chat-bg-assistant` | `#f7f7f8` | Assistant message background (light) |
-| `--chat-bg-dark` | `#343541` | Conversation area (dark) |
-| `--chat-sidebar-dark` | `#202123` | Sidebar background (dark) |
-| `--chat-hover-dark` | `#2a2b32` | Sidebar hover (dark) |
-| `--chat-selected-dark` | `#343541` | Selected conversation (dark) |
+| Token                  | Hex       | Role                                 |
+|------------------------|-----------|--------------------------------------|
+| `--chat-bg-light`      | `#ffffff` | User message background (light)      |
+| `--chat-bg-assistant`  | `#f7f7f8` | Assistant message background (light) |
+| `--chat-bg-dark`       | `#343541` | Conversation area (dark)             |
+| `--chat-sidebar-dark`  | `#202123` | Sidebar background (dark)            |
+| `--chat-hover-dark`    | `#2a2b32` | Sidebar hover (dark)                 |
+| `--chat-selected-dark` | `#343541` | Selected conversation (dark)         |
 
 ### Semantic Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--error-red` | `#ef4146` | Errors, destructive actions |
-| `--error-bg` | `#fef2f2` | Error backgrounds |
-| `--warning-orange` | `#f59e0b` | Warnings, caution states |
-| `--warning-bg` | `#fffbeb` | Warning backgrounds |
-| `--success-green` | `#10a37f` | Success, confirmation |
-| `--success-bg` | `#d1fae5` | Success backgrounds |
-| `--info-blue` | `#3b82f6` | Information, links |
-| `--info-bg` | `#eff6ff` | Info backgrounds |
+| Token              | Hex       | Role                        |
+|--------------------|-----------|-----------------------------|
+| `--error-red`      | `#ef4146` | Errors, destructive actions |
+| `--error-bg`       | `#fef2f2` | Error backgrounds           |
+| `--warning-orange` | `#f59e0b` | Warnings, caution states    |
+| `--warning-bg`     | `#fffbeb` | Warning backgrounds         |
+| `--success-green`  | `#10a37f` | Success, confirmation       |
+| `--success-bg`     | `#d1fae5` | Success backgrounds         |
+| `--info-blue`      | `#3b82f6` | Information, links          |
+| `--info-bg`        | `#eff6ff` | Info backgrounds            |
 
 ### API & Documentation Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--code-purple` | `#7c3aed` | API endpoints |
-| `--code-blue` | `#2563eb` | Method names |
-| `--code-green` | `#059669` | Strings, success |
+| Token           | Hex       | Role                 |
+|-----------------|-----------|----------------------|
+| `--code-purple` | `#7c3aed` | API endpoints        |
+| `--code-blue`   | `#2563eb` | Method names         |
+| `--code-green`  | `#059669` | Strings, success     |
 | `--code-orange` | `#ea580c` | Warnings, deprecated |
-| `--code-pink` | `#db2777` | Keywords |
+| `--code-pink`   | `#db2777` | Keywords             |
 
 ---
 
@@ -135,30 +135,30 @@ OpenAI embodies **academic rigor meets accessible technology**. The interface fe
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing | Color |
-|---------|------|--------|-------------|----------------|-------|
-| Hero Display | 56px | 600 | 1.1 | -0.02em | `--gray-900` |
-| Page Title | 40px | 600 | 1.2 | -0.015em | `--gray-900` |
-| Section Title | 32px | 600 | 1.25 | -0.01em | `--gray-800` |
-| Card Title | 24px | 600 | 1.3 | -0.01em | `--gray-800` |
-| Subsection | 20px | 600 | 1.35 | -0.005em | `--gray-800` |
-| Large Body | 18px | 400 | 1.6 | 0 | `--gray-600` |
-| Body | 16px | 400 | 1.6 | 0 | `--gray-600` |
-| Small Body | 14px | 400 | 1.5 | 0 | `--gray-500` |
-| Caption | 13px | 400 | 1.4 | 0 | `--gray-400` |
-| Label | 12px | 500 | 1.4 | 0.01em | `--gray-500` |
-| Chat Message | 16px | 400 | 1.75 | 0 | `--gray-800` |
-| Code Inline | 14px | 400 | 1.6 | 0 | `--code-purple` |
-| Code Block | 14px | 400 | 1.6 | 0 | `--gray-800` |
+| Element       | Size | Weight | Line Height | Letter Spacing | Color           |
+|---------------|------|--------|-------------|----------------|-----------------|
+| Hero Display  | 56px | 600    | 1.1         | -0.02em        | `--gray-900`    |
+| Page Title    | 40px | 600    | 1.2         | -0.015em       | `--gray-900`    |
+| Section Title | 32px | 600    | 1.25        | -0.01em        | `--gray-800`    |
+| Card Title    | 24px | 600    | 1.3         | -0.01em        | `--gray-800`    |
+| Subsection    | 20px | 600    | 1.35        | -0.005em       | `--gray-800`    |
+| Large Body    | 18px | 400    | 1.6         | 0              | `--gray-600`    |
+| Body          | 16px | 400    | 1.6         | 0              | `--gray-600`    |
+| Small Body    | 14px | 400    | 1.5         | 0              | `--gray-500`    |
+| Caption       | 13px | 400    | 1.4         | 0              | `--gray-400`    |
+| Label         | 12px | 500    | 1.4         | 0.01em         | `--gray-500`    |
+| Chat Message  | 16px | 400    | 1.75        | 0              | `--gray-800`    |
+| Code Inline   | 14px | 400    | 1.6         | 0              | `--code-purple` |
+| Code Block    | 14px | 400    | 1.6         | 0              | `--gray-800`    |
 
 ### Font Weights
 
-| Weight | Name | Usage |
-|--------|------|-------|
-| 400 | Regular | Body text, chat messages, descriptions |
-| 500 | Medium | Labels, navigation, metadata |
-| 600 | Semibold | Headlines, titles, buttons |
-| 700 | Bold | Maximum emphasis, critical actions |
+| Weight | Name     | Usage                                  |
+|--------|----------|----------------------------------------|
+| 400    | Regular  | Body text, chat messages, descriptions |
+| 500    | Medium   | Labels, navigation, metadata           |
+| 600    | Semibold | Headlines, titles, buttons             |
+| 700    | Bold     | Maximum emphasis, critical actions     |
 
 ### Typography Philosophy
 OpenAI's typography balances **academic precision with conversational warmth**. The Söhne typeface provides a distinctive, modern feel while remaining highly readable for extended chat interactions. Headlines use restrained negative tracking for a refined appearance, while body text maintains neutral spacing for optimal readability.
@@ -173,12 +173,12 @@ OpenAI's typography balances **academic precision with conversational warmth**. 
 
 ### Monospace Typography (Söhne Mono)
 
-| Element | Size | Weight | Usage |
-|---------|------|--------|-------|
-| Code Block | 14px | 400 | Multi-line code, API examples |
-| Inline Code | 13px | 400 | Technical terms, parameters |
-| Terminal | 13px | 400 | CLI commands |
-| API Endpoint | 14px | 500 | API documentation |
+| Element      | Size | Weight | Usage                         |
+|--------------|------|--------|-------------------------------|
+| Code Block   | 14px | 400    | Multi-line code, API examples |
+| Inline Code  | 13px | 400    | Technical terms, parameters   |
+| Terminal     | 13px | 400    | CLI commands                  |
+| API Endpoint | 14px | 500    | API documentation             |
 
 ---
 
@@ -285,11 +285,11 @@ OpenAI's typography balances **academic precision with conversational warmth**. 
 
 #### Button Sizes
 
-| Size | Height | Padding | Font Size |
-|------|--------|---------|-----------|
-| Small | 32px | 8px 12px | 13px |
-| Medium (default) | 40px | 10px 16px | 14px |
-| Large | 48px | 12px 24px | 16px |
+| Size             | Height | Padding   | Font Size |
+|------------------|--------|-----------|-----------|
+| Small            | 32px   | 8px 12px  | 13px      |
+| Medium (default) | 40px   | 10px 16px | 14px      |
+| Large            | 48px   | 12px 24px | 16px      |
 
 ### Inputs
 
@@ -758,18 +758,18 @@ OpenAI's typography balances **academic precision with conversational warmth**. 
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--space-1` | 4px | Tight gaps, icon padding |
-| `--space-2` | 8px | Small gaps, inline spacing |
-| `--space-3` | 12px | Compact element spacing |
-| `--space-4` | 16px | Standard element spacing |
-| `--space-5` | 20px | Card content spacing |
-| `--space-6` | 24px | Section padding |
-| `--space-7` | 32px | Large section gaps |
-| `--space-8` | 48px | Major section separation |
-| `--space-9` | 64px | Page section breaks |
-| `--space-10` | 96px | Hero spacing |
+| Token        | Value | Usage                      |
+|--------------|-------|----------------------------|
+| `--space-1`  | 4px   | Tight gaps, icon padding   |
+| `--space-2`  | 8px   | Small gaps, inline spacing |
+| `--space-3`  | 12px  | Compact element spacing    |
+| `--space-4`  | 16px  | Standard element spacing   |
+| `--space-5`  | 20px  | Card content spacing       |
+| `--space-6`  | 24px  | Section padding            |
+| `--space-7`  | 32px  | Large section gaps         |
+| `--space-8`  | 48px  | Major section separation   |
+| `--space-9`  | 64px  | Page section breaks        |
+| `--space-10` | 96px  | Hero spacing               |
 
 ### Core Layout Structure
 
@@ -816,14 +816,14 @@ OpenAI's typography balances **academic precision with conversational warmth**. 
 
 ### Content Widths
 
-| Context | Max Width | Centering |
-|---------|-----------|-----------|
-| Chat Messages | 768px | Centered |
-| Documentation | 768px | Centered |
-| Landing Page Content | 1200px | Centered |
-| API Playground | 100% | Full-width |
-| Settings/Forms | 560px | Left-aligned |
-| Modal Content | 500px | Centered |
+| Context              | Max Width | Centering    |
+|----------------------|-----------|--------------|
+| Chat Messages        | 768px     | Centered     |
+| Documentation        | 768px     | Centered     |
+| Landing Page Content | 1200px    | Centered     |
+| API Playground       | 100%      | Full-width   |
+| Settings/Forms       | 560px     | Left-aligned |
+| Modal Content        | 500px     | Centered     |
 
 ### Grid System
 
@@ -946,15 +946,15 @@ OpenAI uses whitespace to create **focus and hierarchy**. The ChatGPT interface 
 
 ### Z-Index Scale
 
-| Layer | Z-Index | Elements |
-|-------|---------|----------|
-| Base | 0 | Main content, messages |
-| Sticky | 100 | Navigation headers |
-| Dropdown | 200 | Menus, autocomplete |
-| Sidebar Overlay | 250 | Mobile sidebar |
-| Modal | 300 | Dialogs |
-| Toast | 400 | Notifications |
-| Tooltip | 500 | Tooltips |
+| Layer           | Z-Index | Elements               |
+|-----------------|---------|------------------------|
+| Base            | 0       | Main content, messages |
+| Sticky          | 100     | Navigation headers     |
+| Dropdown        | 200     | Menus, autocomplete    |
+| Sidebar Overlay | 250     | Mobile sidebar         |
+| Modal           | 300     | Dialogs                |
+| Toast           | 400     | Notifications          |
+| Tooltip         | 500     | Tooltips               |
 
 ---
 
@@ -962,45 +962,45 @@ OpenAI uses whitespace to create **focus and hierarchy**. The ChatGPT interface 
 
 ### Do's
 
-| Guideline | Rationale |
-|-----------|-----------|
-| Use green (#10a37f) for primary actions | Brand recognition, positive association |
-| Apply generous line-height (1.6-1.75) for chat | Readability for extended conversations |
-| Keep message containers centered and constrained | Optimal reading width, focus |
-| Use rounded corners (8-16px) on containers | Friendly, approachable feel |
-| Implement both light and dark themes | User preference, eye comfort |
-| Show typing indicators during AI responses | User feedback, expectation setting |
-| Use subtle borders over heavy shadows | Clean, academic aesthetic |
-| Apply Söhne font consistently | Brand identity, readability |
-| Provide clear copy buttons for code | Utility for developers |
-| Show token/character counts where relevant | Transparency about API usage |
+| Guideline                                        | Rationale                               |
+|--------------------------------------------------|-----------------------------------------|
+| Use green (#10a37f) for primary actions          | Brand recognition, positive association |
+| Apply generous line-height (1.6-1.75) for chat   | Readability for extended conversations  |
+| Keep message containers centered and constrained | Optimal reading width, focus            |
+| Use rounded corners (8-16px) on containers       | Friendly, approachable feel             |
+| Implement both light and dark themes             | User preference, eye comfort            |
+| Show typing indicators during AI responses       | User feedback, expectation setting      |
+| Use subtle borders over heavy shadows            | Clean, academic aesthetic               |
+| Apply Söhne font consistently                    | Brand identity, readability             |
+| Provide clear copy buttons for code              | Utility for developers                  |
+| Show token/character counts where relevant       | Transparency about API usage            |
 
 ### Don'ts
 
-| Anti-Pattern | Why to Avoid |
-|--------------|--------------|
+| Anti-Pattern                                       | Why to Avoid                        |
+|----------------------------------------------------|-------------------------------------|
 | Never use bright, saturated colors for UI elements | Contradicts sophisticated aesthetic |
-| Avoid dense information layouts | Chat requires breathing room |
-| Don't use multiple accent colors | Green is the singular brand color |
-| Never hide the AI attribution | Transparency is core to trust |
-| Avoid aggressive animations | Professional, calm environment |
-| Don't use small text for chat messages | Readability is paramount |
-| Never auto-submit without user confirmation | Respect user control |
-| Avoid inconsistent dark mode colors | Coherent theme is essential |
-| Don't truncate code blocks aggressively | Technical utility matters |
-| Never use generic system fonts in UI | Söhne is brand-defining |
+| Avoid dense information layouts                    | Chat requires breathing room        |
+| Don't use multiple accent colors                   | Green is the singular brand color   |
+| Never hide the AI attribution                      | Transparency is core to trust       |
+| Avoid aggressive animations                        | Professional, calm environment      |
+| Don't use small text for chat messages             | Readability is paramount            |
+| Never auto-submit without user confirmation        | Respect user control                |
+| Avoid inconsistent dark mode colors                | Coherent theme is essential         |
+| Don't truncate code blocks aggressively            | Technical utility matters           |
+| Never use generic system fonts in UI               | Söhne is brand-defining             |
 
 ### Content Guidelines
 
-| Do | Don't |
-|----|-------|
-| Use clear, helpful AI responses | Use jargon without explanation |
-| Show examples with code | Provide abstract explanations only |
-| Indicate when AI is uncertain | Assert false confidence |
-| Provide citations for research claims | Make unverified claims |
-| Use consistent model naming (GPT-4, etc.) | Use internal codenames |
-| Show rate limits and usage clearly | Hide limitations |
-| Explain capabilities and limitations | Overpromise functionality |
+| Do                                        | Don't                              |
+|-------------------------------------------|------------------------------------|
+| Use clear, helpful AI responses           | Use jargon without explanation     |
+| Show examples with code                   | Provide abstract explanations only |
+| Indicate when AI is uncertain             | Assert false confidence            |
+| Provide citations for research claims     | Make unverified claims             |
+| Use consistent model naming (GPT-4, etc.) | Use internal codenames             |
+| Show rate limits and usage clearly        | Hide limitations                   |
+| Explain capabilities and limitations      | Overpromise functionality          |
 
 ---
 
@@ -1008,44 +1008,44 @@ OpenAI uses whitespace to create **focus and hierarchy**. The ChatGPT interface 
 
 ### Breakpoints
 
-| Name | Width | Behavior |
-|------|-------|----------|
-| Mobile | <640px | Full-width chat, collapsible sidebar |
-| Tablet | 640px - 1024px | Overlay sidebar, 2-column layouts |
-| Desktop | 1024px - 1440px | Full layout, persistent sidebar |
-| Wide | >1440px | Maximum content width, centered |
+| Name    | Width           | Behavior                             |
+|---------|-----------------|--------------------------------------|
+| Mobile  | <640px          | Full-width chat, collapsible sidebar |
+| Tablet  | 640px - 1024px  | Overlay sidebar, 2-column layouts    |
+| Desktop | 1024px - 1440px | Full layout, persistent sidebar      |
+| Wide    | >1440px         | Maximum content width, centered      |
 
 ### Mobile Adaptations
 
-| Component | Desktop | Mobile |
-|-----------|---------|--------|
-| Sidebar | Persistent 260px | Full-screen overlay |
-| Chat Messages | 768px max-width | Full width with padding |
-| Navigation | Full items | Hamburger menu |
-| Input Area | Single row expandable | Full width, larger touch targets |
-| Code Blocks | Horizontal scroll | Horizontal scroll |
-| Modal | Centered 500px | Full screen or bottom sheet |
+| Component     | Desktop               | Mobile                           |
+|---------------|-----------------------|----------------------------------|
+| Sidebar       | Persistent 260px      | Full-screen overlay              |
+| Chat Messages | 768px max-width       | Full width with padding          |
+| Navigation    | Full items            | Hamburger menu                   |
+| Input Area    | Single row expandable | Full width, larger touch targets |
+| Code Blocks   | Horizontal scroll     | Horizontal scroll                |
+| Modal         | Centered 500px        | Full screen or bottom sheet      |
 
 ### Touch Targets
 
-| Element | Minimum Size | Notes |
-|---------|--------------|-------|
-| Buttons | 44px height | iOS guidelines |
-| Send Button | 48px × 48px | Critical action |
-| Navigation Items | 48px height | Easy thumb access |
-| Conversation Items | Full width × 56px | Easy selection |
-| Input Field | 52px min-height | Comfortable typing |
+| Element            | Minimum Size      | Notes              |
+|--------------------|-------------------|--------------------|
+| Buttons            | 44px height       | iOS guidelines     |
+| Send Button        | 48px × 48px       | Critical action    |
+| Navigation Items   | 48px height       | Easy thumb access  |
+| Conversation Items | Full width × 56px | Easy selection     |
+| Input Field        | 52px min-height   | Comfortable typing |
 
 ### Responsive Typography
 
-| Element | Desktop | Mobile |
-|---------|---------|--------|
-| Hero Display | 56px | 36px |
-| Page Title | 40px | 28px |
-| Section Title | 32px | 24px |
-| Chat Message | 16px | 16px |
-| Body | 16px | 16px |
-| Caption | 13px | 13px |
+| Element       | Desktop | Mobile |
+|---------------|---------|--------|
+| Hero Display  | 56px    | 36px   |
+| Page Title    | 40px    | 28px   |
+| Section Title | 32px    | 24px   |
+| Chat Message  | 16px    | 16px   |
+| Body          | 16px    | 16px   |
+| Caption       | 13px    | 13px   |
 
 ### Chat Interface Responsive
 

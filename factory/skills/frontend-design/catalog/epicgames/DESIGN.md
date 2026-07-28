@@ -35,66 +35,66 @@ Epic Games Store embraces a **premium, cinematic gaming** design philosophy. The
 
 ### Primary Dark Theme
 
-| Token | Hex | Role |
-|-------|-----|------|
+| Token                     | Hex       | Role                             |
+|---------------------------|-----------|----------------------------------|
 | `--background-pure-black` | `#000000` | Deepest surfaces, modal overlays |
-| `--background-primary` | `#121212` | Main app background |
-| `--background-secondary` | `#202020` | Cards, elevated surfaces |
-| `--background-tertiary` | `#2a2a2a` | Hover states, selected items |
-| `--background-elevated` | `#303030` | Dropdowns, popovers |
-| `--background-input` | `#3a3a3a` | Form inputs, search fields |
-| `--background-sidebar` | `#18181c` | Left sidebar navigation |
-| `--background-header` | `#121212` | Top navigation bar |
+| `--background-primary`    | `#121212` | Main app background              |
+| `--background-secondary`  | `#202020` | Cards, elevated surfaces         |
+| `--background-tertiary`   | `#2a2a2a` | Hover states, selected items     |
+| `--background-elevated`   | `#303030` | Dropdowns, popovers              |
+| `--background-input`      | `#3a3a3a` | Form inputs, search fields       |
+| `--background-sidebar`    | `#18181c` | Left sidebar navigation          |
+| `--background-header`     | `#121212` | Top navigation bar               |
 
 ### Accent Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--accent-primary` | `#0074e4` | Primary buttons, links, selections |
-| `--accent-primary-hover` | `#0084ff` | Primary button hover state |
-| `--accent-primary-active` | `#0066cc` | Primary button pressed state |
-| `--accent-secondary` | `#26bbff` | Light blue highlights, secondary accents |
-| `--free-game-yellow` | `#f5a623` | Free game badges, promotions |
-| `--free-game-yellow-bright` | `#ffcc00` | Free game banner highlights |
-| `--sale-green` | `#00e676` | Sale badges, discount indicators |
+| Token                       | Hex       | Role                                     |
+|-----------------------------|-----------|------------------------------------------|
+| `--accent-primary`          | `#0074e4` | Primary buttons, links, selections       |
+| `--accent-primary-hover`    | `#0084ff` | Primary button hover state               |
+| `--accent-primary-active`   | `#0066cc` | Primary button pressed state             |
+| `--accent-secondary`        | `#26bbff` | Light blue highlights, secondary accents |
+| `--free-game-yellow`        | `#f5a623` | Free game badges, promotions             |
+| `--free-game-yellow-bright` | `#ffcc00` | Free game banner highlights              |
+| `--sale-green`              | `#00e676` | Sale badges, discount indicators         |
 
 ### Text Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--text-primary` | `#ffffff` | Primary body text, headers |
-| `--text-secondary` | `#a8a8a8` | Secondary text, metadata |
-| `--text-tertiary` | `#6b6b6b` | Tertiary text, placeholders |
-| `--text-muted` | `#505050` | Disabled text, timestamps |
-| `--text-link` | `#0074e4` | Hyperlinks |
-| `--text-link-hover` | `#26bbff` | Link hover state |
-| `--text-price` | `#ffffff` | Price displays |
-| `--text-discount` | `#00e676` | Discounted price |
+| Token                   | Hex       | Role                         |
+|-------------------------|-----------|------------------------------|
+| `--text-primary`        | `#ffffff` | Primary body text, headers   |
+| `--text-secondary`      | `#a8a8a8` | Secondary text, metadata     |
+| `--text-tertiary`       | `#6b6b6b` | Tertiary text, placeholders  |
+| `--text-muted`          | `#505050` | Disabled text, timestamps    |
+| `--text-link`           | `#0074e4` | Hyperlinks                   |
+| `--text-link-hover`     | `#26bbff` | Link hover state             |
+| `--text-price`          | `#ffffff` | Price displays               |
+| `--text-discount`       | `#00e676` | Discounted price             |
 | `--text-original-price` | `#6b6b6b` | Strikethrough original price |
 
 ### Status & Semantic Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--status-online` | `#00e676` | Online friends indicator |
-| `--status-away` | `#f5a623` | Away status |
-| `--status-offline` | `#505050` | Offline status |
-| `--status-in-game` | `#0074e4` | Currently playing game |
-| `--success` | `#00e676` | Success confirmations |
-| `--warning` | `#f5a623` | Warning states |
-| `--error` | `#f44336` | Error states, critical alerts |
-| `--info` | `#26bbff` | Informational messages |
+| Token              | Hex       | Role                          |
+|--------------------|-----------|-------------------------------|
+| `--status-online`  | `#00e676` | Online friends indicator      |
+| `--status-away`    | `#f5a623` | Away status                   |
+| `--status-offline` | `#505050` | Offline status                |
+| `--status-in-game` | `#0074e4` | Currently playing game        |
+| `--success`        | `#00e676` | Success confirmations         |
+| `--warning`        | `#f5a623` | Warning states                |
+| `--error`          | `#f44336` | Error states, critical alerts |
+| `--info`           | `#26bbff` | Informational messages        |
 
 ### Badge & Tag Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--badge-free` | `#f5a623` | Free game badge |
-| `--badge-sale` | `#00e676` | Sale/discount badge |
-| `--badge-new` | `#0074e4` | New release badge |
-| `--badge-coming-soon` | `#9c27b0` | Coming soon badge |
+| Token                  | Hex       | Role                   |
+|------------------------|-----------|------------------------|
+| `--badge-free`         | `#f5a623` | Free game badge        |
+| `--badge-sale`         | `#00e676` | Sale/discount badge    |
+| `--badge-new`          | `#0074e4` | New release badge      |
+| `--badge-coming-soon`  | `#9c27b0` | Coming soon badge      |
 | `--badge-early-access` | `#ff6f00` | Early access indicator |
-| `--badge-owned` | `#303030` | Owned game indicator |
+| `--badge-owned`        | `#303030` | Owned game indicator   |
 
 ---
 
@@ -118,40 +118,40 @@ Epic Games Store embraces a **premium, cinematic gaming** design philosophy. The
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing | Color |
-|---------|------|--------|-------------|----------------|-------|
-| Hero Title | 48px | Bold | 56px | -0.02em | `--text-primary` |
-| Page Title | 32px | Bold | 40px | -0.01em | `--text-primary` |
-| Section Header | 24px | SemiBold | 32px | 0 | `--text-primary` |
-| Card Title | 16px | Medium | 22px | 0 | `--text-primary` |
-| Subtitle | 14px | Regular | 20px | 0 | `--text-secondary` |
-| Body Text | 14px | Regular | 22px | 0.01em | `--text-primary` |
-| Body Small | 13px | Regular | 18px | 0 | `--text-secondary` |
-| Caption | 12px | Regular | 16px | 0.02em | `--text-tertiary` |
-| Button Text | 14px | SemiBold | 20px | 0.02em | `--text-primary` |
-| Price (Large) | 20px | Bold | 24px | 0 | `--text-primary` |
-| Price (Small) | 14px | Medium | 18px | 0 | `--text-primary` |
-| Badge Text | 11px | Bold | 14px | 0.05em | `--text-primary` |
-| Nav Item | 13px | Medium | 18px | 0.01em | `--text-secondary` |
+| Element        | Size | Weight   | Line Height | Letter Spacing | Color              |
+|----------------|------|----------|-------------|----------------|--------------------|
+| Hero Title     | 48px | Bold     | 56px        | -0.02em        | `--text-primary`   |
+| Page Title     | 32px | Bold     | 40px        | -0.01em        | `--text-primary`   |
+| Section Header | 24px | SemiBold | 32px        | 0              | `--text-primary`   |
+| Card Title     | 16px | Medium   | 22px        | 0              | `--text-primary`   |
+| Subtitle       | 14px | Regular  | 20px        | 0              | `--text-secondary` |
+| Body Text      | 14px | Regular  | 22px        | 0.01em         | `--text-primary`   |
+| Body Small     | 13px | Regular  | 18px        | 0              | `--text-secondary` |
+| Caption        | 12px | Regular  | 16px        | 0.02em         | `--text-tertiary`  |
+| Button Text    | 14px | SemiBold | 20px        | 0.02em         | `--text-primary`   |
+| Price (Large)  | 20px | Bold     | 24px        | 0              | `--text-primary`   |
+| Price (Small)  | 14px | Medium   | 18px        | 0              | `--text-primary`   |
+| Badge Text     | 11px | Bold     | 14px        | 0.05em         | `--text-primary`   |
+| Nav Item       | 13px | Medium   | 18px        | 0.01em         | `--text-secondary` |
 
 ### Font Weights
 
-| Weight | Name | Usage |
-|--------|------|-------|
-| 400 | Regular | Body text, descriptions |
-| 500 | Medium | Card titles, navigation, emphasized text |
-| 600 | SemiBold | Section headers, buttons |
-| 700 | Bold | Hero titles, page titles, prices |
+| Weight | Name     | Usage                                    |
+|--------|----------|------------------------------------------|
+| 400    | Regular  | Body text, descriptions                  |
+| 500    | Medium   | Card titles, navigation, emphasized text |
+| 600    | SemiBold | Section headers, buttons                 |
+| 700    | Bold     | Hero titles, page titles, prices         |
 
 ### Marketing Typography
 
-| Element | Size | Weight | Usage |
-|---------|------|--------|-------|
-| Campaign Headline | 64px | Bold | Major sale events, launches |
-| Feature Title | 40px | Bold | Featured game spotlights |
-| Promo Subtitle | 20px | Regular | Campaign descriptions |
-| Banner CTA | 16px | SemiBold | Call-to-action buttons |
-| Free Badge | 14px | Bold | "FREE" label uppercase |
+| Element           | Size | Weight   | Usage                       |
+|-------------------|------|----------|-----------------------------|
+| Campaign Headline | 64px | Bold     | Major sale events, launches |
+| Feature Title     | 40px | Bold     | Featured game spotlights    |
+| Promo Subtitle    | 20px | Regular  | Campaign descriptions       |
+| Banner CTA        | 16px | SemiBold | Call-to-action buttons      |
+| Free Badge        | 14px | Bold     | "FREE" label uppercase      |
 
 ---
 
@@ -1001,16 +1001,16 @@ Epic Games Store embraces a **premium, cinematic gaming** design philosophy. The
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--spacing-xs` | 4px | Tight gaps, icon spacing |
-| `--spacing-sm` | 8px | Component internal padding |
-| `--spacing-md` | 12px | Small gaps between elements |
-| `--spacing-lg` | 16px | Standard gaps, card padding |
-| `--spacing-xl` | 24px | Section spacing |
-| `--spacing-2xl` | 32px | Major section breaks |
-| `--spacing-3xl` | 48px | Page section margins |
-| `--spacing-4xl` | 64px | Hero section padding |
+| Token           | Value | Usage                       |
+|-----------------|-------|-----------------------------|
+| `--spacing-xs`  | 4px   | Tight gaps, icon spacing    |
+| `--spacing-sm`  | 8px   | Component internal padding  |
+| `--spacing-md`  | 12px  | Small gaps between elements |
+| `--spacing-lg`  | 16px  | Standard gaps, card padding |
+| `--spacing-xl`  | 24px  | Section spacing             |
+| `--spacing-2xl` | 32px  | Major section breaks        |
+| `--spacing-3xl` | 48px  | Page section margins        |
+| `--spacing-4xl` | 64px  | Hero section padding        |
 
 ### Core Layout Structure
 
@@ -1083,27 +1083,27 @@ Epic Games Store embraces a **premium, cinematic gaming** design philosophy. The
 
 ### Content Widths
 
-| Context | Width | Notes |
-|---------|-------|-------|
+| Context                 | Width  | Notes                      |
+|-------------------------|--------|----------------------------|
 | Content container (max) | 1600px | Centered with auto margins |
-| Store grid | 1440px | 4-5 column game grid |
-| Detail page | 1200px | Game detail content |
-| Modal small | 400px | Simple confirmations |
-| Modal medium | 560px | Forms, settings |
-| Modal large | 800px | Complex dialogs |
-| Sidebar | 240px | Fixed width |
+| Store grid              | 1440px | 4-5 column game grid       |
+| Detail page             | 1200px | Game detail content        |
+| Modal small             | 400px  | Simple confirmations       |
+| Modal medium            | 560px  | Forms, settings            |
+| Modal large             | 800px  | Complex dialogs            |
+| Sidebar                 | 240px  | Fixed width                |
 
 ### Game Image Sizes
 
-| Type | Dimensions | Aspect Ratio | Usage |
-|------|------------|--------------|-------|
-| Hero/Featured | 2560×1080 | 21:9 | Carousel hero images |
-| Landscape Wide | 1920×1080 | 16:9 | Game detail hero |
-| Card Standard | 400×225 | 16:9 | Store cards |
-| Card Tall | 600×800 | 3:4 | Vertical game cards |
-| Thumbnail | 200×112 | 16:9 | List views, cart |
-| Icon | 256×256 | 1:1 | Library icons |
-| Logo | Variable | Variable | Game logos (PNG) |
+| Type           | Dimensions | Aspect Ratio | Usage                |
+|----------------|------------|--------------|----------------------|
+| Hero/Featured  | 2560×1080  | 21:9         | Carousel hero images |
+| Landscape Wide | 1920×1080  | 16:9         | Game detail hero     |
+| Card Standard  | 400×225    | 16:9         | Store cards          |
+| Card Tall      | 600×800    | 3:4          | Vertical game cards  |
+| Thumbnail      | 200×112    | 16:9         | List views, cart     |
+| Icon           | 256×256    | 1:1          | Library icons        |
+| Logo           | Variable   | Variable     | Game logos (PNG)     |
 
 ### Whitespace Philosophy
 - **Generous and premium**: Content has room to breathe
@@ -1118,14 +1118,14 @@ Epic Games Store embraces a **premium, cinematic gaming** design philosophy. The
 
 ### Shadow System
 
-| Level | Shadow | Usage |
-|-------|--------|-------|
-| Level 0 | None | Flat surfaces, base elements |
-| Level 1 | `0 2px 8px rgba(0,0,0,0.2)` | Subtle lift, cards at rest |
-| Level 2 | `0 4px 16px rgba(0,0,0,0.3)` | Hovered cards |
-| Level 3 | `0 8px 24px rgba(0,0,0,0.4)` | Dropdowns, elevated cards |
-| Level 4 | `0 16px 48px rgba(0,0,0,0.5)` | Modals, important overlays |
-| Level 5 | `0 24px 64px rgba(0,0,0,0.6)` | Full-screen overlays |
+| Level   | Shadow                        | Usage                        |
+|---------|-------------------------------|------------------------------|
+| Level 0 | None                          | Flat surfaces, base elements |
+| Level 1 | `0 2px 8px rgba(0,0,0,0.2)`   | Subtle lift, cards at rest   |
+| Level 2 | `0 4px 16px rgba(0,0,0,0.3)`  | Hovered cards                |
+| Level 3 | `0 8px 24px rgba(0,0,0,0.4)`  | Dropdowns, elevated cards    |
+| Level 4 | `0 16px 48px rgba(0,0,0,0.5)` | Modals, important overlays   |
+| Level 5 | `0 24px 64px rgba(0,0,0,0.6)` | Full-screen overlays         |
 
 ### Surface Hierarchy
 
@@ -1149,17 +1149,17 @@ Epic Games Store embraces a **premium, cinematic gaming** design philosophy. The
 
 ### Z-Index Scale
 
-| Layer | Z-Index | Elements |
-|-------|---------|----------|
-| Base | 0 | Main content, game cards |
-| Sticky | 10 | Section headers within scroll |
-| Header | 100 | Main navigation header |
-| Sidebar | 50 | Left sidebar (below header) |
-| Dropdown | 200 | Search results, menus |
-| Popover | 300 | Quick actions, tooltips |
-| Modal | 400 | Dialogs, confirmations |
-| Toast | 500 | Notifications |
-| Tooltip | 600 | Help tooltips |
+| Layer    | Z-Index | Elements                      |
+|----------|---------|-------------------------------|
+| Base     | 0       | Main content, game cards      |
+| Sticky   | 10      | Section headers within scroll |
+| Header   | 100     | Main navigation header        |
+| Sidebar  | 50      | Left sidebar (below header)   |
+| Dropdown | 200     | Search results, menus         |
+| Popover  | 300     | Quick actions, tooltips       |
+| Modal    | 400     | Dialogs, confirmations        |
+| Toast    | 500     | Notifications                 |
+| Tooltip  | 600     | Help tooltips                 |
 
 ### Gradient Treatments
 
@@ -1205,44 +1205,44 @@ Epic Games Store embraces a **premium, cinematic gaming** design philosophy. The
 
 ### Do's
 
-| Guideline | Rationale |
-|-----------|-----------|
-| Use pure black (#121212) as primary background | Cinematic, premium feel |
-| Make free games prominent with yellow (#f5a623) | Core value proposition |
+| Guideline                                           | Rationale                  |
+|-----------------------------------------------------|----------------------------|
+| Use pure black (#121212) as primary background      | Cinematic, premium feel    |
+| Make free games prominent with yellow (#f5a623)     | Core value proposition     |
 | Use blue (#0074e4) consistently for primary actions | Clear interaction patterns |
-| Let game artwork fill cards edge-to-edge | Visual-first experience |
-| Apply generous border-radius (8-16px) | Modern, friendly aesthetic |
-| Show countdown timers on free game offers | Creates urgency |
-| Use full-bleed hero images | Cinematic impact |
-| Keep navigation minimal and clean | Focus on content |
-| Show "In Library" badges on owned games | Prevents confusion |
-| Include social proof (friends who own game) | Community connection |
+| Let game artwork fill cards edge-to-edge            | Visual-first experience    |
+| Apply generous border-radius (8-16px)               | Modern, friendly aesthetic |
+| Show countdown timers on free game offers           | Creates urgency            |
+| Use full-bleed hero images                          | Cinematic impact           |
+| Keep navigation minimal and clean                   | Focus on content           |
+| Show "In Library" badges on owned games             | Prevents confusion         |
+| Include social proof (friends who own game)         | Community connection       |
 
 ### Don'ts
 
-| Anti-Pattern | Why to Avoid |
-|--------------|--------------|
-| Don't use light backgrounds | Breaks dark theme immersion |
-| Avoid sharp corners (< 8px radius) | Feels dated, less premium |
-| Don't hide free game offers | Core differentiator |
-| Avoid cluttered layouts | Epic favors curation over density |
-| Don't use colored text for body copy | Maintain readability |
-| Avoid small, cramped touch targets | Mobile/controller accessibility |
-| Don't obscure game artwork with overlays | Games should be the hero |
-| Avoid auto-playing video with sound | Respect user attention |
-| Don't use generic placeholder images | Quality matters |
-| Avoid inconsistent icon styles | Maintain visual coherence |
+| Anti-Pattern                             | Why to Avoid                      |
+|------------------------------------------|-----------------------------------|
+| Don't use light backgrounds              | Breaks dark theme immersion       |
+| Avoid sharp corners (< 8px radius)       | Feels dated, less premium         |
+| Don't hide free game offers              | Core differentiator               |
+| Avoid cluttered layouts                  | Epic favors curation over density |
+| Don't use colored text for body copy     | Maintain readability              |
+| Avoid small, cramped touch targets       | Mobile/controller accessibility   |
+| Don't obscure game artwork with overlays | Games should be the hero          |
+| Avoid auto-playing video with sound      | Respect user attention            |
+| Don't use generic placeholder images     | Quality matters                   |
+| Avoid inconsistent icon styles           | Maintain visual coherence         |
 
 ### Content Guidelines
 
-| Do | Don't |
-|----|-------|
-| Clear, prominent pricing | Hidden costs or unclear pricing |
-| Show platform compatibility icons | Assume single platform |
-| Display file size for downloads | Surprise users with storage needs |
-| Include age ratings | Skip content warnings |
-| Show "Free" prominently when applicable | Bury free offers |
-| Display refund policy clearly | Hide return information |
+| Do                                      | Don't                             |
+|-----------------------------------------|-----------------------------------|
+| Clear, prominent pricing                | Hidden costs or unclear pricing   |
+| Show platform compatibility icons       | Assume single platform            |
+| Display file size for downloads         | Surprise users with storage needs |
+| Include age ratings                     | Skip content warnings             |
+| Show "Free" prominently when applicable | Bury free offers                  |
+| Display refund policy clearly           | Hide return information           |
 
 ---
 
@@ -1250,52 +1250,52 @@ Epic Games Store embraces a **premium, cinematic gaming** design philosophy. The
 
 ### Breakpoints
 
-| Name | Width | Behavior |
-|------|-------|----------|
-| Desktop XL | >1600px | Full layout, 5-column grids |
-| Desktop | 1200px - 1600px | Standard layout, 4-column grids |
-| Desktop SM | 960px - 1199px | Compact layout, 3-column grids |
-| Tablet | 768px - 959px | Sidebar collapses, 2-column grids |
-| Mobile | <768px | Single column, bottom navigation |
+| Name       | Width           | Behavior                          |
+|------------|-----------------|-----------------------------------|
+| Desktop XL | >1600px         | Full layout, 5-column grids       |
+| Desktop    | 1200px - 1600px | Standard layout, 4-column grids   |
+| Desktop SM | 960px - 1199px  | Compact layout, 3-column grids    |
+| Tablet     | 768px - 959px   | Sidebar collapses, 2-column grids |
+| Mobile     | <768px          | Single column, bottom navigation  |
 
 ### Desktop Scaling
 
-| Viewport | Content Width | Grid Columns | Sidebar |
-|----------|---------------|--------------|---------|
-| >1600px | 1440px | 5 | 240px |
-| 1200-1600px | 1200px | 4 | 240px |
-| 960-1199px | 100% - 48px | 3 | 200px |
-| <960px | 100% - 32px | 2 | Collapsed |
+| Viewport    | Content Width | Grid Columns | Sidebar   |
+|-------------|---------------|--------------|-----------|
+| >1600px     | 1440px        | 5            | 240px     |
+| 1200-1600px | 1200px        | 4            | 240px     |
+| 960-1199px  | 100% - 48px   | 3            | 200px     |
+| <960px      | 100% - 32px   | 2            | Collapsed |
 
 ### Component Adaptations
 
-| Component | Desktop | Tablet | Mobile |
-|-----------|---------|--------|--------|
-| Sidebar | Fixed visible | Collapsible drawer | Bottom sheet |
-| Game Grid | 4-5 columns | 2-3 columns | 1-2 columns |
-| Hero Carousel | Full width 21:9 | Full width 16:9 | Full width 4:3 |
-| Cart | Dropdown | Dropdown | Full page |
-| Search | Header input | Icon + modal | Icon + full screen |
-| Game Cards | Hover effects | Touch effects | Tap to expand |
+| Component     | Desktop         | Tablet             | Mobile             |
+|---------------|-----------------|--------------------|--------------------|
+| Sidebar       | Fixed visible   | Collapsible drawer | Bottom sheet       |
+| Game Grid     | 4-5 columns     | 2-3 columns        | 1-2 columns        |
+| Hero Carousel | Full width 21:9 | Full width 16:9    | Full width 4:3     |
+| Cart          | Dropdown        | Dropdown           | Full page          |
+| Search        | Header input    | Icon + modal       | Icon + full screen |
+| Game Cards    | Hover effects   | Touch effects      | Tap to expand      |
 
 ### Touch Targets
 
-| Element | Minimum Size | Notes |
-|---------|--------------|-------|
-| Buttons | 44px × 44px | WCAG 2.1 compliant |
-| Navigation items | 48px height | Comfortable tapping |
-| Game cards | 160px min width | Visible and tappable |
-| Close buttons | 44px × 44px | Easy dismissal |
-| Cart items | 72px height | Clear tap zones |
+| Element          | Minimum Size    | Notes                |
+|------------------|-----------------|----------------------|
+| Buttons          | 44px × 44px     | WCAG 2.1 compliant   |
+| Navigation items | 48px height     | Comfortable tapping  |
+| Game cards       | 160px min width | Visible and tappable |
+| Close buttons    | 44px × 44px     | Easy dismissal       |
+| Cart items       | 72px height     | Clear tap zones      |
 
 ### Image Handling
 
-| Type | Desktop | Tablet | Mobile |
-|------|---------|--------|--------|
-| Hero | 2560×1080 | 1920×1080 | 1280×960 |
-| Cards | 400×225 | 300×169 | Full width |
-| Thumbnails | 200×112 | 160×90 | 120×67 |
-| Load Strategy | Eager | Lazy | Lazy + LQIP |
+| Type          | Desktop   | Tablet    | Mobile      |
+|---------------|-----------|-----------|-------------|
+| Hero          | 2560×1080 | 1920×1080 | 1280×960    |
+| Cards         | 400×225   | 300×169   | Full width  |
+| Thumbnails    | 200×112   | 160×90    | 120×67      |
+| Load Strategy | Eager     | Lazy      | Lazy + LQIP |
 
 ### Mobile Specific
 

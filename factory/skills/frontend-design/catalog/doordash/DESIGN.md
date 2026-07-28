@@ -3,40 +3,40 @@
 ## 1. Color Palette
 
 ### Primary Colors
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| DoorDash Red | `#FF3008` | rgb(255, 48, 8) | Primary brand, CTAs, logo |
-| DoorDash Red Dark | `#C41E00` | rgb(196, 30, 0) | Hover states, emphasis |
-| DoorDash Red Light | `#FF6B4D` | rgb(255, 107, 77) | Accent highlights |
+| Color Name         | Hex Code  | RGB               | Usage                     |
+|--------------------|-----------|-------------------|---------------------------|
+| DoorDash Red       | `#FF3008` | rgb(255, 48, 8)   | Primary brand, CTAs, logo |
+| DoorDash Red Dark  | `#C41E00` | rgb(196, 30, 0)   | Hover states, emphasis    |
+| DoorDash Red Light | `#FF6B4D` | rgb(255, 107, 77) | Accent highlights         |
 
 ### Secondary Colors
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| DashPass Purple | `#5C2D91` | rgb(92, 45, 145) | DashPass membership branding |
-| DashPass Purple Light | `#7B4CB8` | rgb(123, 76, 184) | DashPass accents |
-| Success Green | `#00A651` | rgb(0, 166, 81) | Delivery confirmations, savings |
-| Alert Yellow | `#FFBE00` | rgb(255, 190, 0) | Warnings, attention |
-| Star Gold | `#FFCC00` | rgb(255, 204, 0) | Rating stars |
+| Color Name            | Hex Code  | RGB               | Usage                           |
+|-----------------------|-----------|-------------------|---------------------------------|
+| DashPass Purple       | `#5C2D91` | rgb(92, 45, 145)  | DashPass membership branding    |
+| DashPass Purple Light | `#7B4CB8` | rgb(123, 76, 184) | DashPass accents                |
+| Success Green         | `#00A651` | rgb(0, 166, 81)   | Delivery confirmations, savings |
+| Alert Yellow          | `#FFBE00` | rgb(255, 190, 0)  | Warnings, attention             |
+| Star Gold             | `#FFCC00` | rgb(255, 204, 0)  | Rating stars                    |
 
 ### Neutral Colors
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| Black | `#191919` | rgb(25, 25, 25) | Primary text |
-| Gray 900 | `#2E2E2E` | rgb(46, 46, 46) | Headings |
-| Gray 700 | `#494949` | rgb(73, 73, 73) | Secondary text |
-| Gray 500 | `#767676` | rgb(118, 118, 118) | Placeholder text |
-| Gray 300 | `#B8B8B8` | rgb(184, 184, 184) | Disabled states |
-| Gray 200 | `#E8E8E8` | rgb(232, 232, 232) | Borders, dividers |
-| Gray 100 | `#F5F5F5` | rgb(245, 245, 245) | Background secondary |
-| White | `#FFFFFF` | rgb(255, 255, 255) | Primary background |
+| Color Name | Hex Code  | RGB                | Usage                |
+|------------|-----------|--------------------|----------------------|
+| Black      | `#191919` | rgb(25, 25, 25)    | Primary text         |
+| Gray 900   | `#2E2E2E` | rgb(46, 46, 46)    | Headings             |
+| Gray 700   | `#494949` | rgb(73, 73, 73)    | Secondary text       |
+| Gray 500   | `#767676` | rgb(118, 118, 118) | Placeholder text     |
+| Gray 300   | `#B8B8B8` | rgb(184, 184, 184) | Disabled states      |
+| Gray 200   | `#E8E8E8` | rgb(232, 232, 232) | Borders, dividers    |
+| Gray 100   | `#F5F5F5` | rgb(245, 245, 245) | Background secondary |
+| White      | `#FFFFFF` | rgb(255, 255, 255) | Primary background   |
 
 ### Delivery Status Colors
-| Color Name | Hex Code | Usage |
-|------------|----------|-------|
-| Preparing | `#FF9500` | Order being prepared |
-| On The Way | `#007AFF` | Dasher en route |
-| Arriving | `#34C759` | Dasher nearby |
-| Delivered | `#00A651` | Order complete |
+| Color Name | Hex Code  | Usage                |
+|------------|-----------|----------------------|
+| Preparing  | `#FF9500` | Order being prepared |
+| On The Way | `#007AFF` | Dasher en route      |
+| Arriving   | `#34C759` | Dasher nearby        |
+| Delivered  | `#00A651` | Order complete       |
 
 ---
 
@@ -52,28 +52,28 @@ font-family: 'DD-TTNorms', 'SF Pro Display', -apple-system, sans-serif;
 ```
 
 ### Type Scale
-| Style | Size | Weight | Line Height | Letter Spacing | Usage |
-|-------|------|--------|-------------|----------------|-------|
-| Display XL | 48px | 800 | 1.1 | -0.02em | Hero promotions |
-| Display Large | 36px | 700 | 1.2 | -0.01em | Page titles |
-| Heading 1 | 28px | 700 | 1.25 | -0.01em | Section headers |
-| Heading 2 | 24px | 700 | 1.3 | 0 | Restaurant names |
-| Heading 3 | 20px | 600 | 1.35 | 0 | Category titles |
-| Heading 4 | 18px | 600 | 1.4 | 0 | Dish names |
-| Body Large | 16px | 400 | 1.5 | 0 | Primary content |
-| Body | 14px | 400 | 1.5 | 0 | Descriptions |
-| Body Small | 13px | 400 | 1.45 | 0 | Metadata |
-| Caption | 12px | 500 | 1.4 | 0.01em | Labels, times |
-| Micro | 11px | 500 | 1.3 | 0.02em | Badges |
+| Style         | Size | Weight | Line Height | Letter Spacing | Usage            |
+|---------------|------|--------|-------------|----------------|------------------|
+| Display XL    | 48px | 800    | 1.1         | -0.02em        | Hero promotions  |
+| Display Large | 36px | 700    | 1.2         | -0.01em        | Page titles      |
+| Heading 1     | 28px | 700    | 1.25        | -0.01em        | Section headers  |
+| Heading 2     | 24px | 700    | 1.3         | 0              | Restaurant names |
+| Heading 3     | 20px | 600    | 1.35        | 0              | Category titles  |
+| Heading 4     | 18px | 600    | 1.4         | 0              | Dish names       |
+| Body Large    | 16px | 400    | 1.5         | 0              | Primary content  |
+| Body          | 14px | 400    | 1.5         | 0              | Descriptions     |
+| Body Small    | 13px | 400    | 1.45        | 0              | Metadata         |
+| Caption       | 12px | 500    | 1.4         | 0.01em         | Labels, times    |
+| Micro         | 11px | 500    | 1.3         | 0.02em         | Badges           |
 
 ### Font Weights
-| Weight Name | Value | Usage |
-|-------------|-------|-------|
-| Regular | 400 | Body text, descriptions |
-| Medium | 500 | Labels, metadata |
-| Semibold | 600 | Subheadings, emphasis |
-| Bold | 700 | Headings, restaurant names |
-| Extrabold | 800 | Promotional displays |
+| Weight Name | Value | Usage                      |
+|-------------|-------|----------------------------|
+| Regular     | 400   | Body text, descriptions    |
+| Medium      | 500   | Labels, metadata           |
+| Semibold    | 600   | Subheadings, emphasis      |
+| Bold        | 700   | Headings, restaurant names |
+| Extrabold   | 800   | Promotional displays       |
 
 ### Typography Tokens
 ```css
@@ -130,19 +130,19 @@ font-family: 'DD-TTNorms', 'SF Pro Display', -apple-system, sans-serif;
 ```
 
 ### Spacing Scale
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--space-0` | 0px | Reset |
-| `--space-1` | 4px | Tight spacing |
-| `--space-2` | 8px | Icon gaps |
-| `--space-3` | 12px | Small gaps |
-| `--space-4` | 16px | Component padding |
-| `--space-5` | 20px | Card padding |
-| `--space-6` | 24px | Section spacing |
-| `--space-8` | 32px | Large gaps |
-| `--space-10` | 40px | Section margins |
-| `--space-12` | 48px | Page sections |
-| `--space-16` | 64px | Hero spacing |
+| Token        | Value | Usage             |
+|--------------|-------|-------------------|
+| `--space-0`  | 0px   | Reset             |
+| `--space-1`  | 4px   | Tight spacing     |
+| `--space-2`  | 8px   | Icon gaps         |
+| `--space-3`  | 12px  | Small gaps        |
+| `--space-4`  | 16px  | Component padding |
+| `--space-5`  | 20px  | Card padding      |
+| `--space-6`  | 24px  | Section spacing   |
+| `--space-8`  | 32px  | Large gaps        |
+| `--space-10` | 40px  | Section margins   |
+| `--space-12` | 48px  | Page sections     |
+| `--space-16` | 64px  | Hero spacing      |
 
 ### Component Spacing
 ```css
@@ -205,16 +205,16 @@ font-family: 'DD-TTNorms', 'SF Pro Display', -apple-system, sans-serif;
 ## 4. Border Radius
 
 ### Radius Scale
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--radius-none` | 0px | Sharp edges |
-| `--radius-xs` | 4px | Small chips |
-| `--radius-sm` | 8px | Buttons, inputs |
-| `--radius-md` | 12px | Cards |
-| `--radius-lg` | 16px | Restaurant images |
-| `--radius-xl` | 20px | Modal corners |
-| `--radius-2xl` | 24px | Bottom sheets |
-| `--radius-full` | 9999px | Pills, badges |
+| Token           | Value  | Usage             |
+|-----------------|--------|-------------------|
+| `--radius-none` | 0px    | Sharp edges       |
+| `--radius-xs`   | 4px    | Small chips       |
+| `--radius-sm`   | 8px    | Buttons, inputs   |
+| `--radius-md`   | 12px   | Cards             |
+| `--radius-lg`   | 16px   | Restaurant images |
+| `--radius-xl`   | 20px   | Modal corners     |
+| `--radius-2xl`  | 24px   | Bottom sheets     |
+| `--radius-full` | 9999px | Pills, badges     |
 
 ### Component Radius
 ```css
@@ -263,14 +263,14 @@ font-family: 'DD-TTNorms', 'SF Pro Display', -apple-system, sans-serif;
 ## 5. Shadow System
 
 ### Shadow Scale
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--shadow-none` | none | Flat elements |
-| `--shadow-sm` | 0 1px 2px rgba(0,0,0,0.06) | Subtle lift |
-| `--shadow-md` | 0 2px 8px rgba(0,0,0,0.08) | Cards |
-| `--shadow-lg` | 0 4px 16px rgba(0,0,0,0.1) | Floating cart |
-| `--shadow-xl` | 0 8px 32px rgba(0,0,0,0.12) | Modals |
-| `--shadow-2xl` | 0 16px 48px rgba(0,0,0,0.16) | Bottom sheets |
+| Token           | Value                        | Usage         |
+|-----------------|------------------------------|---------------|
+| `--shadow-none` | none                         | Flat elements |
+| `--shadow-sm`   | 0 1px 2px rgba(0,0,0,0.06)   | Subtle lift   |
+| `--shadow-md`   | 0 2px 8px rgba(0,0,0,0.08)   | Cards         |
+| `--shadow-lg`   | 0 4px 16px rgba(0,0,0,0.1)   | Floating cart |
+| `--shadow-xl`   | 0 8px 32px rgba(0,0,0,0.12)  | Modals        |
+| `--shadow-2xl`  | 0 16px 48px rgba(0,0,0,0.16) | Bottom sheets |
 
 ### Component Shadows
 ```css
@@ -850,14 +850,14 @@ font-family: 'DD-TTNorms', 'SF Pro Display', -apple-system, sans-serif;
 ## 7. Iconography
 
 ### Icon Specifications
-| Property | Value |
-|----------|-------|
-| Default Size | 24px |
-| Small Size | 16px |
-| Large Size | 32px |
-| Stroke Width | 1.5px - 2px |
-| Style | Rounded, friendly |
-| Color | Inherit from parent |
+| Property     | Value               |
+|--------------|---------------------|
+| Default Size | 24px                |
+| Small Size   | 16px                |
+| Large Size   | 32px                |
+| Stroke Width | 1.5px - 2px         |
+| Style        | Rounded, friendly   |
+| Color        | Inherit from parent |
 
 ### Core Icons
 ```
@@ -960,13 +960,13 @@ Order:
 ```
 
 ### Duration Scale
-| Token | Duration | Usage |
-|-------|----------|-------|
-| `--duration-instant` | 100ms | Micro-interactions |
-| `--duration-fast` | 150ms | Buttons, hovers |
-| `--duration-normal` | 200ms | Most transitions |
-| `--duration-slow` | 300ms | Page transitions |
-| `--duration-slower` | 400ms | Complex animations |
+| Token                | Duration | Usage              |
+|----------------------|----------|--------------------|
+| `--duration-instant` | 100ms    | Micro-interactions |
+| `--duration-fast`    | 150ms    | Buttons, hovers    |
+| `--duration-normal`  | 200ms    | Most transitions   |
+| `--duration-slow`    | 300ms    | Page transitions   |
+| `--duration-slower`  | 400ms    | Complex animations |
 
 ### Component Animations
 ```css
@@ -1093,14 +1093,14 @@ Order:
 ## 9. Responsive Breakpoints
 
 ### Breakpoint Scale
-| Name | Width | Description |
-|------|-------|-------------|
-| `xs` | 0-479px | Small phones |
-| `sm` | 480-767px | Large phones |
-| `md` | 768-1023px | Tablets |
-| `lg` | 1024-1279px | Small desktop |
-| `xl` | 1280-1439px | Desktop |
-| `2xl` | 1440px+ | Large desktop |
+| Name  | Width       | Description   |
+|-------|-------------|---------------|
+| `xs`  | 0-479px     | Small phones  |
+| `sm`  | 480-767px   | Large phones  |
+| `md`  | 768-1023px  | Tablets       |
+| `lg`  | 1024-1279px | Small desktop |
+| `xl`  | 1280-1439px | Desktop       |
+| `2xl` | 1440px+     | Large desktop |
 
 ### Media Queries
 ```css

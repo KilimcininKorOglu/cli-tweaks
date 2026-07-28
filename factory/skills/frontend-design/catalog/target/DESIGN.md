@@ -19,44 +19,44 @@ Target's visual identity centers around its iconic bullseye logo—a simple yet 
 
 ### Primary Colors
 
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| Target Red | `#CC0000` | 204, 0, 0 | Primary brand color, CTAs, bullseye logo, key actions |
-| Target Red Dark | `#A80000` | 168, 0, 0 | Hover states, active buttons, emphasis |
-| Target Red Light | `#FF3333` | 255, 51, 51 | Highlights, sale tags, promotional accents |
+| Color Name       | Hex Code  | RGB         | Usage                                                 |
+|------------------|-----------|-------------|-------------------------------------------------------|
+| Target Red       | `#CC0000` | 204, 0, 0   | Primary brand color, CTAs, bullseye logo, key actions |
+| Target Red Dark  | `#A80000` | 168, 0, 0   | Hover states, active buttons, emphasis                |
+| Target Red Light | `#FF3333` | 255, 51, 51 | Highlights, sale tags, promotional accents            |
 
 ### Neutral Colors
 
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| White | `#FFFFFF` | 255, 255, 255 | Primary background, cards, clean spaces |
-| Off White | `#FAFAFA` | 250, 250, 250 | Alternate backgrounds, subtle separation |
-| Light Gray | `#F7F7F7` | 247, 247, 247 | Section backgrounds, containers |
-| Gray 100 | `#EDEDED` | 237, 237, 237 | Borders, dividers, disabled states |
-| Gray 200 | `#D6D6D6` | 214, 214, 214 | Input borders, secondary dividers |
-| Gray 300 | `#888888` | 136, 136, 136 | Placeholder text, muted content |
-| Gray 400 | `#666666` | 102, 102, 102 | Secondary text, metadata |
-| Charcoal | `#333333` | 51, 51, 51 | Primary text, headings |
-| Black | `#000000` | 0, 0, 0 | High contrast text, icons |
+| Color Name | Hex Code  | RGB           | Usage                                    |
+|------------|-----------|---------------|------------------------------------------|
+| White      | `#FFFFFF` | 255, 255, 255 | Primary background, cards, clean spaces  |
+| Off White  | `#FAFAFA` | 250, 250, 250 | Alternate backgrounds, subtle separation |
+| Light Gray | `#F7F7F7` | 247, 247, 247 | Section backgrounds, containers          |
+| Gray 100   | `#EDEDED` | 237, 237, 237 | Borders, dividers, disabled states       |
+| Gray 200   | `#D6D6D6` | 214, 214, 214 | Input borders, secondary dividers        |
+| Gray 300   | `#888888` | 136, 136, 136 | Placeholder text, muted content          |
+| Gray 400   | `#666666` | 102, 102, 102 | Secondary text, metadata                 |
+| Charcoal   | `#333333` | 51, 51, 51    | Primary text, headings                   |
+| Black      | `#000000` | 0, 0, 0       | High contrast text, icons                |
 
 ### Semantic Colors
 
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| Success Green | `#008300` | 0, 131, 0 | In stock, delivery available, success states |
-| Warning Yellow | `#FFB800` | 255, 184, 0 | Limited stock, warnings, attention |
-| Error Red | `#CC0000` | 204, 0, 0 | Errors (same as brand red) |
-| Info Blue | `#0066CC` | 0, 102, 204 | Links, informational elements |
-| Circle Gold | `#DAAA00` | 218, 170, 0 | Target Circle rewards, member benefits |
+| Color Name     | Hex Code  | RGB         | Usage                                        |
+|----------------|-----------|-------------|----------------------------------------------|
+| Success Green  | `#008300` | 0, 131, 0   | In stock, delivery available, success states |
+| Warning Yellow | `#FFB800` | 255, 184, 0 | Limited stock, warnings, attention           |
+| Error Red      | `#CC0000` | 204, 0, 0   | Errors (same as brand red)                   |
+| Info Blue      | `#0066CC` | 0, 102, 204 | Links, informational elements                |
+| Circle Gold    | `#DAAA00` | 218, 170, 0 | Target Circle rewards, member benefits       |
 
 ### Promotional Colors
 
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| Sale Red | `#CC0000` | 204, 0, 0 | Sale pricing, clearance |
-| Deal Green | `#008300` | 0, 131, 0 | Circle deals, member savings |
+| Color Name    | Hex Code  | RGB         | Usage                           |
+|---------------|-----------|-------------|---------------------------------|
+| Sale Red      | `#CC0000` | 204, 0, 0   | Sale pricing, clearance         |
+| Deal Green    | `#008300` | 0, 131, 0   | Circle deals, member savings    |
 | Same-Day Blue | `#0066CC` | 0, 102, 204 | Same-day delivery/pickup badges |
-| Shipt Green | `#00875A` | 0, 135, 90 | Shipt delivery integration |
+| Shipt Green   | `#00875A` | 0, 135, 90  | Shipt delivery integration      |
 
 ---
 
@@ -75,28 +75,28 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing | Usage |
-|---------|------|--------|-------------|----------------|-------|
-| Display XL | 48px | 700 (Bold) | 1.1 | -0.5px | Hero headlines, major promotions |
-| Display L | 36px | 700 (Bold) | 1.15 | -0.3px | Page titles, campaign headers |
-| Heading 1 | 28px | 700 (Bold) | 1.2 | -0.2px | Section headers, category titles |
-| Heading 2 | 24px | 700 (Bold) | 1.25 | -0.1px | Subsection headers |
-| Heading 3 | 20px | 600 (Semibold) | 1.3 | 0 | Card titles, product names |
-| Heading 4 | 18px | 600 (Semibold) | 1.35 | 0 | Minor headings, labels |
-| Body Large | 16px | 400 (Regular) | 1.5 | 0 | Primary body text |
-| Body | 14px | 400 (Regular) | 1.5 | 0 | Standard body, descriptions |
-| Body Small | 13px | 400 (Regular) | 1.45 | 0 | Secondary information |
-| Caption | 12px | 400 (Regular) | 1.4 | 0.1px | Metadata, timestamps |
-| Micro | 11px | 500 (Medium) | 1.3 | 0.3px | Badges, labels, legal text |
+| Element    | Size | Weight         | Line Height | Letter Spacing | Usage                            |
+|------------|------|----------------|-------------|----------------|----------------------------------|
+| Display XL | 48px | 700 (Bold)     | 1.1         | -0.5px         | Hero headlines, major promotions |
+| Display L  | 36px | 700 (Bold)     | 1.15        | -0.3px         | Page titles, campaign headers    |
+| Heading 1  | 28px | 700 (Bold)     | 1.2         | -0.2px         | Section headers, category titles |
+| Heading 2  | 24px | 700 (Bold)     | 1.25        | -0.1px         | Subsection headers               |
+| Heading 3  | 20px | 600 (Semibold) | 1.3         | 0              | Card titles, product names       |
+| Heading 4  | 18px | 600 (Semibold) | 1.35        | 0              | Minor headings, labels           |
+| Body Large | 16px | 400 (Regular)  | 1.5         | 0              | Primary body text                |
+| Body       | 14px | 400 (Regular)  | 1.5         | 0              | Standard body, descriptions      |
+| Body Small | 13px | 400 (Regular)  | 1.45        | 0              | Secondary information            |
+| Caption    | 12px | 400 (Regular)  | 1.4         | 0.1px          | Metadata, timestamps             |
+| Micro      | 11px | 500 (Medium)   | 1.3         | 0.3px          | Badges, labels, legal text       |
 
 ### Font Weights
 
-| Weight Name | Value | Usage |
-|-------------|-------|-------|
-| Regular | 400 | Body text, descriptions |
-| Medium | 500 | Emphasis, badges, buttons |
-| Semibold | 600 | Subheadings, product titles |
-| Bold | 700 | Headlines, CTAs, prices |
+| Weight Name | Value | Usage                       |
+|-------------|-------|-----------------------------|
+| Regular     | 400   | Body text, descriptions     |
+| Medium      | 500   | Emphasis, badges, buttons   |
+| Semibold    | 600   | Subheadings, product titles |
+| Bold        | 700   | Headlines, CTAs, prices     |
 
 ### Typography Guidelines
 
@@ -117,33 +117,33 @@ Target uses an 8px base spacing unit for consistent rhythm and alignment.
 
 ### Spacing Scale
 
-| Token | Size | Usage |
-|-------|------|-------|
-| `space-0` | 0px | No spacing |
-| `space-1` | 4px | Tight spacing, inline elements |
-| `space-2` | 8px | Compact spacing, icon gaps |
-| `space-3` | 12px | Small component padding |
-| `space-4` | 16px | Standard padding, card gutters |
-| `space-5` | 20px | Medium spacing |
-| `space-6` | 24px | Section padding, card spacing |
-| `space-7` | 32px | Large section gaps |
-| `space-8` | 40px | Major section separators |
-| `space-9` | 48px | Page section spacing |
-| `space-10` | 64px | Large layout gaps |
-| `space-11` | 80px | Hero spacing |
-| `space-12` | 96px | Maximum spacing |
+| Token      | Size | Usage                          |
+|------------|------|--------------------------------|
+| `space-0`  | 0px  | No spacing                     |
+| `space-1`  | 4px  | Tight spacing, inline elements |
+| `space-2`  | 8px  | Compact spacing, icon gaps     |
+| `space-3`  | 12px | Small component padding        |
+| `space-4`  | 16px | Standard padding, card gutters |
+| `space-5`  | 20px | Medium spacing                 |
+| `space-6`  | 24px | Section padding, card spacing  |
+| `space-7`  | 32px | Large section gaps             |
+| `space-8`  | 40px | Major section separators       |
+| `space-9`  | 48px | Page section spacing           |
+| `space-10` | 64px | Large layout gaps              |
+| `space-11` | 80px | Hero spacing                   |
+| `space-12` | 96px | Maximum spacing                |
 
 ### Layout Spacing
 
-| Context | Value | Usage |
-|---------|-------|-------|
-| Page Margin Mobile | 16px | Side margins on mobile |
-| Page Margin Tablet | 24px | Side margins on tablet |
-| Page Margin Desktop | 32-48px | Side margins on desktop |
-| Grid Gutter | 16px | Gap between product cards |
-| Section Gap | 32-48px | Vertical space between sections |
-| Card Padding | 16px | Internal card spacing |
-| Header Height | 64-72px | Top navigation bar |
+| Context             | Value   | Usage                           |
+|---------------------|---------|---------------------------------|
+| Page Margin Mobile  | 16px    | Side margins on mobile          |
+| Page Margin Tablet  | 24px    | Side margins on tablet          |
+| Page Margin Desktop | 32-48px | Side margins on desktop         |
+| Grid Gutter         | 16px    | Gap between product cards       |
+| Section Gap         | 32-48px | Vertical space between sections |
+| Card Padding        | 16px    | Internal card spacing           |
+| Header Height       | 64-72px | Top navigation bar              |
 
 ---
 
@@ -392,36 +392,36 @@ Colors:
 
 ### Core Icons
 
-| Icon | Usage | Notes |
-|------|-------|-------|
-| Bullseye | Brand logo, loading states | Always Target Red |
-| Cart | Shopping cart, add to cart | Shows count badge |
-| Heart | Favorites, save items | Filled when active |
-| Search | Search functionality | Magnifying glass |
-| User | Account, sign in | Profile silhouette |
-| Location | Store finder, delivery | Pin marker |
-| Clock | Same-day delivery times | Circular clock |
-| Truck | Shipping, delivery | Delivery vehicle |
-| Store | Pickup, store location | Building icon |
-| Check | Success, completed | Checkmark |
-| Star | Ratings | Five-star system |
-| Filter | Sort/filter products | Funnel shape |
-| Close | Close modals, remove | X mark |
-| Menu | Mobile navigation | Hamburger |
-| Arrow | Navigation, accordions | Directional |
-| Gift | Registry, gifts | Gift box |
-| Barcode | Scan, wallet | Scanner lines |
-| Circle | Target Circle program | Circle logo mark |
+| Icon     | Usage                      | Notes              |
+|----------|----------------------------|--------------------|
+| Bullseye | Brand logo, loading states | Always Target Red  |
+| Cart     | Shopping cart, add to cart | Shows count badge  |
+| Heart    | Favorites, save items      | Filled when active |
+| Search   | Search functionality       | Magnifying glass   |
+| User     | Account, sign in           | Profile silhouette |
+| Location | Store finder, delivery     | Pin marker         |
+| Clock    | Same-day delivery times    | Circular clock     |
+| Truck    | Shipping, delivery         | Delivery vehicle   |
+| Store    | Pickup, store location     | Building icon      |
+| Check    | Success, completed         | Checkmark          |
+| Star     | Ratings                    | Five-star system   |
+| Filter   | Sort/filter products       | Funnel shape       |
+| Close    | Close modals, remove       | X mark             |
+| Menu     | Mobile navigation          | Hamburger          |
+| Arrow    | Navigation, accordions     | Directional        |
+| Gift     | Registry, gifts            | Gift box           |
+| Barcode  | Scan, wallet               | Scanner lines      |
+| Circle   | Target Circle program      | Circle logo mark   |
 
 ### Icon Colors
 
-| Context | Color | Hex |
-|---------|-------|-----|
-| Default | Charcoal | #333333 |
+| Context     | Color      | Hex     |
+|-------------|------------|---------|
+| Default     | Charcoal   | #333333 |
 | Interactive | Target Red | #CC0000 |
-| Muted | Gray | #888888 |
-| Success | Green | #008300 |
-| On Dark | White | #FFFFFF |
+| Muted       | Gray       | #888888 |
+| Success     | Green      | #008300 |
+| On Dark     | White      | #FFFFFF |
 
 ---
 
@@ -429,14 +429,14 @@ Colors:
 
 ### Breakpoints
 
-| Name | Width | Columns | Margin | Gutter |
-|------|-------|---------|--------|--------|
-| Mobile Small | 0-375px | 2 | 16px | 12px |
-| Mobile | 376-599px | 2 | 16px | 16px |
-| Tablet | 600-899px | 3-4 | 24px | 16px |
-| Desktop Small | 900-1199px | 4-5 | 32px | 20px |
-| Desktop | 1200-1439px | 5-6 | 40px | 24px |
-| Desktop Large | 1440px+ | 6 | 48px | 24px |
+| Name          | Width       | Columns | Margin | Gutter |
+|---------------|-------------|---------|--------|--------|
+| Mobile Small  | 0-375px     | 2       | 16px   | 12px   |
+| Mobile        | 376-599px   | 2       | 16px   | 16px   |
+| Tablet        | 600-899px   | 3-4     | 24px   | 16px   |
+| Desktop Small | 900-1199px  | 4-5     | 32px   | 20px   |
+| Desktop       | 1200-1439px | 5-6     | 40px   | 24px   |
+| Desktop Large | 1440px+     | 6       | 48px   | 24px   |
 
 ### Max Content Width
 
@@ -448,12 +448,12 @@ Colors:
 
 ### Product Grid
 
-| Viewport | Products Per Row | Card Width |
-|----------|------------------|------------|
-| Mobile | 2 | ~160px |
-| Tablet | 3-4 | ~180px |
-| Desktop | 4-5 | ~220px |
-| Large Desktop | 5-6 | ~240px |
+| Viewport      | Products Per Row | Card Width |
+|---------------|------------------|------------|
+| Mobile        | 2                | ~160px     |
+| Tablet        | 3-4              | ~180px     |
+| Desktop       | 4-5              | ~220px     |
+| Large Desktop | 5-6              | ~240px     |
 
 ### Page Structure
 
@@ -484,22 +484,22 @@ Layout:
 
 ### Timing Functions
 
-| Name | Value | Usage |
-|------|-------|-------|
+| Name         | Value                          | Usage               |
+|--------------|--------------------------------|---------------------|
 | Ease Default | `cubic-bezier(0.4, 0, 0.2, 1)` | General transitions |
-| Ease In | `cubic-bezier(0.4, 0, 1, 1)` | Elements exiting |
-| Ease Out | `cubic-bezier(0, 0, 0.2, 1)` | Elements entering |
-| Ease In Out | `cubic-bezier(0.4, 0, 0.2, 1)` | Morphing elements |
+| Ease In      | `cubic-bezier(0.4, 0, 1, 1)`   | Elements exiting    |
+| Ease Out     | `cubic-bezier(0, 0, 0.2, 1)`   | Elements entering   |
+| Ease In Out  | `cubic-bezier(0.4, 0, 0.2, 1)` | Morphing elements   |
 
 ### Durations
 
-| Duration | Time | Usage |
-|----------|------|-------|
-| Instant | 100ms | Micro-interactions, hovers |
-| Fast | 150ms | Button states, toggles |
-| Normal | 200ms | Standard transitions |
-| Moderate | 300ms | Panels, modals appearing |
-| Slow | 400ms | Page transitions, complex animations |
+| Duration | Time  | Usage                                |
+|----------|-------|--------------------------------------|
+| Instant  | 100ms | Micro-interactions, hovers           |
+| Fast     | 150ms | Button states, toggles               |
+| Normal   | 200ms | Standard transitions                 |
+| Moderate | 300ms | Panels, modals appearing             |
+| Slow     | 400ms | Page transitions, complex animations |
 
 ### Common Animations
 
@@ -575,14 +575,14 @@ animation: spin 1s linear infinite;
 
 ### Color Contrast
 
-| Combination | Ratio | WCAG Level |
-|-------------|-------|------------|
-| Charcoal (#333333) on White (#FFFFFF) | 12.6:1 | AAA |
-| Target Red (#CC0000) on White (#FFFFFF) | 5.9:1 | AA |
-| White (#FFFFFF) on Target Red (#CC0000) | 5.9:1 | AA |
-| Gray 400 (#666666) on White (#FFFFFF) | 5.7:1 | AA |
-| Gray 300 (#888888) on White (#FFFFFF) | 3.5:1 | AA Large |
-| Success Green (#008300) on White (#FFFFFF) | 4.6:1 | AA Large |
+| Combination                                | Ratio  | WCAG Level |
+|--------------------------------------------|--------|------------|
+| Charcoal (#333333) on White (#FFFFFF)      | 12.6:1 | AAA        |
+| Target Red (#CC0000) on White (#FFFFFF)    | 5.9:1  | AA         |
+| White (#FFFFFF) on Target Red (#CC0000)    | 5.9:1  | AA         |
+| Gray 400 (#666666) on White (#FFFFFF)      | 5.7:1  | AA         |
+| Gray 300 (#888888) on White (#FFFFFF)      | 3.5:1  | AA Large   |
+| Success Green (#008300) on White (#FFFFFF) | 4.6:1  | AA Large   |
 
 ### Focus States
 

@@ -487,7 +487,7 @@ extension ContainerViewController {
 When you follow the 3-step pattern correctly, UIKit automatically forwards these to the child:
 
 | Parent Action             | Child Receives                                   |
-| ------------------------- | ------------------------------------------------ |
+|---------------------------|--------------------------------------------------|
 | `addChild(_:)`            | `willMove(toParent: parentVC)` (called by UIKit) |
 | `didMove(toParent:)`      | `viewWillAppear`, `viewDidAppear`                |
 | `willMove(toParent: nil)` | `viewWillDisappear`                              |

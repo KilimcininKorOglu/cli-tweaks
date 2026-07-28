@@ -33,66 +33,66 @@ Mastodon embraces a **privacy-conscious, community-driven** design philosophy. T
 
 ### Primary Dark Theme
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--background-base` | `#191b22` | Deepest background, app container |
-| `--background-elevated` | `#282c37` | Cards, panels, columns |
-| `--background-input` | `#1f232b` | Form inputs, text areas |
-| `--background-hover` | `#313543` | Interactive hover states |
-| `--background-active` | `#393f4f` | Active/selected states |
-| `--background-overlay` | `rgba(0, 0, 0, 0.7)` | Modal backdrops |
+| Token                   | Hex                  | Role                              |
+|-------------------------|----------------------|-----------------------------------|
+| `--background-base`     | `#191b22`            | Deepest background, app container |
+| `--background-elevated` | `#282c37`            | Cards, panels, columns            |
+| `--background-input`    | `#1f232b`            | Form inputs, text areas           |
+| `--background-hover`    | `#313543`            | Interactive hover states          |
+| `--background-active`   | `#393f4f`            | Active/selected states            |
+| `--background-overlay`  | `rgba(0, 0, 0, 0.7)` | Modal backdrops                   |
 
 ### Brand Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--mastodon-purple` | `#6364FF` | Primary brand, buttons, links, accents |
-| `--mastodon-purple-hover` | `#7477FF` | Hover state for purple elements |
-| `--mastodon-purple-active` | `#5253E0` | Active/pressed purple |
-| `--mastodon-purple-muted` | `rgba(99, 100, 255, 0.2)` | Subtle purple backgrounds |
-| `--mastodon-purple-dark` | `#4E4FCC` | Dark purple for emphasis |
+| Token                      | Hex                       | Role                                   |
+|----------------------------|---------------------------|----------------------------------------|
+| `--mastodon-purple`        | `#6364FF`                 | Primary brand, buttons, links, accents |
+| `--mastodon-purple-hover`  | `#7477FF`                 | Hover state for purple elements        |
+| `--mastodon-purple-active` | `#5253E0`                 | Active/pressed purple                  |
+| `--mastodon-purple-muted`  | `rgba(99, 100, 255, 0.2)` | Subtle purple backgrounds              |
+| `--mastodon-purple-dark`   | `#4E4FCC`                 | Dark purple for emphasis               |
 
 ### Text Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--text-primary` | `#ffffff` | Primary headings, important text |
-| `--text-secondary` | `#9baec8` | Body text, content |
-| `--text-tertiary` | `#606984` | Muted text, timestamps, metadata |
-| `--text-link` | `#6364FF` | Hyperlinks |
-| `--text-link-hover` | `#858AFA` | Link hover state |
-| `--text-inverse` | `#282c37` | Text on light/purple backgrounds |
+| Token               | Hex       | Role                             |
+|---------------------|-----------|----------------------------------|
+| `--text-primary`    | `#ffffff` | Primary headings, important text |
+| `--text-secondary`  | `#9baec8` | Body text, content               |
+| `--text-tertiary`   | `#606984` | Muted text, timestamps, metadata |
+| `--text-link`       | `#6364FF` | Hyperlinks                       |
+| `--text-link-hover` | `#858AFA` | Link hover state                 |
+| `--text-inverse`    | `#282c37` | Text on light/purple backgrounds |
 
 ### Semantic Colors
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--color-success` | `#79bd9a` | Success states, confirmations |
-| `--color-warning` | `#ca8f04` | Warnings, cautions |
-| `--color-error` | `#df405a` | Errors, destructive actions |
-| `--color-info` | `#6364FF` | Informational highlights |
-| `--color-boost` | `#2b90d9` | Boost (retweet) action |
-| `--color-favorite` | `#ca8f04` | Favorite (star) action |
-| `--color-bookmark` | `#6364FF` | Bookmark action |
+| Token              | Hex       | Role                          |
+|--------------------|-----------|-------------------------------|
+| `--color-success`  | `#79bd9a` | Success states, confirmations |
+| `--color-warning`  | `#ca8f04` | Warnings, cautions            |
+| `--color-error`    | `#df405a` | Errors, destructive actions   |
+| `--color-info`     | `#6364FF` | Informational highlights      |
+| `--color-boost`    | `#2b90d9` | Boost (retweet) action        |
+| `--color-favorite` | `#ca8f04` | Favorite (star) action        |
+| `--color-bookmark` | `#6364FF` | Bookmark action               |
 
 ### Federation Indicators
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--federation-local` | `#79bd9a` | Local instance content |
-| `--federation-remote` | `#6364FF` | Federated/remote content |
+| Token                 | Hex       | Role                           |
+|-----------------------|-----------|--------------------------------|
+| `--federation-local`  | `#79bd9a` | Local instance content         |
+| `--federation-remote` | `#6364FF` | Federated/remote content       |
 | `--instance-badge-bg` | `#393f4f` | Instance name badge background |
 
 ### Light Theme (Alternate)
 
-| Token | Hex | Role |
-|-------|-----|------|
-| `--background-base` | `#f2f5f7` | App container |
+| Token                   | Hex       | Role          |
+|-------------------------|-----------|---------------|
+| `--background-base`     | `#f2f5f7` | App container |
 | `--background-elevated` | `#ffffff` | Cards, panels |
-| `--background-input` | `#f0f3f5` | Form inputs |
-| `--text-primary` | `#282c37` | Primary text |
-| `--text-secondary` | `#444b5d` | Body text |
-| `--text-tertiary` | `#9baec8` | Muted text |
+| `--background-input`    | `#f0f3f5` | Form inputs   |
+| `--text-primary`        | `#282c37` | Primary text  |
+| `--text-secondary`      | `#444b5d` | Body text     |
+| `--text-tertiary`       | `#9baec8` | Muted text    |
 
 ---
 
@@ -118,28 +118,28 @@ Mastodon embraces a **privacy-conscious, community-driven** design philosophy. T
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Letter Spacing | Color |
-|---------|------|--------|-------------|----------------|-------|
-| Display Headline | 28px | 700 | 36px | -0.02em | `--text-primary` |
-| Column Header | 16px | 700 | 24px | 0 | `--text-primary` |
-| Post Author | 15px | 700 | 20px | 0 | `--text-primary` |
-| Post Handle | 15px | 400 | 20px | 0 | `--text-tertiary` |
-| Post Content | 15px | 400 | 22px | 0 | `--text-secondary` |
-| Timestamp | 14px | 400 | 20px | 0 | `--text-tertiary` |
-| Button Text | 14px | 600 | 18px | 0.02em | White or contextual |
-| Form Label | 14px | 500 | 20px | 0 | `--text-secondary` |
-| Input Text | 15px | 400 | 22px | 0 | `--text-primary` |
-| Small Text | 13px | 400 | 18px | 0 | `--text-tertiary` |
-| Counter Badge | 12px | 600 | 14px | 0 | `--text-primary` |
+| Element          | Size | Weight | Line Height | Letter Spacing | Color               |
+|------------------|------|--------|-------------|----------------|---------------------|
+| Display Headline | 28px | 700    | 36px        | -0.02em        | `--text-primary`    |
+| Column Header    | 16px | 700    | 24px        | 0              | `--text-primary`    |
+| Post Author      | 15px | 700    | 20px        | 0              | `--text-primary`    |
+| Post Handle      | 15px | 400    | 20px        | 0              | `--text-tertiary`   |
+| Post Content     | 15px | 400    | 22px        | 0              | `--text-secondary`  |
+| Timestamp        | 14px | 400    | 20px        | 0              | `--text-tertiary`   |
+| Button Text      | 14px | 600    | 18px        | 0.02em         | White or contextual |
+| Form Label       | 14px | 500    | 20px        | 0              | `--text-secondary`  |
+| Input Text       | 15px | 400    | 22px        | 0              | `--text-primary`    |
+| Small Text       | 13px | 400    | 18px        | 0              | `--text-tertiary`   |
+| Counter Badge    | 12px | 600    | 14px        | 0              | `--text-primary`    |
 
 ### Font Weights
 
-| Weight | Name | Usage |
-|--------|------|-------|
-| 400 | Regular | Body text, posts, descriptions |
-| 500 | Medium | Form labels, subtle emphasis |
-| 600 | Semibold | Buttons, links, interactive elements |
-| 700 | Bold | Headings, usernames, strong emphasis |
+| Weight | Name     | Usage                                |
+|--------|----------|--------------------------------------|
+| 400    | Regular  | Body text, posts, descriptions       |
+| 500    | Medium   | Form labels, subtle emphasis         |
+| 600    | Semibold | Buttons, links, interactive elements |
+| 700    | Bold     | Headings, usernames, strong emphasis |
 
 ### Post Content Typography
 
@@ -713,16 +713,16 @@ Mastodon embraces a **privacy-conscious, community-driven** design philosophy. T
 
 ### Spacing Scale
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--spacing-2` | 2px | Micro gaps, inline spacing |
-| `--spacing-4` | 4px | Tight element gaps |
-| `--spacing-8` | 8px | Standard element gaps |
-| `--spacing-10` | 10px | Small component padding |
-| `--spacing-14` | 14px | Card padding |
-| `--spacing-16` | 16px | Standard padding |
-| `--spacing-20` | 20px | Section spacing |
-| `--spacing-24` | 24px | Large section breaks |
+| Token          | Value | Usage                      |
+|----------------|-------|----------------------------|
+| `--spacing-2`  | 2px   | Micro gaps, inline spacing |
+| `--spacing-4`  | 4px   | Tight element gaps         |
+| `--spacing-8`  | 8px   | Standard element gaps      |
+| `--spacing-10` | 10px  | Small component padding    |
+| `--spacing-14` | 14px  | Card padding               |
+| `--spacing-16` | 16px  | Standard padding           |
+| `--spacing-20` | 20px  | Section spacing            |
+| `--spacing-24` | 24px  | Large section breaks       |
 
 ### Multi-Column Layout (Advanced Web)
 
@@ -762,13 +762,13 @@ Mastodon embraces a **privacy-conscious, community-driven** design philosophy. T
 
 ### Column Widths
 
-| Panel | Width | Notes |
-|-------|-------|-------|
-| Navigation Rail | 60px | Icon-only navigation |
-| Standard Column | 350px | Timeline, notifications |
-| Compose Panel | 285px | Getting started, compose |
-| Single-Column Content | 600px max | Mobile/simple view |
-| Profile Header | Full width | Responsive within container |
+| Panel                 | Width      | Notes                       |
+|-----------------------|------------|-----------------------------|
+| Navigation Rail       | 60px       | Icon-only navigation        |
+| Standard Column       | 350px      | Timeline, notifications     |
+| Compose Panel         | 285px      | Getting started, compose    |
+| Single-Column Content | 600px max  | Mobile/simple view          |
+| Profile Header        | Full width | Responsive within container |
 
 ### Grid System
 Mastodon uses a **flex-based multi-column layout** for the advanced web interface. Columns are fixed-width and horizontally scrollable. Single-column mode centers content with max-width constraints.
@@ -785,13 +785,13 @@ Mastodon uses a **flex-based multi-column layout** for the advanced web interfac
 
 ### Shadow System
 
-| Level | Shadow | Usage |
-|-------|--------|-------|
-| Level 0 | None | Base surfaces, columns |
-| Level 1 | `0 1px 2px rgba(0, 0, 0, 0.2)` | Subtle lift, dropdown triggers |
-| Level 2 | `0 4px 8px rgba(0, 0, 0, 0.3)` | Dropdowns, popovers |
-| Level 3 | `0 8px 16px rgba(0, 0, 0, 0.4)` | Modals, dialogs |
-| Level 4 | `0 16px 32px rgba(0, 0, 0, 0.5)` | Large overlays |
+| Level   | Shadow                           | Usage                          |
+|---------|----------------------------------|--------------------------------|
+| Level 0 | None                             | Base surfaces, columns         |
+| Level 1 | `0 1px 2px rgba(0, 0, 0, 0.2)`   | Subtle lift, dropdown triggers |
+| Level 2 | `0 4px 8px rgba(0, 0, 0, 0.3)`   | Dropdowns, popovers            |
+| Level 3 | `0 8px 16px rgba(0, 0, 0, 0.4)`  | Modals, dialogs                |
+| Level 4 | `0 16px 32px rgba(0, 0, 0, 0.5)` | Large overlays                 |
 
 ### Surface Hierarchy
 
@@ -809,16 +809,16 @@ Mastodon uses a **flex-based multi-column layout** for the advanced web interfac
 
 ### Z-Index Scale
 
-| Layer | Z-Index | Elements |
-|-------|---------|----------|
-| Base | 0 | Columns, content |
-| Sticky Headers | 100 | Column headers |
-| Dropdown | 1000 | Menus, autocomplete |
-| Popout | 1001 | User cards, popovers |
-| Modal | 1002 | Dialogs, modals |
-| Toast | 1003 | Notifications |
-| Tooltip | 1004 | Tooltips |
-| Compose Overlay | 1005 | Full-screen compose |
+| Layer           | Z-Index | Elements             |
+|-----------------|---------|----------------------|
+| Base            | 0       | Columns, content     |
+| Sticky Headers  | 100     | Column headers       |
+| Dropdown        | 1000    | Menus, autocomplete  |
+| Popout          | 1001    | User cards, popovers |
+| Modal           | 1002    | Dialogs, modals      |
+| Toast           | 1003    | Notifications        |
+| Tooltip         | 1004    | Tooltips             |
+| Compose Overlay | 1005    | Full-screen compose  |
 
 ### Border Treatments
 
@@ -847,43 +847,43 @@ background: #393f4f;
 
 ### Do's
 
-| Guideline | Rationale |
-|-----------|-----------|
-| Use Mastodon Purple (#6364FF) as primary accent | Brand recognition, consistency |
-| Maintain dark backgrounds as default | Eye comfort, immersive reading |
-| Show federation context (instance badges) | Users should know where content originates |
-| Implement content warnings properly | Core feature of Mastodon culture |
-| Display clear boost vs. favorite distinction | Different actions have different meanings |
-| Use accessible color contrast (4.5:1 minimum) | Open-source projects prioritize accessibility |
-| Support keyboard navigation throughout | Power users and accessibility |
-| Show character count in compose | Mastodon has character limits |
-| Indicate sensitive media clearly | User safety and consent |
-| Allow instance-level customization | Decentralization means branding flexibility |
+| Guideline                                       | Rationale                                     |
+|-------------------------------------------------|-----------------------------------------------|
+| Use Mastodon Purple (#6364FF) as primary accent | Brand recognition, consistency                |
+| Maintain dark backgrounds as default            | Eye comfort, immersive reading                |
+| Show federation context (instance badges)       | Users should know where content originates    |
+| Implement content warnings properly             | Core feature of Mastodon culture              |
+| Display clear boost vs. favorite distinction    | Different actions have different meanings     |
+| Use accessible color contrast (4.5:1 minimum)   | Open-source projects prioritize accessibility |
+| Support keyboard navigation throughout          | Power users and accessibility                 |
+| Show character count in compose                 | Mastodon has character limits                 |
+| Indicate sensitive media clearly                | User safety and consent                       |
+| Allow instance-level customization              | Decentralization means branding flexibility   |
 
 ### Don'ts
 
-| Anti-Pattern | Why to Avoid |
-|--------------|--------------|
-| Never auto-expand content warnings | Defeats the purpose of CW system |
-| Avoid algorithmic feed manipulation UI | Mastodon is chronological by design |
-| Don't hide federation indicators | Transparency about content origin |
-| Never auto-play media without consent | Respect user preferences |
-| Avoid dark patterns for engagement | Against Mastodon's ethical design values |
-| Don't use "retweet"/"like" terminology | Use Mastodon terms: boost, favorite |
-| Never collect unnecessary analytics | Privacy-first platform |
-| Avoid engagement metric prominence | Social media wellness, not vanity metrics |
-| Don't make ads UI patterns | Mastodon is ad-free by design |
-| Never use infinite scroll without pause | Encourage intentional usage |
+| Anti-Pattern                            | Why to Avoid                              |
+|-----------------------------------------|-------------------------------------------|
+| Never auto-expand content warnings      | Defeats the purpose of CW system          |
+| Avoid algorithmic feed manipulation UI  | Mastodon is chronological by design       |
+| Don't hide federation indicators        | Transparency about content origin         |
+| Never auto-play media without consent   | Respect user preferences                  |
+| Avoid dark patterns for engagement      | Against Mastodon's ethical design values  |
+| Don't use "retweet"/"like" terminology  | Use Mastodon terms: boost, favorite       |
+| Never collect unnecessary analytics     | Privacy-first platform                    |
+| Avoid engagement metric prominence      | Social media wellness, not vanity metrics |
+| Don't make ads UI patterns              | Mastodon is ad-free by design             |
+| Never use infinite scroll without pause | Encourage intentional usage               |
 
 ### Content & Tone Guidelines
 
-| Do | Don't |
-|----|-------|
-| Use inclusive, welcoming language | Corporate or aggressive marketing tone |
-| Explain federation concepts clearly | Assume users understand decentralization |
-| Provide clear moderation controls | Hide safety features |
-| Show timestamps in human-readable format | Unix timestamps or confusing formats |
-| Translate instance rules clearly | Use technical/legal jargon |
+| Do                                       | Don't                                    |
+|------------------------------------------|------------------------------------------|
+| Use inclusive, welcoming language        | Corporate or aggressive marketing tone   |
+| Explain federation concepts clearly      | Assume users understand decentralization |
+| Provide clear moderation controls        | Hide safety features                     |
+| Show timestamps in human-readable format | Unix timestamps or confusing formats     |
+| Translate instance rules clearly         | Use technical/legal jargon               |
 
 ---
 
@@ -891,52 +891,52 @@ background: #393f4f;
 
 ### Breakpoints
 
-| Name | Width | Behavior |
-|------|-------|----------|
-| Desktop XL | >1400px | Multiple columns visible |
-| Desktop | 1024px - 1400px | 3-4 columns with scroll |
-| Tablet | 768px - 1023px | Single column, sidebar toggle |
-| Mobile | <768px | Single column, bottom navigation |
+| Name       | Width           | Behavior                         |
+|------------|-----------------|----------------------------------|
+| Desktop XL | >1400px         | Multiple columns visible         |
+| Desktop    | 1024px - 1400px | 3-4 columns with scroll          |
+| Tablet     | 768px - 1023px  | Single column, sidebar toggle    |
+| Mobile     | <768px          | Single column, bottom navigation |
 
 ### Mobile Adaptations
 
-| Component | Desktop | Mobile |
-|-----------|---------|--------|
-| Navigation | Left sidebar rail | Bottom tab bar |
-| Columns | Horizontal scroll | Single column |
-| Compose | Inline in column | Full-screen modal |
-| Search | Header search | Dedicated tab |
-| Profile | Card + tabs | Stacked sections |
-| Actions | Icon + count | Icon only |
+| Component  | Desktop           | Mobile            |
+|------------|-------------------|-------------------|
+| Navigation | Left sidebar rail | Bottom tab bar    |
+| Columns    | Horizontal scroll | Single column     |
+| Compose    | Inline in column  | Full-screen modal |
+| Search     | Header search     | Dedicated tab     |
+| Profile    | Card + tabs       | Stacked sections  |
+| Actions    | Icon + count      | Icon only         |
 
 ### Touch Targets
 
-| Element | Minimum Size | Notes |
-|---------|--------------|-------|
-| Action Buttons | 44px × 44px | Reply, boost, favorite, etc. |
-| Navigation Items | 48px × 48px | Bottom nav tabs |
-| Avatar | 46px × 46px | Tappable profile link |
-| Follow Button | 44px height | Comfortable touch |
-| Menu Items | 44px height | Dropdown items |
+| Element          | Minimum Size | Notes                        |
+|------------------|--------------|------------------------------|
+| Action Buttons   | 44px × 44px  | Reply, boost, favorite, etc. |
+| Navigation Items | 48px × 48px  | Bottom nav tabs              |
+| Avatar           | 46px × 46px  | Tappable profile link        |
+| Follow Button    | 44px height  | Comfortable touch            |
+| Menu Items       | 44px height  | Dropdown items               |
 
 ### Responsive Typography
 
-| Element | Desktop | Mobile |
-|---------|---------|--------|
-| Post Content | 15px | 16px |
-| Display Name | 15px | 16px |
-| Timestamps | 14px | 13px |
+| Element       | Desktop | Mobile              |
+|---------------|---------|---------------------|
+| Post Content  | 15px    | 16px                |
+| Display Name  | 15px    | 16px                |
+| Timestamps    | 14px    | 13px                |
 | Action Labels | Visible | Hidden (icons only) |
 
 ### Image Handling
 
-| Context | Behavior |
-|---------|----------|
-| Avatar | 46px default, 80px in profile |
-| Header Image | 400px height max, responsive width |
+| Context          | Behavior                                |
+|------------------|-----------------------------------------|
+| Avatar           | 46px default, 80px in profile           |
+| Header Image     | 400px height max, responsive width      |
 | Media Attachment | Max-height 300px, maintain aspect ratio |
-| Sensitive Media | Blurred overlay until revealed |
-| Emoji | 22px inline, 36px in picker |
+| Sensitive Media  | Blurred overlay until revealed          |
+| Emoji            | 22px inline, 36px in picker             |
 
 ---
 

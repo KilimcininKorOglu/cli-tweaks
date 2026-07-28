@@ -3,54 +3,54 @@
 ## 1. Color Palette
 
 ### Primary Colors
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| Amazon Orange | `#FF9900` | rgb(255, 153, 0) | Primary brand color, buttons, accents, links on dark backgrounds |
-| Amazon Dark Navy | `#131921` | rgb(19, 25, 33) | Primary header, footer background |
-| Amazon Navy | `#232F3E` | rgb(35, 47, 62) | Secondary header, navigation panels |
+| Color Name       | Hex Code  | RGB              | Usage                                                            |
+|------------------|-----------|------------------|------------------------------------------------------------------|
+| Amazon Orange    | `#FF9900` | rgb(255, 153, 0) | Primary brand color, buttons, accents, links on dark backgrounds |
+| Amazon Dark Navy | `#131921` | rgb(19, 25, 33)  | Primary header, footer background                                |
+| Amazon Navy      | `#232F3E` | rgb(35, 47, 62)  | Secondary header, navigation panels                              |
 
 ### Background Colors
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| White | `#FFFFFF` | rgb(255, 255, 255) | Primary page background, product cards |
-| Light Gray | `#EAEDED` | rgb(234, 237, 237) | Page background, section dividers |
-| Soft Gray | `#F3F3F3` | rgb(243, 243, 243) | Input fields, hover states |
-| Card Background | `#FAFAFA` | rgb(250, 250, 250) | Product card backgrounds |
+| Color Name      | Hex Code  | RGB                | Usage                                  |
+|-----------------|-----------|--------------------|----------------------------------------|
+| White           | `#FFFFFF` | rgb(255, 255, 255) | Primary page background, product cards |
+| Light Gray      | `#EAEDED` | rgb(234, 237, 237) | Page background, section dividers      |
+| Soft Gray       | `#F3F3F3` | rgb(243, 243, 243) | Input fields, hover states             |
+| Card Background | `#FAFAFA` | rgb(250, 250, 250) | Product card backgrounds               |
 
 ### Text Colors
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| Primary Text | `#0F1111` | rgb(15, 17, 17) | Main body text, headings |
-| Secondary Text | `#565959` | rgb(86, 89, 89) | Subtext, descriptions |
-| Muted Text | `#767676` | rgb(118, 118, 118) | Tertiary information |
-| Link Blue | `#007185` | rgb(0, 113, 133) | Text links, interactive elements |
-| Link Hover | `#C7511F` | rgb(199, 81, 31) | Link hover state |
+| Color Name     | Hex Code  | RGB                | Usage                            |
+|----------------|-----------|--------------------|----------------------------------|
+| Primary Text   | `#0F1111` | rgb(15, 17, 17)    | Main body text, headings         |
+| Secondary Text | `#565959` | rgb(86, 89, 89)    | Subtext, descriptions            |
+| Muted Text     | `#767676` | rgb(118, 118, 118) | Tertiary information             |
+| Link Blue      | `#007185` | rgb(0, 113, 133)   | Text links, interactive elements |
+| Link Hover     | `#C7511F` | rgb(199, 81, 31)   | Link hover state                 |
 
 ### Status & Alert Colors
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| Success Green | `#067D62` | rgb(6, 125, 98) | In stock, success messages |
-| Error Red | `#B12704` | rgb(177, 39, 4) | Errors, sale prices |
-| Warning Orange | `#F0AD4E` | rgb(240, 173, 78) | Warnings, limited stock |
-| Deal Red | `#CC0C39` | rgb(204, 12, 57) | Deal badges, lightning deals |
+| Color Name     | Hex Code  | RGB               | Usage                        |
+|----------------|-----------|-------------------|------------------------------|
+| Success Green  | `#067D62` | rgb(6, 125, 98)   | In stock, success messages   |
+| Error Red      | `#B12704` | rgb(177, 39, 4)   | Errors, sale prices          |
+| Warning Orange | `#F0AD4E` | rgb(240, 173, 78) | Warnings, limited stock      |
+| Deal Red       | `#CC0C39` | rgb(204, 12, 57)  | Deal badges, lightning deals |
 
 ### Rating & Badge Colors
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| Star Gold | `#FFA41C` | rgb(255, 164, 28) | Star ratings filled |
-| Star Empty | `#DDDDDD` | rgb(221, 221, 221) | Star ratings empty |
-| Prime Blue | `#00A8E1` | rgb(0, 168, 225) | Prime badges, Prime-related elements |
-| Prime Dark | `#146EB4` | rgb(20, 110, 180) | Prime text, secondary Prime elements |
+| Color Name | Hex Code  | RGB                | Usage                                |
+|------------|-----------|--------------------|--------------------------------------|
+| Star Gold  | `#FFA41C` | rgb(255, 164, 28)  | Star ratings filled                  |
+| Star Empty | `#DDDDDD` | rgb(221, 221, 221) | Star ratings empty                   |
+| Prime Blue | `#00A8E1` | rgb(0, 168, 225)   | Prime badges, Prime-related elements |
+| Prime Dark | `#146EB4` | rgb(20, 110, 180)  | Prime text, secondary Prime elements |
 
 ### Button Colors
-| Color Name | Hex Code | RGB | Usage |
-|------------|----------|-----|-------|
-| Button Yellow | `#FFD814` | rgb(255, 216, 20) | Add to Cart primary button |
-| Button Yellow Hover | `#F7CA00` | rgb(247, 202, 0) | Add to Cart hover state |
-| Button Orange | `#FFA41C` | rgb(255, 164, 28) | Buy Now button |
-| Button Orange Hover | `#FA8900` | rgb(250, 137, 0) | Buy Now hover state |
-| Button Gray | `#F0F2F2` | rgb(240, 242, 242) | Secondary buttons |
-| Button Gray Hover | `#E3E6E6` | rgb(227, 230, 230) | Secondary button hover |
+| Color Name          | Hex Code  | RGB                | Usage                      |
+|---------------------|-----------|--------------------|----------------------------|
+| Button Yellow       | `#FFD814` | rgb(255, 216, 20)  | Add to Cart primary button |
+| Button Yellow Hover | `#F7CA00` | rgb(247, 202, 0)   | Add to Cart hover state    |
+| Button Orange       | `#FFA41C` | rgb(255, 164, 28)  | Buy Now button             |
+| Button Orange Hover | `#FA8900` | rgb(250, 137, 0)   | Buy Now hover state        |
+| Button Gray         | `#F0F2F2` | rgb(240, 242, 242) | Secondary buttons          |
+| Button Gray Hover   | `#E3E6E6` | rgb(227, 230, 230) | Secondary button hover     |
 
 ---
 
@@ -69,28 +69,28 @@ font-family: "Amazon Ember Mono", Consolas, monospace;
 ```
 
 ### Font Weights
-| Weight Name | Value | Usage |
-|-------------|-------|-------|
-| Light | 300 | Large display text, subtle headings |
-| Regular | 400 | Body text, descriptions |
-| Medium | 500 | Subheadings, emphasis |
-| Bold | 700 | Headings, prices, important text |
+| Weight Name | Value | Usage                               |
+|-------------|-------|-------------------------------------|
+| Light       | 300   | Large display text, subtle headings |
+| Regular     | 400   | Body text, descriptions             |
+| Medium      | 500   | Subheadings, emphasis               |
+| Bold        | 700   | Headings, prices, important text    |
 
 ### Type Scale
-| Element | Size | Weight | Line Height | Letter Spacing |
-|---------|------|--------|-------------|----------------|
-| Hero Title | 28px | 400 | 1.2 | -0.01em |
-| Page Title | 24px | 400 | 1.25 | normal |
-| Section Title | 21px | 700 | 1.25 | normal |
-| Product Title | 18px | 400 | 1.35 | normal |
-| Card Title | 16px | 400 | 1.4 | normal |
-| Body Large | 14px | 400 | 1.45 | normal |
-| Body | 13px | 400 | 1.45 | normal |
-| Body Small | 12px | 400 | 1.5 | normal |
-| Caption | 11px | 400 | 1.4 | normal |
-| Price Large | 28px | 400 | 1.2 | -0.02em |
-| Price Medium | 21px | 400 | 1.25 | -0.01em |
-| Price Small | 14px | 400 | 1.3 | normal |
+| Element       | Size | Weight | Line Height | Letter Spacing |
+|---------------|------|--------|-------------|----------------|
+| Hero Title    | 28px | 400    | 1.2         | -0.01em        |
+| Page Title    | 24px | 400    | 1.25        | normal         |
+| Section Title | 21px | 700    | 1.25        | normal         |
+| Product Title | 18px | 400    | 1.35        | normal         |
+| Card Title    | 16px | 400    | 1.4         | normal         |
+| Body Large    | 14px | 400    | 1.45        | normal         |
+| Body          | 13px | 400    | 1.45        | normal         |
+| Body Small    | 12px | 400    | 1.5         | normal         |
+| Caption       | 11px | 400    | 1.4         | normal         |
+| Price Large   | 28px | 400    | 1.2         | -0.02em        |
+| Price Medium  | 21px | 400    | 1.25        | -0.01em        |
+| Price Small   | 14px | 400    | 1.3         | normal         |
 
 ### Text Treatments
 ```css
@@ -153,19 +153,19 @@ font-family: "Amazon Ember Mono", Consolas, monospace;
 - Base spacing unit: **4px**
 
 ### Spacing Scale
-| Token | Value | Usage |
-|-------|-------|-------|
-| `space-0` | 0px | Reset |
-| `space-1` | 4px | Tight spacing, inline elements |
-| `space-2` | 8px | Related elements, icon padding |
-| `space-3` | 12px | Card internal padding |
-| `space-4` | 16px | Section padding, card gaps |
-| `space-5` | 20px | Standard container padding |
-| `space-6` | 24px | Section gaps |
-| `space-7` | 32px | Large section gaps |
-| `space-8` | 40px | Major section separation |
-| `space-9` | 48px | Page level spacing |
-| `space-10` | 64px | Hero sections |
+| Token      | Value | Usage                          |
+|------------|-------|--------------------------------|
+| `space-0`  | 0px   | Reset                          |
+| `space-1`  | 4px   | Tight spacing, inline elements |
+| `space-2`  | 8px   | Related elements, icon padding |
+| `space-3`  | 12px  | Card internal padding          |
+| `space-4`  | 16px  | Section padding, card gaps     |
+| `space-5`  | 20px  | Standard container padding     |
+| `space-6`  | 24px  | Section gaps                   |
+| `space-7`  | 32px  | Large section gaps             |
+| `space-8`  | 40px  | Major section separation       |
+| `space-9`  | 48px  | Page level spacing             |
+| `space-10` | 64px  | Hero sections                  |
 
 ### Layout Spacing
 ```css
@@ -199,12 +199,12 @@ font-family: "Amazon Ember Mono", Consolas, monospace;
 ```
 
 ### Responsive Spacing
-| Breakpoint | Container Padding | Grid Gap |
-|------------|-------------------|----------|
-| Mobile (<768px) | 12px | 8px |
-| Tablet (768-1024px) | 16px | 12px |
-| Desktop (1024-1440px) | 18px | 14px |
-| Wide (>1440px) | 24px | 16px |
+| Breakpoint            | Container Padding | Grid Gap |
+|-----------------------|-------------------|----------|
+| Mobile (<768px)       | 12px              | 8px      |
+| Tablet (768-1024px)   | 16px              | 12px     |
+| Desktop (1024-1440px) | 18px              | 14px     |
+| Wide (>1440px)        | 24px              | 16px     |
 
 ---
 
@@ -588,14 +588,14 @@ font-family: "Amazon Ember Mono", Consolas, monospace;
 ```
 
 ### Container Widths
-| Breakpoint | Max Width | Padding |
-|------------|-----------|---------|
-| Default | 100% | 12px |
-| Small (576px+) | 540px | 16px |
-| Medium (768px+) | 720px | 18px |
-| Large (992px+) | 960px | 18px |
-| X-Large (1200px+) | 1140px | 18px |
-| XX-Large (1400px+) | 1500px | 24px |
+| Breakpoint         | Max Width | Padding |
+|--------------------|-----------|---------|
+| Default            | 100%      | 12px    |
+| Small (576px+)     | 540px     | 16px    |
+| Medium (768px+)    | 720px     | 18px    |
+| Large (992px+)     | 960px     | 18px    |
+| X-Large (1200px+)  | 1140px    | 18px    |
+| XX-Large (1400px+) | 1500px    | 24px    |
 
 ### Page Layout Structure
 ```css
@@ -702,14 +702,14 @@ font-family: "Amazon Ember Mono", Consolas, monospace;
 ## 6. Iconography
 
 ### Icon Sizes
-| Size | Dimensions | Usage |
-|------|------------|-------|
-| xs | 12px | Inline text icons, ratings |
-| sm | 16px | Navigation, badges |
-| md | 20px | Buttons, actions |
-| lg | 24px | Headers, primary actions |
-| xl | 32px | Feature icons |
-| 2xl | 48px | Empty states, illustrations |
+| Size | Dimensions | Usage                       |
+|------|------------|-----------------------------|
+| xs   | 12px       | Inline text icons, ratings  |
+| sm   | 16px       | Navigation, badges          |
+| md   | 20px       | Buttons, actions            |
+| lg   | 24px       | Headers, primary actions    |
+| xl   | 32px       | Feature icons               |
+| 2xl  | 48px       | Empty states, illustrations |
 
 ### Icon Style Guidelines
 - **Stroke width**: 1.5px for outlined icons
@@ -741,31 +741,31 @@ font-family: "Amazon Ember Mono", Consolas, monospace;
 ```
 
 ### Essential Icon Set
-| Icon | Usage | Context |
-|------|-------|---------|
-| Search | Search bar, navigation | Header |
-| Cart | Shopping cart | Header, product pages |
-| User | Account, sign in | Header |
-| Location | Delivery address | Header, checkout |
-| Star | Ratings | Product cards, reviews |
-| Star-half | Half ratings | Product cards |
-| Heart | Wishlist, save | Product actions |
-| Share | Share product | Product pages |
-| Compare | Compare products | Search results |
-| Filter | Filter results | Search sidebar |
-| Sort | Sort options | Search results |
-| Grid | Grid view | View toggle |
-| List | List view | View toggle |
-| Checkmark | Prime, verified | Badges, confirmation |
-| Truck | Delivery | Shipping info |
-| Return | Free returns | Product info |
-| Lock | Secure checkout | Checkout |
-| Arrow-down | Dropdowns | Navigation, selects |
-| Arrow-right | Navigation, links | Carousels, breadcrumbs |
-| Close | Close modal | Modals, notifications |
-| Menu | Mobile menu | Mobile header |
-| Plus | Add quantity | Quantity selector |
-| Minus | Remove quantity | Quantity selector |
+| Icon        | Usage                  | Context                |
+|-------------|------------------------|------------------------|
+| Search      | Search bar, navigation | Header                 |
+| Cart        | Shopping cart          | Header, product pages  |
+| User        | Account, sign in       | Header                 |
+| Location    | Delivery address       | Header, checkout       |
+| Star        | Ratings                | Product cards, reviews |
+| Star-half   | Half ratings           | Product cards          |
+| Heart       | Wishlist, save         | Product actions        |
+| Share       | Share product          | Product pages          |
+| Compare     | Compare products       | Search results         |
+| Filter      | Filter results         | Search sidebar         |
+| Sort        | Sort options           | Search results         |
+| Grid        | Grid view              | View toggle            |
+| List        | List view              | View toggle            |
+| Checkmark   | Prime, verified        | Badges, confirmation   |
+| Truck       | Delivery               | Shipping info          |
+| Return      | Free returns           | Product info           |
+| Lock        | Secure checkout        | Checkout               |
+| Arrow-down  | Dropdowns              | Navigation, selects    |
+| Arrow-right | Navigation, links      | Carousels, breadcrumbs |
+| Close       | Close modal            | Modals, notifications  |
+| Menu        | Mobile menu            | Mobile header          |
+| Plus        | Add quantity           | Quantity selector      |
+| Minus       | Remove quantity        | Quantity selector      |
 
 ---
 
@@ -781,13 +781,13 @@ font-family: "Amazon Ember Mono", Consolas, monospace;
 ```
 
 ### Duration Scale
-| Token | Duration | Usage |
-|-------|----------|-------|
-| `instant` | 0ms | Immediate feedback |
-| `fast` | 100ms | Micro-interactions, hovers |
-| `normal` | 200ms | Standard transitions |
-| `slow` | 300ms | Modal, drawer animations |
-| `slower` | 400ms | Complex animations |
+| Token     | Duration | Usage                      |
+|-----------|----------|----------------------------|
+| `instant` | 0ms      | Immediate feedback         |
+| `fast`    | 100ms    | Micro-interactions, hovers |
+| `normal`  | 200ms    | Standard transitions       |
+| `slow`    | 300ms    | Modal, drawer animations   |
+| `slower`  | 400ms    | Complex animations         |
 
 ### Standard Animations
 ```css
@@ -902,14 +902,14 @@ font-family: "Amazon Ember Mono", Consolas, monospace;
 ## 8. Responsive Breakpoints
 
 ### Breakpoint Definitions
-| Name | Min Width | Max Width | Target |
-|------|-----------|-----------|--------|
-| xs | 0 | 479px | Small phones |
-| sm | 480px | 767px | Large phones |
-| md | 768px | 991px | Tablets |
-| lg | 992px | 1199px | Small laptops |
-| xl | 1200px | 1499px | Desktops |
-| xxl | 1500px | - | Large desktops |
+| Name | Min Width | Max Width | Target         |
+|------|-----------|-----------|----------------|
+| xs   | 0         | 479px     | Small phones   |
+| sm   | 480px     | 767px     | Large phones   |
+| md   | 768px     | 991px     | Tablets        |
+| lg   | 992px     | 1199px    | Small laptops  |
+| xl   | 1200px    | 1499px    | Desktops       |
+| xxl  | 1500px    | -         | Large desktops |
 
 ### Media Query Mixins
 ```css
@@ -935,27 +935,27 @@ font-family: "Amazon Ember Mono", Consolas, monospace;
 ### Responsive Component Behavior
 
 #### Header
-| Breakpoint | Behavior |
-|------------|----------|
-| xs-sm | Hamburger menu, simplified search, stacked layout |
-| md | Full navigation visible, search expands |
-| lg+ | Full header with all elements, account dropdown |
+| Breakpoint | Behavior                                          |
+|------------|---------------------------------------------------|
+| xs-sm      | Hamburger menu, simplified search, stacked layout |
+| md         | Full navigation visible, search expands           |
+| lg+        | Full header with all elements, account dropdown   |
 
 #### Product Grid
-| Breakpoint | Columns | Card Style |
-|------------|---------|------------|
-| xs | 1 | Full width, horizontal layout |
-| sm | 2 | Vertical cards |
-| md | 3 | Vertical cards |
-| lg | 4 | Vertical cards |
-| xl | 5 | Vertical cards |
-| xxl | 6 | Vertical cards, compact |
+| Breakpoint | Columns | Card Style                    |
+|------------|---------|-------------------------------|
+| xs         | 1       | Full width, horizontal layout |
+| sm         | 2       | Vertical cards                |
+| md         | 3       | Vertical cards                |
+| lg         | 4       | Vertical cards                |
+| xl         | 5       | Vertical cards                |
+| xxl        | 6       | Vertical cards, compact       |
 
 #### Navigation
-| Breakpoint | Behavior |
-|------------|----------|
-| xs-md | Slide-out drawer, hamburger trigger |
-| lg+ | Horizontal mega-menu on hover |
+| Breakpoint | Behavior                            |
+|------------|-------------------------------------|
+| xs-md      | Slide-out drawer, hamburger trigger |
+| lg+        | Horizontal mega-menu on hover       |
 
 ### Responsive Typography
 ```css
@@ -1072,13 +1072,13 @@ a:focus-visible {
 ```
 
 ### Color Contrast Requirements
-| Element | Foreground | Background | Ratio |
-|---------|------------|------------|-------|
-| Body Text | #0F1111 | #FFFFFF | 18.1:1 |
-| Secondary Text | #565959 | #FFFFFF | 7.0:1 |
-| Links | #007185 | #FFFFFF | 5.0:1 |
-| Primary Button | #0F1111 | #FFD814 | 10.4:1 |
-| Header Text | #FFFFFF | #131921 | 16.8:1 |
+| Element        | Foreground | Background | Ratio  |
+|----------------|------------|------------|--------|
+| Body Text      | #0F1111    | #FFFFFF    | 18.1:1 |
+| Secondary Text | #565959    | #FFFFFF    | 7.0:1  |
+| Links          | #007185    | #FFFFFF    | 5.0:1  |
+| Primary Button | #0F1111    | #FFD814    | 10.4:1 |
+| Header Text    | #FFFFFF    | #131921    | 16.8:1 |
 
 ### ARIA Labels
 ```html

@@ -12,10 +12,10 @@ This file is for human planning and visualization. Updated by `/task-plan`, `/ta
 
 ## Progress Overview
 
-| Feature                          | Status      | Tasks | Completed | Progress |
-|----------------------------------|-------------|-------|-----------|----------|
-| F001 - User Registration         | IN_PROGRESS | 5     | 2         | 40%      |
-| F002 - Password Reset            | NOT_STARTED | 3     | 0         | 0%       |
+| Feature                  | Status      | Tasks | Completed | Progress |
+|--------------------------|-------------|-------|-----------|----------|
+| F001 - User Registration | IN_PROGRESS | 5     | 2         | 40%      |
+| F002 - Password Reset    | NOT_STARTED | 3     | 0         | 0%       |
 
 ## Execution Phases
 
@@ -24,13 +24,13 @@ This file is for human planning and visualization. Updated by `/task-plan`, `/ta
 **Status:** IN_PROGRESS
 **Tasks:** T001-T005
 
-| Task | Name               | Status         | Priority |
-|------|--------------------|----------------|----------|
-| T001 | Kayit formu UI     | COMPLETED      | P2       |
-| T002 | Input validation   | COMPLETED      | P2       |
-| T003 | API endpoint       | IN_PROGRESS    | P1       |
-| T004 | Database migration | NOT_STARTED    | P1       |
-| T005 | Unit tests         | NOT_STARTED    | P2       |
+| Task | Name               | Status      | Priority |
+|------|--------------------|-------------|----------|
+| T001 | Kayit formu UI     | COMPLETED   | P2       |
+| T002 | Input validation   | COMPLETED   | P2       |
+| T003 | API endpoint       | IN_PROGRESS | P1       |
+| T004 | Database migration | NOT_STARTED | P1       |
+| T005 | Unit tests         | NOT_STARTED | P2       |
 
 ## Critical Path
 [Tasks that must be done sequentially]

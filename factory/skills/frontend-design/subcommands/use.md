@@ -17,35 +17,35 @@ The catalog directory is located at `catalog/` relative to this skill's director
 
 **Name resolution** (case-insensitive):
 
-| Input | Resolves To |
-|-------|-------------|
-| `github` | `catalog/github/DESIGN.md` |
-| `vercel` | `catalog/vercel/DESIGN.md` |
-| `discord` | `catalog/discord/DESIGN.md` |
-| `anthropic` | `catalog/anthropic/DESIGN.md` |
-| `x` or `twitter` | `catalog/x/DESIGN.md` |
-| `tiktok` | `catalog/tiktok/DESIGN.md` |
-| `reddit` | `catalog/reddit/DESIGN.md` |
-| `linkedin` | `catalog/linkedin/DESIGN.md` |
-| `snapchat` | `catalog/snapchat/DESIGN.md` |
-| `threads` | `catalog/threads/DESIGN.md` |
-| `mastodon` | `catalog/mastodon/DESIGN.md` |
-| `amazon` | `catalog/amazon/DESIGN.md` |
-| `shopify` | `catalog/shopify/DESIGN.md` |
-| `etsy` | `catalog/etsy/DESIGN.md` |
-| `ebay` | `catalog/ebay/DESIGN.md` |
-| `target` | `catalog/target/DESIGN.md` |
-| `walmart` | `catalog/walmart/DESIGN.md` |
-| `booking` | `catalog/booking/DESIGN.md` |
-| `doordash` | `catalog/doordash/DESIGN.md` |
-| `starbucks` | `catalog/starbucks/DESIGN.md` |
-| `steam` | `catalog/steam/DESIGN.md` |
-| `epicgames` or `epic` | `catalog/epicgames/DESIGN.md` |
+| Input                 | Resolves To                     |
+|-----------------------|---------------------------------|
+| `github`              | `catalog/github/DESIGN.md`      |
+| `vercel`              | `catalog/vercel/DESIGN.md`      |
+| `discord`             | `catalog/discord/DESIGN.md`     |
+| `anthropic`           | `catalog/anthropic/DESIGN.md`   |
+| `x` or `twitter`      | `catalog/x/DESIGN.md`           |
+| `tiktok`              | `catalog/tiktok/DESIGN.md`      |
+| `reddit`              | `catalog/reddit/DESIGN.md`      |
+| `linkedin`            | `catalog/linkedin/DESIGN.md`    |
+| `snapchat`            | `catalog/snapchat/DESIGN.md`    |
+| `threads`             | `catalog/threads/DESIGN.md`     |
+| `mastodon`            | `catalog/mastodon/DESIGN.md`    |
+| `amazon`              | `catalog/amazon/DESIGN.md`      |
+| `shopify`             | `catalog/shopify/DESIGN.md`     |
+| `etsy`                | `catalog/etsy/DESIGN.md`        |
+| `ebay`                | `catalog/ebay/DESIGN.md`        |
+| `target`              | `catalog/target/DESIGN.md`      |
+| `walmart`             | `catalog/walmart/DESIGN.md`     |
+| `booking`             | `catalog/booking/DESIGN.md`     |
+| `doordash`            | `catalog/doordash/DESIGN.md`    |
+| `starbucks`           | `catalog/starbucks/DESIGN.md`   |
+| `steam`               | `catalog/steam/DESIGN.md`       |
+| `epicgames` or `epic` | `catalog/epicgames/DESIGN.md`   |
 | `playstation` or `ps` | `catalog/playstation/DESIGN.md` |
-| `xbox` | `catalog/xbox/DESIGN.md` |
-| `twitch` | `catalog/twitch/DESIGN.md` |
-| `supabase` | `catalog/supabase/DESIGN.md` |
-| `openai` | `catalog/openai/DESIGN.md` |
+| `xbox`                | `catalog/xbox/DESIGN.md`        |
+| `twitch`              | `catalog/twitch/DESIGN.md`      |
+| `supabase`            | `catalog/supabase/DESIGN.md`    |
+| `openai`              | `catalog/openai/DESIGN.md`      |
 
 If the argument doesn't match any catalog name, treat it as a file path and read with the Read tool.
 
@@ -65,12 +65,12 @@ If the argument doesn't match any catalog name, treat it as a file path and read
 **Atmosphere:** [1-sentence mood/philosophy from Section 1]
 
 **Key Colors:**
-| Role | Color | Hex |
-|------|-------|-----|
-| Primary | [name] | [hex] |
+| Role       | Color  | Hex   |
+|------------|--------|-------|
+| Primary    | [name] | [hex] |
 | Background | [name] | [hex] |
-| Text | [name] | [hex] |
-| Accent | [name] | [hex] |
+| Text       | [name] | [hex] |
+| Accent     | [name] | [hex] |
 
 **Typography:** [Primary font family] — [base size]
 

@@ -83,27 +83,27 @@ Produce a complete DESIGN.md following the 9-section standard:
 ## 2. Color Palette & Roles
 
 ### Core Colors
-| Token | Hex | Role |
-|-------|-----|------|
+| Token  | Hex   | Role            |
+|--------|-------|-----------------|
 | [name] | [hex] | [semantic role] |
 
 ### Light Mode
-| Element | Hex | Role |
-|---------|-----|------|
+| Element   | Hex   | Role   |
+|-----------|-------|--------|
 | [element] | [hex] | [role] |
 
 ### Dark Mode (if detected)
-| Element | Hex | Role |
-|---------|-----|------|
+| Element   | Hex   | Role   |
+|-----------|-------|--------|
 | [element] | [hex] | [role] |
 
 ### State Colors
-| State | Color | Hex |
-|-------|-------|-----|
+| State   | Color  | Hex   |
+|---------|--------|-------|
 | Success | [name] | [hex] |
 | Warning | [name] | [hex] |
-| Error | [name] | [hex] |
-| Info | [name] | [hex] |
+| Error   | [name] | [hex] |
+| Info    | [name] | [hex] |
 
 ---
 
@@ -113,8 +113,8 @@ Produce a complete DESIGN.md following the 9-section standard:
 [CSS font-family declarations]
 
 ### Type Scale
-| Style | Size | Weight | Line Height |
-|-------|------|--------|-------------|
+| Style   | Size   | Weight   | Line Height   |
+|---------|--------|----------|---------------|
 | [style] | [size] | [weight] | [line-height] |
 
 ### Typography Guidelines
@@ -141,16 +141,16 @@ Produce a complete DESIGN.md following the 9-section standard:
 ## 5. Layout Principles
 
 ### Spacing Scale
-| Token | Value |
-|-------|-------|
+| Token  | Value   |
+|--------|---------|
 | [name] | [value] |
 
 ### Grid
 [Column system, max-width, gutters]
 
 ### Breakpoints
-| Name | Value |
-|------|-------|
+| Name   | Value   |
+|--------|---------|
 | [name] | [value] |
 
 ---
@@ -158,8 +158,8 @@ Produce a complete DESIGN.md following the 9-section standard:
 ## 6. Depth & Elevation
 
 ### Shadow System
-| Level | Shadow | Usage |
-|-------|--------|-------|
+| Level   | Shadow       | Usage        |
+|---------|--------------|--------------|
 | [level] | [CSS shadow] | [where used] |
 
 ### Surface Hierarchy

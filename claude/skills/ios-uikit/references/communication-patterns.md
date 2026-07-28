@@ -721,7 +721,7 @@ Is this a one-shot async callback?
 ### Ranking by Preference
 
 | Rank | Pattern               | When to Reach for It                                                                                                                                             |
-| ---- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|------|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 1    | **Closures**          | Default choice. One-shot callbacks, completion handlers, short-lived communication. Simple, inline, and easy to follow.                                          |
 | 2    | **Protocol-Delegate** | Sustained multi-event communication. When you need multiple callback methods. When the relationship is long-lived (table views, text fields, custom components). |
 | 3    | **Target-Action**     | UIControl events (button taps, slider changes, text edits). The built-in UIKit mechanism for controls.                                                           |
