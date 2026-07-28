@@ -17,7 +17,6 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                   |
 | `git-protect.py`      | PreToolUse (Bash)    | Global gitignore'daki dosyalara `git add -f/--force` uygulanmasını engeller                                         |
 | `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                                     |
-| `buddy-seed-apply.sh` | (yalnızca Claude)    | Oturum başında `~/.claude.json` buddy seed'ini yeniden uygular                                                      |
 
 ### Skill'ler
 
@@ -26,7 +25,6 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `commit`                       | `/commit`                       | Repo stilini taklit eden conventional commit'ler                                |
 | `task-plan`                    | `/task-plan`                    | PRD'yi özelliklere ayırma ve otonom yürütme                                     |
 | `bug-report`                   | `/bug-report`                   | Genel hata analizi ve `BUG-REPORT.md` yazan odaklı audit subcommand'leri        |
-| `git-flow`                     | `/git-flow`                     | Sıkı doğrulama kurallarıyla yapılandırılmış branch yönetimi                     |
 | `initialize` / `init-claude`   | `/initialize`, `/init-claude`   | Kod tabanını tarayarak AGENTS.md (Factory) veya CLAUDE.md (Claude) oluşturur    |
 | `redate-commits`               | `/redate-commits`               | Commit tarihlerini seçilen aralığa yayar, güvenli iş akışı uyarıları verir      |
 | `frontend-design`              | `/frontend-design`              | 28 siteli tasarım kataloğu ile frontend kod üretimi                             |

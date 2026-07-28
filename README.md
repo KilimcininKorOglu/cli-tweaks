@@ -17,7 +17,6 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
 | `git-protect.py`      | PreToolUse (Bash)    | Blocks `git add -f/--force` on files listed in the global gitignore                             |
 | `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |
-| `buddy-seed-apply.sh` | SessionStart         | Claude Code only: re-applies a custom buddy seed that Claude Code resets on every startup      |
 
 ### Skills
 
@@ -26,7 +25,6 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `commit`                       | `/commit`                       | Conventional commits with repo style mimicry, smart staging, git safety protocol |
 | `task-plan`                    | `/task-plan`                    | PRD breakdown into features with autonomous execution and checkpointing          |
 | `bug-report`                   | `/bug-report`                   | General bug analysis plus focused audit subcommands writing to BUG-REPORT.md     |
-| `git-flow`                     | `/git-flow`                     | Structured branch management with strict validation rules                        |
 | `initialize` / `init-claude`   | `/initialize`, `/init-claude`   | Scans the codebase and writes AGENTS.md (Factory, `initialize`) or CLAUDE.md (Claude Code, `init-claude`) |
 | `redate-commits`               | `/redate-commits`               | Rewrites commit dates across a selected range with safe workflow warnings        |
 | `frontend-design`              | `/frontend-design`              | Frontend code generation with 28-site design system catalog                      |
