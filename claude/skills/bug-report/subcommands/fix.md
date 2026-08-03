@@ -3,10 +3,12 @@
 ## Command
 
 ```bash
-/bug-report fix [BUG-ID]
+/bug-report fix                  # batch: every open bug in BUG-REPORT.md
+/bug-report fix BUG-042          # single bug, selected by ID
+/bug-report fix "<description>"  # single bug, described in your own words
 ```
 
-Fixes bugs recorded in `BUG-REPORT.md`. With no BUG-ID it works through every
+Fixes bugs recorded in `BUG-REPORT.md`. With no argument it works through every
 open bug one at a time: verify, plan, approve, fix, verify, commit, then move to
 the next. Each bug is fully resolved and committed before the next one is
 started.
@@ -15,19 +17,115 @@ started.
 
 ## What To Do Right Now
 
-Parse the user's command and follow exactly ONE of these paths:
+Parse the user's argument and follow exactly ONE of these paths:
 
-### No BUG-ID provided, batch mode
+| Argument | Path |
+|----------|------|
+| none | Batch mode |
+| matches `BUG-<number>` (case-insensitive) | Single-bug mode |
+| any other text | Free-text mode, which resolves to one of the two above |
+
+### No argument, batch mode
 
 1. Read `BUG-REPORT.md`. Collect every finding whose `Status:` is `NEW` or `OPEN`, in the order they appear. The report is severity-sorted, so this is CRITICAL first.
 2. If zero NEW/OPEN findings exist, tell the user and STOP.
-3. Work through the collected bugs ONE AT A TIME, in that order. For each bug, run Phase 1 through Phase 7 to completion before starting the next bug. Never batch, parallelize, or reorder them.
-4. Phase 2C requires explicit user approval before Phase 3 starts ONLY for architectural fixes (see Phase 2C for the definition). Non-architectural fixes proceed directly without plan-mode approval. In batch mode, when approval is required, get it for each bug separately.
-5. After the last bug, print the Final Summary at the end of this file.
+3. Write the queue down as a numbered ledger before touching any code (see the Batch Continuation Contract below). The ledger is binding for the rest of the run.
+4. Work through the collected bugs ONE AT A TIME, in that order. For each bug, run Phase 1 through Phase 7 to completion before starting the next bug. Never batch, parallelize, or reorder them.
+5. Phase 2C requires explicit user approval before Phase 3 starts ONLY for architectural fixes (see Phase 2C for the definition). Non-architectural fixes proceed directly without plan-mode approval. In batch mode, when approval is required, get it for each bug separately.
+6. After the last bug, print the Final Summary at the end of this file.
 
 ### BUG-ID provided, single-bug mode
 
 Run Phase 1 through Phase 7 for that one bug, print its per-bug report, and STOP. Do not touch any other bug.
+
+### Free text provided, resolve then fix
+
+The user described a bug in prose instead of naming an ID. Resolve the text to a
+target BEFORE any code change, and say out loud which target you resolved to.
+
+1. If `BUG-REPORT.md` exists, read it and score every `NEW`/`OPEN` finding
+   against the user's text, comparing against the title, `Problem:`, `File:`,
+   and `Component:` fields.
+2. **Exactly one clear match** — announce `Matched BUG-<ID>: <title>` with the
+   one-line reason it matched, then run single-bug mode for that ID.
+3. **Several plausible matches** — do NOT guess. Use `AskUserQuestion` to let the
+   user pick the intended finding, then run single-bug mode for the chosen ID.
+4. **No match, or no `BUG-REPORT.md`** — run ad-hoc mode below.
+
+#### Ad-hoc mode (the described bug is not in the report)
+
+The user's text IS the bug statement; there is no report entry to read.
+
+1. Replace Phase 1 with a triage step: locate the defect in the codebase from the
+   description. Search for the named symptom, surface, file, or component.
+2. State what you believe the defect is, in the same shape Phase 2A requires:
+   exact current behavior, exact expected behavior, and the files and functions
+   that prove it exists.
+3. If you cannot locate the defect, or the description matches several unrelated
+   code paths, STOP and ask the user for the missing detail. NEVER guess a target
+   and NEVER fix something the user did not describe.
+4. Then run Phase 2A through Phase 5 unchanged.
+5. Phase 6 is conditional in this mode:
+   - If `BUG-REPORT.md` exists, append a new finding in the canonical report
+     format, allocate the next ID from the report's `Last Bug ID:` field, update
+     that field, and set `Status: FIXED`.
+   - If `BUG-REPORT.md` does NOT exist, skip Phase 6 entirely. NEVER create the
+     report file.
+6. Print the per-bug report and STOP. Ad-hoc mode fixes exactly the one described
+   defect; it never continues into the rest of the report.
+
+---
+
+## Batch Continuation Contract (batch mode only)
+
+Batch mode has ONE failure worth naming: stopping early. Fixing three bugs and
+ending the turn is a failed run, not a partial success. This section is the
+contract that prevents it.
+
+**Write the ledger first.** Before Phase 0 of the first bug, print the full queue
+and keep it as the run's state:
+
+```
+Fix queue (N total)
+1. BUG-007 — <title>   [pending]
+2. BUG-012 — <title>   [pending]
+...
+```
+
+**Restate progress after every bug.** At the end of each Phase 7, print one line:
+`Progress: i/N complete · next: BUG-<ID>` (or `next: none, printing Final
+Summary`). This line is mandatory; it is what keeps the queue alive across a long
+run.
+
+**NEVER end your turn while the ledger still has a `[pending]` entry.** These are
+the ONLY conditions that may end a batch run early:
+
+1. Every ledger entry is `[fixed]` or `[skipped]` — then print the Final Summary.
+2. Phase 0 found uncommitted changes that this run did not create.
+3. The user explicitly told you to stop.
+4. Ad-hoc/free-text mode, which is single-bug by definition.
+
+Nothing else qualifies. In particular, these are NOT stopping points:
+
+- **A finished per-bug report.** Phase 7 output is a checkpoint, not an ending.
+  Continue to the next bug in the SAME turn.
+- **A plan approval round-trip.** When Phase 2C approval ends a turn, your VERY
+  FIRST action in the next turn is to resume that bug's Phase 3, then continue
+  the ledger. Do not re-plan finished work and do not restart the queue.
+- **A skipped or failed bug.** A failed verification (Phase 4) or a rejected plan
+  affects that bug only. Mark it `[skipped]` with its reason and move to the next
+  entry immediately.
+- **A long run.** Bug count, elapsed work, or context pressure are never reasons
+  to stop. If context is tight, re-read `BUG-REPORT.md` and the ledger rather
+  than ending the run.
+
+**NEVER ask whether to continue.** Do not ask "should I keep going?", "want me to
+fix the next one?", or any variant. The user already asked for every open bug by
+invoking batch mode. Asking is the same failure as stopping.
+
+If a turn ends for any reason outside your control, treat resuming the next
+`[pending]` ledger entry as the first action of the next turn, with no new
+confirmation.
 
 ---
 
@@ -39,6 +137,7 @@ Hard constraints:
 - Continue only from a clean working tree, or from a tree that contains only explicitly allowed report/status edits from earlier completed bugs.
 - If unrelated changed files exist, STOP and report them. Do not overwrite or stage them.
 - Do not start a new bug while a previous bug has uncommitted code changes.
+- The uncommitted `BUG-REPORT.md` status edits produced by earlier bugs in THIS run are expected and allowed. They are never a reason to stop the run; only changes this run did not create qualify.
 
 ---
 
@@ -222,7 +321,19 @@ After each bug, tell the user:
 - Verification result, including any known baseline failures.
 - Whether report status was updated and whether it remains unstaged.
 
-Then proceed to the next bug in batch mode. In single-bug mode, STOP here.
+Then mark this bug `[fixed]` or `[skipped]` in the ledger and print the mandatory
+progress line:
+
+```
+Progress: i/N complete · next: BUG-<ID>
+```
+
+In batch mode, immediately begin Phase 0 of that next bug in the SAME turn. Do
+not stop, do not summarize the run so far, and do not ask whether to continue.
+The per-bug report you just printed is a checkpoint, not an ending. Only when the
+ledger has no `[pending]` entry left do you print the Final Summary instead.
+
+In single-bug mode and ad-hoc mode, STOP here.
 
 ---
 
