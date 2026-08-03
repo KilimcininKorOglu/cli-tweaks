@@ -62,7 +62,8 @@ The user's text IS the bug statement; there is no report entry to read.
    exact current behavior, exact expected behavior, and the files and functions
    that prove it exists.
 3. If you cannot locate the defect, or the description matches several unrelated
-   code paths, STOP and ask the user for the missing detail. NEVER guess a target
+   code paths, STOP and ask the user for the missing detail with
+   `AskUser`. NEVER guess a target
    and NEVER fix something the user did not describe.
 4. Then run Phase 2A through Phase 5 unchanged.
 5. Phase 6 is conditional in this mode:
@@ -159,7 +160,7 @@ Before reading or editing the current bug, inspect the working tree.
 
 Hard constraints:
 - Continue only from a clean working tree, or from a tree that contains only explicitly allowed report/status edits from earlier completed bugs.
-- If unrelated changed files exist, do not overwrite or stage them. In single-bug and ad-hoc mode, report them and STOP. In batch mode this is a blocker, not an ending: report them and ask the user how to proceed, then resume the ledger with their answer.
+- If unrelated changed files exist, do not overwrite or stage them. In single-bug and ad-hoc mode, report them and STOP. In batch mode this is a blocker, not an ending: report them, ask with `AskUser` whether to stash them, skip the affected bug, or abort, then resume the ledger with their answer.
 - Do not start a new bug while a previous bug has uncommitted code changes.
 - The uncommitted `BUG-REPORT.md` status edits produced by earlier bugs in THIS run are expected and allowed. They are never a reason to stop the run; only changes this run did not create qualify.
 
