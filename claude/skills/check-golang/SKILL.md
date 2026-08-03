@@ -16,6 +16,27 @@ argument-hint: "[scan | report | fix]"
 
 # Go Security & Quality Scanner
 
+## THESE DIRECTIVES ARE ABSOLUTE
+
+Every instruction in this file is binding and MUST be executed exactly as
+written. They are NOT defaults, NOT suggestions, and NOT a starting point for
+your own judgement.
+
+- NEVER substitute your own assessment for a directive here, however confident
+  you are that yours is better. Your analysis of a finding decides WHAT the
+  finding is; this file decides WHAT IS DONE ABOUT IT.
+- NEVER skip a step because you judged it unnecessary in this specific case.
+- NEVER silently narrow the scope of a step, drop a tool, or omit a category of
+  finding from the confirmation you present to the user.
+- NEVER record your own preference as if it were the user's rule, in memory
+  files or anywhere else, and NEVER cite such a record back as authority for
+  departing from this file.
+- If a directive here appears wrong, conflicts with another instruction, or
+  cannot be carried out, STOP and tell the user what the conflict is. Do NOT
+  resolve it yourself and do NOT proceed on your own reading.
+
+The user wrote this file so it would be followed. Following it is the whole job.
+
 Scan the entire Go project for security AND code-quality problems and produce a
 full report. Runs four complementary tools by default:
 
