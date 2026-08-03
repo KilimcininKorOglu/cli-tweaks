@@ -97,13 +97,27 @@ Fix queue (N total)
 Summary`). This line is mandatory; it is what keeps the queue alive across a long
 run.
 
-**NEVER end your turn while the ledger still has a `[pending]` entry.** These are
-the ONLY conditions that may end a batch run early:
+**NEVER end your turn while the ledger still has a `[pending]` entry.** A batch
+run ends by itself in exactly ONE case: every ledger entry is `[fixed]` or
+`[skipped]`, and you print the Final Summary. The user explicitly telling you to
+stop also ends it. Ad-hoc and free-text mode are single-bug by definition and
+never enter this contract.
 
-1. Every ledger entry is `[fixed]` or `[skipped]` — then print the Final Summary.
-2. Phase 0 found uncommitted changes that this run did not create.
-3. The user explicitly told you to stop.
-4. Ad-hoc/free-text mode, which is single-bug by definition.
+**Everything else that prevents progress is a BLOCKER, not an ending.** On a
+blocker, ask the user how to proceed with `AskUserQuestion` and wait for the
+answer. Do NOT end the run, and do NOT silently abandon the remaining queue.
+Blockers include:
+
+- Phase 0 found uncommitted changes that this run did not create. Show them and
+  ask whether to stash them, leave them and skip the affected bug, or abort.
+- The current bug cannot be located, or its plan was rejected with no clear
+  alternative. Ask what to do with that one entry, apply the answer, then carry
+  on with the rest of the ledger.
+- A repository gate or tool fails in a way the report does not cover and you
+  cannot resolve from the code.
+
+After the user answers a blocker, resume the ledger from the next `[pending]`
+entry. A blocker affects at most the current bug; it never cancels the queue.
 
 Nothing else qualifies. In particular, these are NOT stopping points:
 
@@ -123,6 +137,16 @@ Nothing else qualifies. In particular, these are NOT stopping points:
 fix the next one?", or any variant. The user already asked for every open bug by
 invoking batch mode. Asking is the same failure as stopping.
 
+Keep the two kinds of question apart:
+
+| Question | Rule |
+|----------|------|
+| Queue progression ("continue?", "next one?") | FORBIDDEN — just continue |
+| Blocker resolution ("this tree is dirty, stash or skip?") | REQUIRED — ask and wait |
+
+The ban is on asking for permission to do what was already requested. It is not a
+ban on asking for a decision you genuinely cannot make.
+
 If a turn ends for any reason outside your control, treat resuming the next
 `[pending]` ledger entry as the first action of the next turn, with no new
 confirmation.
@@ -135,7 +159,7 @@ Before reading or editing the current bug, inspect the working tree.
 
 Hard constraints:
 - Continue only from a clean working tree, or from a tree that contains only explicitly allowed report/status edits from earlier completed bugs.
-- If unrelated changed files exist, STOP and report them. Do not overwrite or stage them.
+- If unrelated changed files exist, do not overwrite or stage them. In single-bug and ad-hoc mode, report them and STOP. In batch mode this is a blocker, not an ending: report them and ask the user how to proceed, then resume the ledger with their answer.
 - Do not start a new bug while a previous bug has uncommitted code changes.
 - The uncommitted `BUG-REPORT.md` status edits produced by earlier bugs in THIS run are expected and allowed. They are never a reason to stop the run; only changes this run did not create qualify.
 
