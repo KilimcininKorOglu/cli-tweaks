@@ -39,6 +39,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `goal-prep`                    | `/goal-prep`                    | Converts free-form work into a verifiable `/goal` completion condition           |
 | `no-ai`                        | `/no-ai`                        | Rewrites text to remove common AI-generated writing patterns                     |
 | `check-golang`                 | `/check-golang`                 | Runs four Go scans (govulncheck, gosec, golangci-lint, modernize) into a ranked report |
+| `check-swift`                  | `/check-swift`                  | Runs four Swift scans (dependency-check, semgrep, SwiftLint, swift-format) into a ranked report |
 
 #### `bug-report` audit subcommands
 

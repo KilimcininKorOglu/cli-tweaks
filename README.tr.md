@@ -39,6 +39,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `goal-prep`                    | `/goal-prep`                    | Serbest metni doğrulanabilir `/goal` tamamlanma koşuluna dönüştürür             |
 | `no-ai`                        | `/no-ai`                        | Metinden yaygın AI üretimi yazı kalıplarını kaldırır                            |
 | `check-golang`                 | `/check-golang`                 | Dört Go taraması (govulncheck, gosec, golangci-lint, modernize) çalıştırıp sıralı rapor üretir |
+| `check-swift`                  | `/check-swift`                  | Dört Swift taraması (dependency-check, semgrep, SwiftLint, swift-format) çalıştırıp sıralı rapor üretir |
 
 #### `bug-report` audit subcommand'leri
 
