@@ -58,6 +58,19 @@ that worker if the marker exists.
 
 2. Launch ALL remaining subcommands through a rolling worker pool with at most 2 concurrent workers. Start up to 2 workers initially, preserve the original worker order, and launch the next pending worker immediately whenever one finishes. Skip any worker whose completion marker already exists in `BUG-REPORT.md`:
 
+   **BACKFILL-FIRST RULE (mandatory ordering).** The moment a worker-completion
+   notification arrives, your VERY FIRST action in that turn must be to launch
+   the next pending worker — before you verify findings, before you write to
+   `BUG-REPORT.md`, before any other tool call. Verification and report-writing
+   happen only AFTER the replacement worker is in flight, so the pool never
+   drops below 2 while you do bookkeeping. Concretely, in the same response:
+   (a) launch the next pending worker; (b) then verify + write the just-finished
+   worker's findings. Never treat a worker whose result you already hold as
+   "still running" — a held result means that slot is FREE and must be
+   backfilled at once. If two workers finish together, backfill BOTH free slots
+   before writing anything. Do not end a turn with an idle slot while pending
+   workers remain.
+
    **General audit workers:**
 
    | Worker    | Subcommand file                         | Completion marker                            |
@@ -183,6 +196,14 @@ This runs ONLY the security scan subcommands (not general audits).
 1. Run `sec-recon` first (inline) to establish codebase context.
 
 2. Launch security scan workers through a rolling worker pool with at most 2 concurrent workers. Start up to 2 workers initially, preserve the original worker order, and launch the next pending worker immediately whenever one finishes:
+
+   **BACKFILL-FIRST RULE (mandatory ordering).** On every worker-completion
+   notification, your VERY FIRST action that turn is to launch the next pending
+   worker — before verifying findings or writing to `BUG-REPORT.md`. Only after
+   the replacement is in flight do you verify + write the finished worker's
+   results. A result you already hold means that slot is FREE; never treat it as
+   "still running". If two finish together, backfill both before writing. Do not
+   end a turn with an idle slot while pending workers remain.
 
    | Worker    | Subcommand file                     | Completion marker                          |
    |-----------|--------------------------------------|--------------------------------------------|
