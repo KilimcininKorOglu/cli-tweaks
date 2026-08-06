@@ -11,7 +11,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | Hook                  | Event                | Description                                                                                    |
 |-----------------------|----------------------|------------------------------------------------------------------------------------------------|
 | `session-start.py`    | SessionStart/compact | Injects global user files and project memory into context                                      |
-| `save-plan.py`        | PostToolUse          | Saves plans to disk (Factory) or sends notification only (Claude Code)                         |
+| `save-plan.py`        | PreToolUse / PostToolUse | Notifies while a plan waits for approval (Claude Code, PreToolUse) or saves the approved plan to disk (Factory, PostToolUse) |
 | `memory-save.py`      | Stop                 | Reminds the agent to update MEMORY.md; offloads old entries to topic files near the line cap and migrates a malformed file to the standard structure |
 | `memory-reinject.py`  | UserPromptSubmit     | Re-injects MEMORY.md critical rules (every 5th msg) and the full global instruction file (every 15th) to counter recency bias |
 | `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
@@ -211,7 +211,10 @@ Then add the corresponding hook entries to your `settings.json`.
 
 ### Plan Saving
 
-When you use the agent's built-in plan mode and exit it (`ExitPlanMode` on Claude Code, `ExitSpecMode` on Factory Droid), the `save-plan.py` hook captures the event. On Factory Droid the plan content is written to `~/.factory/plans/<project>/`; on Claude Code a desktop notification is sent (the tool provides no plan content to the hook).
+When you use the agent's built-in plan mode and exit it (`ExitPlanMode` on Claude Code, `ExitSpecMode` on Factory Droid), the `save-plan.py` hook captures the event. The two platforms hook different points because they need different things:
+
+- **Claude Code** registers it on `PreToolUse`, which fires *before* the approval prompt blocks on you. That is the moment a notification is useful: the plan is on screen and waiting for your answer. `PostToolUse` would only fire after you already answered. The hook never blocks the tool: it exits 0 and writes nothing to stdout.
+- **Factory Droid** registers it on `PostToolUse`, because it saves the *approved* plan content to `~/.factory/plans/<project>/`.
 
 ### Auto Memory
 

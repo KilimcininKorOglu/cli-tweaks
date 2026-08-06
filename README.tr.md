@@ -11,7 +11,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | Hook                  | Olay                 | Açıklama                                                                                                            |
 |-----------------------|----------------------|---------------------------------------------------------------------------------------------------------------------|
 | `session-start.py`    | SessionStart/compact | Global kullanıcı dosyalarını ve proje belleğini bağlama enjekte eder                                                |
-| `save-plan.py`        | PostToolUse          | Planları diske kaydeder (Factory) veya yalnızca bildirim gönderir (Claude Code)                                     |
+| `save-plan.py`        | PreToolUse / PostToolUse | Plan onay beklerken bildirim gönderir (Claude Code, PreToolUse) veya onaylanan planı diske kaydeder (Factory, PostToolUse) |
 | `memory-save.py`      | Stop                 | MEMORY.md'yi güncellemesini hatırlatır; satır sınırına yaklaşınca eski girdileri topic dosyalarına taşır ve bozuk dosyayı standart yapıya migration yapar |
 | `memory-reinject.py`  | UserPromptSubmit     | Her 5. mesajda MEMORY.md kritik kurallarını, her 15. mesajda tüm global talimat dosyasını yeniden enjekte ederek bağlam kaybını önler |
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                   |
@@ -211,7 +211,10 @@ Ardından ilgili hook kayıtlarını `settings.json` dosyanıza ekleyin.
 
 ### Plan Kaydetme
 
-Ajanın yerleşik plan modunu kullanıp çıktığınızda (`ExitPlanMode` Claude Code'da, `ExitSpecMode` Factory Droid'de), `save-plan.py` hook'u bu olayı yakalar. Factory Droid'de plan içeriği `~/.factory/plans/<proje>/` dizinine yazılır; Claude Code'da masaüstü bildirimi gönderilir (tool, hook'a plan içeriği vermez).
+Ajanın yerleşik plan modunu kullanıp çıktığınızda (`ExitPlanMode` Claude Code'da, `ExitSpecMode` Factory Droid'de), `save-plan.py` hook'u bu olayı yakalar. İki platform farklı noktaya bağlanır, çünkü ihtiyaçları farklıdır:
+
+- **Claude Code** hook'u `PreToolUse` olayına kaydeder. Bu olay, onay istemi sizi beklemeye başlamadan **önce** çalışır. Bildirimin işe yaradığı an tam olarak budur: plan ekrandadır ve cevabınızı bekler. `PostToolUse` ise ancak siz cevap verdikten sonra çalışırdı. Hook aracı asla bloke etmez: çıkış kodu 0 verir ve stdout'a hiçbir şey yazmaz.
+- **Factory Droid** hook'u `PostToolUse` olayına kaydeder, çünkü **onaylanmış** plan içeriğini `~/.factory/plans/<proje>/` dizinine kaydeder.
 
 ### Otomatik Bellek
 

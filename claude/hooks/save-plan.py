@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 """
-Claude Code PostToolUse hook for ExitPlanMode: sends a desktop notification
-when a plan is completed.
+Claude Code PreToolUse hook for ExitPlanMode: sends a desktop notification when
+a plan is put up for approval.
+
+PreToolUse fires before the approval prompt blocks on the user, which is the
+moment the notification is useful. PostToolUse would only fire after the user
+already answered, making the notification pointless.
+
+This hook must never block the tool: it always exits 0 and writes nothing to
+stdout, so the approval prompt proceeds untouched.
 """
 import json
 import sys
@@ -55,6 +62,6 @@ if plansDir.exists():
 
 # Send notification
 if planName and isEnabledFor("PlanSave"):
-    notify("Plan Complete", planName, subtitle="Claude Code")
+    notify("Plan awaiting your approval", planName, subtitle="Claude Code")
 
 sys.exit(0)
