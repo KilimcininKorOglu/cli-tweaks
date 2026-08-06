@@ -1,21 +1,52 @@
 #!/usr/bin/env python3
 """
-PostToolUse hook for ExitSpecMode: saves the plan to a file and sends a notification.
+PreToolUse hook for ExitSpecMode: saves the plan and sends a desktop
+notification while the plan waits for approval.
 
-When ExitSpecMode is called, this hook:
-1. Extracts the plan title and content from tool_input
-2. Saves it to ~/.factory/plans/<project>/<timestamp>-<title>.md
-3. Sends a macOS desktop notification
+PreToolUse fires before the approval prompt blocks on the user, which is the
+moment the notification is useful. PostToolUse would only fire after the user
+already answered, making the notification pointless. The plan content is already
+present in tool_input at this point, so the file is written here too, which means
+a plan is archived whether or not it is later approved.
+
+This hook must never block the tool: it always exits 0 and writes nothing to
+stdout, so the approval prompt proceeds untouched.
 """
 import json
 import os
 import re
+import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from notify import notify, isEnabledFor
+
+
+def _resolveProjectName(cwd):
+    """Return session-lock name, else git root basename, else cwd basename."""
+    lockFile = Path.home() / ".cli-tweaks" / ".session-locks" / str(os.getppid())
+    try:
+        locked = lockFile.read_text(encoding="utf-8").strip()
+        if locked:
+            return locked
+    except (FileNotFoundError, OSError):
+        pass
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--show-toplevel"],
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+            timeout=3,
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            return os.path.basename(result.stdout.strip())
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        pass
+    return os.path.basename(cwd)
+
 
 try:
     inputData = json.load(sys.stdin)
@@ -33,9 +64,8 @@ plan = toolInput.get("plan", "")
 if not plan:
     sys.exit(0)
 
-# Derive project name from cwd
 cwd = inputData.get("cwd", os.getcwd())
-projectName = os.path.basename(cwd)
+projectName = _resolveProjectName(cwd)
 
 # Create plans directory
 plansDir = Path.home() / ".factory" / "plans" / projectName
@@ -62,14 +92,6 @@ filepath.write_text(content, encoding="utf-8")
 
 # Send cross-platform notification
 if isEnabledFor("PlanSave"):
-    notify("Droid CLI Plan Complete", "Plan saved: {}".format(filename), subtitle=title)
+    notify("Plan awaiting your approval", projectName, subtitle="Droid CLI")
 
-# Output context for Droid
-output = {
-    "hookSpecificOutput": {
-        "hookEventName": "PostToolUse",
-        "additionalContext": f"Plan saved to: {filepath}",
-    }
-}
-print(json.dumps(output))
 sys.exit(0)
