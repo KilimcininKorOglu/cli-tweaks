@@ -172,6 +172,12 @@ if hasMemory:
         "multiple ideas into one long line to dodge the line cap — the character cap catches that. "
         "If either is exceeded, move the oldest/least-critical entries to history.md this same session.\n"
         "4. Write memory in English ONLY.\n"
+        "5. Write each entry in short sentences, active voice and simple tenses, with ONE "
+        "INSTRUCTION per sentence, and keep terminology consistent between entries. A reason "
+        "clause is not a second instruction: keep the short 'because' or 'so that' clause "
+        "whenever dropping it would let the rule be applied wrongly.\n"
+        "6. Reproduce identifiers, file names, config keys and trigger phrases exactly as they "
+        "appear in the codebase, including non-English ones. Never translate them.\n"
         "If nothing new was learned and the file already obeys ALL of the above, just stop."
     ).format(dir=memoryDir)
 else:
@@ -187,8 +193,13 @@ else:
         "historical detail goes to a topic file only (history.md by default, or a dedicated subject "
         "file for a large topic). Keep it lean — bounded by BOTH a line cap (under 200) and a "
         "character cap (under 50000) — and in English ONLY. Each bullet is ONE focused project "
-        "rule or fact; no narrative or padding. Skip this ONLY if the session was genuinely trivial "
-        "with nothing project-scoped worth remembering.\n"
+        "rule or fact; no narrative or padding. Write in short sentences, active voice and simple "
+        "tenses, with ONE INSTRUCTION per sentence, and keep terminology consistent between "
+        "entries; a reason clause is not a second instruction, so keep the short 'because' or "
+        "'so that' clause whenever dropping it would let the rule be applied wrongly. Reproduce "
+        "identifiers, file names, config keys and trigger phrases exactly as they appear in the "
+        "codebase, including non-English ones, and never translate them. Skip this ONLY if the "
+        "session was genuinely trivial with nothing project-scoped worth remembering.\n"
         + TEMPLATE
     ).format(dir=memoryDir)
 
