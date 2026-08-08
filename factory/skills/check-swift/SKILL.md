@@ -351,6 +351,8 @@ DerivedData — an incremental build hides warnings cached from an earlier compi
   dependency manifest has no SCA surface at all.
 - Report the Swift and Xcode versions in every report, and flag drift between the
   local toolchain and what CI declares.
+- If the project's CI pins scanner versions, scan with those exact versions so
+  local results match CI.
 - Say which semgrep mode ran (CE or authenticated Pro); a clean CE run is weaker
   evidence and the report must not imply otherwise.
 - Note whether `.swiftlint.yml` and `.swift-format` exist; when they do not, mark
