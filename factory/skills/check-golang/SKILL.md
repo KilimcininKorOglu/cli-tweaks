@@ -214,12 +214,16 @@ improvements, not defects.
 
 Rank all findings by severity for action (security tier first, always):
 1. **Called stdlib CVE** — highest; fix by bumping the Go toolchain.
-2. **Called third-party CVE** — fix by upgrading the module.
-3. **gosec HIGH/MEDIUM real finding** — fix in code.
-4. **gosec LOW / false positive** — sanitize if cheap, else annotate `#nosec`.
-5. **Imported-only CVE** (not called) — note but not urgent.
-6. **golangci-lint issue** — quality; fix in code (correctness linters first).
-7. **modernize suggestion** — lowest; optional idiom upgrade, behavior-preserving.
+2. **Go version drift** — a release, container or CI path declares a version
+   other than the module floor; fix by raising every declaring location. Ranked
+   here because it is how a stdlib CVE reaches production while the local scan
+   reads clean.
+3. **Called third-party CVE** — fix by upgrading the module.
+4. **gosec HIGH/MEDIUM real finding** — fix in code.
+5. **gosec LOW / false positive** — sanitize if cheap, else annotate `#nosec`.
+6. **Imported-only CVE** (not called) — note but not urgent.
+7. **golangci-lint issue** — quality; fix in code (correctness linters first).
+8. **modernize suggestion** — lowest; optional idiom upgrade, behavior-preserving.
 
 ## Step 4: Produce the report
 
