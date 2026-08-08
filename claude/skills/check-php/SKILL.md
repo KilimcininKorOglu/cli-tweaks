@@ -299,7 +299,7 @@ BASELINE: phpstan-baseline.neon suppresses B findings — this run is NOT a clea
 - <file>:<line> — <rule> — <suggested modern idiom>
 
 ## Verdict
-Security: <green ONLY if 0 advisories AND 0 real taint findings | red: list fixes>
+Security: <green ONLY if 0 advisories AND 0 open taint findings | red: list fixes>
 Quality:  <green ONLY if phpstan 0 AND rector 0 AND no baseline | yellow: E errors, S suggestions>
 ```
 
@@ -308,6 +308,11 @@ AND no baseline is suppressing findings. Any Rector suggestion (or any PHPStan
 error, or an active baseline) means quality is NOT clean — mark it yellow and
 list the outstanding items. Never call a tier green while it still has open
 findings, however minor.
+
+Security follows the same bar. Judging a taint finding a false positive does not
+close it: it stays open, and keeps security red, until it is actually closed by a
+real fix or by the narrow line-scoped `@psalm-taint-escape` of a proven-safe
+line. Count open findings, never "real" ones.
 
 For `report` mode, also write this to `VULN-REPORT.md` (or append to an
 existing `BUG-REPORT.md` if the project uses one) in English.
