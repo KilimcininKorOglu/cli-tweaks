@@ -63,7 +63,6 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `feature-flags-audit` | `/bug-report feature-flags-audit` | Feature flag hygiene, rollout safety, and experimentation audit |
 | `observability-audit` | `/bug-report observability-audit` | Logging, metrics, tracing, and debugging-readiness audit        |
 | `queue-audit`         | `/bug-report queue-audit`         | Queue, worker, retry, and DLQ resilience audit                  |
-| `release-discipline`  | `/bug-report release-discipline`  | Version control, review process, and release-discipline audit   |
 | `tech-debt`           | `/bug-report tech-debt`           | Technical debt, dead code detection, and test quality audit     |
 | `tenant-isolation`    | `/bug-report tenant-isolation`    | Multi-tenant isolation and cross-tenant leakage audit           |
 | `ai-code-audit`       | `/bug-report ai-code-audit`       | AI-generated code detection, security, and quality audit        |

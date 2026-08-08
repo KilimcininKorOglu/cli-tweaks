@@ -83,13 +83,12 @@ that worker if the marker exists.
    | Worker 6  | `subcommands/integration-security.md`   | `<!-- scan:integration-security completed -->` |
    | Worker 7  | `subcommands/observability-audit.md`    | `<!-- scan:observability-audit completed -->` |
    | Worker 8  | `subcommands/queue-audit.md`            | `<!-- scan:queue-audit completed -->`        |
-   | Worker 9  | `subcommands/release-discipline.md`     | `<!-- scan:release-discipline completed -->` |
-   | Worker 10 | `subcommands/serialization-audit.md`    | `<!-- scan:serialization-audit completed -->` |
-   | Worker 11 | `subcommands/session-audit.md`          | `<!-- scan:session-audit completed -->`      |
-   | Worker 12 | `subcommands/tech-debt.md`              | `<!-- scan:tech-debt completed -->`          |
-   | Worker 13 | `subcommands/tenant-isolation.md`       | `<!-- scan:tenant-isolation completed -->`   |
-   | Worker 14 | `subcommands/upload-security.md`        | `<!-- scan:upload-security completed -->`    |
-   | Worker 15 | `subcommands/ai-code-audit.md`          | `<!-- scan:ai-code-audit completed -->`      |
+   | Worker 9  | `subcommands/serialization-audit.md`    | `<!-- scan:serialization-audit completed -->` |
+   | Worker 10 | `subcommands/session-audit.md`          | `<!-- scan:session-audit completed -->`      |
+   | Worker 11 | `subcommands/tech-debt.md`              | `<!-- scan:tech-debt completed -->`          |
+   | Worker 12 | `subcommands/tenant-isolation.md`       | `<!-- scan:tenant-isolation completed -->`   |
+   | Worker 13 | `subcommands/upload-security.md`        | `<!-- scan:upload-security completed -->`    |
+   | Worker 14 | `subcommands/ai-code-audit.md`          | `<!-- scan:ai-code-audit completed -->`      |
 
    **Security scan workers:**
 
@@ -300,7 +299,6 @@ Last Bug ID: BUG-[XXX]
 | `integration-security` | Third-party integration, webhook, and OAuth security audit               |
 | `observability-audit`  | Logging, metrics, tracing, and debugging-readiness audit                 |
 | `queue-audit`          | Queue, worker, retry, and DLQ resilience audit                           |
-| `release-discipline`   | Version control, review process, and release-discipline audit            |
 | `serialization-audit`  | Serialization, parsing, XXE, and data transformation security audit      |
 | `session-audit`        | Session lifecycle, JWT vulnerability, cookies, CSRF audit                |
 | `tech-debt`            | Technical debt, dead code, and test quality audit                        |

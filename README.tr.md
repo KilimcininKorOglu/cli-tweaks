@@ -63,7 +63,6 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `feature-flags-audit` | `/bug-report feature-flags-audit` | Feature flag hijyeni, rollout güvenliği ve deney denetimi        |
 | `observability-audit` | `/bug-report observability-audit` | Loglama, metrik, tracing ve hata ayıklanabilirlik denetimi       |
 | `queue-audit`         | `/bug-report queue-audit`         | Kuyruk, worker, retry ve DLQ dayanıklılık denetimi               |
-| `release-discipline`  | `/bug-report release-discipline`  | Versiyon kontrolü, review süreci ve release discipline denetimi  |
 | `tech-debt`           | `/bug-report tech-debt`           | Teknik borç, ölü kod tespiti ve test kalitesi denetimi           |
 | `tenant-isolation`    | `/bug-report tenant-isolation`    | Çok kiracılı izolasyon ve tenantlar arası sızıntı denetimi       |
 | `ai-code-audit`       | `/bug-report ai-code-audit`       | Yapay zeka üretimi kod tespiti, güvenlik ve kalite denetimi      |
