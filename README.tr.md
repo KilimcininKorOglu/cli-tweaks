@@ -29,7 +29,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `redate-commits`               | `/redate-commits`               | Commit tarihlerini seçilen aralığa yayar, güvenli iş akışı uyarıları verir      |
 | `frontend-design`              | `/frontend-design`              | 28 siteli tasarım kataloğu ile frontend kod üretimi                             |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur                         |
-| `ai-seo`                       | `/ai-seo`                       | AI arama motorları için GEO optimizasyonu, 8 analiz alt komutu                  |
+| `ai-seo`                       | `/ai-seo`                       | AI arama motorları için GEO optimizasyonu, 8 sıralı analiz ve fix modu          |
 | `draft-to-article`             | `/draft-to-article`             | Taslakları X Articles, LinkedIn veya Medium/Substack formatına dönüştürme       |
 | `ios-uikit`                    | `/ios-uikit`                    | 20 referans belgeyle programatik UIKit geliştirme                               |
 | `ios-simulator`                | `/ios-simulator`                | 22 Node.js script ile iOS simülatör otomasyonu                                  |

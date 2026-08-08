@@ -29,7 +29,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `redate-commits`               | `/redate-commits`               | Rewrites commit dates across a selected range with safe workflow warnings        |
 | `frontend-design`              | `/frontend-design`              | Frontend code generation with 28-site design system catalog                      |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill                        |
-| `ai-seo`                       | `/ai-seo`                       | GEO optimization for AI search engines with 8 analysis subcommands               |
+| `ai-seo`                       | `/ai-seo`                       | GEO optimization for AI search engines, 8 sequential analyses plus a fix mode    |
 | `draft-to-article`             | `/draft-to-article`             | Format drafts for X Articles, LinkedIn, or Medium/Substack                       |
 | `ios-uikit`                    | `/ios-uikit`                    | Programmatic UIKit development with 20 reference documents                       |
 | `ios-simulator`                | `/ios-simulator`                | iOS simulator automation with 22 Node.js scripts for semantic navigation         |
