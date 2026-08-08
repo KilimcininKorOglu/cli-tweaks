@@ -64,8 +64,11 @@ Code quality:
 manager from the lockfile, never guess: `package-lock.json` → npm,
 `pnpm-lock.yaml` → pnpm, `yarn.lock` → yarn, `bun.lockb`/`bun.lock` → bun. Using
 the wrong one either errors or silently audits a tree the project does not build.
-If there is no lockfile, the audit is meaningless — say so and treat the missing
-committed lockfile as a finding for an application.
+If there is no committed lockfile, do both things: report its absence as a
+finding in its own right, and generate a tree so the audit has something to
+resolve. Advisories from a generated tree describe what installs today, not what
+the project ships, so label them that way and never present them as the shipped
+result.
 
 **`npm audit` has NO reachability analysis.** Unlike a call-graph scanner it
 cannot tell whether your code reaches the vulnerable function, so every advisory
@@ -139,9 +142,10 @@ are available.
    grep -E '"packageManager"' package.json 2>/dev/null
    ```
    Exactly one lockfile should be present. If several exist, that is a finding
-   (the repo builds differently depending on who installs). If none exists, run
-   the install to generate one and record that the scan used a freshly resolved
-   tree, not a committed one.
+   (the repo builds differently depending on who installs). If none exists,
+   record the absence as a finding, then run the install to generate one and
+   label every advisory that follows as coming from a freshly resolved tree
+   rather than the committed one.
 
 3. Record the runtime and manager versions — findings hinge on them:
    ```bash
@@ -218,8 +222,9 @@ Notes:
   are actually linted (`--ext` on legacy configs, or the `files` globs on flat
   config); a green ESLint that never opened a `.ts` file is a false negative.
 - knip honors `knip.json` / the `knip` key in `package.json`. Note which applied.
-- If the audit reports zero because the lockfile is absent, that is not a clean
-  result — go back to Step 1.
+- A zero from an absent lockfile is not a clean result. Generate the tree as
+  Step 1 directs, rerun, and keep the missing committed lockfile as its own
+  finding even when the generated tree audits clean.
 
 ## Step 3: Classify every finding
 
