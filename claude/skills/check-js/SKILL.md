@@ -94,9 +94,10 @@ agreement, and record in the report that it must be revisited.
 
 **ESLint config format decides whether it runs at all.** ESLint v9+ defaults to
 flat config (`eslint.config.js|mjs|ts`); a project still on `.eslintrc.*` needs
-`ESLINT_USE_FLAT_CONFIG=false` or the compatibility layer. If no config exists at
-all, ESLint exits with an error — that is a project finding, not a tool failure.
-Report which config actually applied.
+`ESLINT_USE_FLAT_CONFIG=false` or the compatibility layer. Both cases exit `2`,
+so classify by cause, never by the exit code alone: no config file anywhere is a
+project finding (the project has no agreed lint standard), while a config that
+exists but fails to load is a tool error. Report which config actually applied.
 
 **Security vs quality are separate tiers.** Security findings (audit, semgrep)
 always rank above code-quality findings (ESLint, knip). A style lint never blocks
@@ -206,9 +207,10 @@ npx knip --workspace <name>                   # repeat per workspace if knip is 
 
 Notes:
 - Exit codes: `npm audit` `1` = vulnerabilities found; semgrep `1` = findings
-  (with `--error`); ESLint `1` = lint problems, `2` = config/tool error; knip
-  `1` = issues. `0` = clean for all. Only ESLint `2` is a real tool error —
-  everything else means "parse the findings".
+  (with `--error`); ESLint `1` = lint problems, `2` = ESLint could not run; knip
+  `1` = issues. `0` = clean for all. Every `1` means "parse the findings". ESLint
+  `2` needs its cause read from stderr: no config file anywhere is a project
+  finding, a config that exists but fails to load is a real tool error.
 - `semgrep --config auto` fetches the community rule packs. Offline, fall back to
   the local packs `--config p/javascript --config p/typescript --config p/react
   --config p/nodejs` and say which ran.
