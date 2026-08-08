@@ -323,8 +323,10 @@ GOTOOLCHAIN=local go<X.Y.Z> run golang.org/x/vuln/cmd/govulncheck@latest ./...
 gosec ./... && golangci-lint run ./...   # both must exit 0
 ```
 Expect `No vulnerabilities found`, gosec/golangci-lint exit 0, and no remaining
-modernize suggestions you agreed to apply. Remove any helper toolchain afterward
-(`rm -rf ~/sdk/go<X.Y.Z> "$(go env GOPATH)/bin/go<X.Y.Z>"`) if the user wants it gone.
+modernize suggestions you agreed to apply. Then remove any helper toolchain this
+run downloaded (`rm -rf ~/sdk/go<X.Y.Z> "$(go env GOPATH)/bin/go<X.Y.Z>"`) and say
+so. The run installed it, so the run removes it; offering to remove it and
+leaving it installed does not count.
 
 ## Rules
 

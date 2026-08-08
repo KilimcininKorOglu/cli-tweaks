@@ -364,9 +364,10 @@ cargo audit && cargo deny check          # both must exit 0
 cargo test --workspace                    # a security bump must not break behavior
 ```
 Expect `Success No vulnerable packages found`, cargo-deny exit 0, clippy exit 0,
-and no remaining edition suggestions you agreed to apply. Remove any helper
-toolchain afterward (`rustup toolchain uninstall <X.Y.Z>`) if the user wants it
-gone.
+and no remaining edition suggestions you agreed to apply. Then remove any helper
+toolchain this run downloaded (`rustup toolchain uninstall <X.Y.Z>`) and say so.
+The run installed it, so the run removes it; offering to remove it and leaving it
+installed does not count.
 
 ## Rules
 
