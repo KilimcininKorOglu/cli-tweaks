@@ -1,14 +1,19 @@
 ---
 name: check-php
 description: >
-  This skill MUST be invoked when the user says "check-php", "composer audit", "psalm",
-  "phpstan", "rector", "cve tara", "cve raporu", "güvenlik açığı tara",
-  "zafiyet tara", "vulnerability scan", "vuln scan", "scan for CVEs",
-  "check vulnerabilities", "güvenlik taraması", "security scan",
-  "static security analysis", "taint analysis", "lint tara", "php lint",
-  "lint check", "kod kalitesi tara"
-  or any variation requesting a PHP security or code-quality scan of the whole
-  project. Runs FOUR tools by default — composer audit (CVEs), Psalm taint
+  PHP security and code-quality scan of the whole project. Invoke on "check-php",
+  "composer audit", "psalm", "phpstan", "rector", "taint analysis", "php lint",
+  or any variation naming PHP or its tooling.
+  ALSO invoke on the language-agnostic requests "cve tara", "cve raporu",
+  "güvenlik açığı tara", "zafiyet tara", "güvenlik taraması", "kod kalitesi tara",
+  "lint tara", "lint check", "vulnerability scan", "vuln scan", "scan for CVEs",
+  "check vulnerabilities", "security scan", "static security analysis" — but ONLY
+  when the target project is PHP. Those phrases are shared verbatim with
+  check-golang, check-js, check-rust and check-swift, so they carry no language
+  signal: choose by what the project actually is (`composer.json` present) and
+  never by the phrase alone. If the repository holds more than one of these
+  languages, ask which one the user means instead of guessing.
+  Runs FOUR tools by default — composer audit (CVEs), Psalm taint
   analysis (security static analysis), PHPStan (lint), and Rector (modernization)
   — installs any that are missing, scans every source path, classifies each
   finding, and produces a ranked combined report with fix guidance.

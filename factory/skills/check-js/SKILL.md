@@ -1,14 +1,22 @@
 ---
 name: check-js
 description: >
-  This skill MUST be invoked when the user says "check-js", "check-ts", "npm audit",
-  "semgrep", "eslint", "knip", "cve tara", "cve raporu", "güvenlik açığı tara",
-  "zafiyet tara", "vulnerability scan", "vuln scan", "scan for CVEs",
-  "check vulnerabilities", "güvenlik taraması", "security scan",
-  "static security analysis", "lint tara", "js lint", "ts lint", "lint check",
-  "kod kalitesi tara", "ölü kod tara"
-  or any variation requesting a JavaScript or TypeScript security or code-quality
-  scan of the whole project. Runs FOUR tools by default — the package manager's
+  JavaScript or TypeScript security and code-quality scan of the whole project.
+  Invoke on "check-js", "check-ts", "npm audit", "eslint", "knip", "js lint",
+  "ts lint", "ölü kod tara", or any variation naming JavaScript, TypeScript or
+  their tooling.
+  ALSO invoke on the language-agnostic requests "cve tara", "cve raporu",
+  "güvenlik açığı tara", "zafiyet tara", "güvenlik taraması", "kod kalitesi tara",
+  "lint tara", "lint check", "vulnerability scan", "vuln scan", "scan for CVEs",
+  "check vulnerabilities", "security scan", "static security analysis" — but ONLY
+  when the target project is JavaScript or TypeScript. Those phrases are shared
+  verbatim with check-golang, check-php, check-rust and check-swift, so they carry
+  no language signal: choose by what the project actually is (`package.json`
+  present) and never by the phrase alone. If the repository holds more than one of
+  these languages, ask which one the user means instead of guessing.
+  Treat "semgrep" the same way: check-swift uses it too, so it names a tool rather
+  than a language and selects nothing on its own.
+  Runs FOUR tools by default — the package manager's
   audit (CVEs), semgrep (security static analysis), ESLint (lint), and knip
   (dead code and unused dependencies) — installs any that are missing, scans the
   whole project, classifies each finding, and produces a ranked combined report

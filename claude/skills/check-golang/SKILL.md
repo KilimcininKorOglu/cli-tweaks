@@ -1,13 +1,19 @@
 ---
 name: check-golang
 description: >
-  This skill MUST be invoked when the user says "check-golang", "govulncheck", "gosec",
-  "cve tara", "cve raporu", "güvenlik açığı tara", "zafiyet tara",
-  "vulnerability scan", "vuln scan", "scan for CVEs", "check vulnerabilities",
-  "güvenlik taraması", "security scan", "static security analysis", "lint tara",
-  "golangci-lint", "modernize", "modernizer", "lint check", "kod kalitesi tara"
-  or any variation requesting a Go security or code-quality scan of the whole
-  project. Runs FOUR tools by default — govulncheck (CVEs), gosec (security
+  Go security and code-quality scan of the whole project. Invoke on "check-golang",
+  "govulncheck", "gosec", "golangci-lint", "modernize", "modernizer", "go lint",
+  or any variation naming Go or its tooling.
+  ALSO invoke on the language-agnostic requests "cve tara", "cve raporu",
+  "güvenlik açığı tara", "zafiyet tara", "güvenlik taraması", "kod kalitesi tara",
+  "lint tara", "lint check", "vulnerability scan", "vuln scan", "scan for CVEs",
+  "check vulnerabilities", "security scan", "static security analysis" — but ONLY
+  when the target project is Go. Those phrases are shared verbatim with
+  check-js, check-php, check-rust and check-swift, so they carry no language
+  signal: choose by what the project actually is (`go.mod` present) and never by
+  the phrase alone. If the repository holds more than one of these languages, ask
+  which one the user means instead of guessing.
+  Runs FOUR tools by default — govulncheck (CVEs), gosec (security
   static analysis), golangci-lint (lint), and the gopls modernize analyzer —
   installs any that are missing, scans every package with ./..., classifies each
   finding, and produces a ranked combined report with fix guidance.
