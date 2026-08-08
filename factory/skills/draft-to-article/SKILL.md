@@ -35,7 +35,7 @@ Transform continuous draft text into structured articles optimized for a specifi
 - For `/draft-to-article linkedin`: see [subcommands/linkedin.md](subcommands/linkedin.md)
 - For `/draft-to-article medium`: see [subcommands/medium.md](subcommands/medium.md)
 
-If no subcommand is provided, use AskUserQuestion to ask which platform the article targets.
+If no subcommand is provided, use AskUser to ask which platform the article targets.
 
 ## Process (All Platforms)
 

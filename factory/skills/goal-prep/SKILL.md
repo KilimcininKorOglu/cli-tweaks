@@ -1,6 +1,6 @@
 ---
 name: goal-prep
-description: Converts a free-form task description into a verifiable Claude Code /goal completion condition — one measurable end state, a stated check, constraints, and an optional turn/time cap — asking clarifying questions via AskUserQuestion only when a required component is missing. Invoked explicitly as /goal-prep.
+description: Converts a free-form task description into a verifiable Claude Code /goal completion condition — one measurable end state, a stated check, constraints, and an optional turn/time cap — asking clarifying questions via AskUser only when a required component is missing. Invoked explicitly as /goal-prep.
 user-invocable: true
 disable-model-invocation: true
 argument-hint: "[serbest metin: yapılmasını istediğin iş]"
@@ -50,7 +50,7 @@ Do NOT ask about anything the user already gave or that is clearly inferable fro
 
 ### Phase 3 — Ask, only if blocking gaps remain
 
-If and only if Phase 2 found blocking gaps, call **AskUserQuestion** — once, batched (up to ~4 questions), never drip-fed across turns. Each question targets exactly one gap, with 2–4 concrete options plus room for the user's own answer.
+If and only if Phase 2 found blocking gaps, call **AskUser** — once, batched (up to ~4 questions), never drip-fed across turns. Each question targets exactly one gap, with 2–4 concrete options plus room for the user's own answer.
 
 Question templates (use the user's language; keep commands verbatim):
 
@@ -114,7 +114,7 @@ Do not run the goal yourself. End by telling the user to paste the command (runn
 - ALWAYS pair the end state with a **stated check**: the exact command and the expected output that proves it.
 - NEVER leave a vague success word ("done", "clean", "fixed", "ready", "robust", "optimized", "works") in the final condition — each one is a blocking gap until replaced with a check.
 - ALWAYS require Claude to *surface the proof in the conversation* (print the command output, the count, the diff). The evaluator sees nothing else.
-- Call AskUserQuestion ONLY when a blocking gap remains, batch all questions into a single call, and offer concrete options — never interrogate one question per turn.
+- Call AskUser ONLY when a blocking gap remains, batch all questions into a single call, and offer concrete options — never interrogate one question per turn.
 - NEVER ask for information the user already provided or that is plainly inferable from the task or repo.
 - For open-ended or multi-item work, ALWAYS add a turn/time cap (e.g. "stop after 20 turns if not met") so the goal cannot loop indefinitely.
 - For multi-item backlogs, make the end state a count→0 or empty-queue and require the count to be printed each turn.

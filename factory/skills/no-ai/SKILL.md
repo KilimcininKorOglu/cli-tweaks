@@ -16,7 +16,7 @@ allowed-tools:
   - Edit
   - Grep
   - Glob
-  - AskUserQuestion
+  - AskUser
 ---
 
 # No AI: Remove AI Writing Patterns
