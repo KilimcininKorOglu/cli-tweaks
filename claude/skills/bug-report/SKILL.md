@@ -3,7 +3,7 @@ name: bug-report
 description: >
   Use `/bug-report` for full audit, `/bug-report <subcommand>` for focused audits,
   `/bug-report security-sweep` for security-only scans with a rolling 2-worker pool.
-argument-hint: "[--severity critical|high|medium|low|all | <subcommand>]"
+argument-hint: "[<subcommand> | security-sweep | fix [BUG-<id> | <description>]]"
 disable-model-invocation: true
 ---
 
@@ -133,8 +133,6 @@ that worker if the marker exists.
 5. After re-sorting and deduplication, remove ALL `<!-- scan:SUBCOMMAND completed -->`
    markers from `BUG-REPORT.md` so the user can re-run the full audit at will without
    manually deleting markers first.
-
-If `--severity` flag provided, filter final report to only that severity level.
 
 **Worker prompt template:**
 
