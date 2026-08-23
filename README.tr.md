@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook ve skill koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın.
+Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıllı commit ve daha fazlasını ekleyen hook, skill ve output style koleksiyonu. Ana dizininize kopyalayın, hemen çalışmaya başlasın.
 
 ## İçerik
 
@@ -29,7 +29,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `redate-commits`               | `/redate-commits`               | Commit tarihlerini seçilen aralığa yayar, güvenli iş akışı uyarıları verir      |
 | `frontend-design`              | `/frontend-design`              | 28 siteli tasarım kataloğu ile frontend kod üretimi                             |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Projeyi tarayarak versiyon güncelleme skill'i oluşturur                         |
-| `ai-seo`                       | `/ai-seo`                       | AI arama motorları için GEO optimizasyonu, 8 sıralı analiz ve fix modu          |
+| `ai-seo`                       | `/ai-seo`                       | AI arama motorları için GEO optimizasyonu: 7 analizlik sıralı tarama, audit ve fix modu |
 | `draft-to-article`             | `/draft-to-article`             | Taslakları X Articles, LinkedIn veya Medium/Substack formatına dönüştürme       |
 | `ios-uikit`                    | `/ios-uikit`                    | 20 referans belgeyle programatik UIKit geliştirme                               |
 | `ios-simulator`                | `/ios-simulator`                | 22 Node.js script ile iOS simülatör otomasyonu                                  |
@@ -107,6 +107,16 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `mass-assignment`   | `/bug-report mass-assignment`   | Toplu atama ve parametre kirlenmesi tespiti              |
 | `ldap`              | `/bug-report ldap`              | LDAP enjeksiyonu tespiti                                 |
 
+### Output Style'lar
+
+Yalnızca Claude Code. Factory Droid'in output style sözleşmesi yok, bu yüzden bu ağaç `factory/` altına aynalanmaz.
+
+| Style        | Dosya                                | Açıklama                                                                    |
+|--------------|--------------------------------------|------------------------------------------------------------------------------|
+| `ASD-STE100` | `claude/output-styles/ASD-STE100.md` | Basitleştirilmiş teknik İngilizce: kısa cümle, etken çatı, cümle başına tek talimat, uydurma metafor yok, hedge yok, iltifat yok, önce sonuç |
+
+Dosyayı `~/.claude/output-styles/` altına kopyalayın, sonra `/output-style` ile seçin. Claude Code output style'ı oturum başında okur, yani bir düzenleme sonraki oturumda veya style'ı yeniden seçtiğinizde etkili olur.
+
 ## Dizin Yapısı
 
 ```
@@ -118,6 +128,7 @@ cli-tweaks/
   claude/            <-- Claude Code (~/.claude/ içine kopyalayın)
     hooks/
     skills/
+    output-styles/
     settings.json.example
   SOUL.md.template          <-- Özel persona şablonu
   MEMORY.template.md        <-- Canonical proje MEMORY.md yapısı
@@ -154,9 +165,11 @@ rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
 # Claude Code
 npx degit KilimcininKorOglu/cli-tweaks/claude/hooks /tmp/cli-tweaks-hooks
 npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
+npx degit KilimcininKorOglu/cli-tweaks/claude/output-styles /tmp/cli-tweaks-styles
 cp -r /tmp/cli-tweaks-hooks/* ~/.claude/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.claude/skills/
-rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
+mkdir -p ~/.claude/output-styles && cp -r /tmp/cli-tweaks-styles/* ~/.claude/output-styles/
+rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills /tmp/cli-tweaks-styles
 ```
 
 ### Alternatif: git clone
@@ -172,6 +185,7 @@ cp -r factory/skills/* ~/.factory/skills/
 # Claude Code
 cp -r claude/hooks/* ~/.claude/hooks/
 cp -r claude/skills/* ~/.claude/skills/
+mkdir -p ~/.claude/output-styles && cp -r claude/output-styles/* ~/.claude/output-styles/
 ```
 
 ### Hook Kaydı
@@ -200,6 +214,10 @@ cp factory/hooks/memory-save.py ~/.factory/hooks/
 
 # Yalnızca commit skill'i
 cp -r factory/skills/commit ~/.factory/skills/
+
+# Yalnızca output style (sadece Claude Code)
+mkdir -p ~/.claude/output-styles
+cp claude/output-styles/ASD-STE100.md ~/.claude/output-styles/
 ```
 
 > **Not:** `save-plan.py`, çalışma zamanında `notify.py`'yi import eder. Her zaman `notify.py`'yi de birlikte kopyalayın.
@@ -293,6 +311,7 @@ Masaüstü bildirimleri `settings.json` dosyanızda özellik bazında yapıland�
 | Kullanıcı soru aracı       | `AskUser`        | `AskUserQuestion` |
 | Yeniden enjeksiyon hedefi  | `AGENTS.md`      | `CLAUDE.md`       |
 | Skill çağırma ön eki       | `/`              | `/`               |
+| Output style               | desteklenmiyor   | `~/.claude/output-styles/` |
 
 ## Lisans
 

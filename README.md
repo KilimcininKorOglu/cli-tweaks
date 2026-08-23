@@ -2,7 +2,7 @@
 
 [Türkçe](README.tr.md)
 
-A collection of hooks and skills for Factory Droid and Claude Code that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box. The two platforms share the same behavior, mirrored under `factory/` and `claude/`, diverging only where a platform contract requires it.
+A collection of hooks, skills, and output styles for Factory Droid and Claude Code that add planning automation, persistent memory, smart commits, and more. Drop them into your home directory and they work out of the box. The two platforms share the same behavior, mirrored under `factory/` and `claude/`, diverging only where a platform contract requires it.
 
 ## What's Included
 
@@ -29,7 +29,7 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `redate-commits`               | `/redate-commits`               | Rewrites commit dates across a selected range with safe workflow warnings        |
 | `frontend-design`              | `/frontend-design`              | Frontend code generation with 28-site design system catalog                      |
 | `version-update-skill-creator` | `/version-update-skill-creator` | Scans project and creates a tailored version-update skill                        |
-| `ai-seo`                       | `/ai-seo`                       | GEO optimization for AI search engines, 8 sequential analyses plus a fix mode    |
+| `ai-seo`                       | `/ai-seo`                       | GEO optimization for AI search engines: 7-analysis sequential sweep, plus audit and fix |
 | `draft-to-article`             | `/draft-to-article`             | Format drafts for X Articles, LinkedIn, or Medium/Substack                       |
 | `ios-uikit`                    | `/ios-uikit`                    | Programmatic UIKit development with 20 reference documents                       |
 | `ios-simulator`                | `/ios-simulator`                | iOS simulator automation with 22 Node.js scripts for semantic navigation         |
@@ -107,6 +107,16 @@ A collection of hooks and skills for Factory Droid and Claude Code that add plan
 | `mass-assignment`   | `/bug-report mass-assignment`   | Mass assignment and parameter pollution detection         |
 | `ldap`              | `/bug-report ldap`              | LDAP injection in search filters and DN construction      |
 
+### Output Styles
+
+Claude Code only. Factory Droid has no output-style contract, so this tree is not mirrored under `factory/`.
+
+| Style        | File                                   | Description                                                                  |
+|--------------|----------------------------------------|------------------------------------------------------------------------------|
+| `ASD-STE100` | `claude/output-styles/ASD-STE100.md`   | Simplified Technical English: short sentences, active voice, one instruction per sentence, no invented metaphors, no hedging, no flattery, conclusion first |
+
+Copy the file to `~/.claude/output-styles/`, then select it with `/output-style`. Claude Code reads an output style at session start, so an edit takes effect in the next session or after you re-select the style.
+
 ## Directory Structure
 
 ```
@@ -118,6 +128,7 @@ cli-tweaks/
   claude/            <-- Claude Code (copy to ~/.claude/)
     hooks/
     skills/
+    output-styles/
     settings.json.example
   SOUL.md.template          <-- Custom persona template
   GLOBAL-RULES.template.md  <-- Portable global agent-rules template
@@ -154,9 +165,11 @@ rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
 # Claude Code
 npx degit KilimcininKorOglu/cli-tweaks/claude/hooks /tmp/cli-tweaks-hooks
 npx degit KilimcininKorOglu/cli-tweaks/claude/skills /tmp/cli-tweaks-skills
+npx degit KilimcininKorOglu/cli-tweaks/claude/output-styles /tmp/cli-tweaks-styles
 cp -r /tmp/cli-tweaks-hooks/* ~/.claude/hooks/
 cp -r /tmp/cli-tweaks-skills/* ~/.claude/skills/
-rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills
+mkdir -p ~/.claude/output-styles && cp -r /tmp/cli-tweaks-styles/* ~/.claude/output-styles/
+rm -rf /tmp/cli-tweaks-hooks /tmp/cli-tweaks-skills /tmp/cli-tweaks-styles
 ```
 
 ### Alternative: git clone
@@ -172,6 +185,7 @@ cp -r factory/skills/* ~/.factory/skills/
 # Claude Code
 cp -r claude/hooks/* ~/.claude/hooks/
 cp -r claude/skills/* ~/.claude/skills/
+mkdir -p ~/.claude/output-styles && cp -r claude/output-styles/* ~/.claude/output-styles/
 ```
 
 ### Hook Registration
@@ -200,6 +214,10 @@ cp factory/hooks/memory-save.py ~/.factory/hooks/
 
 # Just the commit skill
 cp -r factory/skills/commit ~/.factory/skills/
+
+# Just the output style (Claude Code only)
+mkdir -p ~/.claude/output-styles
+cp claude/output-styles/ASD-STE100.md ~/.claude/output-styles/
 ```
 
 > **Note:** `save-plan.py` imports `notify.py` at runtime. Always copy `notify.py` alongside it.
@@ -293,6 +311,7 @@ Desktop notifications are configured per-feature in your `settings.json`:
 | User question tool      | `AskUser`        | `AskUserQuestion` |
 | Re-injection target     | `AGENTS.md`      | `CLAUDE.md`       |
 | Skill invocation prefix | `/`              | `/`               |
+| Output styles           | not supported    | `~/.claude/output-styles/` |
 
 ## License
 
