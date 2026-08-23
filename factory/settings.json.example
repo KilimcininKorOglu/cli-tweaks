@@ -3,6 +3,7 @@
     "~/.factory/AGENTS.md"
   ],
   "hookNotifyPlanSave": false,
+  "hookNotifyAskUser": false,
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -31,6 +32,16 @@
           {
             "type": "command",
             "command": "python3 ~/.factory/hooks/save-plan.py",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "AskUser",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.factory/hooks/notify-ask.py",
             "timeout": 15
           }
         ]

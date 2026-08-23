@@ -12,6 +12,7 @@ A collection of hooks, skills, and output styles for Factory Droid and Claude Co
 |-----------------------|----------------------|------------------------------------------------------------------------------------------------|
 | `session-start.py`    | SessionStart/compact | Injects global user files and project memory into context                                      |
 | `save-plan.py`        | PreToolUse           | Notifies while a plan waits for approval; also saves the plan to disk on Factory |
+| `notify-ask.py`       | PreToolUse           | Notifies while a question waits for an answer, with the first question's header |
 | `memory-save.py`      | Stop                 | Reminds the agent to update MEMORY.md; offloads old entries to topic files near the line cap and migrates a malformed file to the standard structure |
 | `memory-reinject.py`  | UserPromptSubmit     | Re-injects MEMORY.md critical rules (every 5th msg) and the full global instruction file (every 15th) to counter recency bias |
 | `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
@@ -204,8 +205,9 @@ Copy the `hooks` section from the example file into your existing settings, or u
 Pick only what you need. Examples below use `factory/`; replace with `claude/` for Claude Code.
 
 ```bash
-# Just the plan-saving hook (notify.py is required by save-plan.py)
+# Just the notification hooks (notify.py is required by both)
 cp factory/hooks/save-plan.py ~/.factory/hooks/
+cp factory/hooks/notify-ask.py ~/.factory/hooks/
 cp factory/hooks/notify.py ~/.factory/hooks/
 
 # Just the memory system
@@ -220,7 +222,7 @@ mkdir -p ~/.claude/output-styles
 cp claude/output-styles/ASD-STE100.md ~/.claude/output-styles/
 ```
 
-> **Note:** `save-plan.py` imports `notify.py` at runtime. Always copy `notify.py` alongside it.
+> **Note:** `save-plan.py` and `notify-ask.py` import `notify.py` at runtime. Always copy `notify.py` alongside either one.
 
 Then add the corresponding hook entries to your `settings.json`.
 
@@ -289,11 +291,15 @@ Desktop notifications are configured per-feature in your `settings.json`:
 
 ```json
 {
-  "hookNotifyPlanSave": true
+  "hookNotifyPlanSave": true,
+  "hookNotifyAskUser": true
 }
 ```
 
-- `hookNotifyPlanSave`: Notifications when plans are saved (default: `false`)
+- `hookNotifyPlanSave`: Notifications when a plan waits for approval (default: `false`)
+- `hookNotifyAskUser`: Notifications when a question waits for an answer (default: `false`)
+
+Each key must be JSON `true`. Any other value, including the string `"false"`, leaves the feature off and is reported on stderr.
 
 ## Requirements
 
