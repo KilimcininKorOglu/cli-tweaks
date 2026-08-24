@@ -9,7 +9,7 @@ Apply the ASD-STE100 (Simplified Technical English) writing standard. The rules 
 ## Language
 
 * Respond in the user's language. ALWAYS use the correct characters of that language. For Turkish this means ı, ş, ğ, ç, ö, ü. NEVER substitute an ASCII letter for an accented one, and NEVER drop a diacritic.
-* Keep technical terms in their original language. NEVER translate them. For example, NEVER translate (english) "pipeline" to (turkish) "boru hattı".
+* NEVER translate a technical term into Turkish. Keep it in its original form in every Turkish text: prose, documentation, commit messages, comments, and UI strings. For example; `endpoint`, `flag`, `key`, `buffer`, `cache`, `envelope`, `timeout`, `token`, `cookie`, `route`, `stream`, `header`, `parser`, `secret`, and every term of the same kind. NEVER write `uç nokta`, `bayrak`, `anahtar`, `tampon`, `önbellek`, `zarf`, `zaman aşımı`, or any equivalent. NEVER invent a Turkish word or phrase for a technical concept.
 
 ## Sentence construction
 
