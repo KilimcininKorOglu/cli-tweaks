@@ -13,6 +13,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `session-start.py`    | SessionStart/compact | Global kullanıcı dosyalarını ve proje belleğini bağlama enjekte eder                                                |
 | `save-plan.py`        | PreToolUse           | Plan onay beklerken bildirim gönderir; Factory'de ayrıca planı diske kaydeder                                        |
 | `notify-ask.py`       | PreToolUse           | Soru cevap beklerken ilk sorunun başlığıyla bildirim gönderir                                                       |
+| `notify-stop.py`      | Stop/StopFailure     | Turn bittiğinde son mesajdan veya hatadan tek satırlık alıntıyla bildirim gönderir                                  |
 | `memory-save.py`      | Stop                 | MEMORY.md'yi güncellemesini hatırlatır; satır sınırına yaklaşınca eski girdileri topic dosyalarına taşır ve bozuk dosyayı standart yapıya migration yapar |
 | `memory-reinject.py`  | UserPromptSubmit     | Her 5. mesajda MEMORY.md kritik kurallarını, her 15. mesajda tüm global talimat dosyasını yeniden enjekte ederek bağlam kaybını önler |
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                   |
@@ -208,6 +209,7 @@ Yalnızca ihtiyacınız olanları seçin. Aşağıdaki örnekler `factory/` kull
 # Yalnızca bildirim hook'ları (notify.py, ikisi için de gereklidir)
 cp factory/hooks/save-plan.py ~/.factory/hooks/
 cp factory/hooks/notify-ask.py ~/.factory/hooks/
+cp factory/hooks/notify-stop.py ~/.factory/hooks/
 cp factory/hooks/notify.py ~/.factory/hooks/
 
 # Yalnızca bellek sistemi
@@ -222,7 +224,7 @@ mkdir -p ~/.claude/output-styles
 cp claude/output-styles/ASD-STE100.md ~/.claude/output-styles/
 ```
 
-> **Not:** `save-plan.py` ve `notify-ask.py`, çalışma zamanında `notify.py`'yi import eder. Hangisini kopyalarsanız kopyalayın, `notify.py`'yi de birlikte alın.
+> **Not:** `save-plan.py`, `notify-ask.py` ve `notify-stop.py`, çalışma zamanında `notify.py`'yi import eder. Hangisini kopyalarsanız kopyalayın, `notify.py`'yi de birlikte alın.
 
 Ardından ilgili hook kayıtlarını `settings.json` dosyanıza ekleyin.
 
@@ -292,12 +294,14 @@ Masaüstü bildirimleri `settings.json` dosyanızda özellik bazında yapıland�
 ```json
 {
   "hookNotifyPlanSave": true,
-  "hookNotifyAskUser": true
+  "hookNotifyAskUser": true,
+  "hookNotifyStop": true
 }
 ```
 
 - `hookNotifyPlanSave`: Plan onay beklerken bildirim (varsayılan: `false`)
 - `hookNotifyAskUser`: Soru cevap beklerken bildirim (varsayılan: `false`)
+- `hookNotifyStop`: Turn bittiğinde veya hatayla sonlandığında bildirim (varsayılan: `false`)
 
 Her anahtar JSON `true` olmalıdır. `"false"` metni dahil başka her değer özelliği kapalı bırakır ve stderr'e bildirilir.
 
