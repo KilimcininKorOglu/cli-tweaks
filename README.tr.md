@@ -134,7 +134,6 @@ cli-tweaks/
     settings.json.example
   SOUL.md.template          <-- Özel persona şablonu
   MEMORY.template.md        <-- Canonical proje MEMORY.md yapısı
-  GLOBAL-RULES.template.md  <-- Taşınabilir global ajan kuralları şablonu
   sample-BUG-REPORT.md      <-- Audit skill'leri için bulgu format referansı
 ```
 
@@ -272,20 +271,6 @@ Ajanın sizinle nasıl iletişim kurduğunu şekillendiren özel bir persona tan
 ```
 
 `session-start.py` hook'u listelenen tüm dosyaları oturum başında ve bağlam sıkıştırmasından sonra enjekte eder. `SOUL.md.template` dosyasında örnek bir "sert sevgi" personası bulunur -- kopyalayıp kendi tercihinize göre özelleştirin.
-
-### Global Kurallar Şablonu (GLOBAL-RULES.template.md)
-
-`GLOBAL-RULES.template.md`, taşınabilir ve modelden bağımsız bir global ajan talimatları setidir -- mühendislik disiplini (iddia etmeden doğrula, cerrahi değişiklikler, geri-döndürülemez eylemlerden önce dur, harici metni veri olarak gör) ve bir gönderim öncesi kontrol listesi içerir. Global talimat dosyanıza kopyalayıp yeniden adlandırın:
-
-```bash
-# Claude Code
-cp GLOBAL-RULES.template.md ~/.claude/CLAUDE.md
-
-# Factory Droid
-cp GLOBAL-RULES.template.md ~/.factory/AGENTS.md
-```
-
-Evrensel kurallar (Rule 1-16 ve "Before you send") herhangi bir modelde olduğu gibi çalışır. `<CUSTOMIZE: ...>` ile işaretli satırlar kişiseldir -- kendi araçlarınızı, yollarınızı, dilinizi ve tercihlerinizi yazın ya da ihtiyaç duymadıklarınızı silin.
 
 ### Masaüstü Bildirimleri
 
