@@ -8,7 +8,7 @@ description: >
   HTTP caching with ETag and Cache-Control headers for static/embedded files.
   Scans the project, detects the framework, and implements content-hash-based
   ETag caching with 304 Not Modified support.
-argument-hint: "[scan | apply]"
+argument-hint: "[scan | fix]"
 ---
 
 # HTTP Cache — ETag + Cache-Control
@@ -22,7 +22,7 @@ Scan the project's HTTP layer, identify static and dynamic endpoints, and implem
 ```
 /http-cache          # Scan only — show what would change, don't modify (DEFAULT)
 /http-cache scan     # Same as default
-/http-cache apply    # Apply the changes from the scan
+/http-cache fix      # Apply the changes from the scan
 ```
 
 ## How It Works
