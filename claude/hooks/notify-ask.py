@@ -20,8 +20,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from notify import notify, isEnabledFor
 
-HEADER_MAX_CHARS = 60
-
 
 def _resolveProjectName(cwd: str) -> str:
     """Return session-lock name, else git root basename, else cwd basename."""
@@ -47,33 +45,6 @@ def _resolveProjectName(cwd: str) -> str:
     return os.path.basename(cwd)
 
 
-def _describeQuestions(toolInput: dict) -> str:
-    """Return a short label for the pending questions, or an empty string.
-
-    The label carries the first question's header so the user knows what is
-    being asked without switching to the terminal. Headers are model-written
-    text of unbounded length, so it is truncated.
-    """
-    questions = toolInput.get("questions")
-    if not isinstance(questions, list) or not questions:
-        return ""
-
-    first = questions[0]
-    header = first.get("header", "") if isinstance(first, dict) else ""
-    if not isinstance(header, str):
-        return ""
-    header = " ".join(header.split())
-    if not header:
-        return ""
-    if len(header) > HEADER_MAX_CHARS:
-        header = header[:HEADER_MAX_CHARS - 1] + "…"
-
-    remaining = len(questions) - 1
-    if remaining > 0:
-        return "{} (+{} more)".format(header, remaining)
-    return header
-
-
 try:
     inputData = json.load(sys.stdin)
 except json.JSONDecodeError:
@@ -84,13 +55,11 @@ if inputData.get("tool_name") != "AskUserQuestion":
 
 if isEnabledFor("AskUser"):
     cwd = inputData.get("cwd", os.getcwd())
-    projectName = _resolveProjectName(cwd)
-    toolInput = inputData.get("tool_input")
-    label = _describeQuestions(toolInput) if isinstance(toolInput, dict) else ""
-    message = "{}: {}".format(projectName, label) if label else projectName
+    # The notice needs only the project name, so the user can tell which
+    # session is waiting. The question text adds noise, not signal.
     notify(
         "Question awaiting your answer",
-        message,
+        _resolveProjectName(cwd),
         subtitle="Claude Code",
     )
 
