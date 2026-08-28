@@ -96,10 +96,12 @@ if isEnabledFor("Stop"):
             inputData.get("last_assistant_message")
         )
         title = "Turn failed"
+        message = "{}: {}".format(projectName, summary) if summary else projectName
     else:
-        summary = _summarize(inputData.get("last_assistant_message"))
+        # A normal turn end needs only the project name, so the user can tell
+        # which session finished. The final message adds noise, not signal.
         title = "Turn finished"
-    message = "{}: {}".format(projectName, summary) if summary else projectName
+        message = projectName
     notify(
         title,
         message,
