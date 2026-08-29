@@ -45,6 +45,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `check-rust`                   | `/check-rust`                   | Dört Rust taraması (cargo-audit, cargo-deny, clippy, edition kontrolü) çalıştırıp sıralı rapor üretir |
 | `check-js`                     | `/check-js`                     | Dört JS/TS taraması (paket audit, semgrep, ESLint, knip) çalıştırıp sıralı rapor üretir |
 | `check-php`                    | `/check-php`                    | Dört PHP taraması (composer audit, Psalm taint, PHPStan, Rector) çalıştırıp sıralı rapor üretir |
+| `go-time-int64`                | `/go-time-int64`                | Sıcak Go struct'larındaki `time.Time` alanlarını `int64` ile değiştirip bellek ve GC yükünü azaltır |
 
 #### `bug-report` audit subcommand'leri
 
