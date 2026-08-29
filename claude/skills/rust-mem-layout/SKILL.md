@@ -4,10 +4,11 @@ description: >
   This skill MUST be invoked when the user says "rust memory", "memory layout",
   "bellek optimizasyonu", "struct boyutu", "struct size", "shrink struct",
   "reduce allocations", "allocation azalt", "cache entry memory", "Box<[T]>",
-  "enum size", "large enum variant", "padding", "hot struct", "per-entry memory"
+  "enum size", "large enum variant", "padding", "hot struct", "per-entry memory",
+  "embedded rust", "gömülü rust", "no_std", "RAM kısıtlı", "bellek kısıtlı cihaz"
   or any variation asking to reduce the memory footprint or allocation count of
-  Rust data structures that are stored in bulk (caches, maps, record lists,
-  arenas). Scans the crate for the five layout anti-patterns from Cloudflare's
+  Rust data structures, whether stored in bulk (caches, maps, record lists,
+  arenas) or on a memory-constrained target. Scans the crate for the five layout anti-patterns from Cloudflare's
   1.1.1.1 DNS-cache optimization (growable containers on immutable data,
   parallel lists, derivable fields, oversized enums, per-record heap boxes) and
   fixes them.
@@ -30,14 +31,19 @@ Find structs that are instantiated in bulk (cache entries, records, nodes, event
 
 ## Scope rule
 
-Only structs that exist in **high cardinality** matter. 8 bytes on a config struct is noise; 8 bytes on a struct held 10M times is 80 MB. Before anything else, identify bulk types:
+Cardinality sets **priority**, and for the patterns that add a cost it sets **whether the trade pays off** — it never decides whether a change is allowed. The five patterns split in two:
+
+- **Near-free (P1, bool/width reduction):** these shrink the type with no added indirection or allocation, so the only gate is the precondition (a `Vec`/`String` provably immutable after construction, ≥ 2 bools). Apply them wherever the precondition holds. Cardinality only orders the work, and on a memory-constrained target (embedded, small-RAM device) even a low-cardinality type counts against a fixed budget. Never tell the user a near-free change is not worth doing because a project or a type's instance count is small.
+- **Cost-bearing (P3 derivation, P4 boxing, P5 packing):** each adds a cost — an allocation, indirection, lost random indexing, or context threaded through call sites. The benefit scales with instance count, so this cost/benefit is the real gate: apply them where the type is held in bulk. Boxing a variant on a struct that exists once adds an allocation to save one-time padding, a net loss.
+
+Before anything else, identify bulk types, because they carry both the highest priority and the case for the cost-bearing patterns:
 
 - Values of `HashMap`/`BTreeMap`/`DashMap`/`moka`/`lru` caches
 - Elements of long-lived `Vec<T>` / `Box<[T]>` / slab / arena
 - Anything with a comment like "entry", "record", "node", "item", "cell"
 - Types whose `size_of` is asserted or benchmarked already
 
-Report non-bulk hits under "low priority" and do not fix them unless asked.
+On a normal-RAM target, report a near-free hit on a low-cardinality type as low priority (the win is real but tiny against the diff churn); on a memory-constrained target, fix it. Report a cost-bearing hit on a non-bulk type as low priority and do not fix it unless asked.
 
 ## Phase 1: Measure
 
@@ -292,7 +298,8 @@ cargo bench
 
 - **Default to `scan`.** Never modify files without an explicit `fix`.
 - Measure with `-Zprint-type-sizes` or `size_of` before claiming a saving. Padding makes arithmetic on field sizes unreliable in both directions.
-- Optimize bulk types only. Report the rest as low priority.
+- Gate each pattern on its precondition and its own cost, never on project size. Apply the near-free patterns (P1, bool/width reduction) wherever the precondition holds; apply the cost-bearing patterns (P3, P4, P5) only where the type is held in bulk, because their added allocation or indirection only pays off at high cardinality.
+- On a memory-constrained target (embedded, `no_std`, small-RAM device), fix near-free hits on low-cardinality types too; the fixed RAM budget, not instance count, is the test.
 - Follow the order P1 → P5. P5 supersedes P4 for the same field — if P5 applies, skip boxing the variants.
 - `Vec` → `Box<[T]>` only when provably immutable after construction. A single `.push` in a rarely-run path still disqualifies it.
 - `Option<Box<T>>`, `Option<Box<[T]>>`, `Option<Box<str>>`, `Option<&T>`, `Option<NonZeroU*>` cost zero extra bytes (niche). Prefer them over sentinel values.
