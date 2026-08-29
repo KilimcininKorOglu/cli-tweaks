@@ -48,6 +48,7 @@ A collection of hooks, skills, and output styles for Factory Droid and Claude Co
 | `go-time-int64`                | `/go-time-int64`                | Replaces Go `time.Time` fields in hot structs with `int64` to cut memory and GC pressure |
 | `pg-fair-queue`                | `/pg-fair-queue`                | Designs a fair multi-tenant Postgres task queue with write-time block-ID round-robin |
 | `pg-insert-perf`               | `/pg-insert-perf`               | Speeds up Postgres inserts with buffered batches or COPY and a right-sized pool |
+| `pg-payload-offload`           | `/pg-payload-offload`           | Offloads cold Postgres payloads to object storage by partition write-and-swap |
 
 #### `bug-report` audit subcommands
 
