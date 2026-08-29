@@ -47,6 +47,7 @@ A collection of hooks, skills, and output styles for Factory Droid and Claude Co
 | `check-php`                    | `/check-php`                    | Runs four PHP scans (composer audit, Psalm taint, PHPStan, Rector) into a ranked report |
 | `go-time-int64`                | `/go-time-int64`                | Replaces Go `time.Time` fields in hot structs with `int64` to cut memory and GC pressure |
 | `pg-fair-queue`                | `/pg-fair-queue`                | Designs a fair multi-tenant Postgres task queue with write-time block-ID round-robin |
+| `pg-insert-perf`               | `/pg-insert-perf`               | Speeds up Postgres inserts with buffered batches or COPY and a right-sized pool |
 
 #### `bug-report` audit subcommands
 

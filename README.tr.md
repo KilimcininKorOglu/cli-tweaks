@@ -47,6 +47,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `check-php`                    | `/check-php`                    | Dört PHP taraması (composer audit, Psalm taint, PHPStan, Rector) çalıştırıp sıralı rapor üretir |
 | `go-time-int64`                | `/go-time-int64`                | Sıcak Go struct'larındaki `time.Time` alanlarını `int64` ile değiştirip bellek ve GC yükünü azaltır |
 | `pg-fair-queue`                | `/pg-fair-queue`                | Write-time block-ID round-robin ile adil multi-tenant Postgres task queue tasarlar |
+| `pg-insert-perf`               | `/pg-insert-perf`               | Buffer'lı batch veya COPY ve doğru boyutlu pool ile Postgres insert'lerini hızlandırır |
 
 #### `bug-report` audit subcommand'leri
 
