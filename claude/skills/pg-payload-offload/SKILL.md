@@ -147,9 +147,12 @@ BEGIN
                 inline_content = EXCLUDED.inline_content;
         RETURN NEW;
     ELSIF TG_OP = 'UPDATE' THEN
-        UPDATE payloads_copy_2026_03_04
-           SET location = NEW.location, external_key = NEW.external_key, inline_content = NEW.inline_content
-         WHERE id = NEW.id AND inserted_at = NEW.inserted_at;
+        -- Upsert, not UPDATE: the bulk loop may not have copied this row yet.
+        -- A plain UPDATE would affect 0 rows and lose the new value.
+        INSERT INTO payloads_copy_2026_03_04 VALUES (NEW.*)
+        ON CONFLICT (id, inserted_at) DO UPDATE
+            SET location = EXCLUDED.location, external_key = EXCLUDED.external_key,
+                inline_content = EXCLUDED.inline_content;
         RETURN NEW;
     ELSE
         DELETE FROM payloads_copy_2026_03_04 WHERE id = OLD.id AND inserted_at = OLD.inserted_at;
@@ -162,6 +165,8 @@ CREATE TRIGGER mirror_writes AFTER INSERT OR UPDATE OR DELETE ON payloads_2026_0
 ```
 
 Late writes into yesterday's partition (retries, backfills) are rare but must not be lost.
+
+**Precondition: the partition being offloaded must be effectively immutable during the run — append-only, no in-place `UPDATE` or `DELETE` of already-inserted rows.** A concurrent `DELETE` of a row the bulk loop has not copied yet is not captured: the trigger's `DELETE` affects 0 rows, then the bulk loop re-inserts the row and the swap resurrects it. The `UPDATE` branch is an upsert so a concurrent in-place update still lands, but do not run the offload against a partition that still takes deletes. Late `INSERT`s are safe; those rows just stay `INLINE` in the swapped partition (never offloaded), which is fine.
 
 **c. Paginate, pack, upload, insert into the copy**
 
@@ -178,7 +183,7 @@ LIMIT 5000;
 
 1. Split the batch into chunks (e.g. 500–2000 rows, grouped by tenant).
 2. Pack + upload chunks in parallel (goroutine pool sized to S3 concurrency).
-3. `INSERT INTO payloads_copy_... (id, inserted_at, tenant_id, location, external_key)` with `location='EXTERNAL'` — use `COPY` or `UNNEST` (see `/pg-insert-perf`). Rows already `EXTERNAL` in the source are copied as-is.
+3. `INSERT INTO payloads_copy_... (id, inserted_at, tenant_id, location, external_key)` with `location='EXTERNAL'` and `ON CONFLICT (id, inserted_at) DO NOTHING` — the trigger may already have inserted a row that arrived live during the job, so a plain insert would hit a primary-key violation. Rows already `EXTERNAL` in the source are copied as-is. `COPY` cannot express `ON CONFLICT`, so `COPY` into a temp table first, then `INSERT INTO payloads_copy_... SELECT * FROM tmp ON CONFLICT DO NOTHING`, or use batched `UNNEST` inserts (see `/pg-insert-perf`).
 4. `UPDATE offload_progress SET last_id=..., last_inserted_at=...`.
 5. Repeat until the SELECT returns 0 rows.
 
@@ -259,6 +264,8 @@ psql -c "SELECT count(*), location FROM payloads_2026_03_04 GROUP BY 2"
 - NEVER upload one object per row. Pack, compress per payload, address by `key:offset:length`.
 - ALWAYS create the copy with a CHECK matching the partition bound so `ATTACH` skips validation and the swap is instant.
 - ALWAYS mirror live writes into the copy with a trigger for the duration of the job.
+- ALWAYS insert into the copy with `ON CONFLICT (id, inserted_at) DO NOTHING`; the trigger may have inserted a live row first, and a plain insert would fail on the primary key.
+- ONLY offload a partition that is immutable during the run (append-only). A concurrent `DELETE` of a not-yet-copied row survives the swap; do not run against a partition that still takes deletes.
 - ALWAYS enforce `INLINE`/`EXTERNAL` exclusivity with a CHECK so the read path never has to guess.
 - ALWAYS paginate by the full primary key (keyset), never `OFFSET`; persist progress so the job resumes.
 - ALWAYS take `ACCESS EXCLUSIVE` on the parent only for the swap transaction; keep it to DDL, no data movement inside the lock.

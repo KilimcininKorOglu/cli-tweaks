@@ -52,6 +52,8 @@ GROUP BY parent.relname, parent.oid
 ORDER BY 2 DESC;
 
 \echo '== 6. Transaction ID age (wraparound risk) top 10 =='
+-- Only relations with real storage. Partitioned parents (relkind 'p') have
+-- relfrozenxid 0, so age() would rank them at the top with a meaningless value.
 SELECT c.oid::regclass AS table_name, age(c.relfrozenxid) AS xid_age
-FROM pg_class c WHERE c.relkind IN ('r','t','p')
+FROM pg_class c WHERE c.relkind IN ('r','t')
 ORDER BY 2 DESC LIMIT 10;
