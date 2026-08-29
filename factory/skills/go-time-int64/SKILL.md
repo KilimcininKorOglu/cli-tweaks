@@ -5,17 +5,27 @@ description: >
   "time int64", "timestamp int64", "time.Time bellek", "time.Time memory",
   "reduce struct size", "struct küçült", "GC pointer azalt", "reduce GC
   pressure", "in-memory index memory", "bellek optimizasyonu go", "go memory
-  overhead", "fit index in memory" or any variation requesting memory or GC
+  overhead", "fit index in memory", "embedded go", "gömülü go", "tinygo",
+  "microcontroller", "RAM kısıtlı", "bellek kısıtlı cihaz", "memory
+  constrained", "shrink footprint" or any variation requesting memory or GC
   reduction in a Go project by replacing time.Time fields with int64
   timestamps. Scans Go structs for time.Time fields held in hot in-memory
-  collections (slices, maps, indexes, queues), reports the byte and GC-pointer
-  savings, and on request performs the conversion with boundary adapters.
+  collections (slices, maps, indexes, queues) or on memory-constrained
+  targets, reports the byte and GC-pointer savings, and on request performs
+  the conversion with boundary adapters.
 argument-hint: "[scan | fix]"
 ---
 
 # Go time.Time → int64
 
 Replace `time.Time` fields in hot in-memory data structures with `int64` (Unix nanoseconds by default). `time.Time` is 24 bytes and contains a `*Location` pointer; `int64` is 8 bytes and pointer-free. In large slices/maps this is a 3x reduction per field and removes one pointer per element from every GC scan.
+
+The win does not depend on project size. For an internal timestamp field, `int64` is a strictly smaller, pointer-free representation of the same instant, so this is a representation improvement, not a scale-dependent tradeoff. What scale changes is the **magnitude** of the win, and therefore its **priority** — never whether the change is correct:
+- Millions of elements turn 16 bytes/field into gigabytes and a pointer-free struct into a `noscan` GC win.
+- A **memory-constrained target** (embedded, TinyGo, small-RAM SBC or microcontroller) makes even a handful of structs matter against a fixed RAM budget.
+- A small server project gets a real but small win; the only cost is the diff churn.
+
+The actual decision to convert is a **correctness** question, not a size question. Keep `time.Time` at API/JSON/ORM boundaries and on in-process monotonic timing (`time.Since` on a live value); convert the internal storage type everywhere else. Do not gate the change on element count.
 
 **Default behavior is `scan` (dry-run).** The conversion changes semantics at edges (zero value, timezone, monotonic clock, JSON shape). Apply only after reviewing the scan report.
 
@@ -63,18 +73,22 @@ Then classify manually using the table below. The scanner cannot know intent.
 
 ### Phase 2: Classify Candidates
 
+`convert` versus `skip` is decided by **where the field lives and its semantics**, never by instance count. The `skip` and `review` rows below are correctness rules: a wire type, an ORM expectation, monotonic timing, timezone display, or a zero-value edge. Instance count only sets **priority** among the `convert` rows, so it appears in the Reason column, not the Action column.
+
 | Category                                                    | Action     | Reason                                                           |
 |-------------------------------------------------------------|------------|------------------------------------------------------------------|
-| Struct held in large slice/map/index/queue/cache/ring       | **convert**| this is the target                                               |
-| Struct with millions of instances alive at once             | **convert**| size + noscan win                                                |
+| Struct held in large slice/map/index/queue/cache/ring       | **convert**| the highest-magnitude win: size + `noscan`                       |
+| Internal storage struct, any instance count                 | **convert**| representation win applies regardless of count; count sets priority |
 | Struct with `*time.Time` for nullable timestamps            | **convert**| use `0` as null sentinel; removes an allocation per element      |
 | Internal DTO between DB layer and in-memory engine          | **convert**| convert `pgtype.Timestamptz` → `int64` directly, skip `time.Time`|
 | Exported API struct / JSON / HTTP / gRPC request-response   | **skip**   | wire format change; keep `time.Time`, convert at boundary        |
 | Struct implementing `sql.Scanner` / ORM model with tags     | **skip**   | ORM expects `time.Time`; convert on load into the internal type  |
 | Field used with `time.Since` / `time.Until` on live values  | **review** | loses monotonic clock; fine for stored timestamps, not for deadlines measured in-process |
 | Field formatted with a specific `Location` for display      | **review** | `int64` is an instant; re-attach location at format time         |
-| Config structs, singletons, request-scoped structs          | **skip**   | negligible instance count; churn not worth it                    |
+| Config structs, singletons, request-scoped structs          | **review** | safe to convert, but on a normal-RAM target the diff churn can outweigh a one-off struct's bytes; on a memory-constrained target, convert |
 | Field where zero `time.Time{}` (year 1) is semantically used| **review** | `time.Time{}.UnixNano()` is undefined (overflow); must map to `0`|
+
+**Memory-constrained target (embedded / TinyGo / small-RAM device):** priority stops mattering; the RAM budget is fixed and small, so convert every semantically-safe internal candidate, including the one-off structs. 16 bytes off a struct that exists a handful of times still counts when total RAM is measured in KB. The GC/`noscan` argument is secondary here (TinyGo's GC differs); the size win is the point. The boundary `skip` rows (exported API/JSON/ORM structs) stay `skip` — those are correctness rules, not scale rules.
 
 ### Phase 3: Conversion (fix)
 
@@ -232,6 +246,8 @@ Report to the user: size before/after per struct, pointer count before/after, an
 
 - **Default to `scan` mode.** Never modify files without an explicit `fix`.
 - ONLY convert Go. This skill is Go-specific; do not apply the pattern to other languages.
+- Decide `convert` versus `skip` by field location and semantics, never by project size. `int64` is a strictly smaller, pointer-free representation, so the win is real at any scale; size only sets priority, not the decision. Never tell the user the change is not worth doing because the project or instance count is small.
+- On a memory-constrained target (embedded, TinyGo, small-RAM device), convert every semantically-safe internal candidate. The fixed RAM budget, not instance count, is the test.
 - NEVER convert exported API/JSON/gRPC/ORM-model structs in place. Keep `time.Time` at the boundary and convert into the internal type.
 - ALWAYS define a named type (`UnixNano`, `UnixMicro`) rather than bare `int64` so the unit is unambiguous and the compiler catches mixing.
 - ALWAYS map `time.Time{}` (zero) ↔ `0`. `time.Time{}.UnixNano()` overflows and returns garbage; `time.Unix(0,0)` is 1970, not zero. Guard both directions.
