@@ -13,7 +13,7 @@ $G 'INSERT[[:space:]]+INTO[^;]*VALUES[[:space:]]*\(\$1|INSERT[[:space:]]+INTO[^;
   --include='*.go' --include='*.sql' --include='*.py' --include='*.js' --include='*.ts' --include='*.rs' || echo "  none"
 
 section "Exec/Query calls that look like inserts inside loops (Go: within 6 lines of for/range)"
-for f in $(grep -rlIE --exclude-dir=vendor --exclude-dir=node_modules 'INSERT[[:space:]]+INTO' "$ROOT" --include='*.go' 2>/dev/null); do
+for f in $(grep -rlIE $EXCL 'INSERT[[:space:]]+INTO' "$ROOT" --include='*.go' 2>/dev/null); do
   awk -v F="$f" '
     /for[[:space:]].*(range|;|\{)/ { loop=NR }
     /\.(Exec|Query|QueryRow|Insert|Create)\(/ && loop && NR-loop<=6 { printf "  %s:%d  %s\n", F, NR, $0 }

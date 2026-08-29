@@ -69,7 +69,7 @@ Report pool findings separately with the recommended size (start at `min(20, 2 �
 
 #### 3.2 Buffer with backpressure (Go, pgx)
 
-Properties: flushes when the flush interval elapses **or** the buffer is full; when full, `Add` blocks — that is the backpressure. One buffer owns one connection at a time; run N buffers to use N pool connections.
+Properties: flushes when the flush interval elapses **or** the buffer is full; when full, `Add` blocks — that is the backpressure. One buffer owns one connection at a time; run N buffers to use N pool connections. The channel holds up to `maxSize` rows and the in-progress `batch` up to `maxSize` more, so size memory for about `2 × maxSize × numBuffers` rows resident.
 
 ```go
 type Row struct{ Args []byte }
@@ -210,7 +210,7 @@ Report before/after rows/s and latency in the same format for both.
 - ALWAYS flush on shutdown (`ctx.Done()`); otherwise buffered rows are lost.
 - ALWAYS flush on interval even when nearly empty — a 3-row batch after 10 ms is correct; waiting for 100 rows at low traffic is a latency bug.
 - Use `COPY` only when `RETURNING` and `ON CONFLICT` are not needed. Otherwise `UNNEST`/multi-row INSERT.
-- Prefer `UNNEST` over generated `VALUES ($1),($2),...` — fixed statement text, no parameter-count limit issues (65535 params in pgx), plan cache friendly.
+- Prefer `UNNEST` over generated `VALUES ($1),($2),...` — fixed statement text, no parameter-count limit issues (Postgres caps a single statement at 65535 bind parameters; `UNNEST` passes one array parameter and sidesteps it), plan cache friendly.
 - Batch size: aim for the smallest size that saturates throughput (usually 25–100). Larger batches add latency without throughput.
 - One batch = one transaction. If per-row failure isolation matters, validate before buffering or split into smaller batches on error; do not silently drop the batch.
 - Do not batch across tables with FK dependencies in one COPY; order table writes within a transaction instead.
