@@ -49,6 +49,7 @@ A collection of hooks, skills, and output styles for Factory Droid and Claude Co
 | `pg-fair-queue`                | `/pg-fair-queue`                | Designs a fair multi-tenant Postgres task queue with write-time block-ID round-robin |
 | `pg-insert-perf`               | `/pg-insert-perf`               | Speeds up Postgres inserts with buffered batches or COPY and a right-sized pool |
 | `pg-payload-offload`           | `/pg-payload-offload`           | Offloads cold Postgres payloads to object storage by partition write-and-swap |
+| `rust-mem-layout`              | `/rust-mem-layout`              | Shrinks bulk-instantiated Rust structs' footprint and allocation count |
 
 #### `bug-report` audit subcommands
 

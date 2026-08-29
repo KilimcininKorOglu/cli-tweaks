@@ -49,6 +49,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `pg-fair-queue`                | `/pg-fair-queue`                | Write-time block-ID round-robin ile adil multi-tenant Postgres task queue tasarlar |
 | `pg-insert-perf`               | `/pg-insert-perf`               | Buffer'lı batch veya COPY ve doğru boyutlu pool ile Postgres insert'lerini hızlandırır |
 | `pg-payload-offload`           | `/pg-payload-offload`           | Soğuk Postgres payload'larını partition write-and-swap ile object storage'a taşır |
+| `rust-mem-layout`              | `/rust-mem-layout`              | Toplu oluşturulan Rust struct'larının bellek ayak izini ve allocation sayısını düşürür |
 
 #### `bug-report` audit subcommand'leri
 
