@@ -1,9 +1,10 @@
-// scan.go — find time.Time / *time.Time struct fields in a Go project and
+// go-time-int64.scan.go — find time.Time / *time.Time struct fields in a Go project and
 // estimate memory / GC savings from converting them to int64.
 //
 // Usage:
-//   go run scan.go ./...
-//   go run scan.go ./internal/engine ./internal/queue
+//
+//	go run go-time-int64.scan.go ./...
+//	go run go-time-int64.scan.go ./internal/engine ./internal/queue
 //
 // Pure go/ast, no type checking, no external deps. Heuristic, not exact.
 package main
@@ -15,6 +16,7 @@ import (
 	"go/token"
 	"os"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 )
@@ -36,7 +38,7 @@ type structInfo struct {
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Fprintln(os.Stderr, "usage: go run scan.go <pkg-pattern> [...]")
+		fmt.Fprintln(os.Stderr, "usage: go run go-time-int64.scan.go <pkg-pattern> [...]")
 		os.Exit(2)
 	}
 	files := collectFiles(os.Args[1:])
@@ -196,10 +198,8 @@ func importAlias(f *ast.File, path string) string {
 }
 
 func appendUnique(s []string, v string) []string {
-	for _, x := range s {
-		if x == v {
-			return s
-		}
+	if slices.Contains(s, v) {
+		return s
 	}
 	return append(s, v)
 }

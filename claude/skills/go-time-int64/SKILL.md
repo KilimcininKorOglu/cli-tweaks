@@ -60,7 +60,7 @@ Real-world reference: a queue engine's priority+timestamp index went from a few 
 Run the bundled scanner from the project root:
 
 ```bash
-go run <skill-dir>/scripts/scan.go ./...
+go run <skill-dir>/scripts/go-time-int64.scan.go ./...
 ```
 
 It walks the AST and reports:
