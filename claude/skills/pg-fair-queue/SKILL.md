@@ -74,6 +74,7 @@ Read the schema and the pop query. Check:
 | Workers start simultaneously with fixed poll interval        | Thundering herd on the pop query                     |
 | No upper bound on QUEUED rows                                | Unrecoverable degradation under backlog              |
 | Per-group concurrency enforced in application memory         | Not consistent across workers; races                 |
+| Watermark/pointer maintained by `... WHERE status <> 'QUEUED' ORDER BY id DESC LIMIT 1` | O(queued) per pop; scans every queued row above the frontier |
 | Pop query lacks index on `(status, id)` or partial index     | Seq scan under load                                  |
 
 Report each finding with the `EXPLAIN ANALYZE` of the current pop query at a representative backlog (seed 25k and 1M rows if a test DB is available). Then recommend: block-ID design (strict fairness), or `OVERFLOW` gate + simpler queue (approximate fairness, higher write rate).
@@ -155,16 +156,23 @@ RETURNING t.*;
 
 Drop the `id <` bound for no per-group limit.
 
+The `id <` window bounds a group to at most `c` tasks in a **single pop's** candidate set (a group has one task per block, so `c` blocks hold at most `c`). It is not a hard cap on tasks `RUNNING` per group across workers over time. For a strict global limit, also track a running count per group and skip a group at its cap.
+
 ### 2.4 Advance the global pointer — same transaction as pop
 
+`max_assigned_block` is the block of the dispatch frontier: the highest block whose tasks have left `QUEUED`. Advance it from the rows this pop just dispatched, not by scanning for the highest non-`QUEUED` task.
+
 ```sql
-UPDATE task_ptrs SET max_assigned_block = COALESCE(
-    (SELECT id / 1048576 FROM tasks WHERE status <> 'QUEUED' ORDER BY id DESC LIMIT 1),
-    (SELECT COALESCE(max(block_addr), 0) FROM task_groups)
-);
+-- $1 = max(id) among the rows this pop returned (0 if it returned none)
+UPDATE task_ptrs
+SET max_assigned_block = GREATEST(max_assigned_block, $1::bigint / 1048576);
 ```
 
-Without this, idle groups keep landing in old blocks and fairness degrades.
+Pop takes the lowest `QUEUED` ids, so `max(id)` of the popped rows is the new frontier. This is O(popped) and keeps the pop transaction constant-time.
+
+NEVER advance the pointer with `SELECT ... WHERE status <> 'QUEUED' ORDER BY id DESC LIMIT 1`. Under a backlog the highest ids are all `QUEUED` future blocks, so that scan skips every queued row above the frontier — O(queued) per pop, the exact trap this design exists to avoid.
+
+Without this advance, idle groups keep landing in old blocks and fairness degrades.
 
 ### 2.5 Worker hygiene
 
@@ -190,6 +198,7 @@ Without this, idle groups keep landing in old blocks and fairness degrades.
 - NEVER use window functions in the pop path. Rank at write time, not read time.
 - ALWAYS use `FOR UPDATE SKIP LOCKED` on the *same* SELECT that filters and orders — never pre-select in a CTE then lock in a second one.
 - ALWAYS update `task_ptrs` in the pop transaction; it is what keeps the round-robin honest.
+- ALWAYS advance `max_assigned_block` from the `max(id)` of the popped rows, never by scanning `status <> 'QUEUED' ORDER BY id DESC`; the scan is O(queued) per pop.
 - ALWAYS define `BLOCK_LEN` once and assert `count(task_groups) < BLOCK_LEN` in a health check.
 - ALWAYS serialize new-group creation (advisory lock) to avoid `gid` collisions.
 - ALWAYS bound `QUEUED` with an overflow status. This is independent of the fairness design and prevents unrecoverable states.
