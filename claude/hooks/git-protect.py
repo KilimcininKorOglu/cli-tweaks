@@ -1,13 +1,23 @@
 #!/usr/bin/env python3
 """
-PreToolUse hook: blocks `git add -f` / `git add --force` on files
-listed in the global gitignore. Prevents Claude from bypassing
-gitignore protection with force-add.
+PreToolUse hook: a path listed in the global gitignore can never enter git.
 
-Matching is scoped to the `git add` invocation itself, never the whole command
-string. An earlier version searched the raw text, so a commit message that
-merely mentioned a force flag or a protected directory name blocked the commit.
-Heredoc bodies are dropped for the same reason.
+The policy is absolute, so the hook does not look for a force flag. It blocks
+every route that could stage a protected path:
+  - `git add` naming a protected path, with or without --force
+  - `git add` whose operands cannot be proven safe (`.`, `-A`, a glob, a
+    directory, a shell variable), because their contents are unknown here
+  - `git update-index --add`, which stages without going through `git add`
+  - `git -c core.excludesfile=...`, which disables the ignore file for one call
+  - `git commit <path>` and `git mv` on a protected path, which is how an
+    already-tracked protected file keeps moving forward
+  - a Bash write to ~/.gitignore_global, or a `!` negation written into a
+    repository .gitignore
+  - a Write or Edit tool call whose target is ~/.gitignore_global
+
+Matching is scoped to the command it belongs to, never the raw command text, so
+a commit message that names a protected path does not block the commit. Heredoc
+bodies are dropped for the same reason. Any parse failure exits 0.
 """
 import fnmatch
 import json
@@ -15,12 +25,48 @@ import os
 import re
 import shlex
 import sys
+from pathlib import Path
+
+SETTINGS_KEY = "hookProtectGitignore"
+GITIGNORE_GLOBAL = "~/.gitignore_global"
 
 OPERATORS = {"|", "||", "&&", ";", ";;", "&", "(", ")", "{", "}", "!", "\n"}
 ASSIGNMENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*=")
 HEREDOC = re.compile(r"<<-?\s*[\"']?([A-Za-z_][A-Za-z0-9_]*)[\"']?")
 WRAPPERS = {"sudo", "command", "env", "time", "nice", "nohup", "builtin", "exec"}
-FORCE_FLAGS = {"--force"}
+
+FILE_TOOLS = ("Write", "Edit", "MultiEdit", "NotebookEdit")
+GIT_VALUE_OPTS = {"-C", "-c", "--git-dir", "--work-tree", "--namespace"}
+STAGE_ALL_FLAGS = {"-A", "--all", "-u", "--update", "--no-ignore-removal"}
+MUTATORS = {"rm", "mv", "cp", "tee", "truncate", "install", "dd", "ln", "sed", "gsed"}
+GLOB_CHARS = "*?["
+
+ADVICE = (
+    "A path in the global gitignore can never enter git. Remove the pattern from "
+    "{ignore} if the file really must be tracked; never work around the ignore "
+    "file. If the path is already tracked from before, untrack it with "
+    "`git rm --cached <path>` instead of staging it again."
+)
+
+
+def isEnabled(settingsFile):
+    """Return True unless the settings file explicitly turns the guard off."""
+    try:
+        data = json.loads(settingsFile.read_text(encoding="utf-8"))
+    except (FileNotFoundError, json.JSONDecodeError, OSError):
+        return True
+    if not isinstance(data, dict) or SETTINGS_KEY not in data:
+        return True
+    value = data.get(SETTINGS_KEY)
+    if value is True or value is False:
+        return value
+    print(
+        "git-protect: {} must be true or false, got {!r}; guard stays on".format(
+            SETTINGS_KEY, value
+        ),
+        file=sys.stderr,
+    )
+    return True
 
 
 def stripHeredocs(command):
@@ -37,7 +83,7 @@ def stripHeredocs(command):
         delimiter = match.group(1)
         while index < len(lines) and lines[index].strip() != delimiter:
             index += 1
-        index += 1  # skip the closing delimiter line
+        index += 1
     return "\n".join(out)
 
 
@@ -50,95 +96,72 @@ def splitStatements(command):
         if escaped:
             out.append(char)
             escaped = False
-            continue
-        if char == "\\" and quote != "'":
+        elif char == "\\" and quote != "'":
             out.append(char)
             escaped = True
-            continue
-        if quote:
+        elif quote:
             out.append(char)
-            if char == quote:
-                quote = ""
-            continue
-        if char in "'\"":
+            quote = "" if char == quote else quote
+        elif char in "'\"":
             quote = char
             out.append(char)
-            continue
-        out.append(" ; " if char == "\n" else char)
+        else:
+            out.append(" ; " if char == "\n" else char)
     return "".join(out)
 
 
-def gitAddArguments(command):
-    """Return the argument list of every `git add` invocation in the command."""
+def tokenize(command):
+    """Return shell tokens with operators separated, or None when unparseable."""
     normalized = splitStatements(stripHeredocs(command))
-    normalized = normalized.replace("$(", " ( ").replace("`", " ( ")
     lexer = shlex.shlex(normalized, posix=True, punctuation_chars=True)
     lexer.whitespace_split = True
     try:
-        tokens = list(lexer)
+        return list(lexer)
     except ValueError:
-        return []
+        return None
 
-    invocations = []
+
+def segments(tokens):
+    """Split tokens into (command, words) pairs, one per shell command."""
+    groups = []
     current = []
     for token in tokens:
         if token in OPERATORS:
             if current:
-                invocations.append(current)
+                groups.append(current)
             current = []
             continue
         current.append(token)
     if current:
-        invocations.append(current)
+        groups.append(current)
 
-    found = []
-    for words in invocations:
+    parsed = []
+    for words in groups:
         index = 0
         while index < len(words) and (
             ASSIGNMENT.match(words[index]) or os.path.basename(words[index]) in WRAPPERS
         ):
             index += 1
-        if index >= len(words) or os.path.basename(words[index]) != "git":
-            continue
-        rest = words[index + 1:]
-        # Skip git's own options (`-C path`, `--no-pager`) to reach the subcommand.
-        cursor = 0
-        while cursor < len(rest) and rest[cursor].startswith("-"):
-            cursor += 2 if rest[cursor] in ("-C", "-c", "--git-dir", "--work-tree") else 1
-        if cursor < len(rest) and rest[cursor] == "add":
-            found.append(rest[cursor + 1:])
-    return found
+        if index < len(words):
+            parsed.append((os.path.basename(words[index]), words[index:]))
+    return parsed
 
 
-def hasForceFlag(args):
-    """True when this `git add` carries -f or --force, bundled forms included."""
-    for arg in args:
-        if arg == "--":
-            return False
-        if arg in FORCE_FLAGS:
-            return True
-        if arg.startswith("--"):
-            continue
-        if arg.startswith("-") and len(arg) > 1 and "f" in arg[1:]:
-            return True
-    return False
-
-
-def pathOperands(args):
-    """Return the non-option operands of a `git add` invocation."""
-    operands = []
-    index = 0
-    while index < len(args):
-        arg = args[index]
-        if arg == "--":
-            operands.extend(args[index + 1:])
-            break
-        if arg.startswith("-") and len(arg) > 1:
-            index += 1
-            continue
-        operands.append(arg)
-        index += 1
-    return operands
+def readIgnoredEntries():
+    """Return the active patterns from the global gitignore."""
+    path = os.path.expanduser(GITIGNORE_GLOBAL)
+    if not os.path.isfile(path):
+        return []
+    try:
+        with open(path, "r") as handle:
+            lines = handle.readlines()
+    except OSError:
+        return []
+    return [
+        line.strip()
+        for line in lines
+        if line.strip() and not line.startswith("#") and not line.startswith("!")
+    ]
 
 
 def matchesEntry(path, entry):
@@ -157,21 +180,176 @@ def matchesEntry(path, entry):
     return any(fnmatch.fnmatch(part, pattern) for part in parts)
 
 
-def readIgnoredEntries():
-    gitignorePath = os.path.expanduser("~/.gitignore_global")
-    if not os.path.isfile(gitignorePath):
+def protectedEntry(path, entries):
+    """Return the first gitignore entry that covers this path, else ''."""
+    for entry in entries:
+        if matchesEntry(path, entry):
+            return entry
+    return ""
+
+
+def unprovableReason(operand, cwd):
+    """Return why an operand's contents cannot be proven safe, else ''."""
+    if operand in (".", "..", ":/", ":", "*"):
+        return "`{}` stages whatever it contains".format(operand)
+    if any(char in operand for char in GLOB_CHARS):
+        return "the glob `{}` can expand onto a protected path".format(operand)
+    if "$" in operand or "`" in operand:
+        return "`{}` is expanded by the shell and cannot be checked here".format(operand)
+    if operand.endswith("/") or os.path.isdir(os.path.join(cwd, operand)):
+        return "the directory `{}` stages whatever it contains".format(operand)
+    return ""
+
+
+def gitSubcommand(words):
+    """Return (subcommand, args) for a git invocation, skipping git's own options."""
+    rest = words[1:]
+    cursor = 0
+    while cursor < len(rest) and rest[cursor].startswith("-"):
+        cursor += 2 if rest[cursor] in GIT_VALUE_OPTS else 1
+    if cursor >= len(rest):
+        return "", []
+    return rest[cursor], rest[cursor + 1:]
+
+
+def pathOperands(args):
+    """Return the non-option operands of a git subcommand."""
+    operands = []
+    index = 0
+    while index < len(args):
+        arg = args[index]
+        if arg == "--":
+            operands.extend(args[index + 1:])
+            break
+        if arg.startswith("-") and len(arg) > 1:
+            index += 1
+            continue
+        operands.append(arg)
+        index += 1
+    return operands
+
+
+def checkExcludesOverride(words):
+    """Block `git -c core.excludesfile=...`, which disables the ignore file."""
+    for word in words:
+        if word.lower().startswith("core.excludesfile="):
+            return "`{}` disables the global gitignore for this call".format(word)
+    return ""
+
+
+def checkStagingPaths(subcommand, args, entries, cwd):
+    """Block a staging command that names a protected or unprovable path."""
+    operands = pathOperands(args)
+    if not operands and any(flag in args for flag in STAGE_ALL_FLAGS):
+        return "`git {}` with a stage-all flag stages whatever is present".format(subcommand)
+    for operand in operands:
+        entry = protectedEntry(operand, entries)
+        if entry:
+            return "`{}` is covered by the gitignore entry `{}`".format(operand, entry)
+        reason = unprovableReason(operand, cwd)
+        if reason:
+            return reason
+    return ""
+
+
+def checkGit(words, entries, cwd):
+    """Return the reason a git invocation must be blocked, else ''."""
+    override = checkExcludesOverride(words)
+    if override:
+        return override
+    subcommand, args = gitSubcommand(words)
+    if subcommand == "add":
+        return checkStagingPaths("add", args, entries, cwd)
+    if subcommand == "update-index" and "--add" in args:
+        return "`git update-index --add` stages without going through `git add`"
+    if subcommand in ("commit", "mv"):
+        for operand in pathOperands(args):
+            entry = protectedEntry(operand, entries)
+            if entry:
+                return "`git {}` touches `{}`, covered by `{}`".format(
+                    subcommand, operand, entry
+                )
+    return ""
+
+
+def touchesGlobalIgnore(words):
+    """True when a word names the global gitignore file."""
+    return any(".gitignore_global" in word for word in words)
+
+
+def isWriting(command, words):
+    """True when this segment writes a file rather than reading one."""
+    return command in MUTATORS or any(word in (">", ">>") for word in words)
+
+
+def checkGlobalIgnoreWrite(command, words):
+    """Block a Bash write to the global gitignore file itself."""
+    if touchesGlobalIgnore(words) and isWriting(command, words):
+        return "this command rewrites {}".format(GITIGNORE_GLOBAL)
+    return ""
+
+
+def checkGitignoreNegation(command, words, entries):
+    """Block a `!` negation of a protected path written into a .gitignore."""
+    if not any(word.endswith(".gitignore") for word in words):
+        return ""
+    if not isWriting(command, words):
+        return ""
+    for word in words:
+        if word.startswith("!") and protectedEntry(word[1:].strip(), entries):
+            return "`{}` would un-ignore a protected path in a .gitignore".format(word)
+    return ""
+
+
+def checkIgnoreFileWrite(command, words, entries):
+    """Block any Bash route that weakens the ignore rules themselves."""
+    return checkGlobalIgnoreWrite(command, words) or checkGitignoreNegation(
+        command, words, entries
+    )
+
+
+def analyzeBash(command, entries, cwd):
+    """Return every reason this Bash command must be blocked."""
+    tokens = tokenize(command)
+    if tokens is None:
         return []
-    try:
-        with open(gitignorePath, "r") as handle:
-            return [
-                line.strip()
-                for line in handle
-                if line.strip()
-                and not line.startswith("#")
-                and not line.startswith("!")
-            ]
-    except OSError:
+    reasons = []
+    for name, words in segments(tokens):
+        reason = checkGit(words, entries, cwd) if name == "git" else ""
+        if not reason:
+            reason = checkIgnoreFileWrite(name, words, entries)
+        if reason and reason not in reasons:
+            reasons.append(reason)
+    return reasons
+
+
+def analyzeFileTool(toolInput):
+    """Block a Write or Edit call whose target is the global gitignore."""
+    path = toolInput.get("file_path", "")
+    if not isinstance(path, str) or not path:
+        return ""
+    target = os.path.realpath(os.path.expanduser(GITIGNORE_GLOBAL))
+    if os.path.realpath(os.path.expanduser(path)) == target:
+        return "this edit rewrites {}".format(GITIGNORE_GLOBAL)
+    return ""
+
+
+def collectReasons(data):
+    """Return every reason this tool call must be blocked."""
+    toolInput = data.get("tool_input", {})
+    if not isinstance(toolInput, dict):
         return []
+    toolName = data.get("tool_name", "")
+    if toolName in FILE_TOOLS:
+        reason = analyzeFileTool(toolInput)
+        return [reason] if reason else []
+    if toolName != "Bash":
+        return []
+    command = toolInput.get("command", "")
+    if not isinstance(command, str) or not command.strip():
+        return []
+    cwd = data.get("cwd") or os.getcwd()
+    return analyzeBash(command, readIgnoredEntries(), cwd)
 
 
 def main():
@@ -179,40 +357,21 @@ def main():
         data = json.load(sys.stdin)
     except (json.JSONDecodeError, EOFError):
         return 0
-    if data.get("tool_name") != "Bash":
+
+    if not isEnabled(Path.home() / ".claude" / "settings.json"):
         return 0
 
-    command = data.get("tool_input", {}).get("command", "")
-    if not isinstance(command, str) or "add" not in command:
-        return 0
-
-    forced = [args for args in gitAddArguments(command) if hasForceFlag(args)]
-    if not forced:
-        return 0
-
-    entries = readIgnoredEntries()
-    if not entries:
-        return 0
-
-    matched = []
-    for args in forced:
-        for path in pathOperands(args):
-            for entry in entries:
-                if matchesEntry(path, entry) and entry not in matched:
-                    matched.append(entry)
-
-    if not matched:
+    reasons = collectReasons(data)
+    if not reasons:
         return 0
 
     # Exit code 2 forces a PreToolUse block: Claude Code ignores stdout, feeds
     # stderr back to the model as the reason, and aborts the tool call. A
     # {"decision": {"behavior": "block"}} JSON object is not a recognized
-    # PreToolUse outcome and is silently ignored, so the force-add proceeds.
+    # PreToolUse outcome and is silently ignored, so the action proceeds.
     print(
-        "BLOCKED: force-add on protected file(s): {}. "
-        "These files are in the global gitignore for a reason. "
-        "Analyze the root cause of the error instead of forcing them in.".format(
-            ", ".join(matched)
+        "BLOCKED by git-protect: {}.\n\n{}".format(
+            "; ".join(reasons), ADVICE.format(ignore=GITIGNORE_GLOBAL)
         ),
         file=sys.stderr,
     )

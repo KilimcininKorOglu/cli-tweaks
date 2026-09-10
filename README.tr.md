@@ -17,7 +17,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `memory-save.py`      | Stop                 | MEMORY.md'yi güncellemesini hatırlatır; satır sınırına yaklaşınca eski girdileri topic dosyalarına taşır ve bozuk dosyayı standart yapıya migration yapar |
 | `memory-reinject.py`  | UserPromptSubmit     | Her 5. mesajda MEMORY.md kritik kurallarını, her 15. mesajda tüm global talimat dosyasını yeniden enjekte ederek bağlam kaybını önler |
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                   |
-| `git-protect.py`      | PreToolUse (Bash)    | Global gitignore'daki dosyalara `git add -f/--force` uygulanmasını engeller                                         |
+| `git-protect.py`      | PreToolUse (Bash, Write/Edit) | Global gitignore'da yazan bir path'in git'e girmesini her yoldan engeller: `--force` olsun olmasın `git add`, içeriği ispatlanamayan operand (`.`, `-A`, glob, dizin, değişken), `git update-index --add`, `git -c core.excludesfile=`, korumalı path üzerinde `git commit`/`git mv`, ignore dosyasına Bash ile yazma ve `~/.gitignore_global`'in Write/Edit ile değiştirilmesi |
 | `bash-search-guard.py` | PreToolUse (Bash)   | Dosya okuyan shell aramasını (`grep`, `sed`, `rg`, `ack`, `ag`, `git grep`) ve shell ile dosya dökümünü (`cat`, `head`, `tail`, `nl`, `more`, `less`, `bat`) engeller, ripwire MCP'ye ve Read tool'una yönlendirir; pipe ile filtreleme, redirect ve `tail -f` serbest kalır |
 | `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                                     |
 

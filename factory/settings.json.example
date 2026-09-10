@@ -52,6 +52,16 @@
             "timeout": 15
           }
         ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.factory/hooks/git-protect.py",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "SessionStart": [
@@ -96,5 +106,6 @@
         ]
       }
     ]
-  }
+  },
+  "hookProtectGitignore": true
 }

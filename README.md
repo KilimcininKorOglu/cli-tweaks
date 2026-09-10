@@ -17,7 +17,7 @@ A collection of hooks, skills, and output styles for Factory Droid and Claude Co
 | `memory-save.py`      | Stop                 | Reminds the agent to update MEMORY.md; offloads old entries to topic files near the line cap and migrates a malformed file to the standard structure |
 | `memory-reinject.py`  | UserPromptSubmit     | Re-injects MEMORY.md critical rules (every 5th msg) and the full global instruction file (every 15th) to counter recency bias |
 | `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
-| `git-protect.py`      | PreToolUse (Bash)    | Blocks `git add -f/--force` on files listed in the global gitignore                             |
+| `git-protect.py`      | PreToolUse (Bash, Write/Edit) | Keeps a path listed in the global gitignore out of git by every route: `git add` with or without `--force`, an operand whose contents cannot be proven (`.`, `-A`, a glob, a directory, a variable), `git update-index --add`, `git -c core.excludesfile=`, `git commit`/`git mv` on a protected path, a Bash write to the ignore file, and a Write or Edit of `~/.gitignore_global` |
 | `bash-search-guard.py` | PreToolUse (Bash)   | Blocks a shell search that reads files (`grep`, `sed`, `rg`, `ack`, `ag`, `git grep`) and a shell file dump (`cat`, `head`, `tail`, `nl`, `more`, `less`, `bat`), pointing at the ripwire MCP and the Read tool; piped filtering, redirects and `tail -f` stay allowed |
 | `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |
 

@@ -163,6 +163,17 @@ def segments(tokens):
     return parsed
 
 
+def classifyOption(arg, valueOpts, flagHits):
+    """Return (isValueOption, consumesNextToken, hitsFlag) for one option token."""
+    if arg.startswith("--"):
+        name = arg[2:].split("=")[0]
+        isValue = name in valueOpts
+        return isValue, isValue and "=" not in arg, name in flagHits
+    letters = arg[1:]
+    isValue = bool(letters) and letters[-1] in valueOpts
+    return isValue, isValue, any(letter in flagHits for letter in letters)
+
+
 def splitOperands(args, valueOpts, flagHits):
     """Return (operands, sawValueOpt, hitFlag) for a getopt-style argument list."""
     operands = []
@@ -174,24 +185,11 @@ def splitOperands(args, valueOpts, flagHits):
         if arg == "--":
             operands.extend(args[index + 1:])
             break
-        if arg.startswith("--"):
-            name = arg[2:].split("=")[0]
-            if name in flagHits:
-                hitFlag = True
-            if name in valueOpts:
-                sawValueOpt = True
-                if "=" not in arg:
-                    index += 1
-            index += 1
-            continue
         if arg.startswith("-") and len(arg) > 1:
-            letters = arg[1:]
-            if any(letter in flagHits for letter in letters):
-                hitFlag = True
-            if letters and letters[-1] in valueOpts:
-                sawValueOpt = True
-                index += 1
-            index += 1
+            isValue, consumes, hits = classifyOption(arg, valueOpts, flagHits)
+            sawValueOpt = sawValueOpt or isValue
+            hitFlag = hitFlag or hits
+            index += 2 if consumes else 1
             continue
         operands.append(arg)
         index += 1
@@ -251,8 +249,8 @@ def readerPrintsFile(args, pipedOut):
     return len(operands) > 0
 
 
-def verdict(pipedIn, pipedOut, command, args):
-    """Return the reason string when this command must be blocked, else ''."""
+def searchVerdict(pipedIn, command, args):
+    """Return the reason a search command must be blocked, else ''."""
     if command == "git" and "grep" in args[:3]:
         return "`git grep` searches the repository"
     if command in GREP_CMDS and grepReadsFiles(args):
@@ -261,9 +259,30 @@ def verdict(pipedIn, pipedOut, command, args):
         return "`{}` reads or rewrites files here".format(command)
     if command in WALKER_CMDS and walkerReadsFiles(args, pipedIn):
         return "`{}` walks the working directory".format(command)
+    return ""
+
+
+def verdict(pipedIn, pipedOut, command, args):
+    """Return the reason string when this command must be blocked, else ''."""
+    reason = searchVerdict(pipedIn, command, args)
+    if reason:
+        return reason
     if command in READER_CMDS and readerPrintsFile(args, pipedOut):
         return "`{}` prints a file, which is the Read tool's job".format(command)
     return ""
+
+
+def collectReasons(command):
+    """Return every distinct reason this Bash command must be blocked."""
+    tokens = tokenize(stripHeredocs(command))
+    if tokens is None:
+        return []
+    reasons = []
+    for pipedIn, pipedOut, name, args in segments(tokens):
+        reason = verdict(pipedIn, pipedOut, name, args)
+        if reason and reason not in reasons:
+            reasons.append(reason)
+    return reasons
 
 
 def main():
@@ -282,15 +301,7 @@ def main():
     if not isinstance(command, str) or not command.strip():
         return 0
 
-    tokens = tokenize(stripHeredocs(command))
-    if tokens is None:
-        return 0
-
-    reasons = []
-    for pipedIn, pipedOut, name, args in segments(tokens):
-        reason = verdict(pipedIn, pipedOut, name, args)
-        if reason and reason not in reasons:
-            reasons.append(reason)
+    reasons = collectReasons(command)
     if not reasons:
         return 0
 
