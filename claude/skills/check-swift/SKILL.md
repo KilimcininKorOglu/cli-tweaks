@@ -198,6 +198,20 @@ semgrep scan --config=p/default .                  # human-readable
 # --- Code quality ---
 swiftlint lint --quiet ; echo "swiftlint exit: $?"
 swift-format lint --recursive --parallel . ; echo "swift-format exit: $?"
+
+# Cyclomatic complexity gate: every function must stay at or below 10.
+# SwiftLint's cyclomatic_complexity rule is on by default at warning 10 / error
+# 20, but a repo .swiftlint.yml may disable it or raise the thresholds. Run the
+# gate from its own config so the project's config cannot weaken it.
+cat > "$RUNDIR/complexity.swiftlint.yml" <<'YAML'
+only_rules: [cyclomatic_complexity]
+cyclomatic_complexity:
+  warning: 10
+  error: 10
+excluded: [.build, Pods, Carthage, DerivedData]
+YAML
+swiftlint lint --config "$RUNDIR/complexity.swiftlint.yml" --quiet
+echo "complexity exit: $?"
 ```
 
 For SwiftLint's analyzer rules, and only when the user asked for a deep scan,
@@ -249,6 +263,14 @@ Notes:
 **swift-format lint** — for each violation extract file:line and the rule name.
 These are optional style improvements, not defects.
 
+**complexity** — for each `cyclomatic_complexity` violation extract file:line,
+the function name, and the reported complexity. Every one is a function over the
+limit of 10. Unlike a style violation this is NOT optional: the limit is a
+project rule, and a function above it must be refactored into smaller
+single-responsibility functions, never suppressed and never given a raised
+threshold. Report separately whether the project's own `.swiftlint.yml` disables
+the rule or raises its thresholds — that is a finding of its own.
+
 Rank all findings by severity for action (security tier first, always):
 1. **CVE in a direct dependency** — highest; upgrade the dependency.
 2. **Swift/Xcode version drift** — a CI runner or workflow declares a version
@@ -259,7 +281,10 @@ Rank all findings by severity for action (security tier first, always):
 5. **semgrep WARNING/INFO or false positive** — fix if cheap, else annotate
    `nosemgrep`.
 6. **SwiftLint violation** — quality; fix in code (correctness rules first).
-7. **swift-format violation** — lowest; optional style upgrade,
+7. **Function over the complexity limit (`cyclomatic_complexity` > 10)** —
+   quality; refactor into smaller functions. Ranked above the style tier because
+   it is a limit, not a suggestion.
+8. **swift-format violation** — lowest; optional style upgrade,
    behavior-preserving.
 
 ## Step 4: Produce the report
@@ -271,7 +296,7 @@ Always print a ranked summary to the user, most severe first. Use this shape:
 Toolchain: Swift <X.Y.Z>, Xcode <X.Y>   Build: <SwiftPM | xcodegen | xcodeproj>
 Scanned: <dirs>   Dependency manifests: <Package.swift | none>
 Security  — dependency-check: N CVEs (D direct, T transitive)   semgrep: P (Q real) [CE|Pro]
-Quality   — SwiftLint: L issues   swift-format: S violations
+Quality   — SwiftLint: L issues   complexity: C over limit   swift-format: S violations
 
 # === SECURITY (fix first) ===
 
@@ -289,16 +314,20 @@ Quality   — SwiftLint: L issues   swift-format: S violations
 ## SwiftLint (config: .swiftlint.yml | defaults)
 - [force_cast] <file>:<line> — Force casts should be avoided
 
+## complexity — functions over the limit of 10
+- <file>:<line> — <function> has a cyclomatic complexity of <N> (refactor)
+(note when the project's .swiftlint.yml disables the rule or raises its thresholds)
+
 ## swift-format lint (config: .swift-format | defaults)
 - <file>:<line> — <rule>
 
 ## Verdict
 Security: <green ONLY if 0 CVEs AND semgrep 0 — and state what had no coverage>
-Quality:  <green ONLY if SwiftLint 0 AND swift-format 0 | yellow: L lint, S style>
+Quality:  <green ONLY if SwiftLint 0 AND complexity 0 AND swift-format 0 | yellow: L lint, C over limit, S style>
 ```
 
-**Verdict rule:** Quality is green ONLY when BOTH SwiftLint AND swift-format
-report zero. Any style violation (or any lint issue) means quality is NOT clean —
+**Verdict rule:** Quality is green ONLY when SwiftLint, the complexity gate AND
+swift-format all report zero. Any style violation (or any lint issue) means quality is NOT clean —
 mark it yellow and list the outstanding items. Never call a tier green while it
 still has open findings, however minor.
 
@@ -354,6 +383,14 @@ Fix the rest by hand following each rule's guidance. Re-run `swiftlint lint`
 until 0. Do not silence a rule unless the finding is a proven false positive, and
 then scope `// swiftlint:disable:next <rule>` to the single line with a reason.
 
+### Functions over the complexity limit
+Refactor each function the complexity gate reported into smaller
+single-responsibility functions: extract the branches of a long `if`/`switch`
+chain into named methods, lift error handling out of the happy path, and split
+functions that do two jobs. NEVER raise the thresholds in `.swiftlint.yml`, add a
+`// swiftlint:disable cyclomatic_complexity`, or drop the gate to make the report
+green. Re-run the gate until it reports nothing.
+
 ### swift-format violations
 Apply ONLY when behavior-preserving and the user wants the style upgrade:
 ```bash
@@ -383,7 +420,13 @@ leaving it installed does not count.
 ## Rules
 
 - Default to `scan`; run ALL FOUR tools (dependency-check, semgrep, SwiftLint,
-  swift-format) every time; never modify files unless invoked as `fix`.
+  swift-format) plus the complexity gate every time; never modify files unless
+  invoked as `fix`.
+- Enforce a cyclomatic complexity limit of 10 per function by running SwiftLint
+  from a gate-only config, so a repo `.swiftlint.yml` that disables the rule or
+  raises its thresholds cannot weaken it; report such a config as a finding of
+  its own. NEVER raise the thresholds, add a `swiftlint:disable`, or drop the
+  gate to make the report green.
 - Install missing tools with Homebrew automatically, without asking. Only ask
   before the first dependency-check run when `NVD_API_KEY` is unset, because that
   run is slow.
