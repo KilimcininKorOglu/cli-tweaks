@@ -192,6 +192,7 @@ Verify this is a PHP project and the tools are available.
    test -f vendor/bin/psalm   || composer require --dev vimeo/psalm --no-interaction
    test -f vendor/bin/phpstan || composer require --dev phpstan/phpstan --no-interaction
    test -f vendor/bin/rector  || composer require --dev rector/rector --no-interaction
+   test -f vendor/bin/phpmd   || composer require --dev phpmd/phpmd --no-interaction
    # composer audit ships with Composer 2.4+; upgrade Composer if it is older
    ```
    Prefer the project's own `vendor/bin` binaries over globally installed ones so
@@ -208,7 +209,9 @@ Verify this is a PHP project and the tools are available.
    PHARDIR="$(mktemp -d /tmp/check-php-tools.XXXXXXXX)"; echo "phar dir: $PHARDIR"
    curl -sSL -o "$PHARDIR/phpstan.phar" https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar
    curl -sSL -o "$PHARDIR/psalm.phar"   https://github.com/vimeo/psalm/releases/latest/download/psalm.phar
+   curl -sSL -o "$PHARDIR/phpmd.phar"   https://github.com/phpmd/phpmd/releases/latest/download/phpmd.phar
    php "$PHARDIR/phpstan.phar" --version && php "$PHARDIR/psalm.phar" --version
+   php "$PHARDIR/phpmd.phar" --version
    ```
    Rector ships no official PHAR; in plain PHP mode skip Rector and say so in the
    report rather than pretending the modernization tier ran. Psalm needs a config
@@ -242,6 +245,11 @@ vendor/bin/phpstan analyse --no-progress ; echo "phpstan exit: $?"
 vendor/bin/phpstan analyse --no-progress --error-format=json > "$RUNDIR/phpstan.json" 2>/dev/null
 
 vendor/bin/rector process --dry-run ; echo "rector exit: $?"    # NEVER without --dry-run in scan mode
+
+# Cyclomatic complexity gate: every method must stay at or below 10.
+# PHPMD's codesize ruleset reports CyclomaticComplexity at a threshold of 10.
+vendor/bin/phpmd <src paths> text codesize ; echo "phpmd exit: $?"
+vendor/bin/phpmd <src paths> json codesize > "$RUNDIR/phpmd.json" 2>/dev/null
 ```
 
 Also audit what actually ships, not just the whole tree:
@@ -257,7 +265,8 @@ SCOPE="src app lib includes classes inc"      # whatever Step 1 actually found
 php "$PHARDIR/phpstan.phar" analyse --no-progress --level 5 $SCOPE ; echo "phpstan exit: $?"
 php "$PHARDIR/phpstan.phar" analyse --no-progress --level 5 --error-format=json $SCOPE \
   > "$RUNDIR/phpstan.json" 2>/dev/null
-php "$PHARDIR/psalm.phar" --taint-analysis 2>&1 | tail -40 ; echo "psalm taint exit: $?"
+php "$PHARDIR/psalm.phar" --taint-analysis ; echo "psalm taint exit: $?"
+php "$PHARDIR/phpmd.phar" $SCOPE text codesize ; echo "phpmd exit: $?"
 ```
 With no `phpstan.neon` the level is not declared by the project, so pass one
 explicitly and report which level you chose — an undeclared level is not the
@@ -325,6 +334,14 @@ finding.
 (e.g. `AddVoidReturnTypeRector`, `ReadOnlyPropertyRector`). These are optional
 improvements, not defects. Record which rule sets are configured in `rector.php`.
 
+**PHPMD codesize** — for each `CyclomaticComplexity` violation extract file:line,
+the class and method name, and the reported complexity. Every one is a method
+over the limit of 10. Unlike a Rector suggestion this is NOT optional: the limit
+is a project rule, and a method above it must be refactored into smaller
+single-responsibility methods, never suppressed and never given a raised
+threshold. The same ruleset also reports `NPathComplexity` and `ExcessiveMethodLength`;
+report those alongside it.
+
 Rank all findings by severity for action (security tier first, always):
 1. **Production CVE (`require`)** — highest; ships to production.
 2. **Psalm `TaintedSql` / `TaintedShell` / `TaintedFile`** — injection reaching a
@@ -334,7 +351,10 @@ Rank all findings by severity for action (security tier first, always):
 5. **Psalm taint false positive** — sanitize properly if cheap, else annotate.
 6. **End-of-life PHP branch or version drift** — standing security exposure.
 7. **PHPStan error** — quality; fix in code (higher levels first).
-8. **Rector suggestion** — lowest; optional idiom upgrade, behavior-preserving.
+8. **Method over the complexity limit (PHPMD `CyclomaticComplexity` > 10)** —
+   quality; refactor into smaller methods. Ranked above Rector because it is a
+   limit, not a suggestion.
+9. **Rector suggestion** — lowest; optional idiom upgrade, behavior-preserving.
 
 ## Step 4: Produce the report
 
@@ -345,7 +365,7 @@ Always print a ranked summary to the user, most severe first. Use this shape:
 Runtime: PHP <X.Y.Z>   composer.json floor: <constraint>   platform override: <ver|none>
 Scanned: <src paths>   (when they differ, the floor-pinned run is authoritative)
 Security  — composer audit: N prod, M dev   psalm taint: P (Q real, R false-pos)
-Quality   — phpstan: E errors (level L, baseline: yes/no, B suppressed)   rector: S suggestions
+Quality   — phpstan: E errors (level L, baseline: yes/no, B suppressed)   phpmd: C over limit   rector: S suggestions
 
 # === SECURITY (fix first) ===
 
@@ -369,16 +389,19 @@ Quality   — phpstan: E errors (level L, baseline: yes/no, B suppressed)   rect
 - [argument.type] path/File.php:42 — <message>
 BASELINE: phpstan-baseline.neon suppresses B findings — this run is NOT a clean codebase.
 
+## phpmd codesize — methods over the complexity limit of 10
+- path/File.php:42 — <Class>::<method> has a Cyclomatic Complexity of <N> (refactor)
+
 ## rector (sets: <configured sets>, target PHP <ver>) — optional idiom upgrades
 - <file>:<line> — <rule> — <suggested modern idiom>
 
 ## Verdict
 Security: <green ONLY if 0 advisories AND 0 open taint findings | red: list fixes>
-Quality:  <green ONLY if phpstan 0 AND rector 0 AND no baseline | yellow: E errors, S suggestions>
+Quality:  <green ONLY if phpstan 0 AND phpmd 0 AND rector 0 AND no baseline | yellow: E errors, C over limit, S suggestions>
 ```
 
-**Verdict rule:** Quality is green ONLY when BOTH PHPStan AND Rector report zero
-AND no baseline is suppressing findings. Any Rector suggestion (or any PHPStan
+**Verdict rule:** Quality is green ONLY when PHPStan, PHPMD AND Rector all report
+zero AND no baseline is suppressing findings. Any Rector suggestion (or any PHPStan
 error, or an active baseline) means quality is NOT clean — mark it yellow and
 list the outstanding items. Never call a tier green while it still has open
 findings, however minor.
@@ -459,6 +482,15 @@ line with a reason. NEVER regenerate the baseline to make new errors disappear �
 that hides regressions. If the user wants a stricter analysis, raise the level
 one step at a time and fix what each step surfaces.
 
+### Methods over the complexity limit
+Refactor each method PHPMD reported into smaller single-responsibility methods:
+extract the branches of a long `if`/`switch` chain into named private methods,
+lift error handling out of the happy path, and split methods that do two jobs.
+NEVER raise the threshold in a custom ruleset, add a
+`@SuppressWarnings(PHPMD.CyclomaticComplexity)` annotation, or drop the gate to
+make the report green. Re-run `phpmd <src paths> text codesize` until it reports
+nothing.
+
 ### Rector suggestions
 Apply ONLY when behavior-preserving and the user wants the idiom upgrade:
 ```bash
@@ -490,7 +522,12 @@ count.
 ## Rules
 
 - Default to `scan`; run ALL FOUR tools (composer audit, Psalm taint, PHPStan,
-  Rector) every time; never modify files unless invoked as `fix`.
+  Rector) plus the PHPMD complexity gate every time; never modify files unless
+  invoked as `fix`.
+- Enforce a cyclomatic complexity limit of 10 per method with
+  `phpmd <src paths> text codesize`. Any violation is a finding. NEVER raise the
+  threshold, add a `@SuppressWarnings` annotation, or drop the gate to make the
+  report green; refactor into smaller single-responsibility methods instead.
 - NEVER refuse a PHP project because it has no `composer.json`. STOP only when
   there are no `.php` files. Without Composer, run PHPStan and Psalm from their
   standalone PHARs, skip `composer audit` and Rector, and name every tool that
