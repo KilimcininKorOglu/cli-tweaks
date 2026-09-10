@@ -155,6 +155,12 @@ Verify this is a Rust project and the tools are available.
    container/CI configs. Prefer a committed `rust-toolchain.toml` so CI cannot
    drift from the floor.
 
+   A red CI job is not always visible in the run you are looking at. When the
+   inventory finds drift, check the last few runs of the affected workflow
+   (`gh run list --workflow=<name>.yml --limit 6 --json headSha,conclusion`),
+   because a job broken by an earlier bump keeps failing on every commit after
+   it and is easy to read as a new failure or to miss entirely.
+
 5. Ensure all four tools are installed; install whichever is missing:
    ```bash
    command -v cargo-audit >/dev/null 2>&1 || cargo install cargo-audit --locked
@@ -173,18 +179,26 @@ Verify this is a Rust project and the tools are available.
 Run every tool against the whole workspace. Capture human output plus
 machine-readable streams (authoritative for classification).
 
+Write every machine-readable stream into a fresh per-run directory, NEVER a
+fixed `/tmp/clippy.json` / `/tmp/cargo-audit.json`. A shared path is the classic
+cross-project trap: if a tool errors and does not overwrite, you silently parse
+another repo's stale JSON as this project's findings. A unique dir per run makes
+a write failure show up as a missing file instead of stale data.
+
 ```bash
+RUNDIR="$(mktemp -d /tmp/check-rust.XXXXXXXX)"; echo "run dir: $RUNDIR"
+
 # --- Security ---
 cargo audit ; echo "cargo-audit exit: $?"
-cargo audit --json > /tmp/cargo-audit.json 2>/dev/null
+cargo audit --json > "$RUNDIR/cargo-audit.json" 2>/dev/null
 
 cargo deny check ; echo "cargo-deny exit: $?"          # advisories + bans + licenses + sources
-cargo deny --format json check > /tmp/cargo-deny.json 2>&1
+cargo deny --format json check > "$RUNDIR/cargo-deny.json" 2>&1
 
 # --- Code quality ---
 cargo clippy --workspace --all-targets --all-features -- -D warnings ; echo "clippy exit: $?"
 cargo clippy --workspace --all-targets --all-features --message-format=json \
-  > /tmp/clippy.json 2>/dev/null
+  > "$RUNDIR/clippy.json" 2>/dev/null
 
 cargo fix --edition --workspace --allow-dirty --allow-staged --dry-run 2>&1 | tail -40
 echo "edition check exit: $?"
@@ -201,6 +215,13 @@ cargo "+$FLOOR" clippy --workspace --all-targets --all-features -- -D warnings
 ```
 Report the floor-pinned result as the real one; a green scan on a newer local
 toolchain does NOT clear what CI builds.
+
+Before classifying, confirm the report belongs to THIS workspace. The scan scope
+is whatever `cargo metadata --no-deps` lists as workspace members; every finding's
+file path MUST fall under the current repo root, and none may sit inside
+`~/.cargo/registry` or `target/`. If a path points outside it (a sibling project,
+a vendored dependency, a stale file), discard that finding and re-run the tool
+into a fresh `$RUNDIR` — never report another project's issues as this one's.
 
 Notes:
 - `--workspace` covers every member crate, not just the root package.
@@ -245,14 +266,17 @@ Rank all findings by severity for action (security tier first, always):
 1. **cargo-audit vulnerability in a direct dependency** — highest; upgrade it.
 2. **cargo-audit vulnerability in a transitive dependency** — fix by bumping the
    intermediate crate that pulls it in.
-3. **cargo-deny advisories/bans/sources failure** — supply-chain integrity.
-4. **Yanked crate in the lockfile** — the release was withdrawn; re-resolve.
-5. **Unmaintained / unsound advisory** — standing risk; plan a replacement.
-6. **cargo-deny licenses failure** — compliance; escalate to the user, never
+3. **Rust toolchain drift** — a release, container or CI path declares a version
+   other than the `rust-toolchain.toml` floor (or the MSRV). Ranked here because
+   it is how CI compiles something the local scan never checked.
+4. **cargo-deny advisories/bans/sources failure** — supply-chain integrity.
+5. **Yanked crate in the lockfile** — the release was withdrawn; re-resolve.
+6. **Unmaintained / unsound advisory** — standing risk; plan a replacement.
+7. **cargo-deny licenses failure** — compliance; escalate to the user, never
    silently allow a license.
-7. **clippy correctness / suspicious lint** — quality, near-defect; fix in code.
-8. **clippy perf / complexity / style lint** — quality; fix in code.
-9. **Edition suggestion** — lowest; optional idiom upgrade, behavior-preserving.
+8. **clippy correctness / suspicious lint** — quality, near-defect; fix in code.
+9. **clippy perf / complexity / style lint** — quality; fix in code.
+10. **Edition suggestion** — lowest; optional idiom upgrade, behavior-preserving.
 
 ## Step 4: Produce the report
 
@@ -321,6 +345,20 @@ Then upgrade the intermediate dependency that pins it. Only when no parent
 release exists should you force the resolution with a `[patch]` section or
 `cargo update -p <crate> --precise`, and say clearly in the report that this
 pins a transitive crate against its parent's declared range.
+
+### Rust toolchain drift
+The fix is a version bump, not a code change. Raise the Rust version everywhere
+the Step 1 inventory found it:
+- `rust-toolchain.toml` — the `channel` (the floor CI resolves to)
+- `Cargo.toml` — `rust-version` (the MSRV), when the bump raises it
+- `Dockerfile` — the `rust:X.Y` base image tag
+- CI workflows — the toolchain action in EVERY `.github/workflows/*.y*ml` (ci,
+  release, and any other), not just one; prefer a committed
+  `rust-toolchain.toml` that the action reads so they cannot drift
+
+After raising the floor, re-run the Step 1 inventory and confirm no source still
+names a version below it. A bump that misses one source is silent in the scan
+output but red in CI on every push that follows.
 
 ### Yanked crates
 Re-resolve so the lockfile stops referencing a withdrawn release:
@@ -398,6 +436,15 @@ installed does not count.
 - Inventory every declared Rust version (rust-toolchain.toml, MSRV, Dockerfile,
   ALL workflows) and flag any drift; when the local toolchain differs from the
   floor, the floor-pinned run is the authoritative result.
+- Never "fix" toolchain drift by editing project code — it is a version bump;
+  raise the Rust version in EVERY source that declares it, then re-run the
+  inventory and confirm none still names a version below the floor.
+- Write every machine-readable stream into a fresh `mktemp -d` run directory,
+  never a fixed `/tmp` path, so a failed write shows up as a missing file instead
+  of another project's stale JSON.
+- Confirm every finding's file path falls under the current repo root and outside
+  `~/.cargo/registry` and `target/` before classifying it; discard and re-scan
+  anything that points elsewhere.
 - Scan against a lockfile; if none exists, generate one and say so, and treat a
   binary crate's missing committed lockfile as a finding.
 - For clippy false positives, prefer fixing the code; use an item-scoped
