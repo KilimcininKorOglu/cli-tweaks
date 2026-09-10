@@ -25,6 +25,8 @@ GREP_CMDS = {"grep", "egrep", "fgrep", "rgrep", "zgrep", "zegrep", "zfgrep", "gg
 SED_CMDS = {"sed", "gsed"}
 # These default to a recursive walk of the working directory when given no path.
 WALKER_CMDS = {"rg", "ripgrep", "ack", "ack-grep", "ag"}
+# These only print a file, which is the Read tool's job.
+READER_CMDS = {"cat", "head", "tail", "nl", "more", "less", "bat"}
 
 # Prefixes that carry another command as their argument.
 WRAPPERS = {"sudo", "command", "env", "time", "nice", "nohup", "builtin", "exec", "xargs"}
@@ -40,8 +42,9 @@ GUIDANCE = """Use the ripwire MCP for codebase search:
   who calls X           -> ripwire find_referencing_symbols
   is it safe to change  -> ripwire impact plus ripwire uses
   read one symbol       -> ripwire fetch_body
-  read a file or slice  -> the Read tool with offset/limit, never sed
-Filtering another command's output is still allowed, e.g. `cmd | grep x`.
+  read a file or slice  -> the Read tool with offset/limit, never cat/head/sed
+Filtering another command's output is still allowed, e.g. `cmd | grep x`, and so
+are a redirect (`cat a b > c`) and a live follow (`tail -f app.log`).
 Set "{key}": false in {settings} to disable this guard."""
 
 
@@ -129,24 +132,24 @@ def tokenize(command):
 
 
 def segments(tokens):
-    """Split tokens into (pipedIn, command, args) triples, one per shell command."""
+    """Split tokens into (pipedIn, pipedOut, command, args), one per shell command."""
     result = []
     current = []
     pipedIn = False
     for token in tokens:
         if token in OPERATORS:
             if current:
-                result.append((pipedIn, current))
+                result.append((pipedIn, current, token))
             # The next command reads a stream only when this operator is a pipe.
             pipedIn = token == "|"
             current = []
             continue
         current.append(token)
     if current:
-        result.append((pipedIn, current))
+        result.append((pipedIn, current, ""))
 
-    triples = []
-    for wasPiped, words in result:
+    parsed = []
+    for wasPiped, words, terminator in result:
         index = 0
         while index < len(words) and (
             ASSIGNMENT.match(words[index]) or os.path.basename(words[index]) in WRAPPERS
@@ -154,8 +157,10 @@ def segments(tokens):
             index += 1
         if index >= len(words):
             continue
-        triples.append((wasPiped, os.path.basename(words[index]), words[index + 1:]))
-    return triples
+        parsed.append(
+            (wasPiped, terminator == "|", os.path.basename(words[index]), words[index + 1:])
+        )
+    return parsed
 
 
 def splitOperands(args, valueOpts, flagHits):
@@ -227,7 +232,26 @@ def walkerReadsFiles(args, pipedIn):
     return hasPath or not pipedIn
 
 
-def verdict(pipedIn, command, args):
+def readerPrintsFile(args, pipedOut):
+    """cat/head/tail only substitute for the Read tool when they just print a file.
+
+    Piping the output onward is data processing, and a redirect is a write, so
+    neither is the Read tool's job. `tail -f` follows a live log, which Read
+    cannot do at all.
+    """
+    if pipedOut:
+        return False
+    if any(">" in arg or "<" in arg for arg in args):
+        return False
+    operands, _, following = splitOperands(
+        args, valueOpts={"n", "c", "lines", "bytes"}, flagHits={"f", "F", "follow"}
+    )
+    if following:
+        return False
+    return len(operands) > 0
+
+
+def verdict(pipedIn, pipedOut, command, args):
     """Return the reason string when this command must be blocked, else ''."""
     if command == "git" and "grep" in args[:3]:
         return "`git grep` searches the repository"
@@ -237,6 +261,8 @@ def verdict(pipedIn, command, args):
         return "`{}` reads or rewrites files here".format(command)
     if command in WALKER_CMDS and walkerReadsFiles(args, pipedIn):
         return "`{}` walks the working directory".format(command)
+    if command in READER_CMDS and readerPrintsFile(args, pipedOut):
+        return "`{}` prints a file, which is the Read tool's job".format(command)
     return ""
 
 
@@ -261,8 +287,8 @@ def main():
         return 0
 
     reasons = []
-    for pipedIn, name, args in segments(tokens):
-        reason = verdict(pipedIn, name, args)
+    for pipedIn, pipedOut, name, args in segments(tokens):
+        reason = verdict(pipedIn, pipedOut, name, args)
         if reason and reason not in reasons:
             reasons.append(reason)
     if not reasons:

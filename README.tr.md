@@ -18,7 +18,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `memory-reinject.py`  | UserPromptSubmit     | Her 5. mesajda MEMORY.md kritik kurallarını, her 15. mesajda tüm global talimat dosyasını yeniden enjekte ederek bağlam kaybını önler |
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                   |
 | `git-protect.py`      | PreToolUse (Bash)    | Global gitignore'daki dosyalara `git add -f/--force` uygulanmasını engeller                                         |
-| `bash-search-guard.py` | PreToolUse (Bash)   | Dosya okuyan shell aramasını (`grep`, `sed`, `rg`, `ack`, `ag`, `git grep`) engeller ve ripwire MCP'ye yönlendirir; pipe ile stream filtreleme serbest kalır |
+| `bash-search-guard.py` | PreToolUse (Bash)   | Dosya okuyan shell aramasını (`grep`, `sed`, `rg`, `ack`, `ag`, `git grep`) ve shell ile dosya dökümünü (`cat`, `head`, `tail`, `nl`, `more`, `less`, `bat`) engeller, ripwire MCP'ye ve Read tool'una yönlendirir; pipe ile filtreleme, redirect ve `tail -f` serbest kalır |
 | `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                                     |
 
 ### Skill'ler
