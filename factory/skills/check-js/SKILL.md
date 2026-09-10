@@ -176,6 +176,12 @@ are available.
    etc., not just one), and container/CI configs. An end-of-life Node major is
    itself a security finding: it stops receiving patches.
 
+   A red CI job is not always visible in the run you are looking at. When the
+   inventory finds drift, check the last few runs of the affected workflow
+   (`gh run list --workflow=<name>.yml --limit 6 --json headSha,conclusion`),
+   because a job broken by an earlier bump keeps failing on every commit after
+   it and is easy to read as a new failure or to miss entirely.
+
 5. Ensure all four tools are available; install whichever is missing:
    ```bash
    command -v semgrep >/dev/null 2>&1 || python3 -m pip install --user semgrep
@@ -194,20 +200,28 @@ Run every tool against the whole project. Capture human output plus
 machine-readable streams (authoritative for classification). Use the package
 manager detected in Step 1.
 
+Write every machine-readable stream into a fresh per-run directory, NEVER a
+fixed `/tmp/eslint.json` / `/tmp/semgrep.json`. A shared path is the classic
+cross-project trap: if a tool errors and does not overwrite, you silently parse
+another repo's stale JSON as this project's findings. A unique dir per run makes
+a write failure show up as a missing file instead of stale data.
+
 ```bash
+RUNDIR="$(mktemp -d /tmp/check-js.XXXXXXXX)"; echo "run dir: $RUNDIR"
+
 # --- Security ---
 npm audit ; echo "audit exit: $?"                       # pnpm audit | yarn npm audit | bun audit
-npm audit --json > /tmp/npm-audit.json 2>/dev/null
+npm audit --json > "$RUNDIR/npm-audit.json" 2>/dev/null
 
 semgrep --config auto --error 2>&1 | tail -40 ; echo "semgrep exit: $?"
-semgrep --config auto --json -o /tmp/semgrep.json --quiet
+semgrep --config auto --json -o "$RUNDIR/semgrep.json" --quiet
 
 # --- Code quality ---
 npx eslint . ; echo "eslint exit: $?"                   # exit 1 if problems
-npx eslint . -f json -o /tmp/eslint.json 2>/dev/null
+npx eslint . -f json -o "$RUNDIR/eslint.json" 2>/dev/null
 
 npx knip ; echo "knip exit: $?"                         # exit 1 if issues
-npx knip --reporter json > /tmp/knip.json 2>/dev/null
+npx knip --reporter json > "$RUNDIR/knip.json" 2>/dev/null
 ```
 
 For a monorepo, scan every workspace, not just the root:
@@ -216,6 +230,13 @@ npm audit --workspaces --include-workspace-root
 npx eslint .                                  # flat config already covers the tree
 npx knip --workspace <name>                   # repeat per workspace if knip is not monorepo-configured
 ```
+
+Before classifying, confirm the report belongs to THIS project. The scan scope is
+the repo root and, in a monorepo, its declared workspaces; every finding's file
+path MUST fall under the current repo root. If a path points outside it (a
+sibling project, a stale file, a globally linked package), discard that finding
+and re-run the tool into a fresh `$RUNDIR` — never report another project's
+issues as this one's.
 
 Notes:
 - Exit codes: `npm audit` `1` = vulnerabilities found; semgrep `1` = findings
@@ -267,15 +288,19 @@ declared, so the build works only by hoisting accident.
 
 Rank all findings by severity for action (security tier first, always):
 1. **Critical/high CVE in `dependencies`** — highest; ships to production.
-2. **Critical/high CVE in `devDependencies`** — build/CI compromise risk.
-3. **semgrep ERROR real finding** — fix in code.
-4. **Moderate/low CVE** — upgrade on the normal cycle.
-5. **semgrep WARNING / false positive** — validate if cheap, else annotate.
-6. **ESLint security-plugin rule** — treat as a code security finding.
-7. **knip unlisted dependency** — build correctness; declare it.
-8. **ESLint error** — quality; fix in code.
-9. **ESLint warning** — quality; lower.
-10. **knip unused file/export/dependency** — lowest; hygiene, verify before
+2. **Node version drift or an end-of-life major** — a release, container or CI
+   path declares a version other than the `engines` floor, or the floor itself is
+   EOL. Ranked here because it is how an unpatched runtime reaches production
+   while the local scan reads clean.
+3. **Critical/high CVE in `devDependencies`** — build/CI compromise risk.
+4. **semgrep ERROR real finding** — fix in code.
+5. **Moderate/low CVE** — upgrade on the normal cycle.
+6. **semgrep WARNING / false positive** — validate if cheap, else annotate.
+7. **ESLint security-plugin rule** — treat as a code security finding.
+8. **knip unlisted dependency** — build correctness; declare it.
+9. **ESLint error** — quality; fix in code.
+10. **ESLint warning** — quality; lower.
+11. **knip unused file/export/dependency** — lowest; hygiene, verify before
     deleting.
 
 ## Step 4: Produce the report
@@ -356,6 +381,20 @@ Then reinstall and re-audit. Record in the report that this override pins a
 package against its parent's declared range and must be revisited when the parent
 ships a fix.
 
+### Node version drift or an end-of-life major
+The fix is a runtime bump, not a code change. Raise the Node version everywhere
+the Step 1 inventory found it:
+- `package.json` — the `engines.node` range (the floor CI resolves against)
+- `.nvmrc` — the local/CI default version
+- `Dockerfile` — the base image tag
+- CI workflows — `node-version` in EVERY `.github/workflows/*.y*ml` (ci, release,
+  and any other), not just one; prefer `node-version-file: .nvmrc` so they track
+  the floor automatically and cannot drift
+
+After raising the floor, re-run the Step 1 inventory and confirm no source still
+names a version below it. A bump that misses one source is silent in the scan
+output but red in CI on every push that follows.
+
 ### semgrep findings
 - **Real finding**: fix the code. XSS → escape or use a framework's safe binding
   instead of `innerHTML`; injection → parameterize; hardcoded secret → move to
@@ -395,7 +434,11 @@ npm test && npm run build          # a security bump must not break behavior
 ```
 Expect `found 0 vulnerabilities`, semgrep/ESLint/knip exit 0, and a passing build
 and test run. If the project pins Node in CI, run the proof under that exact
-version (`nvm use <floor>`), not just the local one.
+version (`nvm use <floor>`), not just the local one. Then remove any helper tool
+this run installed outside the project (`python3 -m pip uninstall -y semgrep`,
+and any Node version this run fetched with `nvm uninstall <ver>`) and say so. The
+run installed it, so the run removes it; offering to remove it and leaving it
+installed does not count.
 
 ## Rules
 
@@ -423,6 +466,16 @@ version (`nvm use <floor>`), not just the local one.
   really linted; a green run that never opened a `.ts` file is a false negative.
 - Report the Node version and the `engines` floor in every report, and flag an
   end-of-life Node major as a security finding.
+- Never "fix" an end-of-life runtime by editing project code — it is a version
+  bump; raise the Node version in EVERY source that declares it, then re-run the
+  inventory and confirm none still names a version below the floor.
+- Write every machine-readable stream into a fresh `mktemp -d` run directory,
+  never a fixed `/tmp` path, so a failed write shows up as a missing file instead
+  of another project's stale JSON.
+- Confirm every finding's file path falls under the current repo root before
+  classifying it; discard and re-scan anything that points outside.
+- Clean up any helper tool this run installed outside the project after proving
+  a fix.
 - For semgrep false positives, prefer a real validator; use a line-scoped
   `// nosemgrep: <rule-id>` with justification only when the code is proven safe.
   Never disable a rule globally to mask a real finding.
