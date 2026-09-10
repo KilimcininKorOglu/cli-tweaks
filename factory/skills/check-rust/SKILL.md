@@ -200,8 +200,19 @@ cargo clippy --workspace --all-targets --all-features -- -D warnings ; echo "cli
 cargo clippy --workspace --all-targets --all-features --message-format=json \
   > "$RUNDIR/clippy.json" 2>/dev/null
 
-cargo fix --edition --workspace --allow-dirty --allow-staged --dry-run 2>&1 | tail -40
+cargo fix --edition --workspace --allow-dirty --allow-staged --dry-run 2>&1
 echo "edition check exit: $?"
+
+# Complexity gate: every function must stay at or below a complexity of 10.
+# clippy::cognitive_complexity is nursery (allow by default), so enable it
+# explicitly. Its threshold comes from clippy.toml, so set one for the run if the
+# project declares none. Cognitive complexity is not identical to cyclomatic — it
+# weights nesting — but it is the only per-function measure clippy offers; say so
+# in the report.
+test -f clippy.toml || echo 'cognitive-complexity-threshold = 10' > "$RUNDIR/clippy.toml"
+CLIPPY_CONF_DIR="$(test -f clippy.toml && pwd || echo "$RUNDIR")" \
+  cargo clippy --workspace --all-targets --all-features -- -W clippy::cognitive_complexity
+echo "complexity exit: $?"
 ```
 
 If step 4 showed the local toolchain differs from the declared floor, ALSO run
@@ -262,6 +273,14 @@ style, pedantic) — correctness lints are near-defects and rank above style.
 **edition** — for each suggestion extract file:line and the idiom the new edition
 requires or prefers. These are optional improvements, not defects.
 
+**complexity** — for each `clippy::cognitive_complexity` warning extract
+file:line, the function name, and the reported score. Every one is a function
+over the limit of 10. Unlike an edition suggestion this is NOT optional: the
+limit is a project rule, and a function above it must be refactored into smaller
+single-responsibility functions, never allowed and never given a raised
+threshold. State in the report that clippy measures cognitive complexity, which
+weights nesting, rather than plain cyclomatic complexity.
+
 Rank all findings by severity for action (security tier first, always):
 1. **cargo-audit vulnerability in a direct dependency** — highest; upgrade it.
 2. **cargo-audit vulnerability in a transitive dependency** — fix by bumping the
@@ -276,7 +295,10 @@ Rank all findings by severity for action (security tier first, always):
    silently allow a license.
 8. **clippy correctness / suspicious lint** — quality, near-defect; fix in code.
 9. **clippy perf / complexity / style lint** — quality; fix in code.
-10. **Edition suggestion** — lowest; optional idiom upgrade, behavior-preserving.
+10. **Function over the complexity limit (`cognitive_complexity` > 10)** —
+    quality; refactor into smaller functions. Ranked above the edition tier
+    because it is a limit, not a suggestion.
+11. **Edition suggestion** — lowest; optional idiom upgrade, behavior-preserving.
 
 ## Step 4: Produce the report
 
@@ -287,7 +309,7 @@ Always print a ranked summary to the user, most severe first. Use this shape:
 Local toolchain: rustc <X.Y.Z>   Declared floor: <X.Y.Z>   Scanned: --workspace --all-targets --all-features
 (when they differ, the floor-pinned run is authoritative — that is what CI/release build)
 Security  — cargo-audit: N vulns, M unmaintained/unsound, Y yanked   cargo-deny: P failures
-Quality   — clippy: L lints (C correctness)   edition: S suggestions
+Quality   — clippy: L lints (C correctness)   complexity: X over limit   edition: S suggestions
 
 # === SECURITY (fix first) ===
 
@@ -309,16 +331,19 @@ Quality   — clippy: L lints (C correctness)   edition: S suggestions
 - [correctness] path/file.rs:42 — <message>
 - [style] path/file.rs:88 — <message>
 
+## complexity — functions over the limit of 10 (clippy cognitive_complexity)
+- path/file.rs:42 — <fn> has a cognitive complexity of <N> (refactor into smaller functions)
+
 ## edition (optional idiom upgrades)
 - <file>:<line> — <suggested modern idiom>
 
 ## Verdict
 Security: <green ONLY if 0 vulns AND cargo-deny exit 0 | red: list fixes>
-Quality:  <green ONLY if clippy 0 AND edition 0 | yellow: L lints, S suggestions>
+Quality:  <green ONLY if clippy 0 AND complexity 0 AND edition 0 | yellow: L lints, X over limit, S suggestions>
 ```
 
-**Verdict rule:** Quality is green ONLY when BOTH clippy AND the edition check
-report zero. Any edition suggestion (or any lint) means quality is NOT clean —
+**Verdict rule:** Quality is green ONLY when clippy, the complexity gate AND the
+edition check all report zero. Any edition suggestion (or any lint) means quality is NOT clean —
 mark it yellow and list the outstanding items. Never call a tier green while it
 still has open findings, however minor.
 
@@ -386,6 +411,14 @@ the finding is a proven false positive, and then scope
 `#[allow(clippy::<lint>)]` to the single item with a reason comment. Never add a
 crate-level `#![allow(...)]` to hide a real finding.
 
+### Functions over the complexity limit
+Refactor each function the complexity gate reported into smaller
+single-responsibility functions: extract match arms and nested branches into
+named helpers, lift error handling out of the happy path with `?`, and split
+functions that do two jobs. NEVER raise `cognitive-complexity-threshold`, add an
+`#[allow(clippy::cognitive_complexity)]`, or drop the gate to make the report
+green. Re-run the gate until it reports nothing.
+
 ### Edition suggestions
 Apply ONLY when behavior-preserving and the user wants the migration:
 ```bash
@@ -416,7 +449,14 @@ installed does not count.
 ## Rules
 
 - Default to `scan`; run ALL FOUR tools (cargo-audit, cargo-deny, clippy,
-  edition check) every time; never modify files unless invoked as `fix`.
+  edition check) plus the complexity gate every time; never modify files unless
+  invoked as `fix`.
+- Enforce a per-function complexity limit of 10 by enabling
+  `clippy::cognitive_complexity` explicitly; it is a nursery lint and is allowed
+  by default. Set the threshold for the run when the project declares no
+  `clippy.toml`, and say in the report that clippy measures cognitive rather than
+  cyclomatic complexity. NEVER raise the threshold, add an `#[allow(...)]`, or
+  drop the gate to make the report green.
 - Keep security and code-quality findings in SEPARATE tiers in the report;
   security always ranks first. Never let clippy/edition noise bury a real
   advisory.
