@@ -234,7 +234,7 @@ go test -run TestJobSize -v .
 
 # 4. Heap before/after on realistic load
 go test -bench=BenchmarkIndexLoad -benchmem -memprofile mem.out .
-go tool pprof -top mem.out | head -20
+go tool pprof -top mem.out
 
 # 5. GC behaviour (pointer-free spans skipped)
 GODEBUG=gctrace=1 ./yourbinary 2>&1 | head

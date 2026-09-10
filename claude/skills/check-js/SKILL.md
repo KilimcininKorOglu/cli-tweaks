@@ -213,7 +213,7 @@ RUNDIR="$(mktemp -d /tmp/check-js.XXXXXXXX)"; echo "run dir: $RUNDIR"
 npm audit ; echo "audit exit: $?"                       # pnpm audit | yarn npm audit | bun audit
 npm audit --json > "$RUNDIR/npm-audit.json" 2>/dev/null
 
-semgrep --config auto --error 2>&1 | tail -40 ; echo "semgrep exit: $?"
+semgrep --config auto --error 2>&1 ; echo "semgrep exit: $?"
 semgrep --config auto --json -o "$RUNDIR/semgrep.json" --quiet
 
 # --- Code quality ---
@@ -479,6 +479,10 @@ installed does not count.
   report green; refactor into smaller single-responsibility functions instead.
 - Detect the package manager from the lockfile; never guess, and never audit
   with a manager the project does not use.
+- NEVER truncate a scan command's output with `head`, `tail`, or a count flag.
+  A capped run reports the first few findings and hides the rest, so the next
+  run finds work you already called done. Read the whole output; use the
+  machine-readable stream in `$RUNDIR` when the human output is long.
 - Keep security and code-quality findings in SEPARATE tiers in the report;
   security always ranks first. Never let lint/knip noise bury a real CVE.
 - Report EVERY finding from all four tools, including dev-dependency CVEs, low

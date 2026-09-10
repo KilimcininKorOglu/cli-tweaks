@@ -430,6 +430,10 @@ leaving it installed does not count.
 - Install missing tools with Homebrew automatically, without asking. Only ask
   before the first dependency-check run when `NVD_API_KEY` is unset, because that
   run is slow.
+- NEVER truncate a scan command's output with `head`, `tail`, or a count flag.
+  A capped run reports the first few findings and hides the rest, so the next
+  run finds work you already called done. Read the whole output; use the
+  machine-readable stream in `$RUNDIR` when the human output is long.
 - Keep security and code-quality findings in SEPARATE tiers in the report;
   security always ranks first. Never let lint/style noise bury a real CVE.
 - Report EVERY finding from all four tools, including transitive CVEs, semgrep

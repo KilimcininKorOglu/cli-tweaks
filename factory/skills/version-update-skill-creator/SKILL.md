@@ -193,7 +193,7 @@ Categorize commits by their conventional commit prefix:
   - Also check tag-triggered runs if a release workflow exists (they share the same commit SHA, so `--commit` catches them too)
 - Watch each run to completion: `gh run watch <databaseId> --exit-status` (exits non-zero if the run fails)
 - Report a compact table: workflow name, event, final conclusion (success/failure), and the run URL (`gh run view <databaseId> --json url`)
-- If any run FAILS: report the failing job and a short log tail (`gh run view <databaseId> --log-failed | tail -50`). Do NOT roll back the release -- the tag is already public; surface the failure so the user can decide.
+- If any run FAILS: report the failing job and its full failure log (`gh run view <databaseId> --log-failed`). Do NOT pipe it through `tail` -- the real cause is often above the last lines, and a truncated log hides the steps that failed before it. Do NOT roll back the release -- the tag is already public; surface the failure so the user can decide.
 - If `gh` is not authenticated or the repo has no Actions, note that runs could not be tracked and stop cleanly (the release itself already succeeded).
 
 [INCLUDE STEP 9 ONLY IF a release with an AUTO-GENERATED body is produced (CI releaser like goreleaser/action-gh-release/cargo-dist, or the skill creates the release) AND `gh` is available. OMIT it if a release tool already owns the CHANGELOG+notes (semantic-release, release-please, changesets) or if no release is produced. The extraction and `gh` commands below are language-agnostic — they read CHANGELOG.md, not any build tool.]

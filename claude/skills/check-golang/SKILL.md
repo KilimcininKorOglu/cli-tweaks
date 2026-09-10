@@ -194,7 +194,7 @@ RUNDIR="$(mktemp -d /tmp/check-golang.XXXXXXXX)"; echo "run dir: $RUNDIR"
 govulncheck ./...
 govulncheck -json ./... > "$RUNDIR/govuln.json"
 
-gosec ./... 2>&1 | tail -40                          # exit 1 if issues
+gosec ./... 2>&1                                     # exit 1 if issues
 gosec -fmt=json -out="$RUNDIR/gosec.json" -quiet ./... ; echo "gosec exit: $?"
 
 # --- Code quality ---
@@ -417,6 +417,10 @@ leaving it installed does not count.
   `gocyclo -over 10`. Any output is a finding. NEVER raise the threshold, ignore
   a function, or drop the gate to make the report green; refactor into smaller
   single-responsibility functions instead.
+- NEVER truncate a scan command's output with `head`, `tail`, or a count flag.
+  A capped run reports the first few findings and hides the rest, so the next
+  run finds work you already called done. Read the whole output; use the
+  machine-readable stream in `$RUNDIR` when the human output is long.
 - Keep security and code-quality findings in SEPARATE tiers in the report;
   security always ranks first. Never let lint/modernize noise bury a real CVE.
 - Report EVERY finding from all four tools, including imported-only CVEs, gosec
