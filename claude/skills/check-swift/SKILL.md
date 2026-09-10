@@ -154,6 +154,12 @@ Verify this is a Swift project and inventory the build surface.
    declares. A newer local Xcode than CI hides errors CI will hit, and a stricter
    CI Xcode fails builds that pass locally — both are real findings.
 
+   A red CI job is not always visible in the run you are looking at. When the
+   inventory finds drift, check the last few runs of the affected workflow
+   (`gh run list --workflow=<name>.yml --limit 6 --json headSha,conclusion`),
+   because a job broken by an earlier bump keeps failing on every commit after
+   it and is easy to read as a new failure or to miss entirely.
+
 5. Ensure all four tools are installed; install whichever is missing:
    ```bash
    command -v swiftlint       >/dev/null 2>&1 || brew install swiftlint
@@ -172,13 +178,21 @@ Verify this is a Swift project and inventory the build surface.
 Run every tool across all sources. Capture human output plus machine-readable
 streams (authoritative for classification).
 
+Write every machine-readable stream into a fresh per-run directory, NEVER a
+fixed `/tmp/semgrep.json` / `/tmp/depcheck`. A shared path is the classic
+cross-project trap: if a tool errors and does not overwrite, you silently parse
+another repo's stale JSON as this project's findings. A unique dir per run makes
+a write failure show up as a missing file instead of stale data.
+
 ```bash
+RUNDIR="$(mktemp -d /tmp/check-swift.XXXXXXXX)"; echo "run dir: $RUNDIR"
+
 # --- Security ---
 # CVEs in declared dependencies (skip with a stated reason if no manifest exists)
-dependency-check --scan . --format JSON --out /tmp/depcheck \
+dependency-check --scan . --format JSON --out "$RUNDIR/depcheck" \
   ${NVD_API_KEY:+--nvdApiKey "$NVD_API_KEY"} ; echo "depcheck exit: $?"
 
-semgrep scan --config=p/default --json --output=/tmp/semgrep.json . ; echo "semgrep exit: $?"
+semgrep scan --config=p/default --json --output="$RUNDIR/semgrep.json" . ; echo "semgrep exit: $?"
 semgrep scan --config=p/default .                  # human-readable
 
 # --- Code quality ---
@@ -190,9 +204,15 @@ For SwiftLint's analyzer rules, and only when the user asked for a deep scan,
 produce a clean build log first:
 ```bash
 rm -rf ~/Library/Developer/Xcode/DerivedData/<ProductName>-*
-xcodebuild -scheme <Scheme> -destination 'platform=macOS' clean build > /tmp/xcodebuild.log
-swiftlint analyze --compiler-log-path /tmp/xcodebuild.log
+xcodebuild -scheme <Scheme> -destination 'platform=macOS' clean build > "$RUNDIR/xcodebuild.log"
+swiftlint analyze --compiler-log-path "$RUNDIR/xcodebuild.log"
 ```
+
+Before classifying, confirm the report belongs to THIS project. Every finding's
+file path MUST fall under the current repo root, and none may sit inside
+`.build/`, `Pods/`, `Carthage/` or `DerivedData/`. If a path points outside it
+(a sibling project, a stale file), discard that finding and re-run the tool into
+a fresh `$RUNDIR` — never report another project's issues as this one's.
 
 Notes:
 - Exit codes: SwiftLint `2` = violations found (`3` with `--strict` on warnings);
@@ -231,12 +251,15 @@ These are optional style improvements, not defects.
 
 Rank all findings by severity for action (security tier first, always):
 1. **CVE in a direct dependency** — highest; upgrade the dependency.
-2. **CVE in a transitive dependency** — upgrade the parent or pin an override.
-3. **semgrep ERROR real finding** — fix in code.
-4. **semgrep WARNING/INFO or false positive** — fix if cheap, else annotate
+2. **Swift/Xcode version drift** — a CI runner or workflow declares a version
+   other than what the project declares. Ranked here because it is how CI builds
+   something the local scan never checked, in either direction.
+3. **CVE in a transitive dependency** — upgrade the parent or pin an override.
+4. **semgrep ERROR real finding** — fix in code.
+5. **semgrep WARNING/INFO or false positive** — fix if cheap, else annotate
    `nosemgrep`.
-5. **SwiftLint violation** — quality; fix in code (correctness rules first).
-6. **swift-format violation** — lowest; optional style upgrade,
+6. **SwiftLint violation** — quality; fix in code (correctness rules first).
+7. **swift-format violation** — lowest; optional style upgrade,
    behavior-preserving.
 
 ## Step 4: Produce the report
@@ -301,6 +324,19 @@ For CocoaPods, edit the `Podfile` and run `pod update <pod>`. Verify the new
 version actually resolved by reading `Package.resolved` / `Podfile.lock` — a
 version range can silently keep the vulnerable build.
 
+### Swift/Xcode version drift
+The fix is a version alignment, not a code change. Raise or align the version
+everywhere the Step 1 inventory found it:
+- `Package.swift` — `swift-tools-version` and the `platforms:` deployment targets
+- `project.yml` / `*.xcconfig` — `SWIFT_VERSION`, `*_DEPLOYMENT_TARGET`
+- CI workflows — the `runs-on` macOS image and any explicit Xcode selection
+  (`xcode-version`, `xcode-select`) in EVERY `.github/workflows/*.y*ml` (ci,
+  release, and any other), not just one
+
+After aligning, re-run the Step 1 inventory and confirm no source still names a
+version below the project's declared floor. A bump that misses one source is
+silent in the scan output but red in CI on every push that follows.
+
 ### semgrep findings
 - **Real finding**: fix the code — replace weak crypto with CryptoKit, move
   secrets to the Keychain, remove ATS exceptions, drop obsolete APIs.
@@ -334,11 +370,15 @@ xcodebuild -scheme <Scheme> -destination 'platform=macOS' clean build
 xcodebuild -scheme <TestScheme> -destination 'platform=macOS' test
 swiftlint lint --quiet && swift-format lint --recursive .   # both must exit 0
 semgrep scan --config=p/default .                           # 0 findings
-dependency-check --scan . --format JSON --out /tmp/depcheck ${NVD_API_KEY:+--nvdApiKey "$NVD_API_KEY"}
+dependency-check --scan . --format JSON --out "$RUNDIR/depcheck" ${NVD_API_KEY:+--nvdApiKey "$NVD_API_KEY"}
 ```
 Expect a clean build, tests passing, SwiftLint and swift-format exit 0, no
 semgrep findings, and no remaining CVEs. A clean build must start from deleted
 DerivedData — an incremental build hides warnings cached from an earlier compile.
+Then remove any helper tool this run installed (`brew uninstall <formula>` for
+whichever of swiftlint, swift-format, semgrep or dependency-check it added) and
+say so. The run installed it, so the run removes it; offering to remove it and
+leaving it installed does not count.
 
 ## Rules
 
@@ -358,6 +398,16 @@ DerivedData — an incremental build hides warnings cached from an earlier compi
   dependency manifest has no SCA surface at all.
 - Report the Swift and Xcode versions in every report, and flag drift between the
   local toolchain and what CI declares.
+- Never "fix" version drift by editing project code — it is a version alignment;
+  raise it in EVERY source that declares it, then re-run the inventory and
+  confirm none still names a version below the declared floor.
+- Write every machine-readable stream into a fresh `mktemp -d` run directory,
+  never a fixed `/tmp` path, so a failed write shows up as a missing file instead
+  of another project's stale JSON.
+- Confirm every finding's file path falls under the current repo root and outside
+  `.build/`, `Pods/`, `Carthage/` and `DerivedData/` before classifying it;
+  discard and re-scan anything that points elsewhere.
+- Clean up any helper tool this run installed with Homebrew after proving a fix.
 - If the project's CI pins scanner versions, scan with those exact versions so
   local results match CI.
 - Say which semgrep mode ran (CE or authenticated Pro); a clean CE run is weaker
