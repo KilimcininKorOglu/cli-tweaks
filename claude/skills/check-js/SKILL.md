@@ -222,6 +222,13 @@ npx eslint . -f json -o "$RUNDIR/eslint.json" 2>/dev/null
 
 npx knip ; echo "knip exit: $?"                         # exit 1 if issues
 npx knip --reporter json > "$RUNDIR/knip.json" 2>/dev/null
+
+# Cyclomatic complexity gate: every function must stay at or below 10.
+# Pass the rule explicitly — the project's config usually does not enable it,
+# and ESLint's own default for `complexity` is 20, not 10.
+npx eslint . --no-inline-config --rule '{"complexity":["error",10]}' \
+  -f json -o "$RUNDIR/complexity.json" 2>/dev/null
+npx eslint . --no-inline-config --rule '{"complexity":["error",10]}' ; echo "complexity exit: $?"
 ```
 
 For a monorepo, scan every workspace, not just the root:
@@ -286,6 +293,12 @@ unused dependency, unlisted dependency, unresolved import) and the path. An
 **unlisted dependency** is the important one: code imports a package that is not
 declared, so the build works only by hoisting accident.
 
+**complexity** — for each `complexity` violation extract file:line, the function
+name, and the reported complexity. Every one is a function over the limit of 10.
+Unlike a style rule this is NOT optional: the limit is a project rule, and a
+function above it must be refactored into smaller single-responsibility
+functions, never suppressed and never given a raised threshold.
+
 Rank all findings by severity for action (security tier first, always):
 1. **Critical/high CVE in `dependencies`** — highest; ships to production.
 2. **Node version drift or an end-of-life major** — a release, container or CI
@@ -299,8 +312,11 @@ Rank all findings by severity for action (security tier first, always):
 7. **ESLint security-plugin rule** — treat as a code security finding.
 8. **knip unlisted dependency** — build correctness; declare it.
 9. **ESLint error** — quality; fix in code.
-10. **ESLint warning** — quality; lower.
-11. **knip unused file/export/dependency** — lowest; hygiene, verify before
+10. **Function over the complexity limit (`complexity` > 10)** — quality;
+    refactor into smaller functions. Ranked above warnings and hygiene because it
+    is a limit, not a suggestion.
+11. **ESLint warning** — quality; lower.
+12. **knip unused file/export/dependency** — lowest; hygiene, verify before
     deleting.
 
 ## Step 4: Produce the report
@@ -312,7 +328,7 @@ Always print a ranked summary to the user, most severe first. Use this shape:
 Node: <vX.Y.Z>   engines floor: <range>   Manager: npm|pnpm|yarn|bun   Scanned: whole project
 (when Node drift exists, name it — an EOL major is itself a security finding)
 Security  — audit: N prod (C critical/high), M dev   semgrep: P (Q real, R false-pos)
-Quality   — eslint: E errors, W warnings   knip: U unused, D undeclared
+Quality   — eslint: E errors, W warnings   complexity: C over limit   knip: U unused, D undeclared
 
 # === SECURITY (fix first) ===
 
@@ -334,16 +350,20 @@ Quality   — eslint: E errors, W warnings   knip: U unused, D undeclared
 ## eslint (config: eslint.config.js | .eslintrc | none)
 - [error] [no-unused-vars] path/file.ts:42 — <message>
 
+## complexity — functions over the limit of 10
+- path/file.ts:42 — <function> has a complexity of <N> (refactor into smaller functions)
+
 ## knip (config: knip.json | defaults)
 - [unlisted dependency] <pkg> imported in path/file.ts — declare it in package.json
 - [unused export] path/file.ts:12 — <name> (VERIFY before deleting)
 
 ## Verdict
 Security: <green ONLY if 0 CVEs AND semgrep exit 0 | red: list fixes>
-Quality:  <green ONLY if eslint 0 AND knip 0 | yellow: E errors, U unused>
+Quality:  <green ONLY if eslint 0 AND complexity 0 AND knip 0 | yellow: E errors, C over limit, U unused>
 ```
 
-**Verdict rule:** Quality is green ONLY when BOTH ESLint AND knip report zero.
+**Verdict rule:** Quality is green ONLY when ESLint, the complexity gate AND knip
+all report zero.
 Any knip finding (or any lint problem) means quality is NOT clean — mark it
 yellow and list the outstanding items. Never call a tier green while it still has
 open findings, however minor.
@@ -414,6 +434,14 @@ silence a rule unless the finding is a proven false positive, and then scope
 `// eslint-disable-next-line <rule>` to the single line with a reason. Never add
 a file-wide or config-wide disable to hide a real finding.
 
+### Functions over the complexity limit
+Refactor each function the complexity gate reported into smaller
+single-responsibility functions: extract the branches of a long `if`/`switch`
+chain into named helpers, lift error handling out of the happy path, and split
+functions that do two jobs. NEVER raise the threshold, add an
+`eslint-disable` for `complexity`, or drop the gate to make the report green.
+Re-run the gate until it reports nothing.
+
 ### knip findings
 - **Unlisted dependency**: declare it in `package.json`. This is a real build
   correctness fix, not hygiene.
@@ -442,8 +470,13 @@ installed does not count.
 
 ## Rules
 
-- Default to `scan`; run ALL FOUR tools (audit, semgrep, ESLint, knip) every
-  time; never modify files unless invoked as `fix`.
+- Default to `scan`; run ALL FOUR tools (audit, semgrep, ESLint, knip) plus the
+  complexity gate every time; never modify files unless invoked as `fix`.
+- Enforce a cyclomatic complexity limit of 10 per function by passing
+  `--rule '{"complexity":["error",10]}'` explicitly; the project's config rarely
+  enables the rule and ESLint's own default is 20. Any violation is a finding.
+  NEVER raise the threshold, disable the rule, or drop the gate to make the
+  report green; refactor into smaller single-responsibility functions instead.
 - Detect the package manager from the lockfile; never guess, and never audit
   with a manager the project does not use.
 - Keep security and code-quality findings in SEPARATE tiers in the report;
