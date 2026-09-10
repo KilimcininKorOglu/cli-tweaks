@@ -84,10 +84,42 @@ def stripHeredocs(command):
     return "\n".join(out)
 
 
+def splitStatements(command):
+    """Turn unquoted newlines into `;` so each line stays its own command.
+
+    shlex treats a newline as whitespace, which would merge one line's command
+    into the previous line's argument list and make a later `echo` look like a
+    file operand of an earlier `grep`. Quoted newlines are left alone.
+    """
+    out = []
+    quote = ""
+    escaped = False
+    for char in command:
+        if escaped:
+            out.append(char)
+            escaped = False
+            continue
+        if char == "\\" and quote != "'":
+            out.append(char)
+            escaped = True
+            continue
+        if quote:
+            out.append(char)
+            if char == quote:
+                quote = ""
+            continue
+        if char in "'\"":
+            quote = char
+            out.append(char)
+            continue
+        out.append(" ; " if char == "\n" else char)
+    return "".join(out)
+
+
 def tokenize(command):
     """Return shell tokens with operators separated, or None when unparseable."""
     # Expose command-substitution boundaries so the inner command is seen.
-    normalized = command.replace("$(", " ( ").replace("`", " ( ")
+    normalized = splitStatements(command).replace("$(", " ( ").replace("`", " ( ")
     lexer = shlex.shlex(normalized, posix=True, punctuation_chars=True)
     lexer.whitespace_split = True
     try:
@@ -101,13 +133,12 @@ def segments(tokens):
     result = []
     current = []
     pipedIn = False
-    nextPipedIn = False
     for token in tokens:
         if token in OPERATORS:
             if current:
                 result.append((pipedIn, current))
-            pipedIn = nextPipedIn
-            nextPipedIn = token == "|"
+            # The next command reads a stream only when this operator is a pipe.
+            pipedIn = token == "|"
             current = []
             continue
         current.append(token)
