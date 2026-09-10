@@ -130,17 +130,35 @@ Verify this is a Go project and the tool is available.
    ```bash
    grep -E '^(go|toolchain) ' go.mod                    # the floor
    # every other declaration, across whatever config files the repo actually has:
-   grep -rniE 'go-version"?:|golang:[0-9]|GO_VERSION|golang\.org/dl/go' \
+   grep -rniE 'go-version"?:|golang:[0-9]|GO_VERSION|GOTOOLCHAIN|golang\.org/dl/go' \
      --include='*.yml' --include='*.yaml' --include='Dockerfile*' \
-     --include='*.Dockerfile' . 2>/dev/null
+     --include='*.Dockerfile' --include='Makefile*' --include='*.mk' . 2>/dev/null
    ```
    Flag any source whose Go version differs from the `go.mod` floor —
    `Dockerfile` base images, `go-version` / `go-version-file` in every workflow
-   (`ci`, `release`, etc., not just one), `.goreleaser.y*ml`, and container/CI
-   configs. If `go version` (step 2) is NEWER than the `go.mod` floor, a plain
-   local scan is a false negative — you MUST also scan pinned to the floor
-   (Step 2, and Prove the fix). Prefer `go-version-file: go.mod` so CI cannot
-   drift from the floor.
+   (`ci`, `release`, etc., not just one), `.goreleaser.y*ml`, `Makefile` build
+   images, and container/CI configs. If `go version` (step 2) is NEWER than the
+   `go.mod` floor, a plain local scan is a false negative — you MUST also scan
+   pinned to the floor (Step 2, and Prove the fix). Prefer `go-version-file:
+   go.mod` so CI cannot drift from the floor.
+
+   **`GOTOOLCHAIN` is a Go version declaration and hides from every other
+   pattern.** A workflow step that sets `GOTOOLCHAIN: go1.26.5` names a
+   toolchain as surely as `go-version:` does, but matches none of
+   `go-version`, `golang:`, `GO_VERSION` or `golang.org/dl/go`, so it survives
+   a scan that reports no drift. It fails differently from the other sources:
+   a pin BELOW the floor does not ship an old toolchain, it refuses to build
+   at all, and the job dies with `go.mod requires go >= X (running go Y)` on
+   every push until someone reads the log. Treat a `GOTOOLCHAIN` literal as
+   drift on sight and prefer `GOTOOLCHAIN: local` next to a
+   `go-version-file: go.mod` setup step, which names the toolchain setup-go
+   just installed and therefore tracks the floor by construction.
+
+   A red CI job is not always visible in the run you are looking at. When the
+   inventory finds drift, check the last few runs of the affected workflow
+   (`gh run list --workflow=<name>.yml --limit 6 --json headSha,conclusion`),
+   because a job broken by an earlier bump keeps failing on every commit after
+   it and is easy to read as a new failure or to miss entirely.
 
 4. Ensure all four tools are installed; install whichever is missing:
    ```bash
@@ -160,18 +178,32 @@ Verify this is a Go project and the tool is available.
 Run every tool against every package. Capture human output plus machine-readable
 streams (authoritative for classification).
 
+Write every machine-readable stream into a fresh per-run directory, NEVER a
+fixed `/tmp/gosec.json` / `/tmp/govuln.json`. A shared path is the classic
+cross-project trap: if gosec errors and does not overwrite, you silently parse
+another repo's stale JSON as this project's findings. A unique dir per run makes
+a write failure show up as a missing file instead of stale data.
+
 ```bash
+RUNDIR="$(mktemp -d /tmp/check-golang.XXXXXXXX)"; echo "run dir: $RUNDIR"
+
 # --- Security ---
 govulncheck ./...
-govulncheck -json ./... > /tmp/govuln.json
+govulncheck -json ./... > "$RUNDIR/govuln.json"
 
 gosec ./... 2>&1 | tail -40                          # exit 1 if issues
-gosec -fmt=json -out=/tmp/gosec.json -quiet ./... ; echo "gosec exit: $?"
+gosec -fmt=json -out="$RUNDIR/gosec.json" -quiet ./... ; echo "gosec exit: $?"
 
 # --- Code quality ---
 golangci-lint run ./... ; echo "golangci exit: $?"    # exit 1 if issues
 go run golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize@latest ./... ; echo "modernize exit: $?"
 ```
+
+Before classifying, confirm the report belongs to THIS module. The scan scope is
+whatever `go list ./...` prints; every gosec finding's file path MUST fall under
+the current repo root. If a path points outside it (a sibling project, a stale
+file), discard that finding and re-run gosec into a fresh `$RUNDIR` — never
+report another project's issues as this one's.
 
 If step 3 showed `go version` differs from the `go.mod` floor (typically local
 is newer), ALSO run govulncheck pinned to the floor — this is what CI/release
@@ -291,9 +323,19 @@ found it:
 - CI workflows — `go-version` in EVERY `.github/workflows/*.y*ml` (ci, release,
   and any other), not just one; prefer `go-version-file: go.mod` so they track
   the floor automatically and cannot drift
+- `GOTOOLCHAIN` — every workflow step that sets it; replace the literal with
+  `GOTOOLCHAIN: local` next to a `go-version-file: go.mod` setup step rather
+  than writing the new patch, so the pin tracks the floor and cannot drift
+  below it on the next bump
+- `Makefile` / `*.mk` — the `golang:X.Y` image a local gate runs in
 - `.goreleaser.y*ml` and any other container/CI config with a pinned Go version
 Keep every source on the same Go line — a stale `release.yml` ships CVE-carrying
-binaries even when `ci.yml` is green.
+binaries even when `ci.yml` is green, and a stale `GOTOOLCHAIN` stops the job
+building at all.
+
+After raising the floor, re-run the Step 1 inventory and confirm no source
+still names a version below it. A bump that misses one source is silent in the
+scan output but red in CI on every push that follows.
 
 ### Third-party CVEs
 ```bash
@@ -351,8 +393,12 @@ leaving it installed does not count.
 - Report the building toolchain version in every report; stdlib findings are
   meaningless without it.
 - Inventory every declared Go version (go.mod floor, Dockerfile, ALL workflows,
-  goreleaser) and flag any drift; when the local toolchain differs from the
-  `go.mod` floor, the floor-pinned govulncheck is the authoritative result.
+  every `GOTOOLCHAIN`, Makefile build images, goreleaser) and flag any drift;
+  when the local toolchain differs from the `go.mod` floor, the floor-pinned
+  govulncheck is the authoritative result.
+- Treat a `GOTOOLCHAIN` literal as drift on sight; it names a Go version, it
+  matches none of the other inventory patterns, and a value below the floor
+  fails the job on every push instead of shipping a vulnerable binary.
 - Never "fix" a stdlib CVE by editing project code — it is always a toolchain
   bump; raise the Go line in EVERY source that declares it, not just go.mod.
 - For gosec false positives, prefer a real sanitizer/validator; use a
