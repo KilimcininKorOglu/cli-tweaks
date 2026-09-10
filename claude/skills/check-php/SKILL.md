@@ -71,6 +71,15 @@ is missing, run `composer update --dry-run` to see the resolution, say clearly
 that the scan used a fresh resolution, and treat the missing committed lockfile
 as a finding for an application.
 
+**Composer is required for the CVE tier only, never for the whole scan.** A plain
+PHP project — legacy code, a WordPress theme or plugin, hand-included libraries,
+a single script — has no `composer.lock`, so `composer audit` has nothing to
+resolve and there is no SCA surface at all. That is a finding in its own right,
+not a green light, and it is NOT a reason to refuse the project: static analysis
+is exactly what such a codebase needs most. Run PHPStan and Psalm from their
+standalone PHARs, state that the dependency tier did not run, and never report
+"0 advisories" without saying that nothing was scanned for them.
+
 **The declared PHP version can lie about the runtime.** `require.php` in
 `composer.json` is the floor, but `config.platform.php` overrides what Composer
 *pretends* the runtime is when resolving. A project can therefore resolve
@@ -124,19 +133,31 @@ behavior.
 
 Verify this is a PHP project and the tools are available.
 
-1. Confirm a `composer.json` exists at the repo root (or find it):
+1. Confirm this is a PHP project and determine its shape. Composer is NOT
+   required — a plain PHP project still gets the three static-analysis tools:
    ```bash
-   test -f composer.json && head -30 composer.json || echo "NO composer.json — not a Composer project"
+   test -f composer.json && head -30 composer.json || echo "NO composer.json — plain PHP mode"
+   find . -name '*.php' -not -path './vendor/*' -not -path './.git/*' | head -1 \
+     || echo "NO .php files — not a PHP project"
    ```
-   If there is no `composer.json`, STOP and tell the user this is not a Composer
-   project. Note the `autoload.psr-4` source paths — they decide scan scope.
+   STOP only when there are no `.php` files at all. Record the mode:
+   - **Composer mode** (`composer.json` present) — all four tools run. Note the
+     `autoload.psr-4` source paths; they decide scan scope.
+   - **Plain PHP mode** (no `composer.json`) — `composer audit` cannot run, the
+     other three still do (see Step 5 for the PHAR path). Derive the scan scope
+     from the real source directories instead:
+     ```bash
+     ls -d src app lib includes classes inc wp-content 2>/dev/null || echo "scope: repo root"
+     ```
 
-2. Confirm a lockfile exists; findings hinge on it:
+2. Confirm a lockfile exists; findings hinge on it. **Composer mode only:**
    ```bash
    test -f composer.lock && echo "composer.lock present" || echo "NO composer.lock"
    ```
    If missing, record in the report that the scan used a fresh resolution, and
    for an application treat the missing committed lockfile as a finding.
+   In plain PHP mode there is no lockfile by definition; record the absent SCA
+   surface as a finding of its own (see Key facts) rather than a clean result.
 
 3. Record the runtime version — findings hinge on it:
    ```bash
@@ -166,7 +187,7 @@ Verify this is a PHP project and the tools are available.
    because a job broken by an earlier bump keeps failing on every commit after
    it and is easy to read as a new failure or to miss entirely.
 
-5. Ensure all four tools are available; install whichever is missing:
+5. Ensure the tools are available. **Composer mode:**
    ```bash
    test -f vendor/bin/psalm   || composer require --dev vimeo/psalm --no-interaction
    test -f vendor/bin/phpstan || composer require --dev phpstan/phpstan --no-interaction
@@ -180,6 +201,20 @@ Verify this is a PHP project and the tools are available.
    If the project's CI pins specific tool versions (check
    `.github/workflows/*.y*ml`), install those exact versions instead so local
    results match CI.
+
+   **Plain PHP mode** — the tools ship standalone PHARs, so Composer is not
+   needed. Download them into the run directory, never into the project:
+   ```bash
+   PHARDIR="$(mktemp -d /tmp/check-php-tools.XXXXXXXX)"; echo "phar dir: $PHARDIR"
+   curl -sSL -o "$PHARDIR/phpstan.phar" https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar
+   curl -sSL -o "$PHARDIR/psalm.phar"   https://github.com/vimeo/psalm/releases/latest/download/psalm.phar
+   php "$PHARDIR/phpstan.phar" --version && php "$PHARDIR/psalm.phar" --version
+   ```
+   Rector ships no official PHAR; in plain PHP mode skip Rector and say so in the
+   report rather than pretending the modernization tier ran. Psalm needs a config
+   — generate a throwaway one with `php "$PHARDIR/psalm.phar" --init <src> 1` and
+   record that the scan used a generated config, not the project's own. Delete
+   `$PHARDIR` when the run finishes.
 
 ## Step 2: Scan the whole project (all four tools)
 
@@ -213,6 +248,20 @@ Also audit what actually ships, not just the whole tree:
 ```bash
 composer audit --no-dev          # production-only advisories; label these separately
 ```
+
+**Plain PHP mode** runs the same scan without Composer. `composer audit` is
+skipped — say so explicitly — and the analyzers run from the PHARs against the
+source scope found in Step 1:
+```bash
+SCOPE="src app lib includes classes inc"      # whatever Step 1 actually found
+php "$PHARDIR/phpstan.phar" analyse --no-progress --level 5 $SCOPE ; echo "phpstan exit: $?"
+php "$PHARDIR/phpstan.phar" analyse --no-progress --level 5 --error-format=json $SCOPE \
+  > "$RUNDIR/phpstan.json" 2>/dev/null
+php "$PHARDIR/psalm.phar" --taint-analysis 2>&1 | tail -40 ; echo "psalm taint exit: $?"
+```
+With no `phpstan.neon` the level is not declared by the project, so pass one
+explicitly and report which level you chose — an undeclared level is not the
+project's agreed standard, so label those findings advisory.
 
 If step 4 showed the runtime differs from the declared floor, ALSO run the
 analysis pinned to the floor — that is what CI/production actually execute:
@@ -334,6 +383,12 @@ error, or an active baseline) means quality is NOT clean — mark it yellow and
 list the outstanding items. Never call a tier green while it still has open
 findings, however minor.
 
+**Coverage rule:** A green security verdict MUST name what was not scanned. In
+plain PHP mode that is the whole dependency tier: `composer audit` did not run,
+so "0 advisories" means "nothing was scanned for advisories", and reporting it as
+safety is a lie. Name the skipped tools (Rector too, when no PHAR exists) rather
+than letting the report imply all four ran.
+
 Security follows the same bar. Judging a taint finding a false positive does not
 close it: it stays open, and keeps security red, until it is actually closed by a
 real fix or by the narrow line-scoped `@psalm-taint-escape` of a proven-safe
@@ -436,6 +491,12 @@ count.
 
 - Default to `scan`; run ALL FOUR tools (composer audit, Psalm taint, PHPStan,
   Rector) every time; never modify files unless invoked as `fix`.
+- NEVER refuse a PHP project because it has no `composer.json`. STOP only when
+  there are no `.php` files. Without Composer, run PHPStan and Psalm from their
+  standalone PHARs, skip `composer audit` and Rector, and name every tool that
+  did not run.
+- State the coverage gap in every security verdict: in plain PHP mode nothing was
+  scanned for advisories, so "0 advisories" must never be presented as safety.
 - ALWAYS pass `--dry-run` to Rector outside `fix` mode; it rewrites files in
   place.
 - Keep security and code-quality findings in SEPARATE tiers in the report;
