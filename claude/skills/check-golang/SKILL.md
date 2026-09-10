@@ -57,6 +57,8 @@ Code quality:
   (errcheck, unused, staticcheck, etc.); honors any `.golangci.*` config.
 - **modernize** (`golang.org/x/tools/gopls/internal/analysis/modernize`) — flags
   outdated idioms replaceable with modern Go equivalents.
+- **gocyclo** (`github.com/fzipp/gocyclo`) — the cyclomatic complexity gate; every
+  function must stay at or below 10.
 
 **Default behavior is `scan`** — run ALL FOUR tools and report every finding.
 `fix` additionally proposes and (with confirmation) applies remediation.
@@ -165,6 +167,7 @@ Verify this is a Go project and the tool is available.
    command -v govulncheck >/dev/null 2>&1 || go install golang.org/x/vuln/cmd/govulncheck@latest
    command -v gosec >/dev/null 2>&1 || go install github.com/securego/gosec/v2/cmd/gosec@latest
    command -v golangci-lint >/dev/null 2>&1 || go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
+   command -v gocyclo >/dev/null 2>&1 || go install github.com/fzipp/gocyclo/cmd/gocyclo@latest
    # modernize has no stable binary name; run it via `go run` (see Step 2)
    ```
    Binaries land in `$(go env GOPATH)/bin`. If that dir is not on `PATH`, invoke
@@ -197,6 +200,11 @@ gosec -fmt=json -out="$RUNDIR/gosec.json" -quiet ./... ; echo "gosec exit: $?"
 # --- Code quality ---
 golangci-lint run ./... ; echo "golangci exit: $?"    # exit 1 if issues
 go run golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize@latest ./... ; echo "modernize exit: $?"
+
+# Cyclomatic complexity gate: every function must stay at or below 10.
+# gocyclo prints one line per function ABOVE the threshold, so any output is a finding.
+gocyclo -over 10 -ignore 'vendor/' . | tee "$RUNDIR/gocyclo.txt"
+echo "over-limit functions: $(wc -l < "$RUNDIR/gocyclo.txt" | tr -d ' ')"
 ```
 
 Before classifying, confirm the report belongs to THIS module. The scan scope is
@@ -250,6 +258,12 @@ Notes:
 proposes (e.g. "Ranging over SplitSeq is more efficient"). These are optional
 improvements, not defects.
 
+**gocyclo** — for each line extract the complexity number, the package, the
+function name, and file:line. Every line is a function over the limit of 10.
+Unlike modernize this is NOT optional: the limit is a project rule, and a
+function above it must be refactored into smaller single-responsibility
+functions, never suppressed and never given a raised threshold.
+
 Rank all findings by severity for action (security tier first, always):
 1. **Called stdlib CVE** — highest; fix by bumping the Go toolchain.
 2. **Go version drift** — a release, container or CI path declares a version
@@ -261,7 +275,10 @@ Rank all findings by severity for action (security tier first, always):
 5. **gosec LOW / false positive** — sanitize if cheap, else annotate `#nosec`.
 6. **Imported-only CVE** (not called) — note but not urgent.
 7. **golangci-lint issue** — quality; fix in code (correctness linters first).
-8. **modernize suggestion** — lowest; optional idiom upgrade, behavior-preserving.
+8. **Function over the complexity limit (gocyclo > 10)** — quality; refactor into
+   smaller functions. Ranked above modernize because it is a limit, not a
+   suggestion.
+9. **modernize suggestion** — lowest; optional idiom upgrade, behavior-preserving.
 
 ## Step 4: Produce the report
 
@@ -272,7 +289,7 @@ Always print a ranked summary to the user, most severe first. Use this shape:
 Local toolchain: go<X.Y.Z>   go.mod floor: go<X.Y.Z>   Scanned: ./...
 (when they differ, the floor-pinned govulncheck is authoritative — that is what CI/release build)
 Security  — govulncheck: N called, M imported-only   gosec: P (Q real, R false-pos)
-Quality   — golangci-lint: L issues   modernize: S suggestions
+Quality   — golangci-lint: L issues   gocyclo: C over limit   modernize: S suggestions
 
 # === SECURITY (fix first) ===
 
@@ -294,16 +311,19 @@ Quality   — golangci-lint: L issues   modernize: S suggestions
 ## golangci-lint (config: .golangci.yml | defaults)
 - [errcheck] path/file.go:42 — Error return value not checked
 
+## gocyclo — functions over the complexity limit of 10
+- <complexity> <package>.<Func> — <file>:<line> (refactor into smaller functions)
+
 ## modernize (optional idiom upgrades)
 - <file>:<line> — <suggested modern idiom>
 
 ## Verdict
 Security: <green ONLY if 0 called CVEs AND gosec exit 0 | red: list fixes>
-Quality:  <green ONLY if lint 0 AND modernize 0 | yellow: L lint, S modernize>
+Quality:  <green ONLY if lint 0 AND gocyclo 0 AND modernize 0 | yellow: L lint, C over limit, S modernize>
 ```
 
-**Verdict rule:** Quality is 🟢 green ONLY when BOTH golangci-lint AND modernize
-report zero. Any modernize suggestion (or any lint issue) means quality is NOT
+**Verdict rule:** Quality is 🟢 green ONLY when golangci-lint, gocyclo AND
+modernize all report zero. Any modernize suggestion (or any lint issue) means quality is NOT
 clean — mark it 🟡 yellow and list the outstanding items. Never call a tier green
 while it still has open findings, however minor.
 
@@ -357,6 +377,14 @@ staticcheck simplifications, etc.). Re-run `golangci-lint run ./...` until 0.
 Do not silence a linter unless the finding is a proven false positive, and then
 scope the `//nolint:<linter>` to the single line with a reason.
 
+### Functions over the complexity limit
+Refactor each function gocyclo reported into smaller single-responsibility
+functions: extract the branches of a long `if`/`switch` chain into named helpers,
+lift error handling out of the happy path, and split loops that do two jobs.
+NEVER raise the threshold, add the function to an ignore list, or disable the
+gate to make the report green. Re-run `gocyclo -over 10 -ignore 'vendor/' .`
+until it prints nothing.
+
 ### modernize suggestions
 Apply ONLY when behavior-preserving and the user wants the idiom upgrade (e.g.
 `strings.SplitSeq` for range loops, `min`/`max` builtins, `slices`/`maps`
@@ -383,7 +411,12 @@ leaving it installed does not count.
 ## Rules
 
 - Default to `scan`; run ALL FOUR tools (govulncheck, gosec, golangci-lint,
-  modernize) every time; never modify files unless invoked as `fix`.
+  modernize) plus the gocyclo complexity gate every time; never modify files
+  unless invoked as `fix`.
+- Enforce a cyclomatic complexity limit of 10 per function with
+  `gocyclo -over 10`. Any output is a finding. NEVER raise the threshold, ignore
+  a function, or drop the gate to make the report green; refactor into smaller
+  single-responsibility functions instead.
 - Keep security and code-quality findings in SEPARATE tiers in the report;
   security always ranks first. Never let lint/modernize noise bury a real CVE.
 - Report EVERY finding from all four tools, including imported-only CVEs, gosec
