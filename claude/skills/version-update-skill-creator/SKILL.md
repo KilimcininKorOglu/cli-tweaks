@@ -45,7 +45,7 @@ Also detect:
 - **Existing CHANGELOG.md**: Note if it exists and its current format
 - **GitHub Actions**: List `.github/workflows/*.yml` and note which trigger on `push`/tags (e.g. `ci`, `release`). Check `gh` is installed and authenticated (`gh auth status`). If workflows exist AND `gh` works, the generated skill gets a post-push Step 8 that tracks them; otherwise it omits that step.
 - **Release mechanism** (language-agnostic — applies to every ecosystem, not just Go): determine whether pushing a tag produces a GitHub Release, and who writes its body. Classify into one of three cases:
-  - **CI generates a release with an auto body** — a tag-triggered workflow runs a releaser that builds the body from git commits, NOT from CHANGELOG.md. Examples across ecosystems: `goreleaser` (Go, `.goreleaser.y*ml` + `goreleaser-action`), `softprops/action-gh-release` / `gh release create` (any lang), `cargo-dist` (Rust), electron-builder publish (JS). Step 9 must OVERWRITE that body after CI with the CHANGELOG section via `gh release edit`.
+  - **CI generates a release with an auto body** — a tag-triggered workflow runs a releaser that builds the body from git commits, NOT from CHANGELOG.md. Examples across ecosystems: `goreleaser` (Go, `.goreleaser.y*ml` + `goreleaser-action`), `softprops/action-gh-release` / `gh release create` (any lang), `cargo-dist` (Rust), electron-builder publish (JS). Step 9 should make the release body the CHANGELOG section, and it PREFERS wiring the release workflow to read the tag's CHANGELOG section from a file so every future release is CHANGELOG-native at publish time (goreleaser `--release-notes=<file>`, `softprops/action-gh-release` `body_path:`, `gh release create --notes-file`); it OVERWRITES the CI body afterward with `gh release edit` only as a fallback when the workflow cannot be wired, or for the current release when the wiring was just added (a workflow edit only takes effect on the next tag).
   - **A release tool already owns the CHANGELOG and the release notes** — `semantic-release`, `release-please`, `changesets`, `standard-version`. These generate the CHANGELOG and the release body themselves; do NOT add Step 9 (and usually this whole skill overlaps them — warn the user instead of fighting the tool).
   - **No release is produced** (or the skill itself will create it) — if nothing produces a release, omit Step 9; if the skill will create the release, it passes the notes at creation time.
 - **Latest git tag**: Run `git describe --tags --abbrev=0 2>/dev/null` to find the current version tag
@@ -205,7 +205,8 @@ The release body must be the human-written CHANGELOG section, not auto-generated
   awk -v v="X.Y.Z" '$0 ~ "^## \\["v"\\]"{f=1;next} f&&/^## \[/{exit} f{print}' CHANGELOG.md > /tmp/relnotes.md
   ```
   If `/tmp/relnotes.md` is empty, STOP this step and report it -- do not push blank notes over a good body.
-- [IF THE RELEASE IS PRODUCED BY CI (goreleaser / release workflow)]: the body already exists once CI finished in Step 8. OVERWRITE it (CI generated its own from commits): `gh release edit vX.Y.Z --notes-file /tmp/relnotes.md`. Wait until the release exists first (`gh release view vX.Y.Z` succeeds); if CI failed in Step 8, skip -- there is no release to edit.
+- [IF THE RELEASE IS PRODUCED BY CI (goreleaser / release workflow) -- PREFERRED, CI-native]: make the release workflow read the CHANGELOG section itself, so the body is correct at publish time with no post-hoc edit. Check the release workflow (e.g. `.github/workflows/release.yml`): if it already extracts the tag's CHANGELOG section and passes it to the releaser (goreleaser `--release-notes=<file>`, `softprops/action-gh-release` `body_path:`, `gh release create --notes-file`), it is wired -- just verify the body after Step 8. If it is NOT wired, add that wiring once (a step that runs the awk extraction above into a file, e.g. keyed on `${GITHUB_REF_NAME#v}`, plus the releaser flag), commit it by its own path (`git add <workflow>` + `chore: wire release notes from CHANGELOG`) and push; a workflow edit only takes effect on the NEXT tag, so ALSO fix the current release once it exists: `gh release edit vX.Y.Z --notes-file /tmp/relnotes.md`.
+- [IF THE RELEASE IS PRODUCED BY CI BUT THE WORKFLOW CANNOT BE WIRED -- FALLBACK]: the body already exists once CI finished in Step 8. OVERWRITE it (CI generated its own from commits): `gh release edit vX.Y.Z --notes-file /tmp/relnotes.md`. Wait until the release exists first (`gh release view vX.Y.Z` succeeds); if CI failed in Step 8, skip -- there is no release to edit.
 - [IF THE SKILL ITSELF CREATES THE RELEASE (no CI release step)]: create it with the notes directly: `gh release create vX.Y.Z --title vX.Y.Z --notes-file /tmp/relnotes.md`.
 - Confirm: `gh release view vX.Y.Z` shows the CHANGELOG content as the body.
 
@@ -218,7 +219,7 @@ The release body must be the human-written CHANGELOG section, not auto-generated
 - Tag format is always `vX.Y.Z`.
 - CHANGELOG entries must be in English.
 - After pushing, track any triggered GitHub Actions to completion and report pass/fail; never roll back a pushed tag on CI failure -- report it instead.
-- If a release is produced, its body must be the CHANGELOG section for this version, never auto-generated commit notes; set it via `gh release edit`/`create --notes-file`.
+- If a release is produced, its body must be the CHANGELOG section for this version, never auto-generated commit notes; prefer wiring the release workflow to feed the CHANGELOG section to the releaser (CI-native), and use `gh release edit --notes-file` only as a fallback or to fix the current release right after adding that wiring.
 ```
 
 ### Adaptation Rules
@@ -233,7 +234,7 @@ When generating the skill:
 - If the project has NO build command, drop only the build line from Step 3; KEEP the content-sweep verification and rename the step to just "Verify"
 - If the project uses a non-standard tag prefix (e.g., no `v` prefix), match the existing convention
 - If CHANGELOG.md already exists, preserve its existing content and prepend the new section
-- **Match Step 9 to the detected release mechanism (this is language-agnostic).** If CI produces a release with an auto body (goreleaser, action-gh-release, cargo-dist, etc.), generate the `gh release edit` variant that overwrites the CI body AFTER Step 8. If the skill creates the release itself, generate the `gh release create --notes-file` variant. If a tool already owns the CHANGELOG+notes (semantic-release, release-please, changesets) or no release is produced, omit Step 9. Never generate more than one variant.
+- **Match Step 9 to the detected release mechanism (this is language-agnostic).** If CI produces a release with an auto body (goreleaser, action-gh-release, cargo-dist, etc.), generate the CI-native variant: it wires the release workflow to feed the tag's CHANGELOG section to the releaser (goreleaser `--release-notes`, action-gh-release `body_path`, `gh release create --notes-file`) so future releases are CHANGELOG-native, and uses `gh release edit` only as a fallback or to fix the release the wiring was just added on. If the release workflow already reads notes from a file, the generated Step 9 only verifies the body. If the skill creates the release itself, generate the `gh release create --notes-file` variant. If a tool already owns the CHANGELOG+notes (semantic-release, release-please, changesets) or no release is produced, omit Step 9. Never generate more than one variant.
 
 ## Phase 3: Confirm
 
@@ -250,7 +251,7 @@ Detected:
 - Latest tag: [tag or "none"]
 - Changelog: [exists / will be created]
 - GitHub Actions tracking: [enabled (workflows: ci, release) / disabled (no workflows or no gh)]
-- Release notes from CHANGELOG: [enabled via gh release edit (CI auto-body: <tool>) / enabled via gh release create / disabled (tool owns changelog: <tool>) / disabled (no release mechanism)]
+- Release notes from CHANGELOG: [CI-native via release workflow --release-notes/body_path (CI auto-body: <tool>) / gh release edit fallback (CI auto-body: <tool>) / enabled via gh release create / disabled (tool owns changelog: <tool>) / disabled (no release mechanism)]
 
 The skill is ready. Run /version-update [major|minor|patch] to use it.
 ```
