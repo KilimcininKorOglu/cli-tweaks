@@ -332,6 +332,24 @@ Open `BUG-REPORT.md`. Change this bug's status line from `Status: NEW` or `Statu
 Status: FIXED
 ```
 
+### Allowed Status values (HARD RULE)
+
+The `Status:` line may hold EXACTLY ONE of these four values and NOTHING else:
+
+- `NEW` — the bug is unresolved.
+- `FIXED` — done and verified.
+- `WONTFIX` — will not be fixed.
+- `DEFERRED` — not handled this run, may be revisited later.
+
+`OPEN` is a synonym for `NEW` and `SKIPPED` is a synonym for `DEFERRED`; both synonyms are
+merged away, so use only the four values above.
+
+Write the keyword alone. NEVER append a parenthetical, an explanation, a note, a
+rationale, a "(stale)" tag, a commit reference, or any other text after it. The line is
+`Status: FIXED`, never `Status: FIXED (because ...)`. Any value outside this list, including
+`PARTIAL`, is forbidden. Record every rationale in the Phase 7 report to the user, never on
+the Status line.
+
 `BUG-REPORT.md` may be gitignored or otherwise excluded by report rules. This status edit stays in the working tree when the report rules say it must not be committed. Do not stage it, and do not let it block the next bug.
 
 ---
