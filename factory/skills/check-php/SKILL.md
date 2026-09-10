@@ -160,6 +160,12 @@ Verify this is a PHP project and the tools are available.
    Check the floor against https://www.php.net/supported-versions.php; an
    end-of-life branch is a security finding on its own.
 
+   A red CI job is not always visible in the run you are looking at. When the
+   inventory finds drift, check the last few runs of the affected workflow
+   (`gh run list --workflow=<name>.yml --limit 6 --json headSha,conclusion`),
+   because a job broken by an earlier bump keeps failing on every commit after
+   it and is easy to read as a new failure or to miss entirely.
+
 5. Ensure all four tools are available; install whichever is missing:
    ```bash
    test -f vendor/bin/psalm   || composer require --dev vimeo/psalm --no-interaction
@@ -180,17 +186,25 @@ Verify this is a PHP project and the tools are available.
 Run every tool against every source path. Capture human output plus
 machine-readable streams (authoritative for classification).
 
+Write every machine-readable stream into a fresh per-run directory, NEVER a
+fixed `/tmp/phpstan.json` / `/tmp/psalm-taint.json`. A shared path is the classic
+cross-project trap: if a tool errors and does not overwrite, you silently parse
+another repo's stale JSON as this project's findings. A unique dir per run makes
+a write failure show up as a missing file instead of stale data.
+
 ```bash
+RUNDIR="$(mktemp -d /tmp/check-php.XXXXXXXX)"; echo "run dir: $RUNDIR"
+
 # --- Security ---
 composer audit ; echo "composer audit exit: $?"
-composer audit --format=json > /tmp/composer-audit.json 2>/dev/null
+composer audit --format=json > "$RUNDIR/composer-audit.json" 2>/dev/null
 
 vendor/bin/psalm --taint-analysis 2>&1 | tail -40 ; echo "psalm taint exit: $?"
-vendor/bin/psalm --taint-analysis --report=/tmp/psalm-taint.json 2>/dev/null
+vendor/bin/psalm --taint-analysis --report="$RUNDIR/psalm-taint.json" 2>/dev/null
 
 # --- Code quality ---
 vendor/bin/phpstan analyse --no-progress ; echo "phpstan exit: $?"
-vendor/bin/phpstan analyse --no-progress --error-format=json > /tmp/phpstan.json 2>/dev/null
+vendor/bin/phpstan analyse --no-progress --error-format=json > "$RUNDIR/phpstan.json" 2>/dev/null
 
 vendor/bin/rector process --dry-run ; echo "rector exit: $?"    # NEVER without --dry-run in scan mode
 ```
@@ -208,6 +222,12 @@ vendor/bin/phpstan analyse --no-progress --php-version "${FLOOR/./0}"   # e.g. 8
 ```
 Report the floor-pinned result as the real one; a green scan on a newer local
 runtime does NOT clear what production runs.
+
+Before classifying, confirm the report belongs to THIS project. The scan scope is
+the `autoload.psr-4` source paths; every finding's file path MUST fall under the
+current repo root, and none may sit inside `vendor/`. If a path points outside it
+(a sibling project, a stale file), discard that finding and re-run the tool into
+a fresh `$RUNDIR` — never report another project's issues as this one's.
 
 Notes:
 - Scan the real source paths from `autoload.psr-4` (commonly `src/`, `app/`),
@@ -359,6 +379,10 @@ the Step 1 inventory found it:
 Keep every source on the same PHP branch — a stale release workflow deploys on an
 unpatched runtime even when CI is green.
 
+After raising the floor, re-run the Step 1 inventory and confirm no source still
+names a version below it. A bump that misses one source is silent in the scan
+output but red in CI on every push that follows.
+
 ### Psalm taint findings
 - **Real finding**: fix the code at the sink. SQL injection → prepared statements
   with bound parameters, never string concatenation; XSS → escape on output with
@@ -401,7 +425,12 @@ vendor/bin/phpunit                            # a security bump must not break b
 ```
 Expect `No security vulnerability advisories found`, Psalm/PHPStan exit 0, and a
 passing test run. If CI pins the PHP version, run the proof under that exact
-version, not just the local one.
+version, not just the local one. Then remove any throwaway tool install this run
+made — if it added Psalm, PHPStan or Rector only to scan, drop them again
+(`composer remove --dev <package> --no-interaction`) and restore `composer.json`
+and `composer.lock` to their committed state, and say so. The run installed it,
+so the run removes it; offering to remove it and leaving it installed does not
+count.
 
 ## Rules
 
@@ -429,7 +458,16 @@ version, not just the local one.
   treat an end-of-life PHP branch as a security finding.
 - Never "fix" an end-of-life runtime by editing project code — it is a version
   bump; raise the PHP version in EVERY source that declares it, not just
-  `composer.json`.
+  `composer.json`, then re-run the inventory and confirm none still names a
+  version below the floor.
+- Write every machine-readable stream into a fresh `mktemp -d` run directory,
+  never a fixed `/tmp` path, so a failed write shows up as a missing file instead
+  of another project's stale JSON.
+- Confirm every finding's file path falls under the current repo root and outside
+  `vendor/` before classifying it; discard and re-scan anything that points
+  elsewhere.
+- Clean up any throwaway tool install this run made, and restore `composer.json`
+  and `composer.lock` to their committed state.
 - Scan against a lockfile; if none exists, say the scan used a fresh resolution,
   and treat an application's missing committed lockfile as a finding.
 - For Psalm false positives, prefer a real escaper; use
