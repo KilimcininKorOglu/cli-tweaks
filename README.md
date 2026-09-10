@@ -18,6 +18,7 @@ A collection of hooks, skills, and output styles for Factory Droid and Claude Co
 | `memory-reinject.py`  | UserPromptSubmit     | Re-injects MEMORY.md critical rules (every 5th msg) and the full global instruction file (every 15th) to counter recency bias |
 | `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
 | `git-protect.py`      | PreToolUse (Bash)    | Blocks `git add -f/--force` on files listed in the global gitignore                             |
+| `bash-search-guard.py` | PreToolUse (Bash)   | Blocks a shell search that reads files (`grep`, `sed`, `rg`, `ack`, `ag`, `git grep`) and points at the ripwire MCP; piped stream filtering stays allowed |
 | `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |
 
 ### Skills

@@ -5,6 +5,7 @@
   "hookNotifyPlanSave": false,
   "hookNotifyAskUser": false,
   "hookNotifyStop": false,
+  "hookBlockBashSearch": true,
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -23,6 +24,11 @@
           {
             "type": "command",
             "command": "python3 ~/.factory/hooks/git-protect.py",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "python3 ~/.factory/hooks/bash-search-guard.py",
             "timeout": 5
           }
         ]
