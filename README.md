@@ -14,7 +14,7 @@ A collection of hooks, skills, and output styles for Factory Droid and Claude Co
 | `save-plan.py`        | PreToolUse           | Notifies while a plan waits for approval; also saves the plan to disk on Factory |
 | `notify-ask.py`       | PreToolUse           | Notifies while a question waits for an answer, with the first question's header |
 | `notify-stop.py`      | Stop/StopFailure     | Notifies when the turn ends, with a one-line excerpt of the final message or the error |
-| `memory-save.py`      | Stop                 | Reminds the agent to update MEMORY.md; offloads old entries to topic files near the line cap and migrates a malformed file to the standard structure |
+| `memory-save.py`      | Stop                 | Reminds the agent to update MEMORY.md; offloads old entries to topic files near the line cap and migrates a malformed file to the standard structure; stays silent while a batch skill holds the latch file `~/.cli-tweaks/.batch-locks/<ppid>` |
 | `memory-reinject.py`  | UserPromptSubmit     | Re-injects MEMORY.md critical rules (every 5th msg) and the full global instruction file (every 15th) to counter recency bias |
 | `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
 | `git-protect.py`      | PreToolUse (Bash, Write/Edit) | Keeps a path listed in the global gitignore out of git by every route: `git add` with or without `--force`, an operand whose contents cannot be proven (`.`, `-A`, a glob, a directory, a variable), `git update-index --add`, `git -c core.excludesfile=`, `git commit`/`git mv` on a protected path, a Bash write to the ignore file, and a Write or Edit of `~/.gitignore_global` |
@@ -45,7 +45,7 @@ A collection of hooks, skills, and output styles for Factory Droid and Claude Co
 | `check-swift`                  | `/check-swift`                  | Runs four Swift scans (dependency-check, semgrep, SwiftLint, swift-format) into a ranked report |
 | `check-rust`                   | `/check-rust`                   | Runs four Rust scans (cargo-audit, cargo-deny, clippy, edition check) into a ranked report |
 | `check-js`                     | `/check-js`                     | Runs four JS/TS scans (package audit, semgrep, ESLint, knip) into a ranked report |
-| `check-php`                    | `/check-php`                    | Runs four PHP scans (composer audit, Psalm taint, PHPStan, Rector) into a ranked report |
+| `check-php`                    | `/check-php`                    | Runs five PHP scans (composer audit, Progpilot taint, Semgrep, PHPStan, Rector) plus the PHPMD complexity gate into a ranked report |
 | `go-time-int64`                | `/go-time-int64`                | Replaces Go `time.Time` fields in hot structs with `int64` to cut memory and GC pressure |
 | `pg-fair-queue`                | `/pg-fair-queue`                | Designs a fair multi-tenant Postgres task queue with write-time block-ID round-robin |
 | `pg-insert-perf`               | `/pg-insert-perf`               | Speeds up Postgres inserts with buffered batches or COPY and a right-sized pool |

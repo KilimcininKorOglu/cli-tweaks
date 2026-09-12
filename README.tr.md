@@ -14,7 +14,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `save-plan.py`        | PreToolUse           | Plan onay beklerken bildirim gönderir; Factory'de ayrıca planı diske kaydeder                                        |
 | `notify-ask.py`       | PreToolUse           | Soru cevap beklerken ilk sorunun başlığıyla bildirim gönderir                                                       |
 | `notify-stop.py`      | Stop/StopFailure     | Turn bittiğinde son mesajdan veya hatadan tek satırlık alıntıyla bildirim gönderir                                  |
-| `memory-save.py`      | Stop                 | MEMORY.md'yi güncellemesini hatırlatır; satır sınırına yaklaşınca eski girdileri topic dosyalarına taşır ve bozuk dosyayı standart yapıya migration yapar |
+| `memory-save.py`      | Stop                 | MEMORY.md'yi güncellemesini hatırlatır; satır sınırına yaklaşınca eski girdileri topic dosyalarına taşır ve bozuk dosyayı standart yapıya migration yapar; bir batch skill `~/.cli-tweaks/.batch-locks/<ppid>` latch dosyasını tuttuğu sürece sessiz kalır |
 | `memory-reinject.py`  | UserPromptSubmit     | Her 5. mesajda MEMORY.md kritik kurallarını, her 15. mesajda tüm global talimat dosyasını yeniden enjekte ederek bağlam kaybını önler |
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                   |
 | `git-protect.py`      | PreToolUse (Bash, Write/Edit) | Global gitignore'da yazan bir path'in git'e girmesini her yoldan engeller: `--force` olsun olmasın `git add`, içeriği ispatlanamayan operand (`.`, `-A`, glob, dizin, değişken), `git update-index --add`, `git -c core.excludesfile=`, korumalı path üzerinde `git commit`/`git mv`, ignore dosyasına Bash ile yazma ve `~/.gitignore_global`'in Write/Edit ile değiştirilmesi |
@@ -45,7 +45,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `check-swift`                  | `/check-swift`                  | Dört Swift taraması (dependency-check, semgrep, SwiftLint, swift-format) çalıştırıp sıralı rapor üretir |
 | `check-rust`                   | `/check-rust`                   | Dört Rust taraması (cargo-audit, cargo-deny, clippy, edition kontrolü) çalıştırıp sıralı rapor üretir |
 | `check-js`                     | `/check-js`                     | Dört JS/TS taraması (paket audit, semgrep, ESLint, knip) çalıştırıp sıralı rapor üretir |
-| `check-php`                    | `/check-php`                    | Dört PHP taraması (composer audit, Psalm taint, PHPStan, Rector) çalıştırıp sıralı rapor üretir |
+| `check-php`                    | `/check-php`                    | Beş PHP taraması (composer audit, Progpilot taint, Semgrep, PHPStan, Rector) ve PHPMD complexity gate çalıştırıp sıralı rapor üretir |
 | `go-time-int64`                | `/go-time-int64`                | Sıcak Go struct'larındaki `time.Time` alanlarını `int64` ile değiştirip bellek ve GC yükünü azaltır |
 | `pg-fair-queue`                | `/pg-fair-queue`                | Write-time block-ID round-robin ile adil multi-tenant Postgres task queue tasarlar |
 | `pg-insert-perf`               | `/pg-insert-perf`               | Buffer'lı batch veya COPY ve doğru boyutlu pool ile Postgres insert'lerini hızlandırır |
