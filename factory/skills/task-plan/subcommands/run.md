@@ -2,6 +2,19 @@
 
 When `/task-plan run` is executed, autonomously implement ALL tasks without stopping.
 
+## Take the batch latch first
+
+Before the first task, run:
+
+```bash
+mkdir -p ~/.cli-tweaks/.batch-locks && touch ~/.cli-tweaks/.batch-locks/$PPID
+```
+
+This keeps the `memory-save.py` stop hook silent for the whole run, so a finished
+task does not cost an extra turn. Release the latch in the Final Completion
+Output step, never earlier. The hook drops a latch older than six hours by
+itself, but that is a backstop, not the release.
+
 ## CRITICAL: AUTONOMOUS EXECUTION RULE
 
 This rule is NON-NEGOTIABLE and overrides all other behaviors:
@@ -31,9 +44,10 @@ After each task completion:
 2. Update `tasks/tasks-status.md`
 3. Update `tasks/run-state.md` with current position (see [run-state template](../templates/run-state.md))
 4. Update `tasks/task-execution-plan.md`
-5. Git commit:
+5. Git commit. Stage the explicit paths this task touched, never `git add -A` or
+   `git add .`, because a blanket stage sweeps in unrelated work:
    ```bash
-   git add -A
+   git add <path> [<path> ...]
    git commit -m "feat(TXXX): [Task name] completed"
    ```
 
@@ -97,7 +111,14 @@ Show ONLY the next feature. Do NOT list all remaining features.
 
 ## Final Completion Output
 
-When ALL tasks are done:
+When ALL tasks are done, release the batch latch first:
+
+```bash
+rm -f ~/.cli-tweaks/.batch-locks/$PPID
+```
+
+The stop hook blocks again from here on, so the turn that ends the run carries
+everything the run learned into memory. Then print:
 ```
 ALL TASKS COMPLETED
   Duration: 4h 30m

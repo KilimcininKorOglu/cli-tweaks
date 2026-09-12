@@ -256,6 +256,19 @@ Recommended fix order: P1 → P2 → P3 → P4 → P5 (re-measure after each)
 
 ## Phase 4: Fix mode
 
+**Take the batch latch first.** Fix mode applies one pattern after another, so run
+this before the first pattern:
+
+```bash
+mkdir -p ~/.cli-tweaks/.batch-locks && touch ~/.cli-tweaks/.batch-locks/$PPID
+```
+
+This keeps the `memory-save.py` stop hook silent for the whole run, so a finished
+pattern does not cost an extra turn. Continue to the next pattern in the same
+turn. Release the latch at the end of Verification, never earlier. A decision the
+run genuinely needs from the user, such as a benchmark regression, still ends the
+turn; the latch removes only the hook turn.
+
 Apply findings **in order P1 → P5, one pattern per commit**, re-measuring after each. Each step:
 
 1. Change the type definition.
@@ -293,6 +306,15 @@ cargo test --release alloc_per_entry -- --nocapture
 # Throughput/latency unchanged or better
 cargo bench
 ```
+
+Release the batch latch after the last measurement:
+
+```bash
+rm -f ~/.cli-tweaks/.batch-locks/$PPID
+```
+
+The stop hook blocks again from here on, so the turn that ends the run carries
+everything the run learned into memory.
 
 ## Rules
 
