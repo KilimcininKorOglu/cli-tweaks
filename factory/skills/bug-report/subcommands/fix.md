@@ -83,7 +83,22 @@ Batch mode has ONE failure worth naming: stopping early. Fixing three bugs and
 ending the turn is a failed run, not a partial success. This section is the
 contract that prevents it.
 
-**Write the ledger first.** Before Phase 0 of the first bug, print the full queue
+**Take the batch latch first.** Before you print the ledger, run:
+
+```bash
+mkdir -p ~/.cli-tweaks/.batch-locks && touch ~/.cli-tweaks/.batch-locks/$PPID
+```
+
+This tells the `memory-save.py` stop hook that a batch run is in progress, so it
+stays silent instead of blocking after every bug. Without it each bug costs two
+turns: one to finish the bug, one to answer the hook. Release the latch in the
+Final Summary step, never earlier.
+
+`[pending]`, `[fixed]` and `[skipped]` below are LEDGER markers for this run.
+They are not `Status:` values. The `Status:` line in `BUG-REPORT.md` accepts only
+`NEW`, `FIXED`, `WONTFIX` and `DEFERRED`; never write a ledger marker there.
+
+**Write the ledger.** Before Phase 0 of the first bug, print the full queue
 and keep it as the run's state:
 
 ```
@@ -97,6 +112,24 @@ Fix queue (N total)
 `Progress: i/N complete · next: BUG-<ID>` (or `next: none, printing Final
 Summary`). This line is mandatory; it is what keeps the queue alive across a long
 run.
+
+**Rebuild the ledger after a context compaction.** A compaction replaces the
+conversation with a summary, and the printed ledger does not survive it. The
+summary carries prose about the run, not the numbered queue, so the queue is gone
+unless you rebuild it. Treat the first action after any compaction as this
+rebuild, before any other work:
+
+1. Read `BUG-REPORT.md` again.
+2. Collect every finding whose `Status:` is `NEW` or `OPEN`, in report order.
+3. Print the ledger again, in full, with every already-handled entry marked
+   `[fixed]` or `[skipped]` from the report's own `Status:` values.
+4. Resume at the first `[pending]` entry.
+
+A compaction is never a reason to stop, to ask what to do next, or to treat the
+run as finished. It is a reason to re-read the report. Losing the `Progress:`
+line across a compaction is the measured way a batch run dies: the queue stops
+being restated, every per-bug report then reads like an ending, and the run stops
+one bug at a time.
 
 **NEVER end your turn while the ledger still has a `[pending]` entry.** A batch
 run ends by itself in exactly ONE case: every ledger entry is `[fixed]` or
@@ -123,7 +156,13 @@ entry. A blocker affects at most the current bug; it never cancels the queue.
 Nothing else qualifies. In particular, these are NOT stopping points:
 
 - **A finished per-bug report.** Phase 7 output is a checkpoint, not an ending.
-  Continue to the next bug in the SAME turn.
+  Continue to the next bug in the SAME turn. Naming the next bug is not the same
+  as starting it: printing `next: BUG-<ID>`, or writing any sentence that defers
+  it to a later turn, and then ending the turn is the exact failure this contract
+  bans. The `next:` field is a promise you keep in the same message.
+- **A stop hook or any other end-of-turn hook.** A hook that runs when your turn
+  ends does not end the run. Do what it asks, then resume the ledger in that same
+  turn. Never let a hook turn one checkpoint into two stops.
 - **A plan approval round-trip.** When Phase 2C approval ends a turn, your VERY
   FIRST action in the next turn is to resume that bug's Phase 3, then continue
   the ledger. Do not re-plan finished work and do not restart the queue.
@@ -381,6 +420,17 @@ In single-bug mode and ad-hoc mode, STOP here.
 ---
 
 ## Final Summary
+
+**Release the batch latch first**, before you print anything:
+
+```bash
+rm -f ~/.cli-tweaks/.batch-locks/$PPID
+```
+
+The stop hook blocks again from here on, so the turn that ends the run carries
+everything the whole run learned into memory. A latch left behind would silence
+the hook for the rest of the session; the hook also drops a latch older than six
+hours by itself, but that is a backstop, not the release.
 
 After the last bug in batch mode, print a summary:
 - Total bugs processed.

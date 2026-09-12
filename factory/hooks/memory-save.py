@@ -10,7 +10,36 @@ import os
 import re
 import subprocess
 import sys
+import time
 from pathlib import Path
+
+# A batch skill (for example `/bug-report fix` with no argument) runs many units
+# of work in one turn and must not be interrupted between them. This hook blocks
+# on every stop, so without a latch each unit costs two turns: one to stop, one
+# to answer the hook. The skill creates the latch file before its first unit and
+# removes it before its final summary.
+#
+# The latch is keyed by parent process id, the same key `.session-locks` uses, so
+# a new session never inherits an old session's latch. A crashed session can
+# still leave the file behind under a recycled pid, so a latch older than
+# BATCH_LATCH_MAX_AGE is removed and the hook blocks as normal.
+BATCH_LATCH_MAX_AGE = 6 * 60 * 60
+
+
+def _batchLatchHolds():
+    """Return whether a batch skill asked this hook to stay silent."""
+    latch = Path.home() / ".cli-tweaks" / ".batch-locks" / str(os.getppid())
+    try:
+        age = time.time() - latch.stat().st_mtime
+    except (FileNotFoundError, OSError):
+        return False
+    if age > BATCH_LATCH_MAX_AGE:
+        try:
+            latch.unlink()
+        except OSError:
+            pass
+        return False
+    return True
 
 
 def _project_name_from_git_common_dir(cwd):
@@ -72,6 +101,12 @@ except json.JSONDecodeError:
 # If already triggered once this turn, let Droid stop
 stopHookActive = inputData.get("stop_hook_active", False)
 if stopHookActive:
+    sys.exit(0)
+
+# A batch skill is mid-run. Stay silent so its queue is not broken into one turn
+# per unit. The skill removes the latch before its final summary, and that last
+# stop reaches the prompt below with everything the whole run learned.
+if _batchLatchHolds():
     sys.exit(0)
 
 cwd = inputData.get("cwd", os.getcwd())
