@@ -47,10 +47,10 @@ file changed since. Say out loud that you are reusing it.
 
 Each finding lands in exactly one bucket. Print both lists.
 
-| Bucket | Meaning | Typical findings |
-|--------|---------|------------------|
+| Bucket           | Meaning                                   | Typical findings                                                                                                                                                                       |
+|------------------|-------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Fixable here** | The fix is an edit to a file in this repo | robots.txt AI crawler blocks, missing llms.txt, missing or broken JSON-LD, missing title/meta description/canonical, broken heading hierarchy, missing alt text, weak internal linking |
-| **Out of repo** | The fix is real but lives somewhere else | brand mentions on third-party platforms, CDN or edge headers, DNS, CMS-hosted content, hosting-level SSR and Core Web Vitals, review-platform presence |
+| **Out of repo**  | The fix is real but lives somewhere else  | brand mentions on third-party platforms, CDN or edge headers, DNS, CMS-hosted content, hosting-level SSR and Core Web Vitals, review-platform presence                                 |
 
 An out-of-repo finding stays OPEN. It keeps its category non-green, and it
 appears in the final report with an owner and a next action. Never close a

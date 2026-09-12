@@ -19,11 +19,11 @@ started.
 
 Parse the user's argument and follow exactly ONE of these paths:
 
-| Argument | Path |
-|----------|------|
-| none | Batch mode |
-| matches `BUG-<number>` (case-insensitive) | Single-bug mode |
-| any other text | Free-text mode, which resolves to one of the two above |
+| Argument                                  | Path                                                   |
+|-------------------------------------------|--------------------------------------------------------|
+| none                                      | Batch mode                                             |
+| matches `BUG-<number>` (case-insensitive) | Single-bug mode                                        |
+| any other text                            | Free-text mode, which resolves to one of the two above |
 
 ### No argument, batch mode
 
@@ -179,10 +179,10 @@ invoking batch mode. Asking is the same failure as stopping.
 
 Keep the two kinds of question apart:
 
-| Question | Rule |
-|----------|------|
-| Queue progression ("continue?", "next one?") | FORBIDDEN — just continue |
-| Blocker resolution ("this tree is dirty, stash or skip?") | REQUIRED — ask and wait |
+| Question                                                  | Rule                      |
+|-----------------------------------------------------------|---------------------------|
+| Queue progression ("continue?", "next one?")              | FORBIDDEN — just continue |
+| Blocker resolution ("this tree is dirty, stash or skip?") | REQUIRED — ask and wait   |
 
 The ban is on asking for permission to do what was already requested. It is not a
 ban on asking for a decision you genuinely cannot make.
