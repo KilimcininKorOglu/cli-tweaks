@@ -44,8 +44,7 @@ GUIDANCE = """Use the ripwire MCP for codebase search:
   read one symbol       -> ripwire fetch_body
   read a file or slice  -> the Read tool with offset/limit, never cat/head/sed
 Filtering another command's output is still allowed, e.g. `cmd | grep x`, and so
-are a redirect (`cat a b > c`) and a live follow (`tail -f app.log`).
-Set "{key}": false in {settings} to disable this guard."""
+are a redirect (`cat a b > c`) and a live follow (`tail -f app.log`)."""
 
 
 def isEnabled(settingsFile):
