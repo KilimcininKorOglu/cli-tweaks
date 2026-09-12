@@ -46,6 +46,7 @@ A collection of hooks, skills, and output styles for Factory Droid and Claude Co
 | `check-rust`                   | `/check-rust`                   | Runs four Rust scans (cargo-audit, cargo-deny, clippy, edition check) into a ranked report |
 | `check-js`                     | `/check-js`                     | Runs four JS/TS scans (package audit, semgrep, ESLint, knip) into a ranked report |
 | `check-php`                    | `/check-php`                    | Runs five PHP scans (composer audit, Progpilot taint, Semgrep, PHPStan, Rector) plus the PHPMD complexity gate into a ranked report |
+| `check-python`                 | `/check-python`                 | Runs four Python scans (pip-audit, bandit, Semgrep, ruff) plus the ruff pyupgrade tier, the `C901` complexity gate and mypy when configured into a ranked report |
 | `go-time-int64`                | `/go-time-int64`                | Replaces Go `time.Time` fields in hot structs with `int64` to cut memory and GC pressure |
 | `pg-fair-queue`                | `/pg-fair-queue`                | Designs a fair multi-tenant Postgres task queue with write-time block-ID round-robin |
 | `pg-insert-perf`               | `/pg-insert-perf`               | Speeds up Postgres inserts with buffered batches or COPY and a right-sized pool |

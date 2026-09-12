@@ -9,12 +9,12 @@ description: >
   "lint tara", "lint check", "vulnerability scan", "vuln scan", "scan for CVEs",
   "check vulnerabilities", "security scan", "static security analysis" — but ONLY
   when the target project is Swift. Those phrases are shared verbatim with
-  check-golang, check-js, check-php and check-rust, so they carry no language
+  check-golang, check-js, check-php, check-python and check-rust, so they carry no language
   signal: choose by what the project actually is (`Package.swift` or an Xcode
   project present) and never by the phrase alone. If the repository holds more
   than one of these languages, ask which one the user means instead of guessing.
-  Treat "semgrep" the same way: check-js uses it too, so it names a tool rather
-  than a language and selects nothing on its own.
+  Treat "semgrep" the same way: check-js, check-php and check-python use it too,
+  so it names a tool rather than a language and selects nothing on its own.
   Runs FOUR tools by default — dependency-check (CVEs in dependencies),
   semgrep (security static analysis), SwiftLint (lint), and swift-format lint
   (style/modernization) — installs any that are missing via Homebrew, scans every

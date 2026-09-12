@@ -46,6 +46,7 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 | `check-rust`                   | `/check-rust`                   | Dört Rust taraması (cargo-audit, cargo-deny, clippy, edition kontrolü) çalıştırıp sıralı rapor üretir |
 | `check-js`                     | `/check-js`                     | Dört JS/TS taraması (paket audit, semgrep, ESLint, knip) çalıştırıp sıralı rapor üretir |
 | `check-php`                    | `/check-php`                    | Beş PHP taraması (composer audit, Progpilot taint, Semgrep, PHPStan, Rector) ve PHPMD complexity gate çalıştırıp sıralı rapor üretir |
+| `check-python`                 | `/check-python`                 | Dört Python taraması (pip-audit, bandit, Semgrep, ruff), ruff pyupgrade tier'ı, `C901` complexity gate ve config varsa mypy çalıştırıp sıralı rapor üretir |
 | `go-time-int64`                | `/go-time-int64`                | Sıcak Go struct'larındaki `time.Time` alanlarını `int64` ile değiştirip bellek ve GC yükünü azaltır |
 | `pg-fair-queue`                | `/pg-fair-queue`                | Write-time block-ID round-robin ile adil multi-tenant Postgres task queue tasarlar |
 | `pg-insert-perf`               | `/pg-insert-perf`               | Buffer'lı batch veya COPY ve doğru boyutlu pool ile Postgres insert'lerini hızlandırır |

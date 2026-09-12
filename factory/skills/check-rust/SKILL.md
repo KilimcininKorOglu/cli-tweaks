@@ -9,7 +9,7 @@ description: >
   "lint tara", "lint check", "vulnerability scan", "vuln scan", "scan for CVEs",
   "check vulnerabilities", "security scan", "static security analysis" — but ONLY
   when the target project is Rust. Those phrases are shared verbatim with
-  check-golang, check-js, check-php and check-swift, so they carry no language
+  check-golang, check-js, check-php, check-python and check-swift, so they carry no language
   signal: choose by what the project actually is (`Cargo.toml` present) and never
   by the phrase alone. If the repository holds more than one of these languages,
   ask which one the user means instead of guessing.

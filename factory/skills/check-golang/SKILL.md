@@ -9,7 +9,7 @@ description: >
   "lint tara", "lint check", "vulnerability scan", "vuln scan", "scan for CVEs",
   "check vulnerabilities", "security scan", "static security analysis" — but ONLY
   when the target project is Go. Those phrases are shared verbatim with
-  check-js, check-php, check-rust and check-swift, so they carry no language
+  check-js, check-php, check-python, check-rust and check-swift, so they carry no language
   signal: choose by what the project actually is (`go.mod` present) and never by
   the phrase alone. If the repository holds more than one of these languages, ask
   which one the user means instead of guessing.
