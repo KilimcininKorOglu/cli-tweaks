@@ -1,15 +1,11 @@
 ---
 name: ios-uikit
 description: >
-  This skill MUST be invoked when the user says "UIKit", "iOS geliştirme",
-  "programmatic UI", "table view", "collection view", "Auto Layout",
-  "UIViewController", "UINavigationController", "Core Animation",
-  "UIKit review", "UIKit build", "iOS view controller", "UIKit pattern",
-  "programmatic layout", or any variation requesting UIKit development,
-  review, or improvement. Covers programmatic UIKit with Auto Layout,
-  table/collection views, navigation, animation, networking, architecture,
-  and 20 reference documents with production-ready patterns.
+  Programmatic UIKit development, review and improvement: Auto Layout, table and
+  collection views, navigation, Core Animation, networking, architecture, and 20
+  reference documents with production-ready patterns.
 argument-hint: "[review | build | improve]"
+disable-model-invocation: true
 ---
 
 # Programmatic UIKit Development

@@ -1,18 +1,13 @@
 ---
 name: rust-mem-layout
 description: >
-  This skill MUST be invoked when the user says "rust memory", "memory layout",
-  "bellek optimizasyonu", "struct boyutu", "struct size", "shrink struct",
-  "reduce allocations", "allocation azalt", "cache entry memory", "Box<[T]>",
-  "enum size", "large enum variant", "padding", "hot struct", "per-entry memory",
-  "embedded rust", "gömülü rust", "no_std", "RAM kısıtlı", "bellek kısıtlı cihaz"
-  or any variation asking to reduce the memory footprint or allocation count of
-  Rust data structures, whether stored in bulk (caches, maps, record lists,
-  arenas) or on a memory-constrained target. Scans the crate for the five layout anti-patterns from Cloudflare's
-  1.1.1.1 DNS-cache optimization (growable containers on immutable data,
-  parallel lists, derivable fields, oversized enums, per-record heap boxes) and
-  fixes them.
+  Reduces the memory footprint and allocation count of Rust data structures held
+  in bulk (caches, maps, record lists, arenas) or on memory-constrained targets.
+  Scans the crate for the five layout anti-patterns from Cloudflare's 1.1.1.1
+  DNS-cache optimization (growable containers on immutable data, parallel lists,
+  derivable fields, oversized enums, per-record heap boxes) and fixes them.
 argument-hint: "[scan | fix]"
+disable-model-invocation: true
 ---
 
 # Rust Memory Layout — scan & fix

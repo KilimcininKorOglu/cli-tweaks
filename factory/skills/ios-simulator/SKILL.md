@@ -1,15 +1,11 @@
 ---
 name: ios-simulator
 description: >
-  This skill MUST be invoked when the user says "simulator", "simülatör",
-  "iOS test", "simulator boot", "simctl", "app launch", "ekran analiz",
-  "screen map", "accessibility audit", "erişilebilirlik", "push notification",
-  "visual diff", "build and test", "xcode build", "simulator oluştur",
-  "simulator sil", "app yükle", or any variation requesting iOS simulator
-  automation, app testing, building, or device management. Provides 21
-  production scripts for semantic UI navigation, build automation,
-  accessibility testing, and simulator lifecycle management.
+  iOS simulator automation with 21 production scripts: semantic UI navigation,
+  build and test automation, app install and launch, accessibility auditing,
+  push notifications, visual diff, and simulator lifecycle management.
 argument-hint: "<script-name> [options]"
+disable-model-invocation: true
 ---
 
 # iOS Simulator Automation

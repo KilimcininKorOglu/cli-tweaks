@@ -1,13 +1,11 @@
 ---
 name: task-plan
 description: >
-  This skill MUST be invoked when the user says "task-plan", "görev planla",
-  "break down this PRD", "create tasks from spec", "PRD'yi parçala",
-  "görevleri oluştur" or any variation requesting task breakdown from a
-  specification document. SHOULD also invoke when user mentions "feature
-  breakdown", "sprint planning", "task tracking", or wants to manage a
-  structured development workflow with features and tasks.
+  Breaks a specification or PRD into tracked features and tasks, then runs them
+  in dependency order. Manages a structured development workflow with per-task
+  status tracking.
 argument-hint: "[PRD path | add <description> | status | run]"
+disable-model-invocation: true
 ---
 
 # Task Plan - Generate Task Breakdown from PRD

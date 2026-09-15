@@ -1,24 +1,15 @@
 ---
 name: check-php
 description: >
-  PHP security and code-quality scan of the whole project. Invoke on "check-php",
-  "composer audit", "progpilot", "semgrep", "phpstan", "rector", "taint analysis",
-  "php lint", or any variation naming PHP or its tooling.
-  ALSO invoke on the language-agnostic requests "cve tara", "cve raporu",
-  "güvenlik açığı tara", "zafiyet tara", "güvenlik taraması", "kod kalitesi tara",
-  "lint tara", "lint check", "vulnerability scan", "vuln scan", "scan for CVEs",
-  "check vulnerabilities", "security scan", "static security analysis" — but ONLY
-  when the target project is PHP. Those phrases are shared verbatim with
-  check-golang, check-js, check-python, check-rust and check-swift, so they carry no language
-  signal: choose by what the project actually is (`composer.json` present) and
-  never by the phrase alone. If the repository holds more than one of these
-  languages, ask which one the user means instead of guessing.
-  Runs FIVE tools by default — composer audit (CVEs), Progpilot (taint analysis),
-  Semgrep (security pattern rules), PHPStan (lint), and Rector (modernization) —
-  plus the PHPMD complexity gate; installs any that are missing, scans every
-  source path, classifies each finding, and produces a ranked combined report
-  with fix guidance.
+  PHP security and code-quality scan of the whole project. Runs FIVE tools by default — composer audit (CVEs), Progpilot (taint
+  analysis), Semgrep (security pattern rules), PHPStan (lint), and Rector
+  (modernization) —
+  installs any that are missing, scans every source path, classifies each
+  finding, and produces a ranked combined report with fix guidance.
+  The PHPMD complexity gate runs with them.
+  Requires a PHP project (`composer.json` present); check-golang, check-js, check-python, check-rust and check-swift cover the other languages.
 argument-hint: "[scan | report | fix]"
+disable-model-invocation: true
 ---
 
 # PHP Security & Quality Scanner

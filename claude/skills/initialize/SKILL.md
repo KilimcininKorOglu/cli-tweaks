@@ -1,15 +1,11 @@
 ---
 name: initialize
 description: >
-  This skill MUST be invoked when the user says "initialize",
-  "başlat", "AGENTS.md oluştur", "create AGENTS.md" or any variation
-  requesting project initialization for AI agents. SHOULD also invoke
-  when user mentions "setup AI rules", "configure agents", "agent
-  kurallarını ayarla". Analyzes the codebase and creates/updates an
-  AGENTS.md file for AI coding agents. Scans project files, build configs,
-  and existing AI rules to generate comprehensive guidance for all AI agents
-  (Cursor, Codex, Gemini CLI, Copilot, etc.).
+  Analyzes the codebase and creates or updates an AGENTS.md file for AI coding
+  agents. Scans project files, build configs, and existing AI rules to generate
+  comprehensive guidance for all AI agents (Cursor, Codex, Gemini CLI, Copilot).
 argument-hint: ""
+disable-model-invocation: true
 ---
 
 # Initialize - Create AGENTS.md

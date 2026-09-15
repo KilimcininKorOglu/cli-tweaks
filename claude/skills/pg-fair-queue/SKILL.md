@@ -1,16 +1,11 @@
 ---
 name: pg-fair-queue
 description: >
-  This skill MUST be invoked when the user says "fair queue", "adil kuyruk",
-  "multi-tenant queue", "tenant isolation queue", "round-robin queue",
-  "noisy neighbor", "bir kullanıcı kuyruğu tıkıyor", "SKIP LOCKED",
-  "postgres task queue", "postgres job queue", "kuyruk starvation",
-  "per-tenant concurrency", "group concurrency limit" or any variation about
-  designing or auditing a Postgres-backed task queue where one tenant's
-  backlog must not starve others. Audits an existing queue (schema + pop
-  query) for fairness and O(n) traps, and on request applies a
+  Audits a Postgres-backed task queue (schema plus pop query) for fairness and
+  O(n) traps where one tenant's backlog starves others, and on request applies a
   write-time block-ID round-robin design with per-group concurrency limits.
 argument-hint: "[scan | fix]"
+disable-model-invocation: true
 ---
 
 # Postgres Fair Queue

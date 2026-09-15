@@ -1,13 +1,11 @@
 ---
 name: draft-to-article
 description: >
-  This skill MUST be invoked when the user says "format article", "makale formatla",
-  "draft to article", "taslağı makaleye çevir", "taslağı formatla", "X article",
-  "LinkedIn article", "Medium article", "Substack article", "makale yaz",
-  "article format", or any variation requesting long-form draft formatting for a
-  publishing platform. Restructures continuous text into platform-optimized articles
-  with section architecture, paragraph rhythm, visual placement, and title options.
+  Restructures a continuous draft into a platform-optimized long-form article
+  with section architecture, paragraph rhythm, visual placement, and title
+  options. Targets X, LinkedIn or Medium.
 argument-hint: "[x | linkedin | medium]"
+disable-model-invocation: true
 ---
 
 # Draft to Article

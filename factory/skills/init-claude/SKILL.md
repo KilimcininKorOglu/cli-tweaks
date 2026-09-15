@@ -1,14 +1,11 @@
 ---
 name: init-claude
 description: >
-  This skill MUST be invoked when the user says "initialize",
-  "başlat", "CLAUDE.md oluştur", "create CLAUDE.md" or any variation
-  requesting CLAUDE.md creation. SHOULD also invoke when user mentions
-  "setup Claude rules", "configure Claude Code". Analyzes the codebase
-  and creates/updates a CLAUDE.md file for Claude Code. Scans project
-  files, build configs, and existing AI rules to generate comprehensive
-  guidance specific to Claude Code.
+  Analyzes the codebase and creates or updates a CLAUDE.md file for Claude Code.
+  Scans project files, build configs, and existing AI rules to generate guidance
+  specific to Claude Code.
 argument-hint: ""
+disable-model-invocation: true
 ---
 
 # Init - Create CLAUDE.md

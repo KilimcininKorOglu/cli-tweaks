@@ -1,14 +1,10 @@
 ---
 name: frontend-design
 description: >
-  This skill MUST be invoked when the user says "frontend yap", "UI tasarla",
-  "component oluştur", "sayfa yap", "design ref", "design system", "DESIGN.md",
-  "site gibi yap", "GitHub tarzı", "Vercel tarzı", "Anthropic tarzı",
-  "generate design system", "design system oluştur", or any variation requesting
-  frontend code generation, design system reference loading, or UI building.
-  Builds distinctive production-grade interfaces and provides a 27-site design
-  system catalog with URL-based generator.
+  Builds distinctive production-grade frontend interfaces and provides a 27-site
+  design system catalog with a URL-based generator.
 argument-hint: "[use <site> | generate <url> | extract [path] | list]"
+disable-model-invocation: true
 ---
 
 # Frontend Design

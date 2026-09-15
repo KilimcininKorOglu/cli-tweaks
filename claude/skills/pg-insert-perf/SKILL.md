@@ -1,16 +1,11 @@
 ---
 name: pg-insert-perf
 description: >
-  This skill MUST be invoked when the user says "insert performance",
-  "insert hızlandır", "postgres yavaş yazıyor", "batch insert", "bulk insert",
-  "COPY FROM", "pgx CopyFrom", "SendBatch", "toplu yazma", "write throughput",
-  "connection pool size", "bağlantı havuzu", "too many connections",
-  "flush buffer", "yazma optimizasyonu" or any variation about speeding up
-  Postgres INSERT throughput or right-sizing connection usage. Scans the
-  project for single-row-in-a-loop inserts, oversized pools, and missing
-  batching/COPY; reports expected gains; on request implements buffered
-  batch inserts or COPY with backpressure.
+  Scans the project for single-row-in-a-loop Postgres inserts, oversized
+  connection pools, and missing batching or COPY; reports the expected gains;
+  on request implements buffered batch inserts or COPY with backpressure.
 argument-hint: "[scan | fix]"
+disable-model-invocation: true
 ---
 
 # Postgres Insert Performance

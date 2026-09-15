@@ -1,28 +1,17 @@
 ---
 name: check-python
 description: >
-  Python security and code-quality scan of the whole project. Invoke on
-  "check-python", "pip-audit", "bandit", "ruff", "pyupgrade", "mypy",
-  "python lint", or any variation naming Python or its tooling.
-  ALSO invoke on the language-agnostic requests "cve tara", "cve raporu",
-  "güvenlik açığı tara", "zafiyet tara", "güvenlik taraması", "kod kalitesi tara",
-  "lint tara", "lint check", "vulnerability scan", "vuln scan", "scan for CVEs",
-  "check vulnerabilities", "security scan", "static security analysis" — but ONLY
-  when the target project is Python. Those phrases are shared verbatim with
-  check-golang, check-js, check-php, check-rust and check-swift, so they carry no
-  language signal: choose by what the project actually is (`.py` files present,
-  usually with `pyproject.toml`, `requirements*.txt`, `setup.py` or `setup.cfg`)
-  and never by the phrase alone. If the repository holds more than one of these
-  languages, ask which one the user means instead of guessing. Treat "semgrep"
-  the same way: check-js, check-php and check-swift use it too, so it names a
-  tool rather than a language and selects nothing on its own.
-  Runs FOUR tools by default — pip-audit (CVEs), bandit plus Semgrep (security
-  static analysis), ruff (lint), and ruff's pyupgrade rules (modernization) —
-  plus the ruff `C901` complexity gate and mypy when the project configures it;
-  installs any that are missing into a throwaway virtualenv, scans every source
-  path, classifies each finding, and produces a ranked combined report with fix
-  guidance.
+  Python security and code-quality scan of the whole project. Runs FOUR tools by default — pip-audit (CVEs), bandit plus Semgrep
+  (security static analysis), ruff (lint), and ruff's pyupgrade rules
+  (modernization) — into a throwaway virtualenv,
+  installs any that are missing, scans every source path, classifies each
+  finding, and produces a ranked combined report with fix guidance.
+  The ruff `C901` complexity gate runs with them, and mypy runs when the
+  project configures it.
+  Requires a Python project (`.py` files present, usually with `pyproject.toml`,
+  `requirements*.txt`, `setup.py` or `setup.cfg`); check-golang, check-js, check-php, check-rust and check-swift cover the other languages.
 argument-hint: "[scan | report | fix]"
+disable-model-invocation: true
 ---
 
 # Python Security & Quality Scanner

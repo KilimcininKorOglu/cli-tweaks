@@ -1,17 +1,12 @@
 ---
 name: pg-payload-offload
 description: >
-  This skill MUST be invoked when the user says "supertoast", "toast table",
-  "toast bloat", "payload offload", "jsonb çok yer kaplıyor", "jsonb too
-  large", "offload to S3", "S3'e taşı", "cold payload", "soğuk veri",
-  "disk doluyor postgres", "autovacuum toast", "autovacuum çok uzun",
-  "wraparound vacuum", "büyük payload postgres", "tiered storage postgres",
-  "write-and-swap" or any variation about large jsonb/bytea/text payloads
-  bloating Postgres, TOAST autovacuum pressure, or moving cold rows to
-  object storage. Audits TOAST usage and access patterns; on request
-  implements a partitioned inline/external payload table with a
-  write-and-swap offload job and batched S3 objects with byte-range keys.
+  Audits Postgres TOAST usage and access patterns for large jsonb, bytea or text
+  payloads; on request implements a partitioned inline/external payload table
+  with a write-and-swap offload job and batched S3 objects with byte-range
+  keys.
 argument-hint: "[scan | fix]"
+disable-model-invocation: true
 ---
 
 # Postgres Payload Offload (supertoast)

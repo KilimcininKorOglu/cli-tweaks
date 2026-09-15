@@ -1,13 +1,11 @@
 ---
 name: version-update-skill-creator
 description: >
-  This skill MUST be invoked when the user says "version update skill oluştur",
-  "create version update skill", "versiyon skill'i oluştur", "update-version skill",
-  "version-update skill yap" or any variation requesting creation of a project-local
-  version update skill. SHOULD also invoke when user mentions "versiyon güncelleme
-  skill'i kur", "setup version bumping", or asks to automate version management
-  for the current project. Scans the project for version files, build commands,
-  and changelog, then generates a tailored version-update skill in .claude/skills/.
+  Scans the project for version files, build commands and changelog, then
+  generates a tailored project-local version-update skill that bumps the
+  version, updates the changelog, creates a git tag and pushes.
+argument-hint: ""
+disable-model-invocation: true
 ---
 
 # Version Update Skill Creator
@@ -82,12 +80,10 @@ The generated skill MUST include:
 ---
 name: version-update
 description: >
-  This skill MUST be invoked when the user says "version update",
-  "versiyon güncelle", "bump version", "release", "tag ekle",
-  "versiyon yükselt", "yeni versiyon" or any variation requesting
-  a version bump. Bumps the project version, updates changelog,
-  creates a git tag, and pushes. Runs fully automatically.
+  Bumps the project version, updates the changelog, creates a git tag,
+  and pushes. Runs fully automatically.
 argument-hint: "[major | minor | patch]"
+disable-model-invocation: true
 ---
 ```
 

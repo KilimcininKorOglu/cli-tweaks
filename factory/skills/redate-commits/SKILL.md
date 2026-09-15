@@ -1,13 +1,10 @@
 ---
 name: redate-commits
 description: >
-  This skill MUST be invoked when the user says
-  "commit tarihlerini değiştir", "redate commits",
-  "spread commits", "backdate" or any variation requesting git commit
-  date rewriting across a date range. Rewrites both author and committer
-  dates using git filter-branch, distributing commits realistically
-  across the specified period.
+  Rewrites git author and committer dates across a date range with
+  git filter-branch, distributing commits realistically across the period.
 argument-hint: "<start-date> <end-date> [--weekdays-only | --include-weekends | --weighted-weekdays]"
+disable-model-invocation: true
 ---
 
 # Redate Commits

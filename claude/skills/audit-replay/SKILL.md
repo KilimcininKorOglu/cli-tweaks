@@ -1,6 +1,15 @@
-# Audit Log + Session Replay
+---
+name: audit-replay
+description: >
+  Adds user action tracking and visual session replay to a web project: a
+  backend audit event log with a per-visitor admin timeline, and rrweb DOM
+  recording replayed as video. Both systems share a `visitor_id` cookie.
+  Covers 8 languages and 4 databases.
+argument-hint: "[scan | events-only | replay-only]"
+disable-model-invocation: true
+---
 
-This skill MUST be invoked when the user says "audit log", "audit replay", "session replay", "rrweb", "kullanıcı takip", "kullanıcı izleme", "event sourcing", "user tracking", "visitor tracking", "oturum kaydı", "replay ekle", "audit ekle", "kullanıcı hareketleri", "action log", or any variation requesting user action tracking, audit event logging, or session replay recording. SHOULD also invoke when user mentions "what did the user do", "debug user session", "replay user actions", or wants to add observability for user behavior.
+# Audit Log + Session Replay
 
 Add user action tracking and visual session replay to any web project. Two systems working together:
 

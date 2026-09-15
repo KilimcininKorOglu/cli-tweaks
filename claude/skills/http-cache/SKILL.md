@@ -1,14 +1,11 @@
 ---
 name: http-cache
 description: >
-  This skill MUST be invoked when the user says "http cache", "cache ekle",
-  "add caching", "ETag ekle", "cache headers", "304 not modified",
-  "static file caching", "browser cache", "tarayıcı cache",
-  "cache-control ekle", "conditional requests" or any variation requesting
-  HTTP caching with ETag and Cache-Control headers for static/embedded files.
-  Scans the project, detects the framework, and implements content-hash-based
-  ETag caching with 304 Not Modified support.
+  Scans the project, detects the web framework, and implements content-hash
+  ETag caching with Cache-Control headers and 304 Not Modified support for
+  static or embedded files.
 argument-hint: "[scan | fix]"
+disable-model-invocation: true
 ---
 
 # HTTP Cache — ETag + Cache-Control

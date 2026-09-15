@@ -1,19 +1,12 @@
 ---
 name: go-time-int64
 description: >
-  This skill MUST be invoked when the user says "time.Time to int64",
-  "time int64", "timestamp int64", "time.Time bellek", "time.Time memory",
-  "reduce struct size", "struct küçült", "GC pointer azalt", "reduce GC
-  pressure", "in-memory index memory", "bellek optimizasyonu go", "go memory
-  overhead", "fit index in memory", "embedded go", "gömülü go", "tinygo",
-  "microcontroller", "RAM kısıtlı", "bellek kısıtlı cihaz", "memory
-  constrained", "shrink footprint" or any variation requesting memory or GC
-  reduction in a Go project by replacing time.Time fields with int64
-  timestamps. Scans Go structs for time.Time fields held in hot in-memory
-  collections (slices, maps, indexes, queues) or on memory-constrained
-  targets, reports the byte and GC-pointer savings, and on request performs
-  the conversion with boundary adapters.
+  Scans Go structs for time.Time fields held in hot in-memory collections
+  (slices, maps, indexes, queues) or on memory-constrained targets, reports the
+  byte and GC-pointer savings, and on request converts those fields to int64
+  timestamps with boundary adapters.
 argument-hint: "[scan | fix]"
+disable-model-invocation: true
 ---
 
 # Go time.Time → int64

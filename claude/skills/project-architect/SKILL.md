@@ -1,15 +1,12 @@
 ---
 name: project-architect
 description: >
-  Documentation-first project planning that produces implementation-ready blueprints and
-  single-shot coding agent prompts. Generates 4 interconnected docs: SPECIFICATION.md,
-  IMPLEMENTATION.md, TASKS.md, BRANDING.md — plus a PROMPT.md prompt for autonomous execution.
-  Includes interactive tech stack selection, design pattern recommendations, and architecture
-  decisions with trade-off analysis. Trigger when user wants to: plan a project, create specs,
-  architect a system, break work into tasks, choose a tech stack, get design pattern advice,
-  generate a coding agent prompt, or do documentation-first development. Phrases: "plan my
-  project", "spec this out", "architect", "help me plan", "what stack should I use",
-  "generate a prompt", "break this into tasks", "project docs", "I want to build X".
+  Documentation-first project planning that produces implementation-ready
+  blueprints and single-shot coding agent prompts. Generates 4 interconnected
+  docs: SPECIFICATION.md, IMPLEMENTATION.md, TASKS.md, BRANDING.md, plus a
+  PROMPT.md prompt for autonomous execution. Includes interactive tech stack
+  selection, design pattern recommendations, and architecture decisions with
+  trade-off analysis.
 license: MIT
 compatibility: >
   Works with any coding agent that supports file read/write and user interaction.
@@ -19,6 +16,8 @@ metadata:
   author: ersinkoc
   version: "1.0.0"
   category: development
+argument-hint: "[project idea or path to an existing PRD]"
+disable-model-invocation: true
 ---
 
 # Project Architect

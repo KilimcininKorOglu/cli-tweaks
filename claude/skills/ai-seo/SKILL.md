@@ -1,19 +1,14 @@
 ---
 name: ai-seo
 description: >
-  This skill MUST be invoked when the user says "ai seo", "seo analiz",
-  "GEO audit", "site optimize", "AI arama optimizasyonu", "citability",
-  "ai citation", "crawlers check", "llms.txt", "brand mentions",
-  "structured data audit", "schema audit", "technical seo", "E-E-A-T",
-  "ai visibility", "generative engine optimization", "seo fix", "geo fix",
-  "seo düzelt", or any variation
-  requesting website optimization for AI-powered search engines. Analyzes
-  websites for AI search readiness across citability, crawler access,
-  brand authority, structured data, technical foundations, and content quality.
-  With no subcommand it runs every analysis in sequence and scores the site;
-  `fix` is the only mode that edits project files, and it asks first.
-  Accepts a live URL or a local project path (scan source files before deploy).
+  Website optimization for AI-powered search engines (generative engine
+  optimization). Analyzes a live URL or a local project path across citability,
+  crawler access, brand authority, structured data, technical foundations, and
+  content quality. With no subcommand it runs every analysis in sequence and
+  scores the site; `fix` is the only mode that edits project files, and it asks
+  first.
 argument-hint: "[audit | citability | crawlers | llmstxt | brands | schema | technical | content | fix] <url | path>"
+disable-model-invocation: true
 ---
 
 # AI SEO — Generative Engine Optimization
