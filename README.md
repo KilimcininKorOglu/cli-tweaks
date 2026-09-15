@@ -88,33 +88,37 @@ A collection of hooks, skills, and output styles for Factory Droid and Claude Co
 
 **Security scans (three-phase: recon, batched verify, merge)**
 
-| Subcommand          | Command                         | Description                                               |
-|---------------------|---------------------------------|-----------------------------------------------------------|
-| `security-sweep`    | `/bug-report security-sweep`    | Run all 24 security scans with a rolling 2-worker pool    |
-| `sec-recon`         | `/bug-report sec-recon`         | Codebase architecture and security posture reconnaissance |
-| `access-control`    | `/bug-report access-control`    | IDOR and missing authentication/authorization detection   |
-| `sqli`              | `/bug-report sqli`              | SQL injection detection                                   |
-| `xss`               | `/bug-report xss`               | Cross-site scripting detection                            |
-| `rce`               | `/bug-report rce`               | Remote code execution and command injection detection     |
-| `ssrf`              | `/bug-report ssrf`              | Server-side request forgery detection                     |
-| `ssti`              | `/bug-report ssti`              | Server-side template injection detection                  |
-| `path-traversal`    | `/bug-report path-traversal`    | Path traversal and directory traversal detection          |
-| `graphql`           | `/bug-report graphql`           | GraphQL injection and abuse detection                     |
-| `hardcoded-secrets` | `/bug-report hardcoded-secrets` | Hardcoded API key, token, and password detection          |
-| `cors`              | `/bug-report cors`              | CORS misconfiguration and cross-origin attack detection   |
-| `open-redirect`     | `/bug-report open-redirect`     | Open redirect and URL manipulation detection              |
-| `nosqli`            | `/bug-report nosqli`            | NoSQL injection (MongoDB, Redis, Elasticsearch) detection |
-| `dependency-audit`  | `/bug-report dependency-audit`  | Supply chain security, CVE, and typosquatting audit       |
-| `data-exposure`     | `/bug-report data-exposure`     | Sensitive data exposure in logs, errors, and APIs         |
-| `crypto`            | `/bug-report crypto`            | Cryptography weakness detection (weak algorithms, keys)   |
-| `ci-cd`             | `/bug-report ci-cd`             | CI/CD pipeline security (GitHub Actions, GitLab CI)       |
-| `docker`            | `/bug-report docker`            | Container security (Dockerfile, docker-compose)           |
-| `rate-limiting`     | `/bug-report rate-limiting`     | Rate limiting and brute force protection audit            |
-| `websocket`         | `/bug-report websocket`         | WebSocket security (origin, auth, message injection)      |
-| `header-injection`  | `/bug-report header-injection`  | HTTP header injection and CRLF detection                  |
-| `clickjacking`      | `/bug-report clickjacking`      | Clickjacking protection (X-Frame-Options, CSP)            |
-| `mass-assignment`   | `/bug-report mass-assignment`   | Mass assignment and parameter pollution detection         |
-| `ldap`              | `/bug-report ldap`              | LDAP injection in search filters and DN construction      |
+| Subcommand             | Command                            | Description                                                      |
+|------------------------|------------------------------------|------------------------------------------------------------------|
+| `security-sweep`       | `/bug-report security-sweep`       | Run all 28 security scans with a rolling 2-worker pool           |
+| `sec-recon`            | `/bug-report sec-recon`            | Codebase architecture and security posture reconnaissance        |
+| `access-control`       | `/bug-report access-control`       | IDOR and missing authentication/authorization detection          |
+| `sqli`                 | `/bug-report sqli`                 | SQL injection detection                                          |
+| `xss`                  | `/bug-report xss`                  | Cross-site scripting detection                                   |
+| `rce`                  | `/bug-report rce`                  | Remote code execution and command injection detection            |
+| `ssrf`                 | `/bug-report ssrf`                 | Server-side request forgery detection                            |
+| `ssti`                 | `/bug-report ssti`                 | Server-side template injection detection                         |
+| `path-traversal`       | `/bug-report path-traversal`       | Path traversal and directory traversal detection                 |
+| `graphql`              | `/bug-report graphql`              | GraphQL injection and abuse detection                            |
+| `hardcoded-secrets`    | `/bug-report hardcoded-secrets`    | Hardcoded API key, token, and password detection                 |
+| `cors`                 | `/bug-report cors`                 | CORS misconfiguration and cross-origin attack detection          |
+| `open-redirect`        | `/bug-report open-redirect`        | Open redirect and URL manipulation detection                     |
+| `nosqli`               | `/bug-report nosqli`               | NoSQL injection (MongoDB, Redis, Elasticsearch) detection        |
+| `dependency-audit`     | `/bug-report dependency-audit`     | Supply chain security, CVE, and typosquatting audit              |
+| `data-exposure`        | `/bug-report data-exposure`        | Sensitive data exposure in logs, errors, and APIs                |
+| `crypto`               | `/bug-report crypto`               | Cryptography weakness detection (weak algorithms, keys)          |
+| `ci-cd`                | `/bug-report ci-cd`                | CI/CD pipeline security (GitHub Actions, GitLab CI)              |
+| `docker`               | `/bug-report docker`               | Container security (Dockerfile, docker-compose)                  |
+| `rate-limiting`        | `/bug-report rate-limiting`        | Rate limiting and brute force protection audit                   |
+| `websocket`            | `/bug-report websocket`            | WebSocket security (origin, auth, message injection)             |
+| `header-injection`     | `/bug-report header-injection`     | HTTP header injection and CRLF detection                         |
+| `clickjacking`         | `/bug-report clickjacking`         | Clickjacking protection (X-Frame-Options, CSP)                   |
+| `mass-assignment`      | `/bug-report mass-assignment`      | Mass assignment and parameter pollution detection                |
+| `ldap`                 | `/bug-report ldap`                 | LDAP injection in search filters and DN construction             |
+| `privilege-escalation` | `/bug-report privilege-escalation` | Role elevation, forged role claims, unguarded admin routes       |
+| `race-condition`       | `/bug-report race-condition`       | Race condition and TOCTOU detection on shared state              |
+| `iac`                  | `/bug-report iac`                  | Terraform, Kubernetes, Helm, and cloud template misconfiguration |
+| `local-ipc`            | `/bug-report local-ipc`            | Desktop and mobile IPC, webview bridge, and deep link security   |
 
 ### Output Styles
 

@@ -141,6 +141,10 @@ that worker if the marker exists.
    | Worker 37 | `subcommands/clickjacking.md`           | `<!-- scan:clickjacking completed -->`       |
    | Worker 38 | `subcommands/dependency-audit.md`       | `<!-- scan:dependency-audit completed -->`   |
    | Worker 39 | `subcommands/ldap.md`                   | `<!-- scan:ldap completed -->`               |
+   | Worker 40 | `subcommands/privilege-escalation.md`   | `<!-- scan:privilege-escalation completed -->` |
+   | Worker 41 | `subcommands/race-condition.md`         | `<!-- scan:race-condition completed -->`     |
+   | Worker 42 | `subcommands/iac.md`                    | `<!-- scan:iac completed -->`                |
+   | Worker 43 | `subcommands/local-ipc.md`              | `<!-- scan:local-ipc completed -->`          |
 
 3. Each worker prompt must include:
    - The full content of its subcommand file as instructions
@@ -269,6 +273,10 @@ never earlier.
    | Worker 22 | `subcommands/clickjacking.md`       | `<!-- scan:clickjacking completed -->`     |
    | Worker 23 | `subcommands/dependency-audit.md`   | `<!-- scan:dependency-audit completed -->`  |
    | Worker 24 | `subcommands/ldap.md`               | `<!-- scan:ldap completed -->`              |
+   | Worker 25 | `subcommands/privilege-escalation.md` | `<!-- scan:privilege-escalation completed -->` |
+   | Worker 26 | `subcommands/race-condition.md`     | `<!-- scan:race-condition completed -->`   |
+   | Worker 27 | `subcommands/iac.md`                | `<!-- scan:iac completed -->`              |
+   | Worker 28 | `subcommands/local-ipc.md`          | `<!-- scan:local-ipc completed -->`        |
 
 3. Use the same worker prompt template from Full Audit above.
 
@@ -378,3 +386,7 @@ Last Bug ID: BUG-[XXX]
 | `mass-assignment`      | Mass assignment and parameter pollution detection                        |
 | `fix`                  | Iterative fix across all open bugs: verify, commit each                  |
 | `ldap`                 | LDAP injection in search filters and DN construction                     |
+| `privilege-escalation` | Role elevation, forged role claims, and unguarded admin routes           |
+| `race-condition`       | Race condition and TOCTOU detection on shared state                      |
+| `iac`                  | Terraform, Kubernetes, Helm, and cloud template misconfiguration         |
+| `local-ipc`            | Desktop and mobile local IPC, webview bridge, and deep link security     |
