@@ -1,3 +1,12 @@
+---
+name: session-audit
+description: >-
+  Audit session lifecycle, session storage, cookie flags, CSRF protection, JWT
+  verification, and authentication flow hardening. Covers session fixation,
+  token revocation, account enumeration, password reset tokens, and MFA on
+  sensitive operations. Use when asked to audit sessions, JWT, or login flows.
+---
+
 # Session Management, JWT & State Persistence Security
 
 This subcommand replaces the old standalone `/session-audit` skill.
@@ -139,6 +148,26 @@ Launch a second subagent **after Phase 1 completes**, providing Phase 1 findings
 - PyJWT < 2.0 accepted `alg: none` by default. Check library version.
 - RS256→HS256 confusion requires: RS256 server + accessible public key + no algorithm restriction.
 - Always check `kid` header lookup implementation for injection vectors.
+
+## 6. Authentication Flow Hardening
+
+Review the login, password reset, and step-up flows themselves. Password hashing strength and constant-time comparison belong to `crypto`. Login attempt throttling belongs to `rate-limiting`. This section covers what neither of those owns.
+
+- **Account enumeration**: does the login flow answer differently for an unknown account and a wrong password? Compare the message, the status code, the response body size, and the response time. Check registration, password reset, and "resend verification" the same way, because those leak the same fact.
+- **Password reset tokens**: is the token generated with a cryptographic PRNG, stored hashed, single-use, and bound to one account? Does it expire in minutes rather than days? Is it invalidated when the password changes, when a newer token is issued, and after a failed attempt budget?
+- **Reset flow binding**: can the reset link be completed from a different session, and does the flow log out other sessions on success? Is the new password accepted without re-verifying the token server-side?
+- **Credential change effects**: does an email or password change require the current password, and does it notify the previous address? Does it revoke refresh tokens, API keys, and "remember me" tokens as well as sessions?
+- **MFA coverage**: is a second factor required for login, for password and email changes, for MFA device removal, and for payment or export actions? Can the second step be skipped by calling the post-MFA endpoint directly?
+- **MFA state**: are recovery codes single-use and hashed? Is the MFA secret shown again after enrollment? Is a partially authenticated session distinguishable from a fully authenticated one, and does it expire on its own?
+- **Federated login**: for OAuth and SSO callbacks, is the `state` value single-use and bound to the initiating session? Is the account linked by a provider-verified identifier rather than by an unverified email address?
+- **Default and seeded credentials**: does a migration, seeder, or bootstrap path create an account with a fixed password that production can reach?
+
+**Severity mapping**:
+- A reset token that is guessable, reusable, or accepted for another account → CRITICAL
+- MFA skippable by calling the post-MFA endpoint, or a fixed-password account reachable in production → HIGH
+- Password change without the current password, or credential change that leaves other sessions alive → HIGH
+- Account enumeration through a differing message, status code, or timing → MEDIUM
+- Recovery codes stored in clear text, or a reset token with a multi-day lifetime → MEDIUM
 
 ## Shared Audit Rules
 

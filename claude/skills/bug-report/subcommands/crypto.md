@@ -28,6 +28,10 @@ Cryptography weakness occurs when an application uses broken or improperly confi
 - Deprecated algorithms: DES, 3DES, RC4, RC2, Blowfish for encryption
 - AES-CBC without HMAC (no authenticated encryption — vulnerable to padding oracle attacks)
 - Hardcoded encryption keys in source code
+- Comparing a token, signature, MAC, or API key with `==`, `===`, `.equals()`, or `strcmp` instead of a constant-time function
+- TLS with certificate validation on but hostname verification off, or a custom verifier that accepts any chain
+- A pinned certificate or public key with no rotation path, and mutual TLS where the client certificate is requested but never required
+- A password verified with a fast hash plus a plain equality check, instead of the hashing library's own verify function
 
 ### What Cryptography Weakness is NOT
 
@@ -64,6 +68,27 @@ const token = crypto.randomBytes(32).toString('hex');
 ```javascript
 const iv = crypto.randomBytes(16);
 const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+```
+
+**5. Constant-time secret comparison**
+```go
+if subtle.ConstantTimeCompare([]byte(got), []byte(want)) == 1 { /* ... */ }
+```
+```python
+import hmac
+if hmac.compare_digest(got, want): ...
+```
+```javascript
+crypto.timingSafeEqual(Buffer.from(got), Buffer.from(want));
+```
+
+**6. Verified hostname and required client certificate**
+```go
+cfg := &tls.Config{
+    MinVersion: tls.VersionTLS12,
+    ServerName: "api.example.com",          // hostname is verified
+    ClientAuth: tls.RequireAndVerifyClientCert, // mutual TLS is enforced
+}
 ```
 
 ---
@@ -255,7 +280,18 @@ Launch a subagent with the following instructions:
 >    - TLS version: `TLSv1`, `TLSv1.1`, `SSLv3`
 >    - `NODE_TLS_REJECT_UNAUTHORIZED = '0'`
 >
-> 5. **Key management**:
+> 5. **Secret comparison**:
+>    - `==`, `===`, `!=`, `.equals(`, `strcmp`, `str_equals` applied to a token, signature, MAC, API key, OTP, or password hash
+>    - Secure alternatives present: `subtle.ConstantTimeCompare`, `hmac.compare_digest`, `crypto.timingSafeEqual`, `MessageDigest.isEqual`, `hash_equals`
+>    - Context: is the compared value a secret the caller supplies, or a public identifier?
+>
+> 6. **Transport identity settings**:
+>    - Hostname verification: `check_hostname = False`, `HostnameVerifier` returning true, `ServerName` left empty with `InsecureSkipVerify`
+>    - Minimum version: `MinVersion`, `ssl_version`, `secureProtocol`, `minimum_protocol_version`
+>    - Mutual TLS: `ClientAuth`, `RequestClientCert`, `VerifyClientCertIfGiven`, client certificate loading
+>    - Pinning: pinned fingerprints or public keys, and whether a rotation path exists
+>
+> 7. **Key management**:
 >    - Hardcoded keys: `key = "mysecretkey"`, `const SECRET = "abc123"`
 >    - Key size: RSA key generation with bit size, AES key length
 >    - Key storage: keys in source code, config files, or proper secrets management
@@ -329,7 +365,20 @@ Give each batch subagent the following instructions (include assigned sites from
 >    - `verify=False` in test only → NOT VULNERABLE
 >    - `InsecureSkipVerify` for internal services → LIKELY VULNERABLE
 >
-> 6. **Key management assessment**: Are keys properly managed?
+> 6. **Secret comparison assessment**: Is the comparison constant-time?
+>    - `==` / `.equals()` / `strcmp` on an attacker-supplied token, signature, MAC, or OTP → VULNERABLE
+>    - Constant-time helper used → NOT VULNERABLE
+>    - Comparison on a public identifier, or on a value already looked up by index → NOT VULNERABLE
+>    - A password checked with the hashing library's verify function → NOT VULNERABLE
+>
+> 7. **Transport identity assessment**: Does TLS prove who the peer is?
+>    - Certificate validated but hostname verification disabled → VULNERABLE
+>    - Custom verifier that accepts any chain → VULNERABLE
+>    - `MinVersion` below TLS 1.2, or no minimum set on a server the code configures → LIKELY VULNERABLE
+>    - Client certificate requested but not required on an endpoint the design calls mutually authenticated → LIKELY VULNERABLE
+>    - Pinned key with no documented rotation path → LIKELY VULNERABLE
+>
+> 8. **Key management assessment**: Are keys properly managed?
 >    - Hardcoded in source code → VULNERABLE
 >    - From environment variable → acceptable (if not committed)
 >    - From KMS/secrets manager → NOT VULNERABLE
@@ -364,7 +413,9 @@ Give each batch subagent the following instructions (include assigned sites from
 > **Severity mapping** (for use in Phase 3 reporting):
 > - Hardcoded encryption keys, ECB mode on sensitive data, disabled cert validation on auth endpoints → CRITICAL
 > - MD5/SHA1 for passwords, static IV/salt, Math.random for security tokens → HIGH
+> - Non-constant-time comparison of an authentication token, signature, or MAC → HIGH
 > - AES-CBC without HMAC, weak key sizes, deprecated TLS versions → MEDIUM
+> - Hostname verification disabled while certificate validation stays on, or mutual TLS requested but not required → MEDIUM
 > - Weak PRNG in low-sensitivity context, MD5 for non-security with misleading variable name → LOW
 
 ### Phase 3: Merge & Report

@@ -348,4 +348,8 @@ After all Phase 2 subagents complete:
 - Rate limiting at infrastructure level (API gateway, nginx, CDN) counts as protection. If you see evidence of infrastructure-level rate limiting, do not flag application-level absence.
 - Missing body size limits allow memory exhaustion attacks. Sending a multi-GB JSON payload can crash a Node.js process.
 - Account lockout is an alternative to rate limiting for auth endpoints. If lockout exists after N failed attempts, rate limiting is less critical.
+- Check the limiter's key, not only its presence. A limit keyed on the client IP alone does not stop credential stuffing from a proxy pool, and a limit keyed on the account alone lets one attacker lock every user out. An auth endpoint needs both a per-account counter and a per-source counter.
+- Check what resets the counter. A counter cleared on a successful login still allows a slow password spray, and a counter held in process memory resets on every deploy and does not exist on a second replica.
+- A lockout that reports "account locked" tells the attacker the account exists. Treat a throttling response that differs between a known and an unknown account as account enumeration and report it through `session-audit`.
+- Password reset, OTP delivery, and invitation endpoints cost money and reach a user's inbox or phone. An unthrottled one is both a brute-force surface and a way to bill or spam the victim.
 - When in doubt, classify as "Needs Manual Review" rather than "Not Vulnerable". False negatives are worse than false positives in security assessment.
