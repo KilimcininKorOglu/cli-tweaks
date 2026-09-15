@@ -1,3 +1,11 @@
+---
+name: api-audit
+description: >-
+  Audit API performance, resilience, contract stability, and endpoint lifecycle:
+  N+1 calls, missing timeouts and retries, breaking response changes, and
+  undocumented deprecations. Use when asked to audit an API.
+---
+
 # API Performance, Resilience & Contract Testing Audit
 
 This subcommand replaces the old standalone `/api-audit` skill.

@@ -1,3 +1,11 @@
+---
+name: queue-audit
+description: >-
+  Audit queue and async job resilience: lost or duplicated jobs, missing retry and
+  dead-letter handling, unbounded worker concurrency, and invisible failures.
+  Use when asked to audit background jobs or queues.
+---
+
 # Queue & Async Job Management Resilience Analysis
 
 This subcommand replaces the old standalone `/queue-audit` skill.

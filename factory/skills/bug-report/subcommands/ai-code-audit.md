@@ -1,3 +1,11 @@
+---
+name: ai-code-audit
+description: >-
+  Detect AI-generated and AI-assisted code, then audit it for security, quality,
+  and process problems such as invented APIs, copied insecure patterns, and
+  unreviewed bulk changes. Use when asked to audit AI-written code.
+---
+
 # AI-Generated & AI-Assisted Code Audit
 
 This subcommand replaces the old standalone `/ai-code-audit` skill.

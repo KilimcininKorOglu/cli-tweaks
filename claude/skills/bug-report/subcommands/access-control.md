@@ -1,3 +1,11 @@
+---
+name: access-control
+description: >-
+  Audit IDOR and broken access control: authenticated user A reaching user B's
+  resources, and endpoints with no authentication or function-level authorization.
+  Use when asked to find access control bugs.
+---
+
 # Access Control Security Audit
 
 This subcommand covers both **IDOR** (horizontal privilege escalation — authenticated user A accessing user B's resources) and **missing authentication / broken function-level authorization** (unauthenticated access + vertical privilege escalation — regular user accessing admin functions). Uses a two-phase subagent approach.

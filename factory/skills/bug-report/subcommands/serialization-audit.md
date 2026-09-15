@@ -1,3 +1,11 @@
+---
+name: serialization-audit
+description: >-
+  Audit serialization, parsing, and data transformation security: unsafe
+  deserialization, XXE, schema drift between producer and consumer, and lossy
+  pipeline conversions. Use when asked to audit parsing or serialization.
+---
+
 # Data Serialization & Transformation Security
 
 This subcommand replaces the old standalone `/serialization-audit` skill.

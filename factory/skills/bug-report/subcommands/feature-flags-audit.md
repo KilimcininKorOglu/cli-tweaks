@@ -1,3 +1,11 @@
+---
+name: feature-flags-audit
+description: >-
+  Audit feature flag hygiene, rollout safety, and experimentation: stale flags,
+  flags that gate security decisions, unsafe defaults, and untracked experiments.
+  Use when asked to audit feature flags.
+---
+
 # Feature Flags, Gradual Rollout & Experimentation Audit
 
 This subcommand replaces the old standalone `/feature-flags-audit` skill.

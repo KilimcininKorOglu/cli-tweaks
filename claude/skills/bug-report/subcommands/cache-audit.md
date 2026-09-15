@@ -1,3 +1,11 @@
+---
+name: cache-audit
+description: >-
+  Audit caching strategy, consistency, and cache security: stale reads, missing
+  invalidation, key collisions across users, and unauthenticated cache backends.
+  Use when asked to audit caching or Redis usage.
+---
+
 # Caching Strategy & Consistency Analysis
 
 This subcommand replaces the old standalone `/cache-audit` skill.

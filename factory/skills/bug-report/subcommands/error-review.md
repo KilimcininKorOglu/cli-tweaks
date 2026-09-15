@@ -1,3 +1,11 @@
+---
+name: error-review
+description: >-
+  Review error messages and user feedback: internal detail disclosed to users,
+  unusable error text, inconsistent error codes, and missing fallback states.
+  Use when asked to audit error handling quality.
+---
+
 # Error Message & User Feedback System Review
 
 This subcommand replaces the old standalone `/error-review` skill.

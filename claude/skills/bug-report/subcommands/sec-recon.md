@@ -1,3 +1,11 @@
+---
+name: sec-recon
+description: >-
+  Map the codebase architecture and security posture before deeper scans: stack,
+  entry points, authentication model, data stores, and trust boundaries. Writes
+  the System Architecture section of BUG-REPORT.md.
+---
+
 # Security Reconnaissance
 
 This subcommand maps the codebase architecture and security posture, writing findings directly to `BUG-REPORT.md`. Run this before deeper vulnerability scans for best results.

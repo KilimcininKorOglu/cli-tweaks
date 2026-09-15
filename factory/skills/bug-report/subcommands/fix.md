@@ -1,3 +1,11 @@
+---
+name: fix
+description: >-
+  Fix already-reported bugs from BUG-REPORT.md one at a time: read the finding,
+  reproduce the root cause, apply the fix, prove it, and commit each fix on its
+  own. Use when asked to fix reported bugs.
+---
+
 # Bug Fix Workflow
 
 ## Command
@@ -48,7 +56,7 @@ target BEFORE any code change, and say out loud which target you resolved to.
    and `Component:` fields.
 2. **Exactly one clear match** — announce `Matched BUG-<ID>: <title>` with the
    one-line reason it matched, then run single-bug mode for that ID.
-3. **Several plausible matches** — do NOT guess. Use `AskUser` to let the
+3. **Several plausible matches** — do NOT guess. Use `AskUserQuestion` to let the
    user pick the intended finding, then run single-bug mode for the chosen ID.
 4. **No match, or no `BUG-REPORT.md`** — run ad-hoc mode below.
 
@@ -63,7 +71,7 @@ The user's text IS the bug statement; there is no report entry to read.
    that prove it exists.
 3. If you cannot locate the defect, or the description matches several unrelated
    code paths, STOP and ask the user for the missing detail with
-   `AskUser`. NEVER guess a target
+   `AskUserQuestion`. NEVER guess a target
    and NEVER fix something the user did not describe.
 4. Then run Phase 2A through Phase 5 unchanged.
 5. Phase 6 is conditional in this mode:
@@ -138,7 +146,7 @@ stop also ends it. Ad-hoc and free-text mode are single-bug by definition and
 never enter this contract.
 
 **Everything else that prevents progress is a BLOCKER, not an ending.** On a
-blocker, ask the user how to proceed with `AskUser` and wait for the
+blocker, ask the user how to proceed with `AskUserQuestion` and wait for the
 answer. Do NOT end the run, and do NOT silently abandon the remaining queue.
 Blockers include:
 
@@ -199,7 +207,7 @@ Before reading or editing the current bug, inspect the working tree.
 
 Hard constraints:
 - Continue only from a clean working tree, or from a tree that contains only explicitly allowed report/status edits from earlier completed bugs.
-- If unrelated changed files exist, do not overwrite or stage them. In single-bug and ad-hoc mode, report them and STOP. In batch mode this is a blocker, not an ending: report them, ask with `AskUser` whether to stash them, skip the affected bug, or abort, then resume the ledger with their answer.
+- If unrelated changed files exist, do not overwrite or stage them. In single-bug and ad-hoc mode, report them and STOP. In batch mode this is a blocker, not an ending: report them, ask with `AskUserQuestion` whether to stash them, skip the affected bug, or abort, then resume the ledger with their answer.
 - Do not start a new bug while a previous bug has uncommitted code changes.
 - The uncommitted `BUG-REPORT.md` status edits produced by earlier bugs in THIS run are expected and allowed. They are never a reason to stop the run; only changes this run did not create qualify.
 
@@ -251,10 +259,10 @@ If the fix requires a refactor or a scope expansion beyond the report's suggeste
 
 ---
 
-## Phase 2C: Pre-Fix Gate in Droid Spec Mode
+## Phase 2C: Pre-Fix Gate in Claude Code Plan Mode
 
-Enter Droid spec mode before Phase 3 ONLY when the fix involves an
-architectural change. For a localized, non-architectural fix, skip spec mode and
+Enter Claude Code plan mode before Phase 3 ONLY when the fix involves an
+architectural change. For a localized, non-architectural fix, skip plan mode and
 proceed directly to Phase 3.
 
 A fix is architectural when it does any of these:
@@ -270,23 +278,23 @@ A fix is NOT architectural when it is localized and behavior-preserving in
 shape: a bounded logic correction, a validation or error-handling fix, a
 nil/empty guard, an off-by-one, a wrong-constant fix, or a single-surface change
 that touches no schema, contract, dependency, or security boundary. Fix these
-directly; do not enter spec mode.
+directly; do not enter plan mode.
 
 When in doubt about whether a fix is architectural, treat it as architectural
-and enter spec mode.
+and enter plan mode.
 
-When spec mode is required, follow this exact three-step tool sequence. Do not
-use `AskUser` for plan approval.
+When plan mode is required, follow this exact three-step tool sequence. Do not
+use `AskUserQuestion` for plan approval.
 
-1. Call the `EnterSpecMode` tool to enter spec mode.
-2. Write the full plan to the spec file that spec mode designates. The plan is
+1. Call the `EnterPlanMode` tool to enter plan mode.
+2. Write the full plan to the plan file that plan mode designates. The plan is
    read from that file, not from your chat message, so it MUST be written to the
    file. Do not present the plan only as chat text.
-3. Call the `ExitSpecMode` tool to request approval. It reads the plan from the
-   spec file and shows it to the user. Only proceed to Phase 3 after the user
+3. Call the `ExitPlanMode` tool to request approval. It reads the plan from the
+   plan file and shows it to the user. Only proceed to Phase 3 after the user
    approves.
 
-The plan written to the spec file must include these sections:
+The plan written to the plan file must include these sections:
 - Confirmed current defect.
 - Product-context assessment.
 - Affected paths.
@@ -297,7 +305,7 @@ The plan written to the spec file must include these sections:
 - Validation gates.
 - Rollback plan.
 
-Hard pre-edit gate (applies ONLY when spec mode is required):
+Hard pre-edit gate (applies ONLY when plan mode is required):
 - Do not call Edit, Write, NotebookEdit, git add, git commit, or any file-mutating shell command before the plan is approved.
 - Do not make partial drafts in project files before approval.
 - If the user rejects the plan, do not edit code. If the user asks to skip, mark the bug according to the report rules and continue or stop according to mode.
