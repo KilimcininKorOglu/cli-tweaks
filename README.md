@@ -311,7 +311,7 @@ Each key must be JSON `true`. Any other value, including the string `"false"`, l
 
 ## Requirements
 
-- Python 3.8+ (Factory Droid and Claude Code hooks)
+- Python 3.9+ (Factory Droid and Claude Code hooks)
 
 ## Platform Differences
 

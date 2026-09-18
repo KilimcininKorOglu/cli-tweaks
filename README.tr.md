@@ -312,7 +312,7 @@ Her anahtar JSON `true` olmalıdır. `"false"` metni dahil başka her değer öz
 
 ## Gereksinimler
 
-- Python 3.8+ (Factory Droid ve Claude Code hook'ları)
+- Python 3.9+ (Factory Droid ve Claude Code hook'ları)
 
 ## Platform Farklılıkları
 
