@@ -6,24 +6,31 @@ The policy is absolute, so the hook does not look for a force flag. It blocks
 every route that could stage a protected path:
   - `git add` naming a protected path, with or without --force
   - `git add` whose operands cannot be proven safe (`.`, `-A`, a glob, a
-    directory, a shell variable), because their contents are unknown here
+    directory, a shell variable, --pathspec-from-file), because their contents
+    are unknown here
   - `git update-index --add`, which stages without going through `git add`
   - `git -c core.excludesfile=...`, which disables the ignore file for one call
-  - `git commit <path>` and `git mv` on a protected path, which is how an
-    already-tracked protected file keeps moving forward
+  - `git commit <path>`, `git commit -a` and `git mv` on a protected path, which
+    is how an already-tracked protected file keeps moving forward
   - a Bash write to ~/.gitignore_global, or a `!` negation written into a
     repository .gitignore
   - a Write or Edit tool call whose target is ~/.gitignore_global
 
-Matching is scoped to the command it belongs to, never the raw command text, so
-a commit message that names a protected path does not block the commit. Heredoc
-bodies are dropped for the same reason. Any parse failure exits 0.
+A path is protected the way git decides it: the last matching pattern wins, a
+`!` pattern re-includes the path, and a path under an excluded directory stays
+excluded. Paths are resolved against the `git -C` directory.
+
+Matching is scoped to the command it belongs to, never the raw command text, and
+option values such as a `-m` message are skipped, so a commit message that names
+a protected path does not block the commit. Heredoc bodies are dropped for the
+same reason. Any parse failure exits 0.
 """
 import fnmatch
 import json
 import os
 import re
 import shlex
+import subprocess
 import sys
 from pathlib import Path
 
@@ -31,6 +38,8 @@ SETTINGS_KEY = "hookProtectGitignore"
 GITIGNORE_GLOBAL = "~/.gitignore_global"
 
 OPERATORS = {"|", "||", "&&", ";", ";;", "&", "(", ")", "{", "}", "!", "\n"}
+OPERATOR_CHARS = set("|&;()")
+OPERATOR_RUN = re.compile(r"\|\||&&|;;|[|&;()]")
 ASSIGNMENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*=")
 HEREDOC = re.compile(r"<<-?\s*[\"']?([A-Za-z_][A-Za-z0-9_]*)[\"']?")
 WRAPPERS = {"sudo", "command", "env", "time", "nice", "nohup", "builtin", "exec"}
@@ -40,6 +49,24 @@ GIT_VALUE_OPTS = {"-C", "-c", "--git-dir", "--work-tree", "--namespace"}
 STAGE_ALL_FLAGS = {"-A", "--all", "-u", "--update", "--no-ignore-removal"}
 MUTATORS = {"rm", "mv", "cp", "tee", "truncate", "install", "dd", "ln", "sed", "gsed"}
 GLOB_CHARS = "*?["
+GIT_TIMEOUT_SECONDS = 5
+
+# Options that take the next token as their value, per subcommand. The value is
+# a message, a commit or a mode, never a path to check.
+SHORT_VALUE_OPTS = {
+    "add": "",
+    "commit": "mFCct",
+    "mv": "",
+}
+LONG_VALUE_OPTS = {
+    "add": {"chmod", "pathspec-from-file"},
+    "commit": {
+        "message", "file", "reuse-message", "reedit-message", "fixup", "squash",
+        "author", "date", "template", "cleanup", "trailer", "pathspec-from-file",
+        "inter-hunk-context",
+    },
+    "mv": set(),
+}
 
 ADVICE = (
     "A path in the global gitignore can never enter git. Remove the pattern from "
@@ -53,7 +80,7 @@ def isEnabled(settingsFile):
     """Return True unless the settings file explicitly turns the guard off."""
     try:
         data = json.loads(settingsFile.read_text(encoding="utf-8"))
-    except (FileNotFoundError, json.JSONDecodeError, OSError):
+    except (FileNotFoundError, json.JSONDecodeError, UnicodeDecodeError, OSError):
         return True
     if not isinstance(data, dict) or SETTINGS_KEY not in data:
         return True
@@ -61,9 +88,7 @@ def isEnabled(settingsFile):
     if value is True or value is False:
         return value
     print(
-        "git-protect: {} must be true or false, got {!r}; guard stays on".format(
-            SETTINGS_KEY, value
-        ),
+        f"git-protect: {SETTINGS_KEY} must be true or false, got {value!r}; guard stays on",
         file=sys.stderr,
     )
     return True
@@ -110,13 +135,28 @@ def splitStatements(command):
     return "".join(out)
 
 
+def splitOperators(tokens):
+    """Split a run of operator characters that shlex returns as one token.
+
+    shlex joins adjacent punctuation, so `(cd sub); git add x` yields `);`,
+    which is no operator; without the split, the git call would be missed.
+    """
+    out = []
+    for token in tokens:
+        if token and token not in OPERATORS and set(token) <= OPERATOR_CHARS:
+            out.extend(OPERATOR_RUN.findall(token))
+        else:
+            out.append(token)
+    return out
+
+
 def tokenize(command):
     """Return shell tokens with operators separated, or None when unparseable."""
     normalized = splitStatements(stripHeredocs(command))
     lexer = shlex.shlex(normalized, posix=True, punctuation_chars=True)
     lexer.whitespace_split = True
     try:
-        return list(lexer)
+        return splitOperators(list(lexer))
     except ValueError:
         return None
 
@@ -148,108 +188,188 @@ def segments(tokens):
 
 
 def readIgnoredEntries():
-    """Return the active patterns from the global gitignore."""
+    """Return the patterns of the global gitignore in file order, negations included."""
     path = os.path.expanduser(GITIGNORE_GLOBAL)
     if not os.path.isfile(path):
         return []
     try:
-        with open(path, "r") as handle:
+        with open(path, encoding="utf-8") as handle:
             lines = handle.readlines()
-    except OSError:
+    except (OSError, UnicodeDecodeError) as err:
+        print(f"git-protect: cannot read {path}: {err}", file=sys.stderr)
         return []
-    return [
-        line.strip()
-        for line in lines
-        if line.strip() and not line.startswith("#") and not line.startswith("!")
-    ]
+    return [line.strip() for line in lines if line.strip() and not line.startswith("#")]
 
 
-def matchesEntry(path, entry):
-    """True when a staged path is covered by one gitignore entry."""
+def matchKind(path, entry):
+    """Return "path" when the entry covers the path itself, "parent" when it
+    covers a parent directory, else ""."""
     pattern = entry.rstrip("/")
     if not pattern:
-        return False
+        return ""
     # Strip only a leading "./", never with lstrip, which would also eat the
     # leading dot of a path like ".claude/settings.json".
     normalized = path
     while normalized.startswith("./"):
         normalized = normalized[2:]
-    if fnmatch.fnmatch(normalized, pattern) or fnmatch.fnmatch(path, pattern):
-        return True
     parts = [part for part in normalized.split("/") if part not in ("", ".", "..")]
-    return any(fnmatch.fnmatch(part, pattern) for part in parts)
+    if fnmatch.fnmatch(normalized, pattern) or fnmatch.fnmatch(path, pattern):
+        return "path"
+    if parts and fnmatch.fnmatch(parts[-1], pattern):
+        return "path"
+    if any(fnmatch.fnmatch(part, pattern) for part in parts[:-1]):
+        return "parent"
+    return ""
 
 
 def protectedEntry(path, entries):
-    """Return the first gitignore entry that covers this path, else ''."""
+    """Return the gitignore entry that excludes this path, else ''.
+
+    The last matching pattern wins. A `!` pattern re-includes the path, but a
+    path under an excluded directory stays excluded, as in git.
+    """
+    byPath = ""
+    byParent = ""
     for entry in entries:
-        if matchesEntry(path, entry):
-            return entry
-    return ""
+        negated = entry.startswith("!")
+        kind = matchKind(path, entry[1:] if negated else entry)
+        if kind == "parent":
+            byParent = "" if negated else entry
+        elif kind == "path":
+            byPath = "" if negated else entry
+    return byParent or byPath
 
 
 def unprovableReason(operand, cwd):
     """Return why an operand's contents cannot be proven safe, else ''."""
     if operand in (".", "..", ":/", ":", "*"):
-        return "`{}` stages whatever it contains".format(operand)
+        return f"`{operand}` stages whatever it contains"
     if any(char in operand for char in GLOB_CHARS):
-        return "the glob `{}` can expand onto a protected path".format(operand)
+        return f"the glob `{operand}` can expand onto a protected path"
     if "$" in operand or "`" in operand:
-        return "`{}` is expanded by the shell and cannot be checked here".format(operand)
+        return f"`{operand}` is expanded by the shell and cannot be checked here"
     if operand.endswith("/") or os.path.isdir(os.path.join(cwd, operand)):
-        return "the directory `{}` stages whatever it contains".format(operand)
+        return f"the directory `{operand}` stages whatever it contains"
     return ""
 
 
-def gitSubcommand(words):
-    """Return (subcommand, args) for a git invocation, skipping git's own options."""
+def gitSubcommand(words, cwd):
+    """Return (subcommand, args, cwd) for a git invocation.
+
+    git's own options are skipped, and every `-C <dir>` moves the directory the
+    path operands are resolved against, as git does.
+    """
     rest = words[1:]
     cursor = 0
     while cursor < len(rest) and rest[cursor].startswith("-"):
-        cursor += 2 if rest[cursor] in GIT_VALUE_OPTS else 1
+        option = rest[cursor]
+        if option == "-C" and cursor + 1 < len(rest):
+            cwd = os.path.join(cwd, os.path.expanduser(rest[cursor + 1]))
+        cursor += 2 if option in GIT_VALUE_OPTS else 1
     if cursor >= len(rest):
-        return "", []
-    return rest[cursor], rest[cursor + 1:]
+        return "", [], cwd
+    return rest[cursor], rest[cursor + 1:], cwd
 
 
-def pathOperands(args):
-    """Return the non-option operands of a git subcommand."""
+def shortOption(arg, shortValues):
+    """Return (flag letters, consumesNext) for one short option cluster.
+
+    A value letter ends the cluster: its value is the rest of the token, or the
+    next token when the letter is last.
+    """
+    letters = arg[1:]
+    for index, letter in enumerate(letters):
+        if letter in shortValues:
+            return letters[:index], index == len(letters) - 1
+    return letters, False
+
+
+def parseArgs(subcommand, args):
+    """Return (operands, flags) of a git subcommand, skipping option values."""
+    shortValues = SHORT_VALUE_OPTS.get(subcommand, "")
+    longValues = LONG_VALUE_OPTS.get(subcommand, set())
     operands = []
+    flags = set()
     index = 0
     while index < len(args):
         arg = args[index]
-        if arg == "--":
-            operands.extend(args[index + 1:])
-            break
-        if arg.startswith("-") and len(arg) > 1:
-            index += 1
-            continue
-        operands.append(arg)
         index += 1
-    return operands
+        if arg == "--":
+            operands.extend(args[index:])
+            break
+        if arg.startswith("--"):
+            name = arg[2:].split("=")[0]
+            flags.add("--" + name)
+            index += 1 if name in longValues and "=" not in arg else 0
+        elif arg.startswith("-") and len(arg) > 1:
+            letters, consumes = shortOption(arg, shortValues)
+            flags.update("-" + letter for letter in letters)
+            index += 1 if consumes else 0
+        else:
+            operands.append(arg)
+    return operands, flags
 
 
 def checkExcludesOverride(words):
     """Block `git -c core.excludesfile=...`, which disables the ignore file."""
     for word in words:
         if word.lower().startswith("core.excludesfile="):
-            return "`{}` disables the global gitignore for this call".format(word)
+            return f"`{word}` disables the global gitignore for this call"
     return ""
 
 
-def checkStagingPaths(subcommand, args, entries, cwd):
-    """Block a staging command that names a protected or unprovable path."""
-    operands = pathOperands(args)
-    if not operands and any(flag in args for flag in STAGE_ALL_FLAGS):
-        return "`git {}` with a stage-all flag stages whatever is present".format(subcommand)
+def checkOperands(subcommand, operands, entries):
+    """Return the reason one operand names a protected path, else ''."""
     for operand in operands:
         entry = protectedEntry(operand, entries)
         if entry:
-            return "`{}` is covered by the gitignore entry `{}`".format(operand, entry)
+            return f"`git {subcommand}` touches `{operand}`, covered by the gitignore entry `{entry}`"
+    return ""
+
+
+def checkStagingPaths(args, entries, cwd):
+    """Block a `git add` that names a protected or unprovable path."""
+    operands, flags = parseArgs("add", args)
+    if "--pathspec-from-file" in flags:
+        return "`git add --pathspec-from-file` reads its paths from a file that cannot be checked here"
+    if not operands and flags & STAGE_ALL_FLAGS:
+        return "`git add` with a stage-all flag stages whatever is present"
+    reason = checkOperands("add", operands, entries)
+    if reason:
+        return reason
+    for operand in operands:
         reason = unprovableReason(operand, cwd)
         if reason:
             return reason
     return ""
+
+
+def trackedChanges(cwd):
+    """Return the tracked files with changes, which `git commit -a` stages."""
+    result = subprocess.run(
+        ["git", "diff", "--name-only"],
+        cwd=cwd,
+        capture_output=True,
+        text=True,
+        timeout=GIT_TIMEOUT_SECONDS,
+    )
+    if result.returncode != 0:
+        raise OSError(result.stderr.strip() or f"git diff exited {result.returncode}")
+    return result.stdout.splitlines()
+
+
+def checkCommit(args, entries, cwd):
+    """Block a commit that moves a protected path forward."""
+    operands, flags = parseArgs("commit", args)
+    if "--pathspec-from-file" in flags:
+        return "`git commit --pathspec-from-file` reads its paths from a file that cannot be checked here"
+    if not flags & {"-a", "--all"}:
+        return checkOperands("commit", operands, entries)
+    try:
+        changed = trackedChanges(cwd)
+    except (OSError, subprocess.TimeoutExpired) as err:
+        return f"`git commit -a` stages every tracked change, and they cannot be listed here ({err})"
+    return checkOperands("commit -a", operands + changed, entries)
 
 
 def checkGit(words, entries, cwd):
@@ -257,18 +377,15 @@ def checkGit(words, entries, cwd):
     override = checkExcludesOverride(words)
     if override:
         return override
-    subcommand, args = gitSubcommand(words)
+    subcommand, args, cwd = gitSubcommand(words, cwd)
     if subcommand == "add":
-        return checkStagingPaths("add", args, entries, cwd)
+        return checkStagingPaths(args, entries, cwd)
     if subcommand == "update-index" and "--add" in args:
         return "`git update-index --add` stages without going through `git add`"
-    if subcommand in ("commit", "mv"):
-        for operand in pathOperands(args):
-            entry = protectedEntry(operand, entries)
-            if entry:
-                return "`git {}` touches `{}`, covered by `{}`".format(
-                    subcommand, operand, entry
-                )
+    if subcommand == "commit":
+        return checkCommit(args, entries, cwd)
+    if subcommand == "mv":
+        return checkOperands("mv", parseArgs("mv", args)[0], entries)
     return ""
 
 
@@ -285,7 +402,7 @@ def isWriting(command, words):
 def checkGlobalIgnoreWrite(command, words):
     """Block a Bash write to the global gitignore file itself."""
     if touchesGlobalIgnore(words) and isWriting(command, words):
-        return "this command rewrites {}".format(GITIGNORE_GLOBAL)
+        return f"this command rewrites {GITIGNORE_GLOBAL}"
     return ""
 
 
@@ -297,7 +414,7 @@ def checkGitignoreNegation(command, words, entries):
         return ""
     for word in words:
         if word.startswith("!") and protectedEntry(word[1:].strip(), entries):
-            return "`{}` would un-ignore a protected path in a .gitignore".format(word)
+            return f"`{word}` would un-ignore a protected path in a .gitignore"
     return ""
 
 
@@ -330,7 +447,7 @@ def analyzeFileTool(toolInput):
         return ""
     target = os.path.realpath(os.path.expanduser(GITIGNORE_GLOBAL))
     if os.path.realpath(os.path.expanduser(path)) == target:
-        return "this edit rewrites {}".format(GITIGNORE_GLOBAL)
+        return f"this edit rewrites {GITIGNORE_GLOBAL}"
     return ""
 
 
@@ -356,6 +473,8 @@ def main():
     try:
         data = json.load(sys.stdin)
     except (json.JSONDecodeError, EOFError):
+        return 0
+    if not isinstance(data, dict):
         return 0
 
     if not isEnabled(Path.home() / ".claude" / "settings.json"):

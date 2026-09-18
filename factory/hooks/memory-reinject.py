@@ -1,161 +1,90 @@
 #!/usr/bin/env python3
 """
-UserPromptSubmit hook: periodically re-injects rules to counter recency bias
-in long conversations.
+UserPromptSubmit hook: re-injects the global instruction files every
+GLOBAL_REINJECT_EVERY prompts, to counter recency drift in long conversations.
 
-session-start.py injects full memory and global instructions once at startup.
-Over a long session the model's attention drifts from that early block, so
-rules get ignored. This hook re-surfaces the project memory '## CRITICAL RULES'
-section every REINJECT_EVERY messages, and the full global instruction file
-every GLOBAL_REINJECT_EVERY messages.
+session-start.py injects the files listed in `globalInjectFiles` of
+~/.factory/settings.json at every session start. Over a long session the
+model's attention drifts from that early block, so this hook re-surfaces the
+same files periodically.
+
+The project memory is not re-injected here: the memory-save mod loads MEMORY.md
+at startup, resume, /clear and compaction only, so the context does not grow
+with repeated copies.
+
+The counter is keyed by the Droid process id. session-start.py resets it
+at every session start and deletes the counters of processes that have ended.
+A counter or an instruction file that cannot be read or written is reported to
+the user with `systemMessage`.
 """
 import json
 import os
-import subprocess
 import sys
 from pathlib import Path
+from typing import NoReturn
 
-REINJECT_EVERY = 5
+sys.path.insert(0, str(Path(__file__).parent))
+from instructions import globalInjectFiles, readInstructions
+from project import REINJECT_COUNTER_DIR
+
 GLOBAL_REINJECT_EVERY = 15
-GLOBAL_FILE = Path.home() / ".factory" / "AGENTS.md"
 
 
-def _resolveProjectName(cwd):
-    """Return git root basename if available, otherwise cwd basename."""
+def _report(message: str) -> NoReturn:
+    """Show a hook problem to the user and end the hook without context."""
+    print(json.dumps({"systemMessage": "memory-reinject.py: " + message}))
+    sys.exit(0)
+
+
+def _store(counterFile: Path, count: int) -> None:
+    """Write the prompt counter, reporting a failed write."""
     try:
-        result = subprocess.run(
-            ["git", "rev-parse", "--show-toplevel"],
-            cwd=cwd,
-            capture_output=True,
-            text=True,
-            timeout=3,
-        )
-        if result.returncode == 0 and result.stdout.strip():
-            return os.path.basename(result.stdout.strip())
-    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
-        pass
-    return os.path.basename(cwd)
+        counterFile.parent.mkdir(parents=True, exist_ok=True)
+        counterFile.write_text(str(count), encoding="utf-8")
+    except OSError as err:
+        _report(f"cannot write the prompt counter {counterFile}: {err}")
 
 
-FALLBACK_LINES = 40
-
-
-def _extractRules(memoryFile):
-    """Return (content, isCriticalSection).
-
-    Prefer the '## CRITICAL RULES' section. If absent (older project memory),
-    fall back to the top of MEMORY.md so the reminder still works everywhere.
-    """
+def _nextCount(counterFile: Path) -> int:
+    """Increment and store this session's prompt counter."""
     try:
-        lines = memoryFile.read_text(encoding="utf-8").splitlines()
-    except (FileNotFoundError, OSError):
-        return ("", False)
-
-    # Preferred: the dedicated CRITICAL RULES section
-    out = []
-    inSection = False
-    for line in lines:
-        if line.strip().lower() == "## critical rules":
-            inSection = True
-            continue
-        if inSection:
-            if line.startswith("## "):
-                break
-            out.append(line)
-    section = "\n".join(out).strip()
-    if section:
-        return (section, True)
-
-    # Fallback: top of the file, skipping the H1 title
-    fallback = []
-    for line in lines:
-        if not fallback and line.startswith("# "):
-            continue
-        fallback.append(line)
-        if len(fallback) >= FALLBACK_LINES:
-            break
-    return ("\n".join(fallback).strip(), False)
-
-
-def _readGlobalInstructions():
-    """Return the full global instruction file content, or empty string."""
-    try:
-        return GLOBAL_FILE.read_text(encoding="utf-8").strip()
-    except (FileNotFoundError, OSError):
-        return ""
+        count = int(counterFile.read_text(encoding="utf-8").strip())
+    except FileNotFoundError:
+        count = 0
+    except (OSError, UnicodeDecodeError, ValueError) as err:
+        # Start the count again, so the next prompt does not hit the same error.
+        _store(counterFile, 1)
+        _report(f"cannot read the prompt counter {counterFile}, counting starts again: {err}")
+    count += 1
+    _store(counterFile, count)
+    return count
 
 
 try:
-    inputData = json.load(sys.stdin)
+    json.load(sys.stdin)
 except json.JSONDecodeError:
     sys.exit(0)
 
-cwd = inputData.get("cwd", os.getcwd())
-
-# Increment per-session counter (keyed by parent PID)
-counterFile = Path.home() / ".cli-tweaks" / ".reinject-counter" / str(os.getppid())
-counterFile.parent.mkdir(parents=True, exist_ok=True)
-try:
-    count = int(counterFile.read_text(encoding="utf-8").strip())
-except (FileNotFoundError, OSError, ValueError):
-    count = 0
-count += 1
-counterFile.write_text(str(count), encoding="utf-8")
-
-# Only re-inject every Nth message
-if count % REINJECT_EVERY != 0:
+count = _nextCount(REINJECT_COUNTER_DIR / str(os.getppid()))
+if count % GLOBAL_REINJECT_EVERY != 0:
     sys.exit(0)
 
-# Resolve project name: prefer the session lock, fallback to git root / cwd
-lockFile = Path.home() / ".cli-tweaks" / ".session-locks" / str(os.getppid())
-try:
-    projectName = lockFile.read_text(encoding="utf-8").strip()
-except (FileNotFoundError, OSError):
-    projectName = _resolveProjectName(cwd)
+errors: list[str] = []
+contents = readInstructions(globalInjectFiles(errors), errors)
 
-memoryFile = Path.home() / ".cli-tweaks" / "memory" / projectName / "MEMORY.md"
-
-parts = []
-
-# Project memory CRITICAL RULES (every REINJECT_EVERY messages)
-rules, isCritical = _extractRules(memoryFile)
-if rules:
-    if isCritical:
-        header = (
-            "[REMINDER OF THE USER'S PROJECT RULES]\n"
-            "The user set these project rules and asked to be reminded of them in long "
-            "sessions. Treat them as the user's own preferences and keep following them:\n\n"
-        )
-    else:
-        header = (
-            "[REMINDER OF THE USER'S PROJECT MEMORY]\n"
-            "The user saved this project memory and asked to be reminded of it in long "
-            "sessions. Treat it as the user's own preferences and keep following it:\n\n"
-        )
-    parts.append(header + rules)
-
-# Global instruction file (every GLOBAL_REINJECT_EVERY messages)
-if count % GLOBAL_REINJECT_EVERY == 0:
-    globalContent = _readGlobalInstructions()
-    if globalContent:
-        globalHeader = (
+output: dict = {}
+if contents:
+    output["hookSpecificOutput"] = {
+        "hookEventName": "UserPromptSubmit",
+        "additionalContext": (
             "[REMINDER OF THE USER'S GLOBAL INSTRUCTIONS]\n"
             "The user configured these global instructions and asked to be reminded of "
             "them in long sessions. Treat them as the user's own preferences and keep "
-            "following them:\n\n"
-        )
-        parts.append(globalHeader + globalContent)
-
-if not parts:
-    sys.exit(0)
-
-context = "\n\n".join(parts)
-
-output = {
-    "hookSpecificOutput": {
-        "hookEventName": "UserPromptSubmit",
-        "additionalContext": context,
+            "following them:\n\n" + "\n\n---\n\n".join(contents)
+        ),
     }
-}
-print(json.dumps(output))
+if errors:
+    output["systemMessage"] = "memory-reinject.py: " + "; ".join(errors)
+if output:
+    print(json.dumps(output))
 sys.exit(0)

@@ -95,11 +95,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.factory/hooks/memory-save.py",
-            "timeout": 10
-          },
-          {
-            "type": "command",
             "command": "python3 ~/.factory/hooks/notify-stop.py",
             "timeout": 15
           }

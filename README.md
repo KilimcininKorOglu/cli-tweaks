@@ -10,16 +10,23 @@ A collection of hooks, skills, and output styles for Factory Droid and Claude Co
 
 | Hook                  | Event                | Description                                                                                    |
 |-----------------------|----------------------|------------------------------------------------------------------------------------------------|
-| `session-start.py`    | SessionStart/compact | Injects global user files and project memory into context                                      |
+| `session-start.py`    | SessionStart/compact | Locks the session project name and injects the global user files into context                  |
 | `save-plan.py`        | PreToolUse           | Notifies while a plan waits for approval; also saves the plan to disk on Factory |
 | `notify-ask.py`       | PreToolUse           | Notifies while a question waits for an answer, with the first question's header |
 | `notify-stop.py`      | Stop/StopFailure     | Notifies when the turn ends, with a one-line excerpt of the final message or the error |
-| `memory-save.py`      | Stop                 | Reminds the agent to update MEMORY.md; offloads old entries to topic files near the line cap and migrates a malformed file to the standard structure; stays silent while a batch skill holds the latch file `~/.cli-tweaks/.batch-locks/<ppid>` |
-| `memory-reinject.py`  | UserPromptSubmit     | Re-injects MEMORY.md critical rules (every 5th msg) and the full global instruction file (every 15th) to counter recency bias |
+| `memory-reinject.py`  | UserPromptSubmit     | Re-injects the global instruction files every 15th prompt to counter recency drift |
 | `compact-reinject.py` | SessionStart:compact | Re-injects instruction files (via argv) after context compaction                               |
 | `git-protect.py`      | PreToolUse (Bash, Write/Edit) | Keeps a path listed in the global gitignore out of git by every route: `git add` with or without `--force`, an operand whose contents cannot be proven (`.`, `-A`, a glob, a directory, a variable), `git update-index --add`, `git -c core.excludesfile=`, `git commit`/`git mv` on a protected path, a Bash write to the ignore file, and a Write or Edit of `~/.gitignore_global` |
 | `bash-search-guard.py` | PreToolUse (Bash)   | Blocks a shell search that reads files (`grep`, `sed`, `rg`, `ack`, `ag`, `git grep`) and a shell file dump (`cat`, `head`, `tail`, `nl`, `more`, `less`, `bat`), pointing at the ripwire MCP and the Read tool; piped filtering, redirects and `tail -f` stay allowed |
 | `notify.py`           | (helper module)      | Cross-platform desktop notifications (macOS, Linux, Windows)                                   |
+| `instructions.py`     | (helper module)      | Reads `globalInjectFiles` from `settings.json` and loads those instruction files               |
+| `project.py`          | (helper module)      | Resolves the session project name, the session lock and the re-injection counter               |
+
+`memory-save.py` is no longer part of this repository. The memory system moved to
+the `memory-save` plugin in [claude-code-mods](https://github.com/KilimcininKorOglu/claude-code-mods):
+it loads MEMORY.md at startup, resume, `/clear` and compaction, and saves what a
+turn learned in the background instead of blocking the `Stop` event. The hooks
+here therefore no longer inject or save project memory.
 
 ### Skills
 
@@ -222,9 +229,11 @@ cp factory/hooks/notify-ask.py ~/.factory/hooks/
 cp factory/hooks/notify-stop.py ~/.factory/hooks/
 cp factory/hooks/notify.py ~/.factory/hooks/
 
-# Just the memory system
+# Just the instruction injection (memory itself lives in the memory-save mod)
 cp factory/hooks/session-start.py ~/.factory/hooks/
-cp factory/hooks/memory-save.py ~/.factory/hooks/
+cp factory/hooks/memory-reinject.py ~/.factory/hooks/
+cp factory/hooks/instructions.py ~/.factory/hooks/
+cp factory/hooks/project.py ~/.factory/hooks/
 
 # Just the commit skill
 cp -r factory/skills/commit ~/.factory/skills/
@@ -254,10 +263,9 @@ On Factory Droid the hook also writes the plan content to `~/.factory/plans/<pro
 
 The memory system gives your agent persistent, project-scoped memory across sessions. Memory is stored in a shared location (`~/.cli-tweaks/memory/`) so Factory Droid and Claude Code can both access the same knowledge base:
 
-- On session start, `session-start.py` reads `~/.cli-tweaks/memory/<project>/MEMORY.md` and injects it
-- On context compaction, memory is automatically re-injected alongside instruction files
-- Every 5th message, `memory-reinject.py` re-injects the critical rules from MEMORY.md; every 15th message it also re-injects your full global instruction file (`~/.claude/CLAUDE.md` or `~/.factory/AGENTS.md`) to counter recency bias in long sessions
-- On session end, `memory-save.py` reminds the agent to save anything new it learned, prompts moving old entries to topic files when MEMORY.md nears its 200-line cap, and enforces the standard four-section structure if the file is malformed
+- Reading and writing MEMORY.md is the job of the `memory-save` plugin in [claude-code-mods](https://github.com/KilimcininKorOglu/claude-code-mods). It loads the file at startup, resume, `/clear` and compaction, and saves what a turn learned after the turn, without blocking the `Stop` event
+- `session-start.py` writes the session project-name lock that every project-scoped hook here reads, so the memory of a moved cwd still resolves to the same project
+- Every 15th prompt, `memory-reinject.py` re-injects your global instruction files (`~/.claude/CLAUDE.md` or `~/.factory/AGENTS.md`) to counter recency drift in long sessions
 - Memory files are organized per project with a main index and topic files
 
 ### Compaction Re-injection

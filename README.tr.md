@@ -10,16 +10,24 @@ Factory Droid ve Claude Code için planlama otomasyonu, kalıcı bellek, akıll�
 
 | Hook                  | Olay                 | Açıklama                                                                                                            |
 |-----------------------|----------------------|---------------------------------------------------------------------------------------------------------------------|
-| `session-start.py`    | SessionStart/compact | Global kullanıcı dosyalarını ve proje belleğini bağlama enjekte eder                                                |
+| `session-start.py`    | SessionStart/compact | Oturumun proje adını kilitler ve global kullanıcı dosyalarını bağlama enjekte eder                                  |
 | `save-plan.py`        | PreToolUse           | Plan onay beklerken bildirim gönderir; Factory'de ayrıca planı diske kaydeder                                        |
 | `notify-ask.py`       | PreToolUse           | Soru cevap beklerken ilk sorunun başlığıyla bildirim gönderir                                                       |
 | `notify-stop.py`      | Stop/StopFailure     | Turn bittiğinde son mesajdan veya hatadan tek satırlık alıntıyla bildirim gönderir                                  |
-| `memory-save.py`      | Stop                 | MEMORY.md'yi güncellemesini hatırlatır; satır sınırına yaklaşınca eski girdileri topic dosyalarına taşır ve bozuk dosyayı standart yapıya migration yapar; bir batch skill `~/.cli-tweaks/.batch-locks/<ppid>` latch dosyasını tuttuğu sürece sessiz kalır |
-| `memory-reinject.py`  | UserPromptSubmit     | Her 5. mesajda MEMORY.md kritik kurallarını, her 15. mesajda tüm global talimat dosyasını yeniden enjekte ederek bağlam kaybını önler |
+| `memory-reinject.py`  | UserPromptSubmit     | Her 15. prompt'ta global talimat dosyalarını yeniden enjekte ederek bağlam kaybını önler |
 | `compact-reinject.py` | SessionStart:compact | Bağlam sıkıştırmasından sonra talimat dosyalarını (argv ile) yeniden enjekte eder                                   |
 | `git-protect.py`      | PreToolUse (Bash, Write/Edit) | Global gitignore'da yazan bir path'in git'e girmesini her yoldan engeller: `--force` olsun olmasın `git add`, içeriği ispatlanamayan operand (`.`, `-A`, glob, dizin, değişken), `git update-index --add`, `git -c core.excludesfile=`, korumalı path üzerinde `git commit`/`git mv`, ignore dosyasına Bash ile yazma ve `~/.gitignore_global`'in Write/Edit ile değiştirilmesi |
 | `bash-search-guard.py` | PreToolUse (Bash)   | Dosya okuyan shell aramasını (`grep`, `sed`, `rg`, `ack`, `ag`, `git grep`) ve shell ile dosya dökümünü (`cat`, `head`, `tail`, `nl`, `more`, `less`, `bat`) engeller, ripwire MCP'ye ve Read tool'una yönlendirir; pipe ile filtreleme, redirect ve `tail -f` serbest kalır |
 | `notify.py`           | (yardımcı modül)     | Platformlar arası masaüstü bildirimleri (macOS, Linux, Windows)                                                     |
+| `instructions.py`     | (yardımcı modül)     | `settings.json` içindeki `globalInjectFiles` listesini okur ve bu talimat dosyalarını yükler                        |
+| `project.py`          | (yardımcı modül)     | Oturumun proje adını, session lock'unu ve yeniden enjeksiyon sayacını çözer                                         |
+
+`memory-save.py` artık bu repoda değil. Bellek sistemi
+[claude-code-mods](https://github.com/KilimcininKorOglu/claude-code-mods)
+reposundaki `memory-save` plugin'ine taşındı: MEMORY.md'yi oturum başında,
+resume'da, `/clear` ve compaction sonrasında yükler; turn'ün öğrendiklerini
+`Stop` olayını bloklamadan arka planda kaydeder. Buradaki hook'lar bu nedenle
+proje belleğini artık enjekte etmez ve kaydetmez.
 
 ### Skill'ler
 
@@ -222,9 +230,11 @@ cp factory/hooks/notify-ask.py ~/.factory/hooks/
 cp factory/hooks/notify-stop.py ~/.factory/hooks/
 cp factory/hooks/notify.py ~/.factory/hooks/
 
-# Yalnızca bellek sistemi
+# Yalnızca talimat enjeksiyonu (belleğin kendisi memory-save mod'unda)
 cp factory/hooks/session-start.py ~/.factory/hooks/
-cp factory/hooks/memory-save.py ~/.factory/hooks/
+cp factory/hooks/memory-reinject.py ~/.factory/hooks/
+cp factory/hooks/instructions.py ~/.factory/hooks/
+cp factory/hooks/project.py ~/.factory/hooks/
 
 # Yalnızca commit skill'i
 cp -r factory/skills/commit ~/.factory/skills/
@@ -254,10 +264,9 @@ Factory Droid'de hook ayrıca plan içeriğini `~/.factory/plans/<proje>/` dizin
 
 Bellek sistemi, ajana oturumlar arası kalıcı ve projeye özel bir bellek sağlar. Bellek, ortak bir konumda (`~/.cli-tweaks/memory/`) saklanır, böylece Factory Droid ve Claude Code aynı bilgi tabanına erişebilir:
 
-- Oturum başında `session-start.py`, `~/.cli-tweaks/memory/<proje>/MEMORY.md` dosyasını okur ve bağlama enjekte eder
-- Bağlam sıkıştırmasında bellek, talimat dosyalarıyla birlikte otomatik olarak yeniden enjekte edilir
-- Her 5. mesajda `memory-reinject.py`, MEMORY.md'deki kritik kuralları yeniden enjekte eder; her 15. mesajda ayrıca tüm global talimat dosyanızı (`~/.claude/CLAUDE.md` veya `~/.factory/AGENTS.md`) yeniden enjekte ederek uzun oturumlarda bağlam kaybını önler
-- Oturum sonunda `memory-save.py`, ajanın yeni öğrendiklerini kaydetmesini hatırlatır, MEMORY.md 200 satır sınırına yaklaşınca eski girdileri topic dosyalarına taşımayı önerir ve dosya bozuksa standart dört bölümlü yapıya migration yapar
+- MEMORY.md'yi okumak ve yazmak [claude-code-mods](https://github.com/KilimcininKorOglu/claude-code-mods) reposundaki `memory-save` plugin'inin işidir. Dosyayı oturum başında, resume'da, `/clear` ve compaction sonrasında yükler; turn'ün öğrendiklerini `Stop` olayını bloklamadan turn sonrasında kaydeder
+- `session-start.py`, buradaki her projeye özel hook'un okuduğu session project-name lock'unu yazar, böylece cwd değişse de proje aynı kalır
+- Her 15. prompt'ta `memory-reinject.py`, global talimat dosyalarınızı (`~/.claude/CLAUDE.md` veya `~/.factory/AGENTS.md`) yeniden enjekte ederek uzun oturumlarda bağlam kaybını önler
 - Bellek dosyaları proje bazında ana indeks ve konu dosyalarıyla düzenlenir
 
 ### Sıkıştırma Sonrası Yeniden Enjeksiyon

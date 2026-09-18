@@ -24,7 +24,7 @@ NOTIFY_TIMEOUT_SECONDS = 5
 
 def _warn(message: str) -> None:
     """Report a helper failure on stderr, never on stdout."""
-    print("notify: {}".format(message), file=sys.stderr)
+    print(f"notify: {message}", file=sys.stderr)
 
 
 def isEnabledFor(feature: str) -> bool:
@@ -44,18 +44,21 @@ def isEnabledFor(feature: str) -> bool:
     try:
         data = json.loads(settingsFile.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
-        _warn("{} is not valid JSON ({}); notifications disabled".format(settingsFile, exc))
+        _warn(f"{settingsFile} is not valid JSON ({exc}); notifications disabled")
         return False
-    except OSError as exc:
-        _warn("cannot read {} ({}); notifications disabled".format(settingsFile, exc))
+    except (OSError, UnicodeDecodeError) as exc:
+        _warn(f"cannot read {settingsFile} ({exc}); notifications disabled")
+        return False
+    if not isinstance(data, dict):
+        _warn(f"{settingsFile} is not a JSON object; notifications disabled")
         return False
 
-    featureKey = "hookNotify{}".format(feature)
+    featureKey = f"hookNotify{feature}"
     value = data.get(featureKey, False)
     if value is True or value is False:
         return value
 
-    _warn("{} must be true or false, got {!r}; treating as false".format(featureKey, value))
+    _warn(f"{featureKey} must be true or false, got {value!r}; treating as false")
     return False
 
 
@@ -78,18 +81,18 @@ def _run(command) -> bool:
             timeout=NOTIFY_TIMEOUT_SECONDS,
         )
     except FileNotFoundError:
-        _warn("{} is not installed".format(command[0]))
+        _warn(f"{command[0]} is not installed")
         return False
     except subprocess.TimeoutExpired:
-        _warn("{} timed out after {}s".format(command[0], NOTIFY_TIMEOUT_SECONDS))
+        _warn(f"{command[0]} timed out after {NOTIFY_TIMEOUT_SECONDS}s")
         return False
     except OSError as exc:
-        _warn("{} failed to start ({})".format(command[0], exc))
+        _warn(f"{command[0]} failed to start ({exc})")
         return False
 
     if result.returncode != 0:
         detail = result.stderr.decode("utf-8", "replace").strip()
-        _warn("{} exited {} ({})".format(command[0], result.returncode, detail))
+        _warn(f"{command[0]} exited {result.returncode} ({detail})")
         return False
     return True
 
@@ -99,17 +102,15 @@ def notify(title: str, message: str, subtitle: str = "") -> bool:
     system = platform.system()
 
     if system == "Darwin":
-        script = 'display notification "{}" with title "{}"'.format(
-            escapeApplescript(message), escapeApplescript(title)
-        )
+        script = f'display notification "{escapeApplescript(message)}" with title "{escapeApplescript(title)}"'
         if subtitle:
-            script += ' subtitle "{}"'.format(escapeApplescript(subtitle))
+            script += f' subtitle "{escapeApplescript(subtitle)}"'
         return _run(["osascript", "-e", script])
 
     if system == "Linux":
         # notify-send has no subtitle field, so fold it into the body instead of
         # dropping it.
-        body = "{}\n{}".format(subtitle, message) if subtitle else message
+        body = f"{subtitle}\n{message}" if subtitle else message
         return _run(["notify-send", title, body])
 
     if system == "Windows":
@@ -117,7 +118,7 @@ def notify(title: str, message: str, subtitle: str = "") -> bool:
         # clicked it, stalling the tool call this helper runs inside.
         safeTitle = escapePowershell(title)
         safeBody = escapePowershell(
-            "{} - {}".format(subtitle, message) if subtitle else message
+            f"{subtitle} - {message}" if subtitle else message
         )
         script = (
             "[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications,"
@@ -125,15 +126,15 @@ def notify(title: str, message: str, subtitle: str = "") -> bool:
             "$x = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent("
             "[Windows.UI.Notifications.ToastTemplateType]::ToastText02); "
             "$t = $x.GetElementsByTagName('text'); "
-            "$t.Item(0).AppendChild($x.CreateTextNode('{}')) > $null; "
-            "$t.Item(1).AppendChild($x.CreateTextNode('{}')) > $null; "
+            f"$t.Item(0).AppendChild($x.CreateTextNode('{safeTitle}')) > $null; "
+            f"$t.Item(1).AppendChild($x.CreateTextNode('{safeBody}')) > $null; "
             "[Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier("
-            "'{{1AC14E77-02E7-4E5D-B744-2EB1AE5198B7}}\\WindowsPowerShell\\v1.0\\powershell.exe'"
+            "'{1AC14E77-02E7-4E5D-B744-2EB1AE5198B7}\\WindowsPowerShell\\v1.0\\powershell.exe'"
             ").Show([Windows.UI.Notifications.ToastNotification]::new($x))"
-        ).format(safeTitle, safeBody)
+        )
         return _run(
             ["powershell.exe", "-NoProfile", "-NonInteractive", "-Command", script]
         )
 
-    _warn("unsupported platform {}".format(system))
+    _warn(f"unsupported platform {system}")
     return False

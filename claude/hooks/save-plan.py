@@ -12,36 +12,12 @@ stdout, so the approval prompt proceeds untouched.
 """
 import json
 import os
-import subprocess
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from notify import notify, isEnabledFor
-
-
-def _resolveProjectName(cwd):
-    """Return session-lock name, else git root basename, else cwd basename."""
-    lockFile = Path.home() / ".cli-tweaks" / ".session-locks" / str(os.getppid())
-    try:
-        locked = lockFile.read_text(encoding="utf-8").strip()
-        if locked:
-            return locked
-    except (FileNotFoundError, OSError):
-        pass
-    try:
-        result = subprocess.run(
-            ["git", "rev-parse", "--show-toplevel"],
-            cwd=cwd,
-            capture_output=True,
-            text=True,
-            timeout=3,
-        )
-        if result.returncode == 0 and result.stdout.strip():
-            return os.path.basename(result.stdout.strip())
-    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
-        pass
-    return os.path.basename(cwd)
+from project import sessionProjectName
 
 
 try:
@@ -56,7 +32,7 @@ if isEnabledFor("PlanSave"):
     cwd = inputData.get("cwd", os.getcwd())
     notify(
         "Plan awaiting your approval",
-        _resolveProjectName(cwd),
+        sessionProjectName(cwd),
         subtitle="Claude Code",
     )
 
