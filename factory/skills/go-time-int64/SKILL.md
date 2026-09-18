@@ -85,16 +85,8 @@ Then classify manually using the table below. The scanner cannot know intent.
 
 ### Phase 3: Conversion (fix)
 
-**Take the batch latch first.** The conversion moves one struct at a time, so run
-this before the first struct:
-
-```bash
-mkdir -p ~/.cli-tweaks/.batch-locks && touch ~/.cli-tweaks/.batch-locks/$PPID
-```
-
-This keeps the `memory-save.py` stop hook silent for the whole conversion, so a
-converted struct does not cost an extra turn. Continue to the next struct in the
-same turn. Release the latch at the end of Phase 4, never earlier.
+The conversion moves one struct at a time. Continue to the next struct in the
+same turn.
 
 #### 3.1 Choose precision once per project
 
@@ -242,12 +234,6 @@ go tool pprof -top mem.out
 
 # 5. GC behaviour (pointer-free spans skipped)
 GODEBUG=gctrace=1 ./yourbinary 2>&1 | head
-```
-
-Release the batch latch before the report:
-
-```bash
-rm -f ~/.cli-tweaks/.batch-locks/$PPID
 ```
 
 Report to the user: size before/after per struct, pointer count before/after, and measured heap delta if a benchmark exists.

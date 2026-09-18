@@ -18,22 +18,9 @@ Parse the user's command and follow exactly ONE of these three paths:
 If the user provided an argument that matches a subcommand from the reference
 table at the bottom of this file:
 
-1. Take the batch latch, unless an outer run already holds it:
-
-   ```bash
-   mkdir -p ~/.cli-tweaks/.batch-locks
-   [ -e ~/.cli-tweaks/.batch-locks/$PPID ] && echo outer-run-owns-latch || touch ~/.cli-tweaks/.batch-locks/$PPID
-   ```
-
-   A subcommand drains a Phase 2 batch queue, and the `memory-save.py` stop hook
-   would otherwise block on every batch-completion turn. When the command prints
-   `outer-run-owns-latch`, a full audit or a security sweep owns the latch: leave
-   the file in place and never remove it. Otherwise the latch is yours, and you
-   remove it with `rm -f ~/.cli-tweaks/.batch-locks/$PPID` immediately before you
-   print the subcommand's final report.
-2. Read the full content of `subcommands/<name>.md` using the Read tool.
-3. Execute the instructions in that file as your complete workflow.
-4. STOP. Do not continue reading this file. The subcommand file is your workflow.
+1. Read the full content of `subcommands/<name>.md` using the Read tool.
+2. Execute the instructions in that file as your complete workflow.
+3. STOP. Do not continue reading this file. The subcommand file is your workflow.
 
 Exception: `security-sweep` is Path B below, not a subcommand file.
 
@@ -58,16 +45,6 @@ Jump to the **Full Audit Orchestration** section below.
 
 This runs when `/bug-report` is called with no subcommand. Launches ALL
 subcommands through a rolling 2-worker pool for comprehensive repository analysis.
-
-**Take the batch latch first.** Before you launch `sec-recon`, run:
-
-```bash
-mkdir -p ~/.cli-tweaks/.batch-locks && touch ~/.cli-tweaks/.batch-locks/$PPID
-```
-
-This tells the `memory-save.py` stop hook that a batch run is in progress, so it
-stays silent instead of blocking on every worker-completion turn. Without it each
-worker costs one extra turn. Release the latch in step 4, never earlier.
 
 **Resume support:** Before launching each worker, read `BUG-REPORT.md` and
 check for its completion marker (`<!-- scan:SUBCOMMAND completed -->`). Skip
@@ -154,15 +131,7 @@ that worker if the marker exists.
    - Instruction to write all confirmed findings to `BUG-REPORT.md` using the
      shared format below, continuing the existing ID sequence
 
-4. After all workers complete, release the batch latch first:
-
-   ```bash
-   rm -f ~/.cli-tweaks/.batch-locks/$PPID
-   ```
-
-   The stop hook blocks again from here on, so the turn that ends the audit
-   carries everything the run learned into memory. Then read `BUG-REPORT.md` and
-   re-sort all findings by severity (CRITICAL -> HIGH -> MEDIUM -> LOW),
+4. After all workers complete, read `BUG-REPORT.md` and re-sort all findings by severity (CRITICAL -> HIGH -> MEDIUM -> LOW),
    deduplicating overlapping findings.
 
 5. After re-sorting and deduplication, remove ALL `<!-- scan:SUBCOMMAND completed -->`
@@ -221,16 +190,6 @@ Use when the user says `/bug-report security-sweep` or natural language like
 
 This runs ONLY the security scan subcommands (not general audits).
 
-**Take the batch latch first.** Before you launch `sec-recon`, run:
-
-```bash
-mkdir -p ~/.cli-tweaks/.batch-locks && touch ~/.cli-tweaks/.batch-locks/$PPID
-```
-
-This keeps the `memory-save.py` stop hook silent while the sweep runs, so a
-worker-completion turn does not cost an extra turn. Release the latch in step 4,
-never earlier.
-
 **Resume support:** Same as Full Audit — check completion markers before launching.
 
 **Execution order:**
@@ -280,15 +239,7 @@ never earlier.
 
 3. Use the same worker prompt template from Full Audit above.
 
-4. After all workers complete, release the batch latch first:
-
-   ```bash
-   rm -f ~/.cli-tweaks/.batch-locks/$PPID
-   ```
-
-   Then re-sort and deduplicate `BUG-REPORT.md`. The stop hook blocks again from
-   here on, so the turn that ends the sweep carries the run's learnings into
-   memory.
+4. After all workers complete, re-sort and deduplicate `BUG-REPORT.md`.
 
 5. After re-sorting and deduplication, remove ALL `<!-- scan:SUBCOMMAND completed -->`
    markers from `BUG-REPORT.md` so the user can re-run the security sweep at will

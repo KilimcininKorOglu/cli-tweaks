@@ -91,17 +91,6 @@ Batch mode has ONE failure worth naming: stopping early. Fixing three bugs and
 ending the turn is a failed run, not a partial success. This section is the
 contract that prevents it.
 
-**Take the batch latch first.** Before you print the ledger, run:
-
-```bash
-mkdir -p ~/.cli-tweaks/.batch-locks && touch ~/.cli-tweaks/.batch-locks/$PPID
-```
-
-This tells the `memory-save.py` stop hook that a batch run is in progress, so it
-stays silent instead of blocking after every bug. Without it each bug costs two
-turns: one to finish the bug, one to answer the hook. Release the latch in the
-Final Summary step, never earlier.
-
 `[pending]`, `[fixed]` and `[skipped]` below are LEDGER markers for this run.
 They are not `Status:` values. The `Status:` line in `BUG-REPORT.md` accepts only
 `NEW`, `FIXED`, `WONTFIX` and `DEFERRED`; never write a ledger marker there.
@@ -428,17 +417,6 @@ In single-bug mode and ad-hoc mode, STOP here.
 ---
 
 ## Final Summary
-
-**Release the batch latch first**, before you print anything:
-
-```bash
-rm -f ~/.cli-tweaks/.batch-locks/$PPID
-```
-
-The stop hook blocks again from here on, so the turn that ends the run carries
-everything the whole run learned into memory. A latch left behind would silence
-the hook for the rest of the session; the hook also drops a latch older than six
-hours by itself, but that is a backstop, not the release.
 
 After the last bug in batch mode, print a summary:
 - Total bugs processed.

@@ -386,19 +386,9 @@ existing `BUG-REPORT.md` if the project uses one) in English.
 
 Never edit files in `scan`/`report` mode. In `fix` mode:
 
-**Take the batch latch first.** A `fix` run repairs one finding class after
-another, so run this before the first fix:
-
-```bash
-mkdir -p ~/.cli-tweaks/.batch-locks && touch ~/.cli-tweaks/.batch-locks/$PPID
-```
-
-This keeps the `memory-save.py` stop hook silent for the whole run, so a finding
-does not cost an extra turn. A finished finding is a checkpoint, not an ending:
-continue to the next finding in the same turn. Release the latch at the end of
-**Prove the fix**, never earlier. A decision the run genuinely needs from the
-user, such as a major-version bump below, still ends the turn; the latch removes
-only the hook turn.
+A `fix` run repairs one finding class after another. A finished finding is a
+checkpoint, not an ending: continue to the next finding in the same turn. A
+decision the run genuinely needs from the user, such as a major-version bump below, still ends the turn.
 
 ### Compatible dependency CVEs
 Raise the pin to the fixed version in the manifest the project actually uses
@@ -486,15 +476,6 @@ proof under that exact version, not just the local one. Then remove the
 throwaway tools virtualenv (`rm -rf "$TOOLDIR"`) and any package this run
 installed into the project environment, and say so. The run installed it, so the
 run removes it; offering to remove it and leaving it installed does not count.
-
-Release the batch latch last, after the proof and the cleanup:
-
-```bash
-rm -f ~/.cli-tweaks/.batch-locks/$PPID
-```
-
-The stop hook blocks again from here on, so the turn that ends the run carries
-everything the run learned into memory.
 
 ## Rules
 

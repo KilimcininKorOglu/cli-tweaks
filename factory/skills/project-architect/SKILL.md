@@ -58,18 +58,6 @@ Read the appropriate reference file before generating each document:
 
 ## Workflow
 
-**Take the batch latch first.** A run pauses for approval after every document,
-so run this before Phase 0:
-
-```bash
-mkdir -p ~/.cli-tweaks/.batch-locks && touch ~/.cli-tweaks/.batch-locks/$PPID
-```
-
-This keeps the `memory-save.py` stop hook silent while the run waits for the
-user, so an approval pause does not also cost a memory-prompt turn. The approval
-pauses themselves stay: the latch removes only the hook turn. Release the latch
-at the end of Phase 5, never earlier.
-
 ### Phase 0: Discovery & Elicitation
 
 Read `references/elicitation-guide.md` for the full question framework.
@@ -154,15 +142,6 @@ Read `references/droid-prompt.md` before generating.
 that Droid can execute to build the entire project from scratch. The prompt must be
 completely self-contained, with inline code for complex patterns and an ordered checklist
 of every file to create.
-
-After PROMPT.md is written, release the batch latch:
-
-```bash
-rm -f ~/.cli-tweaks/.batch-locks/$PPID
-```
-
-The stop hook blocks again from here on, so the turn that ends the run carries
-everything the run learned into memory.
 
 ## Operating Rules
 

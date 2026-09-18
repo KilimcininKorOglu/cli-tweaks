@@ -193,16 +193,22 @@ cargo clippy --workspace --all-targets --all-features --message-format=json \
 cargo fix --edition --workspace --allow-dirty --allow-staged --dry-run 2>&1
 echo "edition check exit: $?"
 
-# Complexity gate: every function must stay at or below a complexity of 10.
-# clippy::cognitive_complexity is nursery (allow by default), so enable it
-# explicitly. Its threshold comes from clippy.toml, so set one for the run if the
-# project declares none. Cognitive complexity is not identical to cyclomatic — it
-# weights nesting — but it is the only per-function measure clippy offers; say so
-# in the report.
-test -f clippy.toml || echo 'cognitive-complexity-threshold = 10' > "$RUNDIR/clippy.toml"
-CLIPPY_CONF_DIR="$(test -f clippy.toml && pwd || echo "$RUNDIR")" \
-  cargo clippy --workspace --all-targets --all-features -- -W clippy::cognitive_complexity
+# Complexity gate: every function must stay at or below a CYCLOMATIC complexity
+# of 10. Measure it with lizard, which parses the source and counts the decision
+# points of each function. Install it with `pipx install lizard` when it is
+# missing. `-C 10` sets the limit and `-w` prints one warning line per function
+# over it; the exit code is 1 when any function exceeds the limit.
+command -v lizard >/dev/null 2>&1 || pipx install lizard
+lizard -l rust -C 10 -w $(cargo metadata --no-deps --format-version 1 \
+  | python3 -c 'import json,sys,os; print(" ".join(os.path.dirname(p["manifest_path"])+"/src" for p in json.load(sys.stdin)["packages"]))') \
+  | tee "$RUNDIR/complexity.txt"
 echo "complexity exit: $?"
+
+# NEVER use clippy::cognitive_complexity as the gate. It counts the branches of
+# every expanded macro, so a ten-line function with two `tracing` macro calls
+# scores 19. That number describes the expansion, not the source, and no
+# refactor brings it under the limit. Run it only as extra information, and say
+# in the report that it is not the gate.
 ```
 
 If step 4 showed the local toolchain differs from the declared floor, ALSO run
@@ -263,13 +269,13 @@ style, pedantic) — correctness lints are near-defects and rank above style.
 **edition** — for each suggestion extract file:line and the idiom the new edition
 requires or prefers. These are optional improvements, not defects.
 
-**complexity** — for each `clippy::cognitive_complexity` warning extract
-file:line, the function name, and the reported score. Every one is a function
-over the limit of 10. Unlike an edition suggestion this is NOT optional: the
-limit is a project rule, and a function above it must be refactored into smaller
-single-responsibility functions, never allowed and never given a raised
-threshold. State in the report that clippy measures cognitive complexity, which
-weights nesting, rather than plain cyclomatic complexity.
+**complexity** — for each lizard warning line extract file:line, the function
+name, and the `CCN` value, which is the cyclomatic complexity. Every one is a
+function over the limit of 10. Unlike an edition suggestion this is NOT optional:
+the limit is a project rule, and a function above it must be refactored into
+smaller single-responsibility functions, never allowed and never given a raised
+threshold. Report a `clippy::cognitive_complexity` count, when you ran that lint,
+as extra information only, and name it cognitive complexity.
 
 Rank all findings by severity for action (security tier first, always):
 1. **cargo-audit vulnerability in a direct dependency** — highest; upgrade it.
@@ -285,7 +291,7 @@ Rank all findings by severity for action (security tier first, always):
    silently allow a license.
 8. **clippy correctness / suspicious lint** — quality, near-defect; fix in code.
 9. **clippy perf / complexity / style lint** — quality; fix in code.
-10. **Function over the complexity limit (`cognitive_complexity` > 10)** —
+10. **Function over the complexity limit (lizard `CCN` > 10)** —
     quality; refactor into smaller functions. Ranked above the edition tier
     because it is a limit, not a suggestion.
 11. **Edition suggestion** — lowest; optional idiom upgrade, behavior-preserving.
@@ -321,8 +327,8 @@ Quality   — clippy: L lints (C correctness)   complexity: X over limit   editi
 - [correctness] path/file.rs:42 — <message>
 - [style] path/file.rs:88 — <message>
 
-## complexity — functions over the limit of 10 (clippy cognitive_complexity)
-- path/file.rs:42 — <fn> has a cognitive complexity of <N> (refactor into smaller functions)
+## complexity — functions over the limit of 10 (lizard, cyclomatic)
+- path/file.rs:42 — <fn> has a cyclomatic complexity of <N> (refactor into smaller functions)
 
 ## edition (optional idiom upgrades)
 - <file>:<line> — <suggested modern idiom>
@@ -344,19 +350,9 @@ existing `BUG-REPORT.md` if the project uses one) in English.
 
 Never edit files in `scan`/`report` mode. In `fix` mode:
 
-**Take the batch latch first.** A `fix` run repairs one finding class after
-another, so run this before the first fix:
-
-```bash
-mkdir -p ~/.cli-tweaks/.batch-locks && touch ~/.cli-tweaks/.batch-locks/$PPID
-```
-
-This keeps the `memory-save.py` stop hook silent for the whole run, so a finding
-does not cost an extra turn. A finished finding is a checkpoint, not an ending:
-continue to the next finding in the same turn. Release the latch at the end of
-**Prove the fix**, never earlier. A decision the run genuinely needs from the
-user, such as a license allow-list entry, still ends the turn; the latch removes
-only the hook turn.
+A `fix` run repairs one finding class after another. A finished finding is a
+checkpoint, not an ending: continue to the next finding in the same turn. A
+decision the run genuinely needs from the user, such as a license allow-list entry, still ends the turn.
 
 ### Direct dependency vulnerabilities
 ```bash
@@ -419,9 +415,9 @@ crate-level `#![allow(...)]` to hide a real finding.
 Refactor each function the complexity gate reported into smaller
 single-responsibility functions: extract match arms and nested branches into
 named helpers, lift error handling out of the happy path with `?`, and split
-functions that do two jobs. NEVER raise `cognitive-complexity-threshold`, add an
-`#[allow(clippy::cognitive_complexity)]`, or drop the gate to make the report
-green. Re-run the gate until it reports nothing.
+functions that do two jobs. NEVER raise the `-C` limit of lizard, and never drop
+the gate to make the report green. Re-run `lizard -l rust -C 10 -w` until it
+reports nothing.
 
 ### Edition suggestions
 Apply ONLY when behavior-preserving and the user wants the migration:
@@ -450,26 +446,17 @@ toolchain this run downloaded (`rustup toolchain uninstall <X.Y.Z>`) and say so.
 The run installed it, so the run removes it; offering to remove it and leaving it
 installed does not count.
 
-Release the batch latch last, after the proof and the cleanup:
-
-```bash
-rm -f ~/.cli-tweaks/.batch-locks/$PPID
-```
-
-The stop hook blocks again from here on, so the turn that ends the run carries
-everything the run learned into memory.
-
 ## Rules
 
 - Default to `scan`; run ALL FOUR tools (cargo-audit, cargo-deny, clippy,
   edition check) plus the complexity gate every time; never modify files unless
   invoked as `fix`.
-- Enforce a per-function complexity limit of 10 by enabling
-  `clippy::cognitive_complexity` explicitly; it is a nursery lint and is allowed
-  by default. Set the threshold for the run when the project declares no
-  `clippy.toml`, and say in the report that clippy measures cognitive rather than
-  cyclomatic complexity. NEVER raise the threshold, add an `#[allow(...)]`, or
-  drop the gate to make the report green.
+- Enforce a per-function CYCLOMATIC complexity limit of 10 with
+  `lizard -l rust -C 10 -w`. NEVER raise the limit and never drop the gate to
+  make the report green.
+- NEVER gate on `clippy::cognitive_complexity`. It counts the branches of every
+  expanded macro, so a function with two `tracing` macro calls scores far above
+  its source complexity and no refactor brings it under the limit.
 - NEVER truncate a scan command's output with `head`, `tail`, or a count flag.
   A capped run reports the first few findings and hides the rest, so the next
   run finds work you already called done. Read the whole output; use the
