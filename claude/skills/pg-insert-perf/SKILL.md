@@ -4,6 +4,10 @@ description: >
   Scans the project for single-row-in-a-loop Postgres inserts, oversized
   connection pools, and missing batching or COPY; reports the expected gains;
   on request implements buffered batch inserts or COPY with backpressure.
+metadata:
+  author: KilimcininKorOglu
+  version: "1.0.0"
+  category: database
 argument-hint: "[scan | fix]"
 disable-model-invocation: true
 ---

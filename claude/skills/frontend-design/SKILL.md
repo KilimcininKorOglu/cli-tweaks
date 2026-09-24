@@ -3,6 +3,10 @@ name: frontend-design
 description: >
   Builds distinctive production-grade frontend interfaces and provides a 27-site
   design system catalog with a URL-based generator.
+metadata:
+  author: KilimcininKorOglu
+  version: "1.0.0"
+  category: web
 argument-hint: "[use <site> | generate <url> | extract [path] | list]"
 disable-model-invocation: true
 ---

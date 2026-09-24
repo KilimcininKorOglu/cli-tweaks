@@ -4,6 +4,10 @@ description: >
   Scans the project, detects the web framework, and implements content-hash
   ETag caching with Cache-Control headers and 304 Not Modified support for
   static or embedded files.
+metadata:
+  author: KilimcininKorOglu
+  version: "1.0.0"
+  category: web
 argument-hint: "[scan | fix]"
 disable-model-invocation: true
 ---

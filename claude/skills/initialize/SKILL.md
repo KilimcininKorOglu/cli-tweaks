@@ -4,6 +4,10 @@ description: >
   Analyzes the codebase and creates or updates an AGENTS.md file for AI coding
   agents. Scans project files, build configs, and existing AI rules to generate
   comprehensive guidance for all AI agents (Cursor, Codex, Gemini CLI, Copilot).
+metadata:
+  author: KilimcininKorOglu
+  version: "1.0.0"
+  category: documentation
 argument-hint: ""
 disable-model-invocation: true
 ---

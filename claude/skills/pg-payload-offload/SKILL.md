@@ -5,6 +5,10 @@ description: >
   payloads; on request implements a partitioned inline/external payload table
   with a write-and-swap offload job and batched S3 objects with byte-range
   keys.
+metadata:
+  author: KilimcininKorOglu
+  version: "1.0.0"
+  category: database
 argument-hint: "[scan | fix]"
 disable-model-invocation: true
 ---

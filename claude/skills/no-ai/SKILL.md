@@ -6,10 +6,10 @@ description: |
   language, superficial -ing analyses, vague attributions, em dash overuse, rule
   of three, AI vocabulary words, passive voice, negative parallelisms, and
   filler phrases.
-license: MIT
-compatibility: claude-code opencode
 metadata:
+  author: KilimcininKorOglu
   version: "1.0.0"
+  category: writing
 argument-hint: "[text or file path] [voice sample path]"
 disable-model-invocation: true
 ---

@@ -4,6 +4,10 @@ description: >
   Programmatic UIKit development, review and improvement: Auto Layout, table and
   collection views, navigation, Core Animation, networking, architecture, and 20
   reference documents with production-ready patterns.
+metadata:
+  author: KilimcininKorOglu
+  version: "1.0.0"
+  category: ios
 argument-hint: "[review | build | improve]"
 disable-model-invocation: true
 ---

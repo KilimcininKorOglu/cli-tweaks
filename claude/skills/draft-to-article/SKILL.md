@@ -4,6 +4,10 @@ description: >
   Restructures a continuous draft into a platform-optimized long-form article
   with section architecture, paragraph rhythm, visual placement, and title
   options. Targets X, LinkedIn or Medium.
+metadata:
+  author: KilimcininKorOglu
+  version: "1.0.0"
+  category: writing
 argument-hint: "[x | linkedin | medium]"
 disable-model-invocation: true
 ---

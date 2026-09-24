@@ -5,6 +5,10 @@ description: >
   (slices, maps, indexes, queues) or on memory-constrained targets, reports the
   byte and GC-pointer savings, and on request converts those fields to int64
   timestamps with boundary adapters.
+metadata:
+  author: KilimcininKorOglu
+  version: "1.0.0"
+  category: performance
 argument-hint: "[scan | fix]"
 disable-model-invocation: true
 ---

@@ -8,6 +8,10 @@ description: >
   well-formatted commits with conventional commit messages. Auto-detects git
   state, stages changes intelligently, and creates atomic commits with a proper
   type/scope/description format.
+metadata:
+  author: KilimcininKorOglu
+  version: "1.0.0"
+  category: git
 argument-hint: "[--all | --staged | --modified | --amend | --no-verify | --wip | --push]"
 ---
 

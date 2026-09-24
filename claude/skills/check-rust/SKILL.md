@@ -7,6 +7,10 @@ description: >
   installs any that are missing, scans every source path, classifies each
   finding, and produces a ranked combined report with fix guidance.
   Requires a Rust project (`Cargo.toml` present); check-golang, check-js, check-php, check-python and check-swift cover the other languages.
+metadata:
+  author: KilimcininKorOglu
+  version: "1.0.0"
+  category: code-quality
 argument-hint: "[scan | report | fix]"
 disable-model-invocation: true
 ---

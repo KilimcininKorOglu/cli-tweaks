@@ -1,6 +1,10 @@
 ---
 name: add-log
 description: Implement centralized API request logging, audit logging, and general-purpose application logging (request_logs + audit_logs + app_logs schema) for any language or framework
+metadata:
+  author: KilimcininKorOglu
+  version: "1.0.0"
+  category: observability
 argument-hint: "[optional: target endpoint or directory]"
 disable-model-invocation: true
 ---
