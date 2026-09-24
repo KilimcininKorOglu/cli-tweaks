@@ -47,7 +47,7 @@ here therefore no longer inject or save project memory.
 | `http-cache`                   | `/http-cache`                   | HTTP caching with ETag and Cache-Control header implementation                   |
 | `add-log`                      | `/add-log`                      | Adds centralized request, audit, and application logging                         |
 | `goal-prep`                    | `/goal-prep`                    | Converts free-form work into a verifiable `/goal` completion condition           |
-| `no-ai`                        | `/no-ai`                        | Rewrites text to remove common AI-generated writing patterns                     |
+| `no-ai`                        | `/no-ai`                        | Finds machine-generated writing habits (`scan`) and rewrites them in the writer's voice (`fix`) |
 | `check-golang`                 | `/check-golang`                 | Runs four Go scans (govulncheck, gosec, golangci-lint, modernize) into a ranked report |
 | `check-swift`                  | `/check-swift`                  | Runs four Swift scans (dependency-check, semgrep, SwiftLint, swift-format) into a ranked report |
 | `check-rust`                   | `/check-rust`                   | Runs four Rust scans (cargo-audit, cargo-deny, clippy, edition check) into a ranked report |

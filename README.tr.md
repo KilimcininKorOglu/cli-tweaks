@@ -48,7 +48,7 @@ proje belleğini artık enjekte etmez ve kaydetmez.
 | `http-cache`                   | `/http-cache`                   | ETag ve Cache-Control header'ları ile HTTP caching uygulaması                   |
 | `add-log`                      | `/add-log`                      | Merkezi request, audit ve application logging ekler                             |
 | `goal-prep`                    | `/goal-prep`                    | Serbest metni doğrulanabilir `/goal` tamamlanma koşuluna dönüştürür             |
-| `no-ai`                        | `/no-ai`                        | Metinden yaygın AI üretimi yazı kalıplarını kaldırır                            |
+| `no-ai`                        | `/no-ai`                        | Makine üretimi yazı alışkanlıklarını bulur (`scan`) ve yazarın sesiyle yeniden yazar (`fix`) |
 | `check-golang`                 | `/check-golang`                 | Dört Go taraması (govulncheck, gosec, golangci-lint, modernize) çalıştırıp sıralı rapor üretir |
 | `check-swift`                  | `/check-swift`                  | Dört Swift taraması (dependency-check, semgrep, SwiftLint, swift-format) çalıştırıp sıralı rapor üretir |
 | `check-rust`                   | `/check-rust`                   | Dört Rust taraması (cargo-audit, cargo-deny, clippy, edition kontrolü) çalıştırıp sıralı rapor üretir |
