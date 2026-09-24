@@ -10,7 +10,7 @@ description: "Detect local trust-boundary failures in desktop and mobile applica
 
 You are performing a focused security assessment of local trust boundaries. This skill uses a three-phase approach: **recon** (map processes, channels, and entry points), **batched verify** (test each channel for peer identity and per-operation authorization), and **merge** (write confirmed findings to `BUG-REPORT.md`).
 
-Run this subcommand only when the repository ships a desktop app, a mobile app, a webview host, a browser extension native host, or a local daemon. A pure server-side web project has no local IPC surface, and this subcommand reports nothing for it.
+This subcommand covers repositories that ship a desktop app, a mobile app, a webview host, a browser extension native host, or a local daemon. A pure server-side web project has no local IPC surface, and this subcommand reports nothing for it.
 
 ---
 
