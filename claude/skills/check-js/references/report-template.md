@@ -38,6 +38,6 @@ Quality   — eslint: E errors, W warnings   complexity: C over limit   knip: U 
 - [unused export] path/file.ts:12 — <name> (VERIFY before deleting)
 
 ## Verdict
-Security: <green ONLY if 0 CVEs AND semgrep exit 0 | red: list fixes>
-Quality:  <green ONLY if eslint 0 AND complexity 0 AND knip 0 | yellow: E errors, C over limit, U unused>
+Security: <🟢 green ONLY if 0 CVEs AND semgrep exit 0 | 🔴 red: list fixes>
+Quality:  <🟢 green ONLY if eslint 0 AND complexity 0 AND knip 0 | 🟡 yellow: E errors, C over limit, U unused>
 ```

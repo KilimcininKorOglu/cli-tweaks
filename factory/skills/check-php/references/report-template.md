@@ -45,6 +45,6 @@ BASELINE: phpstan-baseline.neon suppresses B findings — this run is NOT a clea
 - <file>:<line> — <rule> — <suggested modern idiom>
 
 ## Verdict
-Security: <green ONLY if 0 advisories AND 0 open taint findings | red: list fixes>
-Quality:  <green ONLY if phpstan 0 AND phpmd 0 AND rector 0 AND no baseline | yellow: E errors, C over limit, T suggestions>
+Security: <🟢 green ONLY if 0 advisories AND 0 open taint findings | 🔴 red: list fixes>
+Quality:  <🟢 green ONLY if phpstan 0 AND phpmd 0 AND rector 0 AND no baseline | 🟡 yellow: E errors, C over limit, T suggestions>
 ```

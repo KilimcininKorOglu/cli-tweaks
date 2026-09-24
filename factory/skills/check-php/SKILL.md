@@ -389,9 +389,9 @@ Always print a ranked summary to the user, most severe first. Read
 [references/report-template.md](references/report-template.md) and use its
 shape exactly.
 
-**Verdict rule:** Quality is green ONLY when PHPStan, PHPMD AND Rector all report
+**Verdict rule:** Quality is 🟢 green ONLY when PHPStan, PHPMD AND Rector all report
 zero AND no baseline is suppressing findings. Any Rector suggestion (or any PHPStan
-error, or an active baseline) means quality is NOT clean — mark it yellow and
+error, or an active baseline) means quality is NOT clean — mark it 🟡 yellow and
 list the outstanding items. Never call a tier green while it still has open
 findings, however minor.
 

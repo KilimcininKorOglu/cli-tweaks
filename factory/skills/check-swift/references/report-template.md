@@ -33,6 +33,6 @@ Quality   — SwiftLint: L issues   complexity: C over limit   swift-format: S v
 - <file>:<line> — <rule>
 
 ## Verdict
-Security: <green ONLY if 0 CVEs AND semgrep 0 | red: list fixes — and state what had no coverage>
-Quality:  <green ONLY if SwiftLint 0 AND complexity 0 AND swift-format 0 | yellow: L lint, C over limit, S style>
+Security: <🟢 green ONLY if 0 CVEs AND semgrep 0 | 🔴 red: list fixes — and state what had no coverage>
+Quality:  <🟢 green ONLY if SwiftLint 0 AND complexity 0 AND swift-format 0 | 🟡 yellow: L lint, C over limit, S style>
 ```

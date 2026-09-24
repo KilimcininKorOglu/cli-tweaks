@@ -36,6 +36,6 @@ Quality   — golangci-lint: L issues   gocyclo: C over limit   modernize: S sug
 - <file>:<line> — <suggested modern idiom>
 
 ## Verdict
-Security: <green ONLY if 0 called CVEs AND gosec exit 0 | red: list fixes>
-Quality:  <green ONLY if lint 0 AND gocyclo 0 AND modernize 0 | yellow: L lint, C over limit, S modernize>
+Security: <🟢 green ONLY if 0 called CVEs AND gosec exit 0 | 🔴 red: list fixes>
+Quality:  <🟢 green ONLY if lint 0 AND gocyclo 0 AND modernize 0 | 🟡 yellow: L lint, C over limit, S modernize>
 ```

@@ -306,9 +306,9 @@ Always print a ranked summary to the user, most severe first. Read
 [references/report-template.md](references/report-template.md) and use its
 shape exactly.
 
-**Verdict rule:** Quality is green ONLY when clippy, the complexity gate AND the
+**Verdict rule:** Quality is 🟢 green ONLY when clippy, the complexity gate AND the
 edition check all report zero. Any edition suggestion (or any lint) means quality is NOT clean —
-mark it yellow and list the outstanding items. Never call a tier green while it
+mark it 🟡 yellow and list the outstanding items. Never call a tier green while it
 still has open findings, however minor.
 
 For `report` mode, also write this to `VULN-REPORT.md` (or append to an

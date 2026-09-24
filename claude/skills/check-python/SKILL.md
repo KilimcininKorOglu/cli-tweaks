@@ -338,9 +338,9 @@ Always print a ranked summary to the user, most severe first. Read
 [references/report-template.md](references/report-template.md) and use its
 shape exactly.
 
-**Verdict rule:** Quality is green ONLY when ruff, `C901`, the `UP` tier and mypy
+**Verdict rule:** Quality is 🟢 green ONLY when ruff, `C901`, the `UP` tier and mypy
 all report zero. Any `UP` suggestion (or any lint violation) means quality is NOT
-clean — mark it yellow and list the outstanding items. Never call a tier green
+clean — mark it 🟡 yellow and list the outstanding items. Never call a tier green
 while it still has open findings, however minor. "mypy: not configured" is not a
 pass; report it as a gap in the quality surface.
 

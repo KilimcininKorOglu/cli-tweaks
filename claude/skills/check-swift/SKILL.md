@@ -285,9 +285,9 @@ Always print a ranked summary to the user, most severe first. Read
 [references/report-template.md](references/report-template.md) and use its
 shape exactly.
 
-**Verdict rule:** Quality is green ONLY when SwiftLint, the complexity gate AND
+**Verdict rule:** Quality is 🟢 green ONLY when SwiftLint, the complexity gate AND
 swift-format all report zero. Any style violation (or any lint issue) means quality is NOT clean —
-mark it yellow and list the outstanding items. Never call a tier green while it
+mark it 🟡 yellow and list the outstanding items. Never call a tier green while it
 still has open findings, however minor.
 
 **Coverage rule:** A green security verdict MUST name what was not scanned — at

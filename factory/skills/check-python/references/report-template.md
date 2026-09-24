@@ -39,6 +39,6 @@ Quality   — ruff: L violations   C901: C over limit   UP: U suggestions   mypy
 - <file>:<line> — <suggested modern idiom>
 
 ## Verdict
-Security: <green ONLY if 0 vulns AND bandit 0 AND semgrep 0 | red: list fixes>
-Quality:  <green ONLY if ruff 0 AND C901 0 AND UP 0 AND mypy 0-or-not-configured | yellow: list>
+Security: <🟢 green ONLY if 0 vulns AND bandit 0 AND semgrep 0 | 🔴 red: list fixes>
+Quality:  <🟢 green ONLY if ruff 0 AND C901 0 AND UP 0 AND mypy 0-or-not-configured | 🟡 yellow: list>
 ```

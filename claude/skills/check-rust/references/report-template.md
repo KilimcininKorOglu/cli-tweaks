@@ -36,6 +36,6 @@ Quality   — clippy: L lints (C correctness)   complexity: X over limit   editi
 - <file>:<line> — <suggested modern idiom>
 
 ## Verdict
-Security: <green ONLY if 0 vulns AND cargo-deny exit 0 | red: list fixes>
-Quality:  <green ONLY if clippy 0 AND complexity 0 AND edition 0 | yellow: L lints, X over limit, S suggestions>
+Security: <🟢 green ONLY if 0 vulns AND cargo-deny exit 0 | 🔴 red: list fixes>
+Quality:  <🟢 green ONLY if clippy 0 AND complexity 0 AND edition 0 | 🟡 yellow: L lints, X over limit, S suggestions>
 ```
