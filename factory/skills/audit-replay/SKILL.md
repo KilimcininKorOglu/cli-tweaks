@@ -5,6 +5,7 @@ description: >
   backend audit event log with a per-visitor admin timeline, and rrweb DOM
   recording replayed as video. Both systems share a `visitor_id` cookie.
   Covers 8 languages and 4 databases.
+license: MIT
 version: "1.0.0"
 metadata:
   author: KilimcininKorOglu

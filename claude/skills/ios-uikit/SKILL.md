@@ -4,6 +4,7 @@ description: >
   Programmatic UIKit development, review and improvement: Auto Layout, table and
   collection views, navigation, Core Animation, networking, architecture, and 20
   reference documents with production-ready patterns.
+license: MIT
 metadata:
   author: KilimcininKorOglu
   version: "1.0.0"

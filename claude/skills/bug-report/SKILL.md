@@ -3,6 +3,7 @@ name: bug-report
 description: >
   Use `/bug-report` for full audit, `/bug-report [subcommand]` for focused audits,
   `/bug-report security-sweep` for security-only scans with a rolling 2-worker pool.
+license: MIT
 metadata:
   author: KilimcininKorOglu
   version: "1.0.0"

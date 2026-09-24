@@ -8,6 +8,7 @@ description: >
   finding, and produces a ranked combined report with fix guidance.
   The PHPMD complexity gate runs with them.
   Requires a PHP project (`composer.json` present); check-golang, check-js, check-python, check-rust and check-swift cover the other languages.
+license: MIT
 metadata:
   author: KilimcininKorOglu
   version: "1.0.0"

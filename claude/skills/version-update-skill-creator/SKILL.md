@@ -4,6 +4,7 @@ description: >
   Scans the project for version files, build commands and changelog, then
   generates a tailored project-local version-update skill that bumps the
   version, updates the changelog, creates a git tag and pushes.
+license: MIT
 metadata:
   author: KilimcininKorOglu
   version: "1.0.0"

@@ -4,6 +4,7 @@ description: >
   Analyzes the codebase and creates or updates a CLAUDE.md file for Claude Code.
   Scans project files, build configs, and existing AI rules to generate guidance
   specific to Claude Code.
+license: MIT
 version: "1.0.0"
 metadata:
   author: KilimcininKorOglu

@@ -4,6 +4,7 @@ description: >
   Audits a Postgres-backed task queue (schema plus pop query) for fairness and
   O(n) traps where one tenant's backlog starves others, and on request applies a
   write-time block-ID round-robin design with per-group concurrency limits.
+license: MIT
 version: "1.0.0"
 metadata:
   author: KilimcininKorOglu

@@ -6,6 +6,7 @@ description: >
   Scans the crate for the five layout anti-patterns from Cloudflare's 1.1.1.1
   DNS-cache optimization (growable containers on immutable data, parallel lists,
   derivable fields, oversized enums, per-record heap boxes) and fixes them.
+license: MIT
 metadata:
   author: KilimcininKorOglu
   version: "1.0.0"

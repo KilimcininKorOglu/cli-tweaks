@@ -4,6 +4,7 @@ description: >
   Scans the project, detects the web framework, and implements content-hash
   ETag caching with Cache-Control headers and 304 Not Modified support for
   static or embedded files.
+license: MIT
 metadata:
   author: KilimcininKorOglu
   version: "1.0.0"

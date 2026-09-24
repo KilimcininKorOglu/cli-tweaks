@@ -8,6 +8,7 @@ description: >
   well-formatted commits with conventional commit messages. Auto-detects git
   state, stages changes intelligently, and creates atomic commits with a proper
   type/scope/description format.
+license: MIT
 metadata:
   author: KilimcininKorOglu
   version: "1.0.0"

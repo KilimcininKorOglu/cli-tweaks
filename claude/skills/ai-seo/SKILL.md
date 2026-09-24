@@ -7,6 +7,7 @@ description: >
   content quality. With no subcommand it runs every analysis in sequence and
   scores the site; `fix` is the only mode that edits project files, and it asks
   first.
+license: MIT
 metadata:
   author: KilimcininKorOglu
   version: "1.0.0"

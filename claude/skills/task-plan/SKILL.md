@@ -4,6 +4,7 @@ description: >
   Breaks a specification or PRD into tracked features and tasks, then runs them
   in dependency order. Manages a structured development workflow with per-task
   status tracking.
+license: MIT
 metadata:
   author: KilimcininKorOglu
   version: "1.0.0"

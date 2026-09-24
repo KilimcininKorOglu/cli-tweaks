@@ -10,6 +10,7 @@ description: >
   project configures it.
   Requires a Python project (`.py` files present, usually with `pyproject.toml`,
   `requirements*.txt`, `setup.py` or `setup.cfg`); check-golang, check-js, check-php, check-rust and check-swift cover the other languages.
+license: MIT
 version: "1.0.0"
 metadata:
   author: KilimcininKorOglu

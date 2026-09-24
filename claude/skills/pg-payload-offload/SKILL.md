@@ -5,6 +5,7 @@ description: >
   payloads; on request implements a partitioned inline/external payload table
   with a write-and-swap offload job and batched S3 objects with byte-range
   keys.
+license: MIT
 metadata:
   author: KilimcininKorOglu
   version: "1.0.0"

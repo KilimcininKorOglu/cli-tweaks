@@ -4,6 +4,7 @@ description: >
   Restructures a continuous draft into a platform-optimized long-form article
   with section architecture, paragraph rhythm, visual placement, and title
   options. Targets X, LinkedIn or Medium.
+license: MIT
 metadata:
   author: KilimcininKorOglu
   version: "1.0.0"

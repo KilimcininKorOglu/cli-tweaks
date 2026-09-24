@@ -4,6 +4,7 @@ description: >
   iOS simulator automation with 21 production scripts: semantic UI navigation,
   build and test automation, app install and launch, accessibility auditing,
   push notifications, visual diff, and simulator lifecycle management.
+license: MIT
 metadata:
   author: KilimcininKorOglu
   version: "1.0.0"
