@@ -152,8 +152,6 @@ cli-tweaks/
     output-styles/
     settings.json.example
   SOUL.md.template          <-- Custom persona template
-  MEMORY.template.md        <-- Project memory structure template
-  sample-BUG-REPORT.md      <-- Finding-format reference for audit skills
 ```
 
 ## Installation

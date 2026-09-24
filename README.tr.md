@@ -153,8 +153,6 @@ cli-tweaks/
     output-styles/
     settings.json.example
   SOUL.md.template          <-- Özel persona şablonu
-  MEMORY.template.md        <-- Canonical proje MEMORY.md yapısı
-  sample-BUG-REPORT.md      <-- Audit skill'leri için bulgu format referansı
 ```
 
 ## Kurulum
