@@ -59,6 +59,7 @@ here therefore no longer inject or save project memory.
 | `pg-insert-perf`               | `/pg-insert-perf`               | Speeds up Postgres inserts with buffered batches or COPY and a right-sized pool |
 | `pg-payload-offload`           | `/pg-payload-offload`           | Offloads cold Postgres payloads to object storage by partition write-and-swap |
 | `rust-mem-layout`              | `/rust-mem-layout`              | Shrinks bulk-instantiated Rust structs' footprint and allocation count |
+| `project-architect`            | `/project-architect`            | Documentation-first planning: SPECIFICATION, IMPLEMENTATION, TASKS, BRANDING and a single-shot PROMPT |
 
 #### `bug-report` audit subcommands
 
@@ -330,3 +331,5 @@ Each key must be JSON `true`. Any other value, including the string `"false"`, l
 ## License
 
 MIT
+
+The `project-architect` skill is third-party work by ersin ([ersinkoc/project-architect](https://github.com/ersinkoc/project-architect)), distributed under its own MIT license. The full notice ships with the skill as `project-architect/LICENSE.txt`.

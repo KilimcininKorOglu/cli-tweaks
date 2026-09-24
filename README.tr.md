@@ -60,6 +60,7 @@ proje belleğini artık enjekte etmez ve kaydetmez.
 | `pg-insert-perf`               | `/pg-insert-perf`               | Buffer'lı batch veya COPY ve doğru boyutlu pool ile Postgres insert'lerini hızlandırır |
 | `pg-payload-offload`           | `/pg-payload-offload`           | Soğuk Postgres payload'larını partition write-and-swap ile object storage'a taşır |
 | `rust-mem-layout`              | `/rust-mem-layout`              | Toplu oluşturulan Rust struct'larının bellek ayak izini ve allocation sayısını düşürür |
+| `project-architect`            | `/project-architect`            | Doküman öncelikli planlama: SPECIFICATION, IMPLEMENTATION, TASKS, BRANDING ve tek seferlik PROMPT |
 
 #### `bug-report` audit subcommand'leri
 
@@ -331,3 +332,5 @@ Her anahtar JSON `true` olmalıdır. `"false"` metni dahil başka her değer öz
 ## Lisans
 
 MIT
+
+`project-architect` skill'i ersin'in üçüncü taraf çalışmasıdır ([ersinkoc/project-architect](https://github.com/ersinkoc/project-architect)) ve kendi MIT lisansıyla dağıtılır. Lisans metninin tamamı skill ile birlikte `project-architect/LICENSE.txt` olarak gelir.

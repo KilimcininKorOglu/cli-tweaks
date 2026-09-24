@@ -7,6 +7,7 @@ description: >
   PROMPT.md prompt for autonomous execution. Includes interactive tech stack
   selection, design pattern recommendations, and architecture decisions with
   trade-off analysis.
+license: MIT. LICENSE.txt has complete terms
 version: "1.0.0"
 metadata:
   author: ersinkoc
