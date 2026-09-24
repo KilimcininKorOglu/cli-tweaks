@@ -1,6 +1,5 @@
 ---
 name: no-ai
-version: 1.0.0
 description: |
   Removes signs of AI-generated writing from text, based on Wikipedia's
   "Signs of AI writing" guide. Detects and fixes inflated symbolism, promotional
@@ -9,6 +8,8 @@ description: |
   filler phrases.
 license: MIT
 compatibility: claude-code opencode
+metadata:
+  version: "1.0.0"
 argument-hint: "[text or file path] [voice sample path]"
 disable-model-invocation: true
 ---
