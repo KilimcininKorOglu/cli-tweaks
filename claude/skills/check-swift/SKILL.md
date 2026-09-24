@@ -281,42 +281,9 @@ Rank all findings by severity for action (security tier first, always):
 
 ## Step 4: Produce the report
 
-Always print a ranked summary to the user, most severe first. Use this shape:
-
-```
-# Swift security & quality report — <product name>
-Toolchain: Swift <X.Y.Z>, Xcode <X.Y>   Build: <SwiftPM | xcodegen | xcodeproj>
-Scanned: <dirs>   Dependency manifests: <Package.swift | none>
-Security  — dependency-check: N CVEs (D direct, T transitive)   semgrep: P (Q real) [CE|Pro]
-Quality   — SwiftLint: L issues   complexity: C over limit   swift-format: S violations
-
-# === SECURITY (fix first) ===
-
-## dependency-check — CVEs
-### CVE-YYYY-NNNNN — <package>@<ver> [CVSS 9.8 CRITICAL]
-- Fixed in: <ver>   Direct dependency
-- Fix: raise the version in Package.swift and re-resolve
-
-## semgrep — findings
-### <rule-id> (CWE-NNN) — <file>:<line> [ERROR]
-- <what is unsafe> → <fix>
-
-# === CODE QUALITY (lower priority) ===
-
-## SwiftLint (config: .swiftlint.yml | defaults)
-- [force_cast] <file>:<line> — Force casts should be avoided
-
-## complexity — functions over the limit of 10
-- <file>:<line> — <function> has a cyclomatic complexity of <N> (refactor)
-(note when the project's .swiftlint.yml disables the rule or raises its thresholds)
-
-## swift-format lint (config: .swift-format | defaults)
-- <file>:<line> — <rule>
-
-## Verdict
-Security: <green ONLY if 0 CVEs AND semgrep 0 — and state what had no coverage>
-Quality:  <green ONLY if SwiftLint 0 AND complexity 0 AND swift-format 0 | yellow: L lint, C over limit, S style>
-```
+Always print a ranked summary to the user, most severe first. Read
+[references/report-template.md](references/report-template.md) and use its
+shape exactly.
 
 **Verdict rule:** Quality is green ONLY when SwiftLint, the complexity gate AND
 swift-format all report zero. Any style violation (or any lint issue) means quality is NOT clean —

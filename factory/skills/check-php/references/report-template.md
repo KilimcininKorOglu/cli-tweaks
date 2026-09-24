@@ -4,8 +4,9 @@ Print the ranked summary in this shape, most severe first:
 
 ```
 # PHP security & quality report — <package name>
-Runtime: PHP <X.Y.Z>   composer.json floor: <constraint>   platform override: <ver|none>
-Scanned: <src paths>   (when they differ, the floor-pinned run is authoritative)
+Runtime: PHP <X.Y.Z>   Declared floor: <composer.json constraint>   Scanned: <src paths>
+(when they differ, the floor-pinned run is authoritative)
+Context: platform override: <ver|none>
 Security  — composer audit: N prod, M dev   progpilot: P (Q open, R false-pos)   semgrep: S raw / F filtered (G open)
 Quality   — phpstan: E errors (level L, baseline: yes/no, B suppressed)   phpmd: C over limit   rector: T suggestions
 

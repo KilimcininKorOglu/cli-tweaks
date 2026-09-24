@@ -312,46 +312,9 @@ Rank all findings by severity for action (security tier first, always):
 
 ## Step 4: Produce the report
 
-Always print a ranked summary to the user, most severe first. Use this shape:
-
-```
-# JS/TS security & quality report — <package name>
-Node: <vX.Y.Z>   engines floor: <range>   Manager: npm|pnpm|yarn|bun   Scanned: whole project
-(when Node drift exists, name it — an EOL major is itself a security finding)
-Security  — audit: N prod (C critical/high), M dev   semgrep: P (Q real, R false-pos)
-Quality   — eslint: E errors, W warnings   complexity: C over limit   knip: U unused, D undeclared
-
-# === SECURITY (fix first) ===
-
-## audit — production dependencies (action required)
-### GHSA-xxxx-xxxx-xxxx (CVE-YYYY-NNNNN) — <title> [critical]
-- Package: <pkg>@<ver> (direct | transitive via <parent>)
-- Patched: >= <ver>   Fix: semver-compatible | BREAKING major bump
-- Fix: upgrade <pkg> (or bump <parent> which pins it)
-
-## semgrep — findings
-### <rule-id> (CWE-79) — <file>:<line> [ERROR]
-- <what is tainted> → fix with the appropriate escape/validation.
-
-## audit — dev dependencies (supply-chain risk)
-- GHSA-xxxx — <pkg>@<ver> → fixed in <ver> (build/CI only, does not ship)
-
-# === CODE QUALITY (lower priority) ===
-
-## eslint (config: eslint.config.js | .eslintrc | none)
-- [error] [no-unused-vars] path/file.ts:42 — <message>
-
-## complexity — functions over the limit of 10
-- path/file.ts:42 — <function> has a complexity of <N> (refactor into smaller functions)
-
-## knip (config: knip.json | defaults)
-- [unlisted dependency] <pkg> imported in path/file.ts — declare it in package.json
-- [unused export] path/file.ts:12 — <name> (VERIFY before deleting)
-
-## Verdict
-Security: <green ONLY if 0 CVEs AND semgrep exit 0 | red: list fixes>
-Quality:  <green ONLY if eslint 0 AND complexity 0 AND knip 0 | yellow: E errors, C over limit, U unused>
-```
+Always print a ranked summary to the user, most severe first. Read
+[references/report-template.md](references/report-template.md) and use its
+shape exactly.
 
 **Verdict rule:** Quality is green ONLY when ESLint, the complexity gate AND knip
 all report zero.
