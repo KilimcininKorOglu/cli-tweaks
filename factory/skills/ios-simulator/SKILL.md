@@ -4,6 +4,10 @@ description: >
   iOS simulator automation with 21 production scripts: semantic UI navigation,
   build and test automation, app install and launch, accessibility auditing,
   push notifications, visual diff, and simulator lifecycle management.
+version: "1.0.0"
+metadata:
+  author: KilimcininKorOglu
+  category: ios
 argument-hint: "<script-name> [options]"
 disable-model-invocation: true
 ---

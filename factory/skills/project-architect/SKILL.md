@@ -7,15 +7,10 @@ description: >
   PROMPT.md prompt for autonomous execution. Includes interactive tech stack
   selection, design pattern recommendations, and architecture decisions with
   trade-off analysis.
-license: MIT
-compatibility: >
-  Works with any coding agent that supports file read/write and user interaction.
-  Optimized for Droid, also compatible with Cursor, Gemini CLI, Codex, and other
-  agentskills.io-compatible agents.
+version: "1.0.0"
 metadata:
   author: ersinkoc
-  version: "1.0.0"
-  category: development
+  category: planning
 argument-hint: "[project idea or path to an existing PRD]"
 disable-model-invocation: true
 ---

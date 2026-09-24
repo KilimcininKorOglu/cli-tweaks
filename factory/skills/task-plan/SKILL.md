@@ -4,6 +4,10 @@ description: >
   Breaks a specification or PRD into tracked features and tasks, then runs them
   in dependency order. Manages a structured development workflow with per-task
   status tracking.
+version: "1.0.0"
+metadata:
+  author: KilimcininKorOglu
+  category: planning
 argument-hint: "[PRD path | add <description> | status | run]"
 disable-model-invocation: true
 ---

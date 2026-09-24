@@ -3,6 +3,10 @@ name: redate-commits
 description: >
   Rewrites git author and committer dates across a date range with
   git filter-branch, distributing commits realistically across the period.
+version: "1.0.0"
+metadata:
+  author: KilimcininKorOglu
+  category: git
 argument-hint: "<start-date> <end-date> [--weekdays-only | --include-weekends | --weighted-weekdays]"
 disable-model-invocation: true
 ---

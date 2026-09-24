@@ -7,6 +7,10 @@ description: >
   content quality. With no subcommand it runs every analysis in sequence and
   scores the site; `fix` is the only mode that edits project files, and it asks
   first.
+version: "1.0.0"
+metadata:
+  author: KilimcininKorOglu
+  category: web
 argument-hint: "[audit | citability | crawlers | llmstxt | brands | schema | technical | content | fix] <url | path>"
 disable-model-invocation: true
 ---

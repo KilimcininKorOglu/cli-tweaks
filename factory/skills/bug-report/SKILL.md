@@ -3,6 +3,10 @@ name: bug-report
 description: >
   Use `/bug-report` for full audit, `/bug-report [subcommand]` for focused audits,
   `/bug-report security-sweep` for security-only scans with a rolling 2-worker pool.
+version: "1.0.0"
+metadata:
+  author: KilimcininKorOglu
+  category: code-quality
 argument-hint: "[<subcommand> | security-sweep | fix [BUG-<id> | <description>]]"
 disable-model-invocation: true
 ---

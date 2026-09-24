@@ -1,14 +1,15 @@
 ---
 name: no-ai
-version: 1.0.0
 description: |
   Removes signs of AI-generated writing from text, based on Wikipedia's
   "Signs of AI writing" guide. Detects and fixes inflated symbolism, promotional
   language, superficial -ing analyses, vague attributions, em dash overuse, rule
   of three, AI vocabulary words, passive voice, negative parallelisms, and
   filler phrases.
-license: MIT
-compatibility: claude-code opencode
+version: "1.0.0"
+metadata:
+  author: KilimcininKorOglu
+  category: writing
 argument-hint: "[text or file path] [voice sample path]"
 disable-model-invocation: true
 ---

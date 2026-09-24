@@ -1,8 +1,12 @@
 ---
 name: goal-prep
 description: Converts a free-form task description into a verifiable Claude Code /goal completion condition — one measurable end state, a stated check, constraints, and an optional turn/time cap — asking clarifying questions via AskUser only when a required component is missing. Invoked explicitly as /goal-prep.
-disable-model-invocation: true
+version: "1.0.0"
+metadata:
+  author: KilimcininKorOglu
+  category: planning
 argument-hint: "[free-form description of the task]"
+disable-model-invocation: true
 ---
 
 # Goal Prep — free-form intent → verifiable /goal condition

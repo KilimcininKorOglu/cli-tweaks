@@ -7,6 +7,10 @@ description: >
   installs any that are missing, scans every source path, classifies each
   finding, and produces a ranked combined report with fix guidance.
   Requires a Swift project (`Package.swift` or an Xcode project present); check-golang, check-js, check-php, check-python and check-rust cover the other languages.
+version: "1.0.0"
+metadata:
+  author: KilimcininKorOglu
+  category: code-quality
 argument-hint: "[scan | report | fix]"
 disable-model-invocation: true
 ---
