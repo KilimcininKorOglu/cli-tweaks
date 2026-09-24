@@ -165,7 +165,7 @@ Verify this is a PHP project and the tools are available.
    - **Composer mode** (`composer.json` present) — all five tools run. Note the
      `autoload.psr-4` source paths; they decide scan scope.
    - **Plain PHP mode** (no `composer.json`) — `composer audit` cannot run, the
-     others still do (see Step 5 for the PHAR path). Derive the scan scope from
+     others still do from their PHARs (see item 5). Derive the scan scope from
      the real source directories instead:
      ```bash
      ls -d src app lib includes classes inc wp-content 2>/dev/null || echo "scope: repo root"
@@ -220,7 +220,9 @@ Verify this is a PHP project and the tools are available.
    ```
    Progpilot and Semgrep are NOT installed as dev dependencies: Progpilot runs
    from its PHAR and Semgrep from its Docker image, so neither touches
-   `composer.json`. Prefer the project's own `vendor/bin` binaries over globally
+   `composer.json`. Download the Progpilot PHAR and pull the Semgrep image with
+   the Tool install commands in
+   [references/plain-php.md](references/plain-php.md). Prefer the project's own `vendor/bin` binaries over globally
    installed ones so the configured rule sets and extensions resolve. If
    installing a dev dependency would modify `composer.json`, ask the user first —
    in `scan` mode you may run the tools via `composer exec` or a throwaway
@@ -228,24 +230,8 @@ Verify this is a PHP project and the tools are available.
    `.github/workflows/*.y*ml`), install those exact versions instead so local
    results match CI.
 
-   **Plain PHP mode** — the tools ship standalone PHARs, so Composer is not
-   needed. Download them into the run directory, never into the project:
-   ```bash
-   PHARDIR="$(mktemp -d /tmp/check-php-tools.XXXXXXXX)"; echo "phar dir: $PHARDIR"
-   curl -sSL -o "$PHARDIR/phpstan.phar" https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar
-   curl -sSL -o "$PHARDIR/phpmd.phar"   https://github.com/phpmd/phpmd/releases/latest/download/phpmd.phar
-   # Progpilot's release asset carries the version in its NAME; the plain
-   # progpilot.phar URL answers "Not Found". Resolve the asset, never guess it:
-   PP_URL=$(curl -sSL https://api.github.com/repos/designsecurity/progpilot/releases/latest \
-     | python3 -c 'import sys,json;print([a["browser_download_url"] for a in json.load(sys.stdin)["assets"] if a["name"].endswith(".phar")][0])')
-   curl -sSL -o "$PHARDIR/progpilot.phar" "$PP_URL"
-   php "$PHARDIR/phpstan.phar" --version && php "$PHARDIR/phpmd.phar" --version
-   php "$PHARDIR/progpilot.phar" --version
-   docker pull semgrep/semgrep                    # the Semgrep tier needs Docker
-   ```
-   Rector ships no official PHAR; in plain PHP mode skip Rector and say so in the
-   report rather than pretending the modernization tier ran. Delete `$PHARDIR`
-   when the run finishes.
+   **Plain PHP mode** — read [references/plain-php.md](references/plain-php.md)
+   in full and install the tools as its Tool install section says.
 
 ## Step 2: Scan the whole project (all five tools)
 
@@ -294,19 +280,8 @@ Also audit what actually ships, not just the whole tree:
 composer audit --no-dev          # production-only advisories; label these separately
 ```
 
-**Plain PHP mode** runs the same scan without Composer. `composer audit` is
-skipped — say so explicitly — and the analyzers run from the PHARs and the
-Docker image against the source scope found in Step 1:
-```bash
-SCOPE="src app lib includes classes inc"      # whatever Step 1 actually found
-php "$PHARDIR/phpstan.phar" analyse --no-progress --level 5 $SCOPE ; echo "phpstan exit: $?"
-php "$PHARDIR/phpstan.phar" analyse --no-progress --level 5 --error-format=json $SCOPE \
-  > "$RUNDIR/phpstan.json" 2>/dev/null
-php "$PHARDIR/phpmd.phar" $SCOPE text codesize ; echo "phpmd exit: $?"
-```
-With no `phpstan.neon` the level is not declared by the project, so pass one
-explicitly and report which level you chose — an undeclared level is not the
-project's agreed standard, so label those findings advisory.
+**Plain PHP mode** runs the scan without Composer, as the Scan section of
+[references/plain-php.md](references/plain-php.md) says.
 
 If step 4 showed the runtime differs from the declared floor, ALSO run the
 analysis pinned to the floor — that is what CI/production actually execute:
@@ -410,53 +385,9 @@ Rank all findings by severity for action (security tier first, always):
 
 ## Step 4: Produce the report
 
-Always print a ranked summary to the user, most severe first. Use this shape:
-
-```
-# PHP security & quality report — <package name>
-Runtime: PHP <X.Y.Z>   composer.json floor: <constraint>   platform override: <ver|none>
-Scanned: <src paths>   (when they differ, the floor-pinned run is authoritative)
-Security  — composer audit: N prod, M dev   progpilot: P (Q open, R false-pos)   semgrep: S raw / F filtered (G open)
-Quality   — phpstan: E errors (level L, baseline: yes/no, B suppressed)   phpmd: C over limit   rector: T suggestions
-
-# === SECURITY (fix first) ===
-
-## composer audit — production dependencies (action required)
-### CVE-YYYY-NNNNN — <title>
-- Package: <vendor/pkg>@<ver> (direct | transitive via <parent>)
-- Patched: >= <ver>   Fix: semver-compatible | BREAKING major bump
-- Fix: composer require <vendor/pkg>:^<patched>
-
-## progpilot — taint findings
-### sql_injection (CWE-89) — <sink file>:<line>
-- Path: <source file>:<source line> (<source name>) → <sink name>
-- Guard on the line: <the guard you read, or "none">
-- Fix: use a prepared statement / the appropriate escaping for that sink.
-
-## semgrep — pattern findings (S raw, F after the superglobal filter)
-### <rule id> — <file>:<line>
-- Line: <the source line you read from the file>
-- Fix: <the escaping or cast that closes it>
-
-## composer audit — dev dependencies (supply-chain risk)
-- CVE-YYYY-NNNNN — <vendor/pkg>@<ver> → fixed in <ver> (does not ship)
-
-# === CODE QUALITY (lower priority) ===
-
-## phpstan (config: phpstan.neon | defaults, level L)
-- [argument.type] path/File.php:42 — <message>
-BASELINE: phpstan-baseline.neon suppresses B findings — this run is NOT a clean codebase.
-
-## phpmd codesize — methods over the complexity limit of 10
-- path/File.php:42 — <Class>::<method> has a Cyclomatic Complexity of <N> (refactor)
-
-## rector (sets: <configured sets>, target PHP <ver>) — optional idiom upgrades
-- <file>:<line> — <rule> — <suggested modern idiom>
-
-## Verdict
-Security: <green ONLY if 0 advisories AND 0 open taint findings | red: list fixes>
-Quality:  <green ONLY if phpstan 0 AND phpmd 0 AND rector 0 AND no baseline | yellow: E errors, C over limit, T suggestions>
-```
+Always print a ranked summary to the user, most severe first. Read
+[references/report-template.md](references/report-template.md) and use its
+shape exactly.
 
 **Verdict rule:** Quality is green ONLY when PHPStan, PHPMD AND Rector all report
 zero AND no baseline is suppressing findings. Any Rector suggestion (or any PHPStan
@@ -480,117 +411,9 @@ existing `BUG-REPORT.md` if the project uses one) in English.
 
 ## Step 5: Fix (only in `fix` mode, after confirmation)
 
-Never edit files in `scan`/`report` mode. In `fix` mode:
-
-A `fix` run repairs one finding class after another. A finished finding is a
-checkpoint, not an ending: continue to the next finding in the same turn. A
-decision the run genuinely needs from the user, such as a major-version bump below, still ends the turn.
-
-### Semver-compatible CVEs
-```bash
-composer update <vendor/pkg> --with-dependencies
-```
-
-### CVEs needing a major bump
-NEVER apply these automatically. Propose them one package at a time, naming the
-breaking change and the migration required, and let the user decide:
-```bash
-composer require <vendor/pkg>:^<patched-major> --update-with-dependencies
-```
-Run the project's tests after every such bump, before moving to the next.
-
-### Transitive CVEs with no parent release
-The vulnerable package is usually not yours to bump. Find the parent first:
-```bash
-composer why <vulnerable-package>
-```
-Then upgrade the intermediate dependency that pins it. Only when no parent
-release exists should you force the resolution by requiring the patched version
-directly, and say clearly in the report that this pins a transitive package
-against its parent's declared constraint.
-
-### End-of-life PHP branch
-The fix is a runtime bump, not a code change. Raise the PHP version everywhere
-the Step 1 inventory found it:
-- `composer.json` — `require.php`, and `config.platform.php` if present
-- `Dockerfile` — the base image tag
-- CI workflows — `php-version` in EVERY `.github/workflows/*.y*ml` (ci, release,
-  and any other), not just one
-Keep every source on the same PHP branch — a stale release workflow deploys on an
-unpatched runtime even when CI is green.
-
-After raising the floor, re-run the Step 1 inventory and confirm no source still
-names a version below it. A bump that misses one source is silent in the scan
-output but red in CI on every push that follows.
-
-### Taint findings (Progpilot and Semgrep)
-- **Prove it first.** A taint finding is a claim, not a defect. Reproduce it
-  against the running application with a payload before you change code, and put
-  the response that proves it in the commit message. A finding you cannot
-  reproduce is reported as unproven, never fixed silently.
-- **Real finding**: fix the code at the sink. SQL injection → prepared statements
-  with bound parameters, never string concatenation; XSS → escape on output with
-  `htmlspecialchars($v, ENT_QUOTES, 'UTF-8')`, or cast when the value is an id;
-  command injection → avoid the shell, else `escapeshellarg`; path traversal →
-  resolve with `realpath` and verify the prefix; file inclusion → resolve the
-  name against a whitelist; unsafe deserialization → never `unserialize`
-  untrusted input, use JSON with a validated shape.
-- **Prefer the cast to the escape for an id.** `(int) $_GET['id']` both escapes
-  and validates; `htmlspecialchars` only escapes. For a comma list of ids,
-  rebuild it with `intval()` per element rather than escaping the string.
-- **False positive**: record the guard that closes it in the report. Neither tool
-  supports an inline suppression comment worth adding, so do NOT annotate the
-  code; the report is where a false positive is closed.
-- Re-run both tools after the fix and confirm the finding is gone.
-
-### PHPStan errors
-Fix in code following each message. Re-run until 0. Do not silence an error
-unless it is a proven false positive, and then scope
-`@phpstan-ignore-next-line` (or `@phpstan-ignore <identifier>`) to the single
-line with a reason. Put the comment on the line DIRECTLY above the reported line;
-one line higher matches nothing and adds an `ignore.unmatchedIdentifier` finding
-beside the original. NEVER regenerate the baseline to make new errors disappear —
-that hides regressions. If the user wants a stricter analysis, raise the level
-one step at a time and fix what each step surfaces.
-
-### Methods over the complexity limit
-Refactor each method PHPMD reported into smaller single-responsibility methods:
-extract the branches of a long `if`/`switch` chain into named private methods,
-lift error handling out of the happy path, and split methods that do two jobs.
-NEVER raise the threshold in a custom ruleset, add a
-`@SuppressWarnings(PHPMD.CyclomaticComplexity)` annotation, or drop the gate to
-make the report green. Re-run `phpmd <src paths> text codesize` until it reports
-nothing.
-
-### Rector suggestions
-Apply ONLY when behavior-preserving and the user wants the idiom upgrade:
-```bash
-vendor/bin/rector process        # without --dry-run; review the full diff
-```
-These are optional — skip if they conflict with the project's minimum PHP
-version, and confirm `rector.php` targets the right PHP version first. Review
-every hunk: Rector rewrites real code, and a wrong rule set can change behavior.
-
-### Prove the fix
-A dependency bump changes runtime behavior, so a green scanner is not enough:
-```bash
-composer install                              # prove the lockfile resolves clean
-composer audit && composer audit --no-dev     # both must exit 0
-php "$PHARDIR/progpilot.phar" $(cat "$RUNDIR/phpfiles.txt" | tr '\n' ' ')   # the fixed finding must be gone
-docker run --rm -v "$PWD":/src:ro semgrep/semgrep semgrep scan --config=p/php /src
-vendor/bin/phpstan analyse --no-progress      # must exit 0
-vendor/bin/rector process --dry-run           # no remaining suggestions you agreed to apply
-vendor/bin/phpunit                            # a security bump must not break behavior
-```
-Re-send the payload that proved each taint finding and show the response that no
-longer carries it; a scanner that stopped reporting is not by itself proof. If CI
-pins the PHP version, run the proof under that exact version, not just the local
-one. Then remove any throwaway tool install this run made — if it added PHPStan,
-PHPMD or Rector only to scan, drop them again
-(`composer remove --dev <package> --no-interaction`) and restore `composer.json`
-and `composer.lock` to their committed state, and say so. The run installed it,
-so the run removes it; offering to remove it and leaving it installed does not
-count.
+Never edit files in `scan`/`report` mode. In `fix` mode, read
+[references/fix.md](references/fix.md) in full before you change any file, and
+follow every step in it.
 
 ## Rules
 
