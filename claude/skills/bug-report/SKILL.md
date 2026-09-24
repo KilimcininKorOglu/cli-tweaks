@@ -31,9 +31,7 @@ Exception: `security-sweep` is Path B below, not a subcommand file.
 
 ### Path B: Security sweep (`/bug-report security-sweep`)
 
-If the user said `/bug-report security-sweep` OR used natural language like
-"güvenlik taraması başlat", "security scan", "run all security scans", or
-"security sweep" — jump to the **Security Sweep Orchestration** section below.
+If the argument is `security-sweep`, jump to the **Security Sweep Orchestration** section below.
 
 ### Path C: Full audit (`/bug-report` with no subcommand)
 
@@ -190,10 +188,7 @@ that worker if the marker exists.
 
 ## Security Sweep Orchestration
 
-Use when the user says `/bug-report security-sweep` or natural language like
-"güvenlik taraması başlat", "security scan", "run all security scans".
-
-This runs ONLY the security scan subcommands (not general audits).
+This section runs for `/bug-report security-sweep`. It runs ONLY the security scan subcommands (not general audits).
 
 **Resume support:** Same as Full Audit — check completion markers before launching.
 
