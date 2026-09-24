@@ -1,11 +1,9 @@
 ---
 name: xss
-description: >-
-  Detect Cross-Site Scripting (XSS) vulnerabilities in a codebase using a
+description: "Detect Cross-Site Scripting (XSS) vulnerabilities in a codebase using a
   two-phase approach: first find all HTML, JavaScript, and DOM output sinks
   where data is rendered without escaping, then trace whether user-supplied
-  input reaches those sinks. Use when asked to find XSS
-  or cross-site scripting bugs.
+  input reaches those sinks."
 ---
 
 # Cross-Site Scripting (XSS) Detection

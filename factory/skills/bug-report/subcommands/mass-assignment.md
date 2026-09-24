@@ -1,10 +1,9 @@
 ---
 name: mass-assignment
-description: >-
-  Detect mass assignment vulnerabilities using a three-phase approach:
+description: "Detect mass assignment vulnerabilities using a three-phase approach:
   find request-to-model binding sites, verify unprotected fields
   (role escalation, price manipulation, admin flag injection),
-  then merge confirmed findings. Use when asked to audit mass assignment or over-posting.
+  then merge confirmed findings."
 ---
 
 # Mass Assignment Detection

@@ -1,10 +1,9 @@
 ---
 name: open-redirect
-description: >-
-  Detect open redirect vulnerabilities using a two-phase approach:
+description: "Detect open redirect vulnerabilities using a two-phase approach:
   first find redirect sites (URL parameters, Location headers, client-side
   redirects), then trace whether user input reaches redirect targets without
-  validation. Use when asked to find open redirect or URL redirect bugs.
+  validation."
 ---
 
 # Open Redirect Detection

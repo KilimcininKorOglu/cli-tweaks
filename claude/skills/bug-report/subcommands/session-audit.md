@@ -1,10 +1,9 @@
 ---
 name: session-audit
-description: >-
-  Audit session lifecycle, session storage, cookie flags, CSRF protection, JWT
+description: "Audit session lifecycle, session storage, cookie flags, CSRF protection, JWT
   verification, and authentication flow hardening. Covers session fixation,
   token revocation, account enumeration, password reset tokens, and MFA on
-  sensitive operations. Use when asked to audit sessions, JWT, or login flows.
+  sensitive operations."
 ---
 
 # Session Management, JWT & State Persistence Security

@@ -1,9 +1,8 @@
 ---
 name: serialization-audit
-description: >-
-  Audit serialization, parsing, and data transformation security: unsafe
+description: "Audit serialization, parsing, and data transformation security: unsafe
   deserialization, XXE, schema drift between producer and consumer, and lossy
-  pipeline conversions. Use when asked to audit parsing or serialization.
+  pipeline conversions."
 ---
 
 # Data Serialization & Transformation Security

@@ -1,10 +1,9 @@
 ---
 name: nosqli
-description: >-
-  Detect NoSQL injection vulnerabilities using a two-phase approach:
+description: "Detect NoSQL injection vulnerabilities using a two-phase approach:
   first find NoSQL query sites (MongoDB operator injection, $where JavaScript
   execution, Redis EVAL, Elasticsearch query_string), then trace whether
-  user-supplied input reaches those sites. Use when asked to find NoSQL injection bugs.
+  user-supplied input reaches those sites."
 ---
 
 # NoSQL Injection (NoSQLi) Detection

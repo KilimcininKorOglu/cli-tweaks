@@ -1,9 +1,8 @@
 ---
 name: fix
-description: >-
-  Fix already-reported bugs from BUG-REPORT.md one at a time: read the finding,
+description: "Fix already-reported bugs from BUG-REPORT.md one at a time: read the finding,
   reproduce the root cause, apply the fix, prove it, and commit each fix on its
-  own. Use when asked to fix reported bugs.
+  own."
 ---
 
 # Bug Fix Workflow

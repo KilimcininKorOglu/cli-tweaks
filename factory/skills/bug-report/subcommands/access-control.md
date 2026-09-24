@@ -1,9 +1,6 @@
 ---
 name: access-control
-description: >-
-  Audit IDOR and broken access control: authenticated user A reaching user B's
-  resources, and endpoints with no authentication or function-level authorization.
-  Use when asked to find access control bugs.
+description: "Audit IDOR and broken access control: authenticated user A reaching user B's resources, and endpoints with no authentication or function-level authorization."
 ---
 
 # Access Control Security Audit

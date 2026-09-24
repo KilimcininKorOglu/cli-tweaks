@@ -1,9 +1,8 @@
 ---
 name: sec-recon
-description: >-
-  Map the codebase architecture and security posture before deeper scans: stack,
+description: "Map the codebase architecture and security posture before deeper scans: stack,
   entry points, authentication model, data stores, and trust boundaries. Writes
-  the System Architecture section of BUG-REPORT.md.
+  the System Architecture section of BUG-REPORT.md."
 ---
 
 # Security Reconnaissance

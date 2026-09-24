@@ -1,10 +1,9 @@
 ---
 name: cors
-description: >-
-  Detect CORS misconfiguration vulnerabilities using a two-phase approach:
+description: "Detect CORS misconfiguration vulnerabilities using a two-phase approach:
   first find CORS configuration sites (middleware, response headers, framework
   options), then verify whether misconfigurations allow unauthorized cross-origin
-  access. Use when asked to find CORS issues or cross-origin policy bugs.
+  access."
 ---
 
 # CORS Misconfiguration Detection

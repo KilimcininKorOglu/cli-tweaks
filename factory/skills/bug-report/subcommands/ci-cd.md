@@ -1,10 +1,9 @@
 ---
 name: ci-cd
-description: >-
-  Detect CI/CD pipeline security vulnerabilities using a three-phase approach:
+description: "Detect CI/CD pipeline security vulnerabilities using a three-phase approach:
   find CI configuration files (GitHub Actions, GitLab CI, Jenkinsfile), verify
   misconfigurations (expression injection, secret exfiltration, unpinned actions),
-  then merge confirmed findings. Use when asked to audit CI/CD pipeline security.
+  then merge confirmed findings."
 ---
 
 # CI/CD Pipeline Security Scan

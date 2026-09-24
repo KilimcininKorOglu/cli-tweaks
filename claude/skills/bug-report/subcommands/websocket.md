@@ -1,10 +1,9 @@
 ---
 name: websocket
-description: >-
-  Detect WebSocket security vulnerabilities using a three-phase approach:
+description: "Detect WebSocket security vulnerabilities using a three-phase approach:
   find WebSocket handlers and connection setup, verify missing protections
   (origin validation, authentication, message injection, unencrypted transport),
-  then merge confirmed findings. Use when asked to audit WebSocket security.
+  then merge confirmed findings."
 ---
 
 # WebSocket Security Scan

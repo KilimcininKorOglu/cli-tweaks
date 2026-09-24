@@ -1,9 +1,8 @@
 ---
 name: integration-security
-description: >-
-  Audit third-party integration security: webhook signature verification and
+description: "Audit third-party integration security: webhook signature verification and
   replay binding, outbound API client credential handling, and OAuth flow
-  correctness. Use when asked to audit integrations or webhooks.
+  correctness."
 ---
 
 # Third-Party Integration & Webhook Security Analysis

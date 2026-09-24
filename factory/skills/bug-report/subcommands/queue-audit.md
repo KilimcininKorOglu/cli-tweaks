@@ -1,9 +1,7 @@
 ---
 name: queue-audit
-description: >-
-  Audit queue and async job resilience: lost or duplicated jobs, missing retry and
-  dead-letter handling, unbounded worker concurrency, and invisible failures.
-  Use when asked to audit background jobs or queues.
+description: "Audit queue and async job resilience: lost or duplicated jobs, missing retry and
+  dead-letter handling, unbounded worker concurrency, and invisible failures."
 ---
 
 # Queue & Async Job Management Resilience Analysis

@@ -1,13 +1,11 @@
 ---
 name: hardcoded-secrets
-description: >-
-  Detect hardcoded sensitive data (API keys, access tokens, private keys,
+description: "Detect hardcoded sensitive data (API keys, access tokens, private keys,
   passwords, connection strings) in source code using a three-phase approach:
   recon (find secret candidates via regex and variable name patterns),
   batched verify (confirm real secrets and assess exposure in parallel
   subagents, 3 candidates each), and merge (write confirmed findings to
-  BUG-REPORT.md). Use when asked to find hardcoded secrets, leaked API keys,
-  exposed credentials, or hardcoded passwords.
+  BUG-REPORT.md)."
 ---
 
 # Hardcoded Secrets Detection

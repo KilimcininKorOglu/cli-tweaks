@@ -1,10 +1,8 @@
 ---
 name: race-condition
-description: >-
-  Detect race conditions and TOCTOU flaws where concurrent requests break a
+description: "Detect race conditions and TOCTOU flaws where concurrent requests break a
   shared-state invariant: check-then-act on balances and stock, non-atomic
-  counters, single-use tokens redeemed twice, and file check-then-use.
-  Use when asked to find concurrency bugs with a security or money impact.
+  counters, single-use tokens redeemed twice, and file check-then-use."
 ---
 
 # Race Condition and TOCTOU Detection

@@ -1,9 +1,6 @@
 ---
 name: ai-code-audit
-description: >-
-  Detect AI-generated and AI-assisted code, then audit it for security, quality,
-  and process problems such as invented APIs, copied insecure patterns, and
-  unreviewed bulk changes. Use when asked to audit AI-written code.
+description: "Detect AI-generated and AI-assisted code, then audit it for security, quality, and process problems such as invented APIs, copied insecure patterns, and unreviewed bulk changes."
 ---
 
 # AI-Generated & AI-Assisted Code Audit

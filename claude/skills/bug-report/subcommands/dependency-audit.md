@@ -1,9 +1,8 @@
 ---
 name: dependency-audit
-description: >-
-  Audit project dependencies for supply chain risks: known CVEs in outdated
+description: "Audit project dependencies for supply chain risks: known CVEs in outdated
   packages, typosquatting, dependency confusion, malicious build scripts, and
-  license compliance issues across all major package ecosystems.
+  license compliance issues across all major package ecosystems."
 ---
 
 # Supply Chain Security Audit (Dependency Audit)

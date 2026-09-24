@@ -1,10 +1,9 @@
 ---
 name: docker
-description: >-
-  Detect container security vulnerabilities using a three-phase approach:
+description: "Detect container security vulnerabilities using a three-phase approach:
   find Dockerfile and docker-compose files, verify misconfigurations
   (root user, secrets in layers, privileged mode, unsafe mounts),
-  then merge confirmed findings. Use when asked to audit Docker/container security.
+  then merge confirmed findings."
 ---
 
 # Container Security Scan

@@ -1,12 +1,10 @@
 ---
 name: graphql
-description: >-
-  Detect GraphQL injection vulnerabilities in a codebase using a two-phase
+description: "Detect GraphQL injection vulnerabilities in a codebase using a two-phase
   approach: first confirm GraphQL is in use and find sites where operation
   documents are built unsafely (concatenation, interpolation into query
   strings), then trace whether user input reaches those sites. If no GraphQL technology is found in Phase 1, Phase
-  2 is skipped. Use when asked to find GraphQL injection, unsafe GraphQL
-  document construction, or operation string injection bugs.
+  2 is skipped."
 ---
 
 # GraphQL Injection Detection

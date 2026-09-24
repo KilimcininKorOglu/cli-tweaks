@@ -1,11 +1,9 @@
 ---
 name: rce
-description: >-
-  Detect Remote Code Execution (RCE) vulnerabilities in a codebase using a
+description: "Detect Remote Code Execution (RCE) vulnerabilities in a codebase using a
   two-phase approach: first find dangerous execution sinks (OS command calls,
   eval-like functions, unsafe deserialization), then trace whether user-supplied
-  input reaches those sinks. Use when asked to find RCE,
-  command injection, or unsafe deserialization bugs.
+  input reaches those sinks."
 ---
 
 # Remote Code Execution (RCE) Detection

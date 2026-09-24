@@ -1,10 +1,8 @@
 ---
 name: privilege-escalation
-description: >-
-  Detect privilege escalation vectors where a user raises their own authority:
+description: "Detect privilege escalation vectors where a user raises their own authority:
   role fields accepted from request bodies, role claims trusted from tokens,
-  admin routes without a role guard, and default or seeded admin accounts.
-  Use when asked to find role elevation and RBAC bypass bugs.
+  admin routes without a role guard, and default or seeded admin accounts."
 ---
 
 # Privilege Escalation Detection

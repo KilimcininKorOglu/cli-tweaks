@@ -1,9 +1,7 @@
 ---
 name: feature-flags-audit
-description: >-
-  Audit feature flag hygiene, rollout safety, and experimentation: stale flags,
-  flags that gate security decisions, unsafe defaults, and untracked experiments.
-  Use when asked to audit feature flags.
+description: "Audit feature flag hygiene, rollout safety, and experimentation: stale flags,
+  flags that gate security decisions, unsafe defaults, and untracked experiments."
 ---
 
 # Feature Flags, Gradual Rollout & Experimentation Audit

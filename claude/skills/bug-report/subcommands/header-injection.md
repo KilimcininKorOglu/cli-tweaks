@@ -1,10 +1,9 @@
 ---
 name: header-injection
-description: >-
-  Detect HTTP header injection vulnerabilities using a three-phase approach:
+description: "Detect HTTP header injection vulnerabilities using a three-phase approach:
   find header manipulation sites where user input reaches response headers,
   trace input flow to verify CRLF injection and Host header poisoning,
-  then merge confirmed findings. Use when asked to audit HTTP header security.
+  then merge confirmed findings."
 ---
 
 # HTTP Header Injection Scan

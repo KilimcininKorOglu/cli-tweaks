@@ -1,9 +1,8 @@
 ---
 name: observability-audit
-description: >-
-  Audit logging, metrics, tracing, and debugging readiness: missing operational
+description: "Audit logging, metrics, tracing, and debugging readiness: missing operational
   signals, unstructured logs, absent health checks, and gaps that make an
-  incident unreadable. Use when asked to audit observability.
+  incident unreadable."
 ---
 
 # Logging, Observability & Debugging Readiness

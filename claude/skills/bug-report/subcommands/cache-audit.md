@@ -1,9 +1,7 @@
 ---
 name: cache-audit
-description: >-
-  Audit caching strategy, consistency, and cache security: stale reads, missing
-  invalidation, key collisions across users, and unauthenticated cache backends.
-  Use when asked to audit caching or Redis usage.
+description: "Audit caching strategy, consistency, and cache security: stale reads, missing
+  invalidation, key collisions across users, and unauthenticated cache backends."
 ---
 
 # Caching Strategy & Consistency Analysis

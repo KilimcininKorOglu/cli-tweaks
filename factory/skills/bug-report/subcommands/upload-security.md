@@ -1,9 +1,8 @@
 ---
 name: upload-security
-description: >-
-  Audit file upload and media processing security: unvalidated content type and
+description: "Audit file upload and media processing security: unvalidated content type and
   extension, path control over the stored name, unsafe processing libraries, and
-  unauthenticated download routes. Use when asked to audit file uploads.
+  unauthenticated download routes."
 ---
 
 # File Upload & Media Processing Security Audit

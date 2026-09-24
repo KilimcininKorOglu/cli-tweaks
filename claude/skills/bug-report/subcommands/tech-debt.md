@@ -1,9 +1,7 @@
 ---
 name: tech-debt
-description: >-
-  Map and prioritize technical debt: explicit TODO debt, hidden coupling, aging
-  dependencies, dead code, and weak test coverage. Use when asked to audit
-  technical debt.
+description: "Map and prioritize technical debt: explicit TODO debt, hidden coupling, aging
+  dependencies, dead code, and weak test coverage."
 ---
 
 # Technical Debt Mapping & Prioritization

@@ -1,9 +1,8 @@
 ---
 name: tenant-isolation
-description: >-
-  Audit multi-tenant isolation: queries missing a tenant predicate, shared caches
+description: "Audit multi-tenant isolation: queries missing a tenant predicate, shared caches
   and storage paths, cross-tenant admin actions, and tenant identity taken from
-  the request. Use when asked to audit tenant isolation.
+  the request."
 ---
 
 # Multi-Tenant Isolation & Data Leakage Audit

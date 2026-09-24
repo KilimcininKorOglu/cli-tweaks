@@ -1,10 +1,8 @@
 ---
 name: iac
-description: >-
-  Detect Infrastructure-as-Code misconfigurations in Terraform, Kubernetes,
+description: "Detect Infrastructure-as-Code misconfigurations in Terraform, Kubernetes,
   Helm, and cloud provider templates. Covers public storage, permissive IAM,
-  unencrypted resources, open security groups, and privileged workloads.
-  Use when asked to audit infrastructure definitions.
+  unencrypted resources, open security groups, and privileged workloads."
 ---
 
 # Infrastructure-as-Code Security Detection

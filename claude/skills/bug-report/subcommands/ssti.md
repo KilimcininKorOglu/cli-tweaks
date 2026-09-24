@@ -1,10 +1,9 @@
 ---
 name: ssti
-description: >-
-  Detect Server-Side Template Injection (SSTI) vulnerabilities in a codebase
+description: "Detect Server-Side Template Injection (SSTI) vulnerabilities in a codebase
   using a two-phase approach: first find all template rendering sites where
   user-supplied input is used as the template string itself (not as context
-  data), then trace whether user-supplied input actually reaches those sites. Use when asked to find SSTI or template injection bugs.
+  data), then trace whether user-supplied input actually reaches those sites."
 ---
 
 # Server-Side Template Injection (SSTI) Detection

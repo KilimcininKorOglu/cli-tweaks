@@ -1,12 +1,10 @@
 ---
 name: path-traversal
-description: >-
-  Detect path traversal vulnerabilities in a codebase using a two-phase
+description: "Detect path traversal vulnerabilities in a codebase using a two-phase
   approach: first find all file-loading sites where a path is constructed
   dynamically (open, readFile, send_file, etc.), then trace whether
   user-supplied input reaches those sites and can escape the intended base
-  directory. Use when asked to find path
-  traversal, directory traversal, or file disclosure bugs.
+  directory."
 ---
 
 # Path Traversal Detection

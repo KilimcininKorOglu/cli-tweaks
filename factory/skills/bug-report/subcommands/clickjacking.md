@@ -1,10 +1,8 @@
 ---
 name: clickjacking
-description: >-
-  Audit clickjacking protection using a single-phase comprehensive approach:
+description: "Audit clickjacking protection using a single-phase comprehensive approach:
   check X-Frame-Options headers, CSP frame-ancestors directives, JavaScript
-  framebusting code, and whether sensitive operations lack frame protection.
-  Use when asked to audit clickjacking or UI redressing defenses.
+  framebusting code, and whether sensitive operations lack frame protection."
 ---
 
 # Clickjacking Protection Audit

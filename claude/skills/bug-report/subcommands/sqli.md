@@ -1,9 +1,8 @@
 ---
 name: sqli
-description: >-
-  Detect SQL injection vulnerabilities in a codebase using a two-phase approach:
+description: "Detect SQL injection vulnerabilities in a codebase using a two-phase approach:
   first find unsafe SQL construction sites (string concat, f-strings, unsafe ORM
-  methods), then trace whether user-supplied input reaches those sites. Use when asked to find SQLi or database injection bugs.
+  methods), then trace whether user-supplied input reaches those sites."
 ---
 
 # SQL Injection (SQLi) Detection

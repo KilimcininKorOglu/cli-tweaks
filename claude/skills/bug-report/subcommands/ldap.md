@@ -1,10 +1,9 @@
 ---
 name: ldap
-description: >-
-  Detect LDAP injection vulnerabilities where user input is incorporated into
+description: "Detect LDAP injection vulnerabilities where user input is incorporated into
   LDAP search filters or Distinguished Name strings without proper escaping.
   Enables authentication bypass, unauthorized directory access, and information
-  disclosure. Use when asked to find LDAP injection bugs.
+  disclosure."
 ---
 
 # LDAP Injection Detection

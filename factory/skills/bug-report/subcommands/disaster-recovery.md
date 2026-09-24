@@ -1,9 +1,8 @@
 ---
 name: disaster-recovery
-description: >-
-  Assess disaster recovery and business continuity readiness: backup coverage and
+description: "Assess disaster recovery and business continuity readiness: backup coverage and
   restore proof, single points of failure, incident runbooks, and recovery
-  objectives. Use when asked to audit backup and recovery readiness.
+  objectives."
 ---
 
 # Disaster Recovery & Business Continuity Readiness Assessment

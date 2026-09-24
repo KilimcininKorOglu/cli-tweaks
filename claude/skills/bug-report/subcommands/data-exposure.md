@@ -1,10 +1,9 @@
 ---
 name: data-exposure
-description: >-
-  Detect sensitive data exposure vulnerabilities using a two-phase approach:
+description: "Detect sensitive data exposure vulnerabilities using a two-phase approach:
   first find data exposure sites (PII in logs, debug mode, stack traces in
   responses, source maps, .env files, verbose errors), then verify actual
-  exposure risk. Use when asked to find data leaks or information disclosure bugs.
+  exposure risk."
 ---
 
 # Sensitive Data Exposure Detection

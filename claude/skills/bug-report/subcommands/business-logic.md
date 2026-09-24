@@ -1,13 +1,11 @@
 ---
 name: business-logic
-description: >-
-  Detect business logic vulnerabilities in a codebase using a two-phase
+description: "Detect business logic vulnerabilities in a codebase using a two-phase
   approach: first perform threat modeling by analyzing the application's
   domain and generating specific attack scenarios (price manipulation,
   workflow bypass, limit violations, race conditions, reward abuse, etc.),
   then verify whether those threats are exploitable by checking for missing
-  validations and enforcement.
-  Use when asked to find business logic, logic flaws, or abuse-of-function bugs.
+  validations and enforcement."
 ---
 
 # Business Logic Vulnerability Detection

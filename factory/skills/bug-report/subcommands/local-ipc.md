@@ -1,10 +1,9 @@
 ---
 name: local-ipc
-description: >-
-  Detect local trust-boundary failures in desktop and mobile applications:
+description: "Detect local trust-boundary failures in desktop and mobile applications:
   webview-to-native bridges, deep links and custom URL schemes, Unix sockets,
   named pipes, XPC, Binder and D-Bus endpoints, exported components, and
-  privileged helpers. Use when asked to audit a desktop or mobile app.
+  privileged helpers."
 ---
 
 # Local IPC and Desktop/Mobile Boundary Detection

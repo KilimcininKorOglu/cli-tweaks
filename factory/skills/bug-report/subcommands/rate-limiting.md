@@ -1,10 +1,9 @@
 ---
 name: rate-limiting
-description: >-
-  Detect missing rate limiting and application-level DoS vectors using a
+description: "Detect missing rate limiting and application-level DoS vectors using a
   three-phase approach: find rate-limit-sensitive endpoints and patterns,
   verify missing protections (auth brute force, ReDoS, unbounded pagination),
-  then merge confirmed findings. Use when asked to audit rate limiting or DoS vectors.
+  then merge confirmed findings."
 ---
 
 # Rate Limiting Audit

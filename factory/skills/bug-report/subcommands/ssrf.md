@@ -1,11 +1,9 @@
 ---
 name: ssrf
-description: >-
-  Detect Server-Side Request Forgery (SSRF) vulnerabilities in a codebase using
+description: "Detect Server-Side Request Forgery (SSRF) vulnerabilities in a codebase using
   a two-phase approach: first find all outbound network call sites (HTTP, TCP,
   DNS requests to remote hosts), then trace whether user-supplied input reaches
-  those call sites. Use when asked to find SSRF or
-  server-side request forgery bugs.
+  those call sites."
 ---
 
 # Server-Side Request Forgery (SSRF) Detection

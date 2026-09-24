@@ -1,10 +1,9 @@
 ---
 name: crypto
-description: >-
-  Detect cryptography weakness vulnerabilities using a two-phase approach:
+description: "Detect cryptography weakness vulnerabilities using a two-phase approach:
   first find crypto usage sites (hashing, encryption, PRNG, TLS config), then
   verify whether weak algorithms, insecure modes, or poor key management are
-  used. Use when asked to find crypto or cryptography bugs.
+  used."
 ---
 
 # Cryptography Weakness Detection

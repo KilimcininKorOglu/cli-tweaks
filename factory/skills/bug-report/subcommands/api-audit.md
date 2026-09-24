@@ -1,9 +1,8 @@
 ---
 name: api-audit
-description: >-
-  Audit API performance, resilience, contract stability, and endpoint lifecycle:
+description: "Audit API performance, resilience, contract stability, and endpoint lifecycle:
   N+1 calls, missing timeouts and retries, breaking response changes, and
-  undocumented deprecations. Use when asked to audit an API.
+  undocumented deprecations."
 ---
 
 # API Performance, Resilience & Contract Testing Audit
