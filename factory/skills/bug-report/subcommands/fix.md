@@ -16,9 +16,9 @@ description: "Fix already-reported bugs from BUG-REPORT.md one at a time: read t
 ```
 
 Fixes bugs recorded in `BUG-REPORT.md`. With no argument it works through every
-open bug one at a time: verify, plan, approve, fix, verify, commit, then move to
-the next. Each bug is fully resolved and committed before the next one is
-started.
+open bug one at a time: verify, trace, fix, verify, commit, then move to the
+next. Only an architectural fix stops for spec-mode approval before the fix.
+Each bug is fully resolved and committed before the next one is started.
 
 ---
 
@@ -215,7 +215,7 @@ Read every file path listed in the `File:` field. Read any file referenced in `R
 
 Do NOT trust your memory of file contents. Re-read before editing. Always.
 
-Before planning a fix, confirm that the reported defect still exists in the current code path.
+Before designing a fix, confirm that the reported defect still exists in the current code path.
 
 Write a short defect confirmation that includes:
 - The exact current behavior.
@@ -223,7 +223,7 @@ Write a short defect confirmation that includes:
 - The current files and functions that prove the defect still exists.
 - Any part of the report that is stale or no longer accurate.
 
-If the defect no longer exists, do not edit code. Update the bug status only if the report rules allow it, record the skip reason, and continue or stop according to mode.
+If the defect no longer exists, do not edit code. Update the bug status only if the report rules allow it, record the skip reason in the Phase 7 report, and continue or stop according to mode.
 
 ---
 
@@ -243,24 +243,24 @@ Required trace:
 
 Product-facing configuration must be manageable through the product surface that users or operators actually use. Do not implement a script-only, config-only, or backend-only fix when the setting or behavior must be managed through UI, API, CLI, or another product control plane.
 
-If the fix requires a refactor or a scope expansion beyond the report's suggested commit, state that in the plan. Do not start implementation before approval.
+A fix that requires a refactor, or that reaches a subsystem the report does not name, is architectural. Phase 2C decides whether a fix needs approval.
 
 ---
 
-## Phase 2C: Pre-Fix Gate in Droid Spec Mode
+## Phase 2C: Architectural Gate
 
-Enter Droid spec mode before Phase 3 ONLY when the fix involves an
-architectural change. For a localized, non-architectural fix, skip spec mode and
-proceed directly to Phase 3.
+Fix directly by default. Enter Droid spec mode before Phase 3 ONLY when the fix
+meets one of the criteria below. For a localized, non-architectural fix, skip
+spec mode and proceed directly to Phase 3.
 
 A fix is architectural when it does any of these:
 - Adds or changes a database schema or migration.
 - Adds a new dependency, new package, or new service.
-- Changes an API contract, request/response shape, or route surface.
+- Changes a contract that clients rely on: a route, a request or response field, a field type, or a documented status code. Correcting the status code of an error path, such as a 500 that becomes a 400 for invalid input, is not a contract change.
 - Changes an authentication, authorization, or security boundary.
 - Introduces a cross-cutting refactor or spans multiple subsystems.
 - Changes storage format, configuration model, or a runtime/install contract.
-- Expands scope beyond the report's suggested commit.
+- Reaches a subsystem or file group that the report does not name. One more file in the same component is not a scope expansion.
 
 A fix is NOT architectural when it is localized and behavior-preserving in
 shape: a bounded logic correction, a validation or error-handling fix, a
@@ -268,8 +268,10 @@ nil/empty guard, an off-by-one, a wrong-constant fix, or a single-surface change
 that touches no schema, contract, dependency, or security boundary. Fix these
 directly; do not enter spec mode.
 
-When in doubt about whether a fix is architectural, treat it as architectural
-and enter spec mode.
+Enter spec mode only when you can name the criterion the fix meets. Before you
+enter spec mode, write one line that names it, for example
+`Architectural: adds a migration for the users table`. When you cannot name a
+criterion, the fix is not architectural. Proceed to Phase 3.
 
 When spec mode is required, follow this exact three-step tool sequence. Do not
 use `AskUser` for plan approval.
@@ -304,14 +306,18 @@ Hard pre-edit gate (applies ONLY when spec mode is required):
 
 Make the minimal complete change that resolves the root cause. Minimal means the smallest end-to-end change that makes the product behavior correct, not the smallest number of edited lines.
 
+The implementation boundary is the approved plan when Phase 2C required one.
+Otherwise it is the defect confirmation from Phase 2A and the affected paths
+from Phase 2B.
+
 Hard constraints:
-- Do NOT touch any line that is not directly related to the approved fix.
+- Do NOT touch any line that is not directly related to the fix.
 - Do NOT reformat surrounding code.
-- Do NOT rename variables unless the approved fix requires it.
+- Do NOT rename variables unless the fix requires it.
 - Do NOT add unrelated improvements.
-- Do NOT expand beyond the approved implementation boundary.
-- If implementation proves the approved plan incomplete, stop, revert this bug's edits, and return to Phase 2C with a corrected plan.
-- If the fix requires restructuring that was not approved, treat it as a failed fix: revert this bug's edits using the Phase 4 skip procedure and move on or stop according to mode.
+- Do NOT expand beyond the implementation boundary.
+- If implementation proves the boundary incomplete, stop, revert this bug's edits, and return to Phase 2C with the larger fix.
+- If the fix requires restructuring that no approved plan covers, treat it as a failed fix: revert this bug's edits using the Phase 4 skip procedure and move on or stop according to mode.
 
 ---
 
@@ -333,7 +339,7 @@ If every relevant check passes, continue to Phase 5.
 If any check fails, do NOT commit a broken fix. Instead:
 1. Revert ONLY this bug's edits. Restore the exact files you changed in Phase 3 to their pre-fix state, and delete any new file this fix created. Do not touch other files or earlier commits.
 2. Leave this bug's Status unchanged unless the user explicitly approved a skip status.
-3. Record it as skipped, with the failing check or product-context failure as the reason.
+3. Record it as skipped in the ledger and the Phase 7 report, with the failing check or product-context failure as the reason.
 4. Continue to the next bug in batch mode only when the working tree is clean.
 
 In single-bug mode, report the failure and STOP instead of continuing.
@@ -346,11 +352,16 @@ Known baseline failures may be reported separately only when they are verified t
 
 Create a single commit for THIS one bug fix.
 
+When a `commit` skill is available in this session, create the commit through
+that skill. Give it the exact paths changed for this bug, and hold its staging
+and its message to the constraints below. When no `commit` skill is available,
+stage and commit yourself under the same constraints.
+
 Hard constraints:
 - Stage ONLY the files changed for this bug: `git add <exact paths>`.
 - NEVER use `git add -A`, `git add .`, or `git commit -am`.
 - NEVER stage `BUG-REPORT.md` when it is ignored or when report rules say status edits must remain uncommitted.
-- Respect repository commit instructions and commit helper skills when available.
+- Respect repository commit instructions.
 - Commit message uses conventional format: `fix: <what was fixed>` unless the repository requires a more specific conventional scope.
 - Describe WHAT was fixed and WHY.
 - NEVER include any bug ID.
@@ -379,11 +390,12 @@ The `Status:` line may hold EXACTLY ONE of these four values and NOTHING else:
 `OPEN` is a synonym for `NEW` and `SKIPPED` is a synonym for `DEFERRED`; both synonyms are
 merged away, so use only the four values above.
 
-Write the keyword alone. NEVER append a parenthetical, an explanation, a note, a
-rationale, a "(stale)" tag, a commit reference, or any other text after it. The line is
-`Status: FIXED`, never `Status: FIXED (because ...)`. Any value outside this list, including
-`PARTIAL`, is forbidden. Record every rationale in the Phase 7 report to the user, never on
-the Status line.
+The `Status:` line holds the keyword and NOTHING else. NEVER add any other text to
+it, before or after the keyword: no parenthetical, explanation, note, rationale, date,
+"(stale)" tag, commit reference, or anything else. The line is `Status: FIXED`, never
+`Status: FIXED (because ...)`. Any value outside this list, including `PARTIAL`, is
+forbidden. Record every rationale in the Phase 7 report to the user, never on the Status
+line.
 
 `BUG-REPORT.md` may be gitignored or otherwise excluded by report rules. This status edit stays in the working tree when the report rules say it must not be committed. Do not stage it, and do not let it block the next bug.
 
