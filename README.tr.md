@@ -135,7 +135,7 @@ Yalnızca Claude Code. Factory Droid'in output style sözleşmesi yok, bu yüzde
 
 | Style        | Dosya                                | Açıklama                                                                    |
 |--------------|--------------------------------------|------------------------------------------------------------------------------|
-| `ASD-STE100` | `claude/output-styles/ASD-STE100.md` | Basitleştirilmiş teknik İngilizce: kısa cümle, etken çatı, cümle başına tek talimat, uydurma metafor yok, hedge yok, iltifat yok, önce sonuç |
+| `ASD-STE100` | `claude/output-styles/ASD-STE100.md` | Basitleştirilmiş teknik İngilizce: kısa cümle, etken çatı, cümle başına tek talimat, uydurma metafor yok, hedge yok, em dash yok, iltifat yok, önce sonuç, sonuçla başlayan rapor |
 
 Dosyayı `~/.claude/output-styles/` altına kopyalayın, sonra `/output-style` ile seçin. Claude Code output style'ı oturum başında okur, yani bir düzenleme sonraki oturumda veya style'ı yeniden seçtiğinizde etkili olur.
 

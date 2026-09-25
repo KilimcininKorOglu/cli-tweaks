@@ -134,7 +134,7 @@ Claude Code only. Factory Droid has no output-style contract, so this tree is no
 
 | Style        | File                                   | Description                                                                  |
 |--------------|----------------------------------------|------------------------------------------------------------------------------|
-| `ASD-STE100` | `claude/output-styles/ASD-STE100.md`   | Simplified Technical English: short sentences, active voice, one instruction per sentence, no invented metaphors, no hedging, no flattery, conclusion first |
+| `ASD-STE100` | `claude/output-styles/ASD-STE100.md`   | Simplified Technical English: short sentences, active voice, one instruction per sentence, no invented metaphors, no hedging, no em dashes, no flattery, conclusion first, outcome-first reports |
 
 Copy the file to `~/.claude/output-styles/`, then select it with `/output-style`. Claude Code reads an output style at session start, so an edit takes effect in the next session or after you re-select the style.
 
