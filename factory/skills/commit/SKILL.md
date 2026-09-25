@@ -1,13 +1,12 @@
 ---
 name: commit
 description: >
-  This skill MUST be invoked when the user says "commit", "commitle",
-  "commit at", "commit yap", "push" or any variation requesting a git commit.
-  SHOULD also invoke when the user mentions "stage", "staged",
-  "değişiklikleri commitle", or asks to push code changes. Creates
-  well-formatted commits with conventional commit messages. Auto-detects git
-  state, stages changes intelligently, and creates atomic commits with a proper
-  type/scope/description format.
+  Creates git commits with conventional commit messages: detects git state,
+  stages explicit paths, and writes atomic type(scope): description commits.
+  Invoke this skill for every git commit, both when the user asks ("commit",
+  "commitle", "commit at", "commit yap", "push", "stage",
+  "değişiklikleri commitle") and when you commit your own finished work.
+  Never run `git commit` directly.
 license: MIT
 version: "1.0.0"
 metadata:
