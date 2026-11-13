@@ -5,6 +5,12 @@ name: Cleanup Artifacts
 # full artifact store makes every later run fail at "Upload package artifact" with
 # "Artifact storage quota has been hit", which skips the publish job and leaves the
 # release without IPKs. This workflow deletes the leftovers.
+#
+# It also deletes Actions caches that no later run can read: a cache of a deleted
+# branch, of a closed pull request or of a release tag (a tag run saves under the tag
+# ref, which neither the next tag nor the default branch may restore), and a cache
+# that nobody read for CACHE_IDLE_DAYS. Such caches only fill the 10 GB quota, and a
+# full quota evicts the warm caches of the default branch first.
 
 on:
   schedule:
@@ -17,25 +23,44 @@ on:
         description: 'Delete artifacts older than this many days (0 = delete all)'
         required: false
         default: '1'
+      dry_run:
+        description: 'List what would be deleted, delete nothing'
+        type: boolean
+        default: false
 
 permissions:
   actions: write
+  # The cache step reads the branches and the state of pull requests.
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: cleanup-artifacts
+  cancel-in-progress: false
+
+env:
+  # A cache that nobody read for this many days is deleted. GitHub evicts an unread
+  # cache after 7 days on its own, so this only removes what the eviction missed.
+  CACHE_IDLE_DAYS: 14
+  DRY_RUN: ${{ inputs.dry_run || false }}
 
 jobs:
-  cleanup:
+  artifacts:
     name: Delete old build artifacts
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Delete artifacts
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
         with:
           script: |
+            const { owner, repo } = context.repo;
+            const dryRun = process.env.DRY_RUN === 'true';
             const maxAgeDays = Number(context.payload.inputs?.max_age_days ?? 1);
             const cutoff = Date.now() - maxAgeDays * 24 * 60 * 60 * 1000;
 
             const artifacts = await github.paginate(
               github.rest.actions.listArtifactsForRepo,
-              { owner: context.repo.owner, repo: context.repo.repo, per_page: 100 }
+              { owner, repo, per_page: 100 }
             );
 
             let deleted = 0, freed = 0, kept = 0, failed = 0;
@@ -44,29 +69,113 @@ jobs:
               // so delete it regardless of age.
               const old = new Date(artifact.created_at).getTime() < cutoff;
               if (!old && !artifact.expired) { kept++; continue; }
-              try {
-                await github.rest.actions.deleteArtifact({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  artifact_id: artifact.id,
-                });
-                deleted++;
-                freed += artifact.size_in_bytes;
-              } catch (err) {
-                // A concurrent run may delete the same artifact first. Report the
-                // count instead of failing the whole job.
-                failed++;
-                core.warning(`delete ${artifact.id} (${artifact.name}): ${err.message}`);
+              if (dryRun) {
+                core.info(`would delete artifact ${artifact.id} (${artifact.name})`);
+              } else {
+                try {
+                  await github.rest.actions.deleteArtifact({ owner, repo, artifact_id: artifact.id });
+                } catch (err) {
+                  // A concurrent run may delete the same artifact first. Report the
+                  // count instead of failing the whole job.
+                  failed++;
+                  core.warning(`delete ${artifact.id} (${artifact.name}): ${err.message}`);
+                  continue;
+                }
               }
+              deleted++;
+              freed += artifact.size_in_bytes;
             }
 
             const mib = (freed / 1024 / 1024).toFixed(1);
-            core.info(`scanned=${artifacts.length} deleted=${deleted} kept=${kept} failed=${failed} freed=${mib} MiB`);
-            core.summary
-              .addHeading('Artifact cleanup')
+            core.info(`dry_run=${dryRun} scanned=${artifacts.length} deleted=${deleted} kept=${kept} failed=${failed} freed=${mib} MiB`);
+            await core.summary
+              .addHeading(dryRun ? 'Artifact cleanup (dry run)' : 'Artifact cleanup')
               .addTable([
                 [{ data: 'Metric', header: true }, { data: 'Value', header: true }],
                 ['Scanned', String(artifacts.length)],
+                ['Deleted', String(deleted)],
+                ['Kept', String(kept)],
+                ['Failed', String(failed)],
+                ['Freed', `${mib} MiB`],
+              ])
+              .write();
+
+  caches:
+    name: Delete unreadable and idle caches
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Delete caches
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const dryRun = process.env.DRY_RUN === 'true';
+            const idleCutoff = Date.now() - Number(process.env.CACHE_IDLE_DAYS) * 24 * 60 * 60 * 1000;
+
+            const caches = await github.paginate(
+              github.rest.actions.getActionsCacheList,
+              { owner, repo, per_page: 100 }
+            );
+            const branchRefs = new Set(
+              (await github.paginate(github.rest.repos.listBranches, { owner, repo, per_page: 100 }))
+                .map((branch) => `refs/heads/${branch.name}`)
+            );
+
+            async function pullIsOpen(number) {
+              try {
+                const { data } = await github.rest.pulls.get({ owner, repo, pull_number: number });
+                return data.state === 'open';
+              } catch (err) {
+                // A deleted pull request cannot receive another build.
+                if (err.status === 404) return false;
+                throw err;
+              }
+            }
+
+            // Whether a later run can still read the caches of the ref.
+            async function refIsLive(ref) {
+              const pull = ref.match(/^refs\/pull\/(\d+)\//);
+              if (pull) return pullIsOpen(Number(pull[1]));
+              // A tag builds once, and no other ref may restore its caches. GitHub
+              // reports such a ref as refs/tags/<tag> or refs/heads/refs/tags/<tag>.
+              if (ref.includes('/tags/')) return false;
+              if (ref.startsWith('refs/heads/')) return branchRefs.has(ref);
+              // A shape this step does not know: never guess, keep it.
+              return true;
+            }
+
+            // Cache the verdict per ref, because one ref carries many caches.
+            const verdicts = new Map();
+            let deleted = 0, freed = 0, kept = 0, failed = 0;
+            for (const entry of caches) {
+              if (!verdicts.has(entry.ref)) {
+                verdicts.set(entry.ref, await refIsLive(entry.ref));
+              }
+              const idle = new Date(entry.last_accessed_at).getTime() < idleCutoff;
+              if (verdicts.get(entry.ref) && !idle) { kept++; continue; }
+              if (dryRun) {
+                core.info(`would delete cache ${entry.id} (${entry.key} @ ${entry.ref})`);
+              } else {
+                try {
+                  await github.rest.actions.deleteActionsCacheById({ owner, repo, cache_id: entry.id });
+                } catch (err) {
+                  // A concurrent run or GitHub's own eviction may delete it first.
+                  failed++;
+                  core.warning(`delete cache ${entry.id} (${entry.key} @ ${entry.ref}): ${err.message}`);
+                  continue;
+                }
+              }
+              deleted++;
+              freed += entry.size_in_bytes;
+            }
+
+            const mib = (freed / 1024 / 1024).toFixed(1);
+            core.info(`dry_run=${dryRun} scanned=${caches.length} deleted=${deleted} kept=${kept} failed=${failed} freed=${mib} MiB`);
+            await core.summary
+              .addHeading(dryRun ? 'Cache cleanup (dry run)' : 'Cache cleanup')
+              .addTable([
+                [{ data: 'Metric', header: true }, { data: 'Value', header: true }],
+                ['Scanned', String(caches.length)],
                 ['Deleted', String(deleted)],
                 ['Kept', String(kept)],
                 ['Failed', String(failed)],
