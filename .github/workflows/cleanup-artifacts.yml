@@ -9,7 +9,8 @@ name: Cleanup Artifacts
 # It also deletes Actions caches that no later run can read: a cache of a deleted
 # branch, of a closed pull request or of a release tag (a tag run saves under the tag
 # ref, which neither the next tag nor the default branch may restore), and a cache
-# that nobody read for CACHE_IDLE_DAYS. Such caches only fill the 10 GB quota, and a
+# that nobody read for CACHE_IDLE_DAYS, and a cache that a newer cache of the same ref
+# and key prefix replaced. Such caches only fill the 10 GB quota, and a
 # full quota evicts the warm caches of the default branch first.
 
 on:
@@ -101,7 +102,7 @@ jobs:
               .write();
 
   caches:
-    name: Delete unreadable and idle caches
+    name: Delete unreadable, idle and replaced caches
     runs-on: ubuntu-24.04
     steps:
       - name: Delete caches
@@ -144,6 +145,21 @@ jobs:
               return true;
             }
 
+            // A cache key that ends in a hash of its inputs gets a new entry beside the old
+            // one at every input change, and every entry stays read within CACHE_IDLE_DAYS.
+            // A run of the current inputs restores the newest entry of the ref and key
+            // prefix, so only that one is kept. A key that does not end in a hex hash of at
+            // least 7 digits forms its own group, because its last part can name a target.
+            function groupOf(entry) {
+              const prefix = entry.key.replace(/-[0-9a-f]{7,}$/, '');
+              return prefix === entry.key ? `${entry.ref} ${entry.id}` : `${entry.ref} ${prefix}`;
+            }
+            const newest = new Map();
+            for (const entry of caches) {
+              const top = newest.get(groupOf(entry));
+              if (!top || entry.created_at > top.created_at) newest.set(groupOf(entry), entry);
+            }
+
             // Cache the verdict per ref, because one ref carries many caches.
             const verdicts = new Map();
             let deleted = 0, freed = 0, kept = 0, failed = 0;
@@ -152,7 +168,8 @@ jobs:
                 verdicts.set(entry.ref, await refIsLive(entry.ref));
               }
               const idle = new Date(entry.last_accessed_at).getTime() < idleCutoff;
-              if (verdicts.get(entry.ref) && !idle) { kept++; continue; }
+              const replaced = newest.get(groupOf(entry)) !== entry;
+              if (verdicts.get(entry.ref) && !idle && !replaced) { kept++; continue; }
               if (dryRun) {
                 core.info(`would delete cache ${entry.id} (${entry.key} @ ${entry.ref})`);
               } else {
